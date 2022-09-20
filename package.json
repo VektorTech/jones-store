@@ -6,15 +6,22 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "lint": "next lint",
     "prettier-format": "prettier --config .prettierrc {{src,pages}/**/*.ts,middleware.ts} --write"
   },
   "dependencies": {
     "@prisma/client": "^4.3.1",
+    "bcryptjs": "^2.4.3",
+    "friendly-username-generator": "^2.0.4",
+    "iron-session": "^6.2.1",
     "next": "12.3.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "xss-clean": "^0.1.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/node": "18.7.18",
     "@types/react": "18.0.20",
     "@types/react-dom": "18.0.6",
