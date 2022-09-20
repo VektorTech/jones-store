@@ -1,0 +1,201 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(cuid())
+  username String @unique @db.VarChar(40)
+  email String @unique @db.VarChar(255)
+  role Role @default(USER)
+  cart Cart?
+  userAddress UserAddress[]
+  firstName String? @db.VarChar(50)
+  lastName String? @db.VarChar(50)
+  phoneNumber String? @unique @db.VarChar(15)
+  password String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  avatar Bytes?
+  deactivated Boolean @default(false)
+  review Review[]
+  favorite Favorite[]
+  order Order[]
+
+  @@unique([firstName, lastName])
+  @@map(name: "users")
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+  userId String @unique
+  user User @relation(fields: [userId], references: [id])
+  orderLine OrderLine[]
+  status OrderStatus
+  paymentMethod PaymentType
+  shippingAddressId String
+  shippingAddress Address @relation(fields: [shippingAddressId], references: [id])
+  date DateTime @default(now())
+  total Float
+  additionalInfo String? @db.VarChar(255)
+
+  @@map(name: "user_orders")
+}
+
+model OrderLine {
+  id Int @id @default(autoincrement())
+  jordanOneId String
+  jordanOne JordanOne @relation(fields: [jordanOneId], references: [id])
+  orderId Int
+  order Order @relation(fields: [orderId], references: [id])
+  review Review?
+  quantity Int
+  total Float
+
+  @@map(name: "order_item")
+}
+
+model Favorite {
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jordanOneId String
+  jordanOne JordanOne @relation(fields: [jordanOneId], references: [id], onDelete: Cascade)
+
+  @@id([userId, jordanOneId])
+  @@map(name: "favorites")
+}
+
+model UserAddress {
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  addressId String
+  address Address @relation(fields: [addressId], references: [id], onDelete: Cascade)
+  isDefault Boolean @default(true)
+
+  @@id([userId, addressId])
+  @@map(name: "users_addresses")
+}
+
+model Address {
+  id String @id
+  unitNumber Int?
+  addressLine1 String @db.VarChar(100)
+  addressLine2 String? @db.VarChar(100)
+  city String @db.VarChar(50)
+  region String @db.VarChar(100)
+  postalCode String @db.VarChar(10)
+  country String @db.VarChar(60)
+  userAddress UserAddress[]
+  order Order[]
+
+  @@map(name: "addresses")
+}
+
+model Cart {
+  id Int @id @default(autoincrement())
+  userId String @unique
+  user User @relation(fields: [userId], references: [id])
+  total Float
+
+  @@map(name: "users_cart")
+}
+
+model CartItem {
+  cartId Int
+  jordanOneId String
+  jordanOne JordanOne @relation(fields: [jordanOneId], references: [id], onDelete: Cascade)
+  quantity Int
+  total Float
+
+  @@id([cartId, jordanOneId])
+  @@map(name: "cart_items")
+}
+
+model JordanOne {
+  id String @unique
+  title String @unique @db.VarChar(255)
+  dateAdded DateTime @default(now())
+  mediaUrls String[]
+  price Float
+  discount Float?
+  shippingCost Float @default(0.0)
+  details String
+  salesCount Int?
+  ratings Int?
+  colors String @default("") @db.VarChar(25)
+  sizes String
+  year Int?
+  sku String @db.VarChar(25)
+  stockQty Int
+  gender Gender @default(MEN)
+  type Category
+  review Review[]
+  favorite Favorite[]
+  orderLine OrderLine[]
+  cartItem CartItem[]
+
+  @@map(name: "jordan_ones")
+}
+
+model Review {
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  jordanOneId String
+  jordanOne JordanOne @relation(fields: [jordanOneId], references: [id])
+  comment String?
+  rating Int
+  addedAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+  orderLineId Int? @unique
+  orderLine OrderLine? @relation(fields: [orderLineId], references: [id], onDelete: SetNull)
+
+  @@id([userId, jordanOneId])
+  @@map(name: "reviews")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Gender {
+  MEN
+  WOMEN
+  KIDS
+  BABY
+  UNISEX
+}
+
+enum OrderStatus {
+  PENDING
+  AWAITING_PAYMENT
+  PAYMENT_RECEIVED
+  COMPLETED
+  SHIPPED
+  CANCELLED
+  DECLINED
+  REFUNDED
+  DISPUTED
+}
+
+enum PaymentType {
+  PAYPAL
+  STRIPE
+  WEPAY
+  SKRILL
+  AMAZON_APS
+  COINBASE
+}
+
+enum Category {
+  HIGH
+  MID
+  LOW
+}
