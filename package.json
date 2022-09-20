@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "prettier-format": "prettier --config .prettierrc {{src,pages}/**/*.ts,middleware.ts} --write"
   },
   "dependencies": {
     "@prisma/client": "^4.3.1",
@@ -20,6 +20,7 @@
     "@types/react-dom": "18.0.6",
     "eslint": "8.23.1",
     "eslint-config-next": "12.3.0",
+    "prettier": "^2.7.1",
     "prisma": "^4.3.1",
     "typescript": "4.8.3"
   }
