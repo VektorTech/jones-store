@@ -1,0 +1,57 @@
+html {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+	margin: inherit;
+	padding: inherit;
+	outline: none;
+	box-sizing: inherit;
+}
+
+button,
+button:active,
+button:focus,
+input[type='button']:active,
+input[type='button']:focus,
+input[type='submit'],
+input[type='submit']:active,
+input[type='submit']:focus {
+	background: none;
+	font: initial;
+	cursor: pointer;
+}
+
+button[disabled],
+input[disabled] {
+  cursor: default;
+}
+
+a, a:visited {
+	color: black;
+	text-decoration: none;
+}
+
+button,
+button:active,
+button:focus,
+a:active,
+a:hover {
+  border: none;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit;
+}
+
+ul, ol {
+	list-style: none;
+}

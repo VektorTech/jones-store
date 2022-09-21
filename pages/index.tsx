@@ -1,26 +1,29 @@
 import type { NextPage, GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import styles from '../styles/Home.module.css';
 // import { useEffect } from 'react';
 
 import prisma from '@lib/prisma';
 
 const Home: NextPage = (props) => {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title></title>
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main>
         {/** @ts-ignore */}
         {props.users.map(_ => <p key={_.id}>{_.email + "--" + _.username}</p>)}
       </main>
 
-      <footer className={styles.footer}>
+      <a href="http://facebook.com" className="">Jimmy</a>
+
+      <button>Hello</button>
+
+      <footer>
       </footer>
     </div>
   );

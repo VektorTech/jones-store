@@ -1,3 +1,5 @@
+const path = require("path");
+
 // You can choose which headers to add to the list
 // after learning more below.
 const headerOptions = {
@@ -25,6 +27,10 @@ const securityHeaders = Object.keys(headerOptions).map(key => ({
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'src/styles')],
+  },
 
   async headers() {
     return [
