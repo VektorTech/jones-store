@@ -99,20 +99,20 @@ const Home: NextPage = (props) => {
             </button>
           </div>
 
-          <div className="banner__social_buttons">
-            <button className="banner__social-icon">
+          <div className="banner__social-buttons">
+            <button className="banner__social-button">
               <RiFacebookBoxFill />
             </button>
-            <button className="banner__social-icon">
+            <button className="banner__social-button">
               <RiInstagramFill />
             </button>
-            <button className="banner__social-icon">
+            <button className="banner__social-button">
               <RiYoutubeFill />
             </button>
-            <button className="banner__social-icon">
+            <button className="banner__social-button">
               <RiTwitterFill />
             </button>
-            <button className="banner__social-icon">
+            <button className="banner__social-button">
               <RiPinterestFill />
             </button>
           </div>
@@ -184,19 +184,19 @@ const Home: NextPage = (props) => {
             <p><a href="mailto:support@jones.com?subject=Need%20Support">support@jones.com</a></p>
             <p>46 Lakeshore St. Knoxville, TN 37918</p>
             <div className="footer__social-buttons">
-              <button className="banner__social-icon">
+              <button className="banner__social-button">
                 <RiFacebookBoxFill />
               </button>
-              <button className="banner__social-icon">
+              <button className="banner__social-button">
                 <RiInstagramFill />
               </button>
-              <button className="banner__social-icon">
+              <button className="banner__social-button">
                 <RiYoutubeFill />
               </button>
-              <button className="banner__social-icon">
+              <button className="banner__social-button">
                 <RiTwitterFill />
               </button>
-              <button className="banner__social-icon">
+              <button className="banner__social-button">
                 <RiPinterestFill />
               </button>
             </div>
