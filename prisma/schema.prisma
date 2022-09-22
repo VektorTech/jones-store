@@ -26,7 +26,7 @@ model User {
   avatar Bytes?
   deactivated Boolean @default(false)
   review Review[]
-  favorite Favorite[]
+  wishlist Wishlist[]
   order Order[]
 
   @@unique([firstName, lastName])
@@ -62,14 +62,14 @@ model OrderLine {
   @@map(name: "order_item")
 }
 
-model Favorite {
+model Wishlist {
   userId String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   jordanOneId String
   jordanOne JordanOne @relation(fields: [jordanOneId], references: [id], onDelete: Cascade)
 
   @@id([userId, jordanOneId])
-  @@map(name: "favorites")
+  @@map(name: "wishlist")
 }
 
 model UserAddress {
@@ -137,7 +137,7 @@ model JordanOne {
   gender Gender @default(MEN)
   type Category
   review Review[]
-  favorite Favorite[]
+  wishlist Wishlist[]
   orderLine OrderLine[]
   cartItem CartItem[]
 
