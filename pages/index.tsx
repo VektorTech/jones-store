@@ -141,11 +141,89 @@ const Home: NextPage = (props) => {
       <section className="collections">
         <div className="collections__container">
           <h2 className="collections__heading">#shop collections</h2>
-          <div className="collections__block">
-            <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/pup.jpg" />
-            <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/pup.jpg" />
-            <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/pup.jpg" />
-            <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/pup.jpg" />
+          <p className="collections__sub-text">winter collections &mdash; new modern design</p>
+          <div className="collections__grid">
+            <div className="collections__block">
+              <Link href="/">
+                <a>
+                  <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/pup.jpg" />
+                  <div className="collections__block-content">
+                    <h3>High</h3>
+                    <button>discover</button>
+                  </div>
+                </a>
+              </Link>
+            </div>
+            <div className="collections__block">
+              <Link href="/">
+                <a>
+                  <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/pup.jpg" />
+                  <div className="collections__block-content">
+                    <h3>Medium</h3>
+                    <button>discover</button>
+                  </div>
+                </a>
+              </Link>
+            </div>
+            <div className="collections__block">
+              <Link href="/">
+                <a>
+                  <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/pup.jpg" />
+                  <div className="collections__block-content">
+                    <h3>Low</h3>
+                    <button>discover</button>
+                  </div>
+                </a>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="gender">
+        <div className="gender__container">
+          {/* <h2 className="gender__heading">#shop gender</h2> */}
+          <div className="gender__grid">
+            <div className="gender__block gender__block-men">
+              <Link href="/">
+                <a>
+                  <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/pup.jpg" />
+                  <h3 className="gender__block-heading">Shop Men</h3>
+                </a>
+              </Link>
+            </div>
+            <div className="gender__block gender__block-women">
+              <Link href="/">
+                <a>
+                  <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/pup.jpg" />
+                  <h3 className="gender__block-heading">Shop Women</h3>
+                </a>
+              </Link>
+            </div>
+            <div className="gender__block gender__block-kids">
+              <Link href="/">
+                <a>
+                  <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/pup.jpg" />
+                  <h3 className="gender__block-heading">Shop Kids</h3>
+                </a>
+              </Link>
+            </div>
+            <div className="gender__block gender__block-babies">
+              <Link href="/">
+                <a>
+                  <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/pup.jpg" />
+                  <h3 className="gender__block-heading">Shop Babies</h3>
+                </a>
+              </Link>
+            </div>
+            <div className="gender__block gender__block-unisex">
+              <Link href="/">
+                <a>
+                  <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/pup.jpg" />
+                  <h3 className="gender__block-heading">Shop Unisex</h3>
+                </a>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
