@@ -1,0 +1,76 @@
+@use '../abstracts' as *;
+
+.header {
+	background-color: transparent;
+	position: relative;
+	z-index: 1;
+
+	&__container {
+		@extend %container;
+		height: 6.5rem;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-between;
+	}
+
+	&__logo {
+		flex-basis: getWidth(8);
+		overflow: hidden;
+
+		& img {
+			margin: auto;
+			transform: scale(0.9);
+		}
+	}
+
+	&__nav {
+		display: none;
+	}
+
+	&__nav-links {
+		display: inline-block;
+	}
+
+	&__icons {
+		flex-basis: getWidth(2);
+		text-align: center;
+	}
+
+	&__icon-link {
+		display: none;
+		color: #fff;
+		height: 100%;
+		align-items: center;
+		justify-content: center;
+
+		& span {
+			background-color: $c-red;
+			border-radius: 50%;
+			font-size: $text-xs;
+			height: 2rem;
+			width: 2rem;
+			text-align: center;
+			line-height: 2rem;
+			position: absolute;
+			margin-top: -1.5rem;
+			margin-left: 2.2rem;
+		}
+	}
+
+	&__icon-cart {
+		display: flex;
+		font-size: 2.2rem;
+	}
+
+	&__menu-button {
+		text-align: center;
+		flex-basis: getWidth(2);
+	}
+
+	&__menu-toggle {
+		height: 100%;
+		line-height: 6.5rem;
+		font-size: 2.2rem;
+		color: #fff;
+	}
+}

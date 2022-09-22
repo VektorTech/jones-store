@@ -1,9 +1,13 @@
 import type { NextPage, GetServerSideProps } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
+// import Image from 'next/image';
 // import { useEffect } from 'react';
+import { withSessionSsr } from "@lib/withSession";
 
-import prisma from '@lib/prisma';
+import { BsXLg, BsCart3, BsArrowRight } from "react-icons/bs";
+import Link from 'next/link';
+import Image from 'next/future/image';
+import LogoImg from '@images/jones-logo.png';
 
 const Home: NextPage = (props) => {
   return (
@@ -25,7 +29,45 @@ const Home: NextPage = (props) => {
         </div>
       </div>
 
-      <a href="http://facebook.com" className="">Jimmy</a>
+      <header className='header'>
+        <div className="header__container">
+          <div className="header__menu-button">
+            <button className="header__menu-toggle">
+              <AiOutlineMenu />
+            </button>
+          </div>
+
+          <div className="header__logo">
+            <Link href="/">
+              <a>
+                <Image width={102} height={68} alt="" src={LogoImg} />
+              </a>
+            </Link>
+          </div>
+
+          <div className="header__nav">
+            <nav>
+              <ul>
+                <li className='header__nav-link'><Link href="/"><a>MEN</a></Link></li>
+                <li className='header__nav-link'><Link href="/"><a>WOMEN</a></Link></li>
+                <li className='header__nav-link'><Link href="/"><a>KIDS</a></Link></li>
+                <li className='header__nav-link'><Link href="/"><a>BABY</a></Link></li>
+                <li className='header__nav-link'><Link href="/"><a>UNISEX</a></Link></li>
+              </ul>
+            </nav>
+          </div>
+
+          <div className="header__icons">
+            <ul>
+              <li className='header__icon-link header__icon-cart'>
+                <span>3</span>
+                <Link href="/"><a><BsCart3 /></a></Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
 
       <button>Hello</button>
 
