@@ -30,38 +30,17 @@ const Home: NextPage = (props) => {
 };
 
 // use SSG for loading all & SSR to view individual
+export const getServerSideProps: GetServerSideProps = withSessionSsr(
+  async function ({ params, req }) {
+    // const user = req.session.user;
+    // const results = await prisma.user.findMany();
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const results = await prisma.user.findMany();
-
-  return {
-    props: {
-      users: results.map(_ => ({..._, createdAt: "", updatedAt: ""}))
-    }
-  };
-};
+    return {
+      props: {
+        // users: results.map(_ => ({..._, createdAt: "", updatedAt: ""}))
+      }
+    };
+  }
+);
 
 export default Home;
-
-
-// pages/admin.tsx
-
-// import { withSessionSsr } from "lib/withSession";
-
-// export const getServerSideProps = withSessionSsr(
-//   async function getServerSideProps({ req }) {
-//     const user = req.session.user;
-
-//     if (user.admin !== true) {
-//       return {
-//         notFound: true,
-//       };
-//     }
-
-//     return {
-//       props: {
-//         user: req.session.user,
-//       },
-//     };
-//   }
-// );
