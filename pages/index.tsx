@@ -7,17 +7,23 @@ import prisma from '@lib/prisma';
 
 const Home: NextPage = (props) => {
   return (
-    <div>
+    <main>
       <Head>
         <title></title>
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        {/** @ts-ignore */}
-        {props.users.map(_ => <p key={_.id}>{_.email + "--" + _.username}</p>)}
-      </main>
+      <div className="promo-banner">
+        <div className="promo-banner__container">
+          <div className="promo-banner__content">
+            OFFER: <a href="" className="promo-banner__link">Free Shipping Until January 1st!</a>
+          </div>
+          <button className="promo-banner__close">
+            <BsXLg />
+          </button>
+        </div>
+      </div>
 
       <a href="http://facebook.com" className="">Jimmy</a>
 
@@ -25,7 +31,7 @@ const Home: NextPage = (props) => {
 
       <footer>
       </footer>
-    </div>
+    </main>
   );
 };
 
