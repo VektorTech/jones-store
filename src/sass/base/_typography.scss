@@ -1,0 +1,22 @@
+@charset 'utf-8';
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: 400 1.6rem/1.4 'Roboto Condensed', sans-serif;
+	letter-spacing: 0.03rem;
+	-webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+	font-weight: 700;
+	letter-spacing: 0.01rem;
+	line-height: 1.2;
+	margin-bottom: 1.5rem;
+}
+
+h1 { font-size: 4.209rem; }
+h2 { font-size: 3.157rem; }
+h3 { font-size: 2.369rem; }
