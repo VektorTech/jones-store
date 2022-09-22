@@ -1,3 +1,5 @@
+@use './variables' as v;
+
 %container {
 	width: calc(100% - 2rem);
 	max-width: 144rem;
@@ -14,5 +16,6 @@
 	color: #fff;
 	text-align: center;
 	font-weight: bold;
+	font-size: v.$text-xl;
 	@extend %text-overflow;
 }
