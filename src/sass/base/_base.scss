@@ -1,7 +1,7 @@
 @use '../abstracts' as *;
 
 body {
-	background-color: $background-color;
+	background-color: $c-background-color;
 }
 
 article {
@@ -10,6 +10,14 @@ article {
 
 html {
   scroll-behavior: smooth;
-  -webkit-tap-highlight-color: transparent;
   text-size-adjust: 100%;
+}
+
+html,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button::-moz-focus-inner {
+  border: 0;
 }
