@@ -4,10 +4,11 @@ import Head from 'next/head';
 // import { useEffect } from 'react';
 import { withSessionSsr } from "@lib/withSession";
 
-import { AiOutlineMenu, AiOutlineTags } from "react-icons/ai";
-import { BsXLg, BsCart3, BsArrowRight } from "react-icons/bs";
+import { AiOutlineMenu, AiOutlineTags, AiOutlineMail, AiOutlineHeart } from "react-icons/ai";
+import { BsXLg, BsCart3, BsArrowRight, BsPerson } from "react-icons/bs";
 import { TbTruckDelivery } from "react-icons/tb";
 import { MdSupportAgent } from "react-icons/md";
+import { FiHelpCircle, FiSearch } from "react-icons/fi";
 import {
   RiRadioButtonLine,
   RiCheckboxBlankCircleFill,
@@ -37,7 +38,7 @@ const Home: NextPage = (props) => {
       <div className="promo-banner">
         <div className="promo-banner__container">
           <div className="promo-banner__content">
-            OFFER: <a href="" className="promo-banner__link">Free Shipping Until January 1st!</a>
+            OFFER: <a href="" className="promo-banner__link">Free Shipping Until January 1st!<FiHelpCircle/></a>
           </div>
           <button className="promo-banner__close">
             <BsXLg />

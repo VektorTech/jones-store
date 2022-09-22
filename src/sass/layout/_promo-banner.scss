@@ -24,6 +24,13 @@
 	&__link, &__link[href], &__link:visited {
 		color: $c-link;
 		text-decoration: underline;
+
+		& svg {
+			display: inline;
+			font-size: 1.7rem;
+			margin-left: 0.5rem;
+			vertical-align: sub;
+		}
 	}
 
 	&__close {
