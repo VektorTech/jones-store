@@ -150,22 +150,22 @@ const Home: NextPage = (props) => {
         </div>
       </section>
 
-      <section className="additions">
-        <div className="additions__container">
-          <div className="additions__col">
-            <div className="additions__icon"><AiOutlineTags /></div>
-            <h3 className='additions__title'>100% money-back guarantee</h3>
-            <p className='additions__text'>We offer a <strong>100% money-back guarantee</strong> for any returns in the 14 days protection.</p>
+      <section className="features">
+        <div className="features__container">
+          <div className="features__col">
+            <div className="features__icon"><AiOutlineTags /></div>
+            <h3 className='features__title'>100% money-back guarantee</h3>
+            <p className='features__text'>We offer a <strong>100% money-back guarantee</strong> for any returns in the 14 days protection.</p>
           </div>
-          <div className="additions__col">
-            <div className="additions__icon"><TbTruckDelivery /></div>
-            <h3 className='additions__title'>free shipping</h3>
-            <p className='additions__text'>No matter where you are from, you&apos;ll have <strong>FREE</strong> shipping purchasing in Jones.</p>
+          <div className="features__col">
+            <div className="features__icon"><TbTruckDelivery /></div>
+            <h3 className='features__title'>free shipping</h3>
+            <p className='features__text'>No matter where you are from, you&apos;ll have <strong>FREE</strong> shipping purchasing in Jones.</p>
           </div>
-          <div className="additions__col">
-            <div className="additions__icon"><MdSupportAgent /></div>
-            <h3 className='additions__title'>online support</h3>
-            <p className='additions__text'>Our customer service is <strong>available 24h</strong>.</p>
+          <div className="features__col">
+            <div className="features__icon"><MdSupportAgent /></div>
+            <h3 className='features__title'>online support</h3>
+            <p className='features__text'>Our customer service is <strong>available 24h</strong>.</p>
           </div>
         </div>
       </section>
