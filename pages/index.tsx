@@ -170,7 +170,56 @@ const Home: NextPage = (props) => {
         </div>
       </section>
 
-      <footer>
+      <footer className='footer'>
+        <div className="footer__container">
+          <div className="footer__col">
+            <div className="footer__heading"><h3>about</h3></div>
+            <ul>
+              <li><Link href="/"><a>About Us</a></Link></li>
+              <li><Link href="/"><a>Our Mission</a></Link></li>
+              <li><Link href="/"><a>Staff</a></Link></li>
+            </ul>
+            <hr />
+            <p><a href="tel:13124786691">Call +1 (312) 478-6691</a></p>
+            <p><a href="mailto:support@jones.com?subject=Need%20Support">support@jones.com</a></p>
+            <p>46 Lakeshore St. Knoxville, TN 37918</p>
+            <div className="footer__social-buttons">
+              <button className="banner__social-icon">
+                <RiFacebookBoxFill />
+              </button>
+              <button className="banner__social-icon">
+                <RiInstagramFill />
+              </button>
+              <button className="banner__social-icon">
+                <RiYoutubeFill />
+              </button>
+              <button className="banner__social-icon">
+                <RiTwitterFill />
+              </button>
+              <button className="banner__social-icon">
+                <RiPinterestFill />
+              </button>
+            </div>
+          </div>
+          <div className="footer__col">
+            <div className="footer__heading"><h3>support</h3></div>
+          </div>
+          <div className="footer__col">
+            <div className="footer__heading"><h3>categories</h3></div>
+          </div>
+          <div className="footer__col">
+            <div className="newsletter-box">
+              <h3 className="newsletter__heading">newsletter</h3>
+              <p className="newsletter__heading">Sign up to our newsletter and we&apos;ll keep you up-to-date with the latest arrivals.</p>
+              <form action="">
+                <div className="newsletter__input">
+                  <label><input type="email" name="email" /><span>ENTER EMAIL</span></label>
+                  <button type="submit"><BsArrowRight /></button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </footer>
     </main>
   );
