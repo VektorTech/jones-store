@@ -73,9 +73,19 @@ const Home: NextPage = (props) => {
             </nav>
           </div>
 
-          <div className="header__icons">
+          <div className="header__buttons">
             <ul>
-              <li className='header__icon-link header__icon-cart'>
+              <li className='header__button header__button-search'>
+                <Link href="/"><a><FiSearch /></a></Link>
+              </li>
+              <li className='header__button header__button-account'>
+                <Link href="/"><a><BsPerson /></a></Link>
+              </li>
+              <li className='header__button header__button-wishlist'>
+                <span>12</span>
+                <Link href="/"><a><AiOutlineHeart /></a></Link>
+              </li>
+              <li className='header__button header__button-cart'>
                 <span>3</span>
                 <Link href="/"><a><BsCart3 /></a></Link>
               </li>

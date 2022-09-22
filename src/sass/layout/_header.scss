@@ -31,12 +31,12 @@
 		display: inline-block;
 	}
 
-	&__icons {
+	&__buttons {
 		flex-basis: getWidth(2);
 		text-align: center;
 	}
 
-	&__icon-link {
+	&__button-link {
 		display: none;
 		color: #fff;
 		height: 100%;
@@ -57,7 +57,7 @@
 		}
 	}
 
-	&__icon-cart {
+	&__button-cart {
 		display: flex;
 		font-size: 2.2rem;
 	}
