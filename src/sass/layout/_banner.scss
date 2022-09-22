@@ -1,0 +1,159 @@
+@use '../abstracts' as *;
+
+.banner {
+	width: 100%;
+	height: calc(100vh - 3.5rem - 5rem);
+	margin-top: -6.5rem;
+	position: relative;
+
+	&__container {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+	}
+
+	&__background {
+		width: 100%;
+		height: 100%;
+		background-image: url(/assets/images/banner_bg_eindhoven.jpg);
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: bottom right;
+	}
+
+	&__main {
+		position: absolute;
+		overflow: hidden;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+
+	&__content {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		height: 65%;
+		color: #fff;
+		text-align: center;
+		text-transform: uppercase;
+	}
+
+	&__headings {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+	}
+
+	&__sub-text {
+		font-size: $text-xs;
+		font-style: italic;
+
+		& span {
+			color: $c-red;
+		}
+	}
+
+	&__title {
+		font-size: $text-xl;
+		font-weight: bold;
+
+		&-type {
+			position: absolute;
+			font-size: 20vw;
+			font-weight: bold;
+			font-style: italic;
+			color: transparent;
+			left: 0;
+			right: 0;
+			margin-top: -3rem;
+
+			@supports (-webkit-text-stroke: 0.1rem  #dddddd22) {
+				& {
+				  -webkit-text-stroke: 0.1rem  #cecece1f;
+				}
+			}
+		}
+	}
+
+	&__image {
+		margin: 0 auto;
+		margin-top: 22vh;
+		width: calc(6rem + 10vh + 15vw);
+
+		& > span {
+			overflow: visible !important;
+		}
+
+		& img {
+			transform: rotate(-25deg);
+		}
+	}
+
+	&__action-button {
+		position: absolute;
+		bottom: 2.5rem;
+		left: 0;
+		right: 0;
+
+		&-element {
+			display: inline-block;
+			border: 0.2rem solid #fff;
+			padding-bottom: min(max(8%, 2rem), 4.5rem);
+			padding-right: min(max(35%, 8rem), 23rem);
+			width: 0;
+			height: 0;
+			position: relative;
+
+			& span {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+		}
+	}
+
+	&__indicators {
+		position: absolute;
+		top: 45%;
+		right: 2rem;
+		width: 1.2rem;
+		color: #fff;
+		text-align: center;
+		z-index: 1;
+	}
+
+	&__indicator {
+		font-size: 1.2rem;
+		padding: 0.5rem 0;
+
+		&--active {
+			color: $c-red;
+			transform: scale(1.3);
+		}
+	}
+
+	&__social_buttons {
+		position: absolute;
+		bottom: 2rem;
+		left: 1rem;
+		width: 2rem;
+		color: #fff;
+		text-align: center;
+		z-index: 1;
+	}
+
+	&__social-icon {
+		font-size: 2rem;
+		padding: 0.5rem 0;
+	}
+}

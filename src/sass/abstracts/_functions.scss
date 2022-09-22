@@ -1,0 +1,3 @@
+@function getWidth($span) {
+	@return 100% / 12 * $span;
+}

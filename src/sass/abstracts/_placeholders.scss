@@ -1,0 +1,18 @@
+%container {
+	width: calc(100% - 2rem);
+	max-width: 144rem;
+	margin: 0 auto;
+}
+
+%text-overflow {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+%section-heading {
+	text-transform: uppercase;
+	color: #fff;
+	text-align: center;
+	font-weight: bold;
+	@extend %text-overflow;
+}
