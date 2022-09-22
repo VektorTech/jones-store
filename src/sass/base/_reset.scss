@@ -1,57 +1,60 @@
-html {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
 *,
 *::before,
 *::after {
-	margin: inherit;
-	padding: inherit;
+	margin: 0;
+	padding: 0;
+	border: 0;
 	outline: none;
-	box-sizing: inherit;
+	box-sizing: border-box;
+	vertical-align: baseline;
+}
+
+html, body {
+	height: 100%;
+}
+
+body {
+	line-height: 1.5;
+}
+
+img, picture, video, canvas, svg {
+	display: block;
+	max-width: 100%;
 }
 
 button,
-button:active,
-button:focus,
-input[type='button']:active,
-input[type='button']:focus,
-input[type='submit'],
-input[type='submit']:active,
-input[type='submit']:focus {
+input[type='button'],
+input[type='submit'] {
 	background: none;
-	font: initial;
 	cursor: pointer;
 }
 
 button[disabled],
 input[disabled] {
-  cursor: default;
+	cursor: default;
 }
 
-a, a:visited {
-	color: black;
+input,
+label,
+button,
+textarea,
+select,
+optgroup {
+	font: inherit;
+	color: inherit;
+}
+
+a, a[href], a:visited {
+	color: inherit;
 	text-decoration: none;
 }
 
-button,
-button:active,
-button:focus,
-a:active,
-a:hover {
-  border: none;
-}
-
-button,
-input,
-optgroup,
-select,
-textarea {
-  color: inherit;
-}
-
 ul, ol {
-	list-style: none;
+	list-style-type: none;
+	width: 100%;
+	height: 100%;
+}
+
+#root, #__next {
+	isolation: isolate;
 }
