@@ -191,6 +191,13 @@ const Home: NextPage = (props) => {
         </div>
       </section>
 
+      <section className="new-arrivals">
+        <div className="new-arrivals__container">
+          <h2 className="new-arrivals__heading">#shop new arrivals</h2>
+          <div className="new-arrivals__products"></div>
+        </div>
+      </section>
+
       <section className="gender">
         <div className="gender__container">
           {/* <h2 className="gender__heading">#shop gender</h2> */}
@@ -236,6 +243,13 @@ const Home: NextPage = (props) => {
               </Link>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="best-sellers">
+        <div className="best-sellers__container">
+          <h2 className="best-sellers__heading">#shop best sellers</h2>
+          <div className="best-sellers__products"></div>
         </div>
       </section>
 
