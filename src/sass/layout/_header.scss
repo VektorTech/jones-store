@@ -3,6 +3,7 @@
 .header {
 	background-color: transparent;
 	position: relative;
+	overflow: hidden;
 	z-index: 1;
 
 	&__container {
@@ -34,32 +35,38 @@
 	&__buttons {
 		flex-basis: getWidth(2);
 		text-align: center;
+		white-space: nowrap;
 	}
 
-	&__button-link {
+	&__button {
 		display: none;
 		color: #fff;
 		height: 100%;
 		align-items: center;
 		justify-content: center;
+		font-size: 3rem;
+		// display: inline-flex;
+
+		&:nth-of-type(n + 2) {
+			margin-left: 2rem;
+		}
 
 		& span {
 			background-color: $c-red;
 			border-radius: 50%;
-			font-size: $text-xs;
+			font-size: $text-sm;
 			height: 2rem;
 			width: 2rem;
 			text-align: center;
 			line-height: 2rem;
 			position: absolute;
-			margin-top: -1.5rem;
-			margin-left: 2.2rem;
+			margin-top: -2.5rem;
+			margin-left: 2.5rem;
 		}
 	}
 
 	&__button-cart {
-		display: flex;
-		font-size: 2.2rem;
+		display: inline-flex;
 	}
 
 	&__menu-button {
