@@ -4,11 +4,14 @@ import Head from 'next/head';
 // import { useEffect } from 'react';
 import { withSessionSsr } from "@lib/withSession";
 
-import { AiOutlineMenu, AiOutlineTags, AiOutlineMail, AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineMenu, AiOutlineTags, AiOutlineHeart } from "react-icons/ai";
 import { BsXLg, BsCart3, BsArrowRight, BsPerson } from "react-icons/bs";
 import { TbTruckDelivery } from "react-icons/tb";
 import { MdSupportAgent } from "react-icons/md";
 import { FiHelpCircle, FiSearch } from "react-icons/fi";
+import { BiMap, BiPhone, BiTime } from "react-icons/bi";
+import { HiOutlineMail } from "react-icons/hi";
+import { TbMinusVertical } from "react-icons/tb";
 import {
   RiRadioButtonLine,
   RiCheckboxBlankCircleFill,
@@ -278,7 +281,7 @@ const Home: NextPage = (props) => {
       <footer className='footer'>
         <div className="footer__container">
           <div className="footer__col">
-            <div className="header__logo">
+            <div className="footer__logo">
               <Link href="/">
                 <a>
                   <Image width={102} height={68} alt="" src={LogoImg} />
@@ -286,57 +289,57 @@ const Home: NextPage = (props) => {
               </Link>
             </div>
             <h3 className="footer__sub-heading">Contact</h3>
-            <p><strong>Address:</strong> 46 Lakeshore St. Knoxville, TN 37918</p>
-            <p><strong>Phone:</strong> <a href="tel:13124786691">Call +1 (312) 478 6691</a></p>
-            <p><strong>Email:</strong> <a href="mailto:support@jones.com?subject=Need%20Support">support@jones.com</a></p>
-            <p><strong>Hours:</strong> 10:00 &mdash; 18:00, Mon &mdash; Sat</p>
+            <p className='footer__contact'><BiMap/>46 Lakeshore St. Knoxville, TN 37918</p>
+            <p className='footer__contact'><BiPhone /><a href="tel:13124786691">Call +1 (312) 478 6691</a></p>
+            <p className='footer__contact'><HiOutlineMail /><a href="mailto:support@jones.com?subject=Need%20Support">support@jones.com</a></p>
+            <p className='footer__contact'><BiTime />10:00 &mdash; 18:00, Mon &mdash; Sat</p>
             <hr />
             <h3 className="footer__sub-heading">Connect With Us</h3>
             <div className="footer__social-buttons">
-              <button className="banner__social-button">
+              <button className="footer__social-button">
                 <RiFacebookBoxFill />
               </button>
-              <button className="banner__social-button">
+              <button className="footer__social-button">
                 <RiInstagramFill />
               </button>
-              <button className="banner__social-button">
+              <button className="footer__social-button">
                 <RiYoutubeFill />
               </button>
-              <button className="banner__social-button">
+              <button className="footer__social-button">
                 <RiTwitterFill />
               </button>
-              <button className="banner__social-button">
+              <button className="footer__social-button">
                 <RiPinterestFill />
               </button>
             </div>
           </div>
           <div className="footer__col">
-            <div className="footer__heading"><h3>about</h3></div>
+            <h3 className="footer__heading">about</h3>
             <ul>
-              <li><Link href="/"><a>About Us</a></Link></li>
-              <li><Link href="/"><a>Delivery Information</a></Link></li>
-              <li><Link href="/"><a>Contact Us</a></Link></li>
-              <li><Link href="/"><a>Returns</a></Link></li>
-              <li><Link href="/"><a>F.A.Q</a></Link></li>
-              <li><Link href="/"><a>Site Map</a></Link></li>
+              <li className='footer__link'><Link href="/"><a>About Us</a></Link></li>
+              <li className='footer__link'><Link href="/"><a>Delivery Information</a></Link></li>
+              <li className='footer__link'><Link href="/"><a>Contact Us</a></Link></li>
+              <li className='footer__link'><Link href="/"><a>Returns</a></Link></li>
+              <li className='footer__link'><Link href="/"><a>F.A.Q</a></Link></li>
+              <li className='footer__link'><Link href="/"><a>Site Map</a></Link></li>
             </ul>
           </div>
           <div className="footer__col">
-            <div className="footer__heading"><h3>my account</h3></div>
+            <h3 className="footer__heading">my account</h3>
             <ul>
-              <li><Link href="/"><a>Sign In</a></Link></li>
-              <li><Link href="/"><a>View Cart</a></Link></li>
-              <li><Link href="/"><a>My Wishlist</a></Link></li>
-              <li><Link href="/"><a>Track My Order</a></Link></li>
+              <li className='footer__link'><Link href="/"><a>Sign In</a></Link></li>
+              <li className='footer__link'><Link href="/"><a>View Cart</a></Link></li>
+              <li className='footer__link'><Link href="/"><a>My Wishlist</a></Link></li>
+              <li className='footer__link'><Link href="/"><a>Track My Order</a></Link></li>
             </ul>
           </div>
           <div className="footer__col">
-            <div className="newsletter-box">
-              <h3 className="newsletter__heading"><AiOutlineMail /> newsletter</h3>
-              <p className="newsletter__heading">Sign up to our newsletter and we&apos;ll keep you up-to-date with the latest arrivals and <strong style={{color:"orange"}}>special offers.</strong></p>
+            <div className="newsletter">
+              <h3 className="newsletter__heading">newsletter</h3>
+              <p className="newsletter__info">Sign up to our newsletter and we&apos;ll keep you up-to-date with the latest arrivals and <strong style={{color:"orange"}}>special offers.</strong></p>
               <form action="">
                 <div className="newsletter__input">
-                  <label><input type="email" name="email" /><span>ENTER EMAIL</span></label>
+                  <label><input type="email" name="email" /><span>enter email</span></label>
                   <button type="submit"><BsArrowRight /></button>
                 </div>
               </form>
@@ -347,11 +350,12 @@ const Home: NextPage = (props) => {
           <div className="gutter__container">
             <div className="gutter__terms">
               <Link href="/"><a>Terms</a></Link>
+              <span></span>
               <Link href="/"><a>Privacy</a></Link>
             </div>
             <div className="gutter__copy">&copy; {(new Date()).getFullYear()} Jones LLC. All Rights Reserved</div>
             <div className="gutter__lang-currency">
-              <button>{"English"} &#124; {"$ USD"}</button>
+              <button>{"English"} <TbMinusVertical /> {"$ USD"}</button>
             </div>
           </div>
         </div>

@@ -1,1 +1,152 @@
 @use '../abstracts' as *;
+
+.footer {
+	background-color: #000;
+
+	&__container {
+		@extend %container;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding: 3rem 0;
+	}
+
+	& hr {
+		background-color: #333;
+		height: 0.1rem;
+		margin: 2rem 0;
+	}
+
+	&__col {
+		flex: 1;
+		color: #fff;
+		font-size: $text-md;
+
+		& + & {
+			margin-top: 4rem;
+		}
+	}
+
+	&__logo {
+		& img {
+			transform-origin: top left;
+			transform: scale(0.8);
+		}
+	}
+
+	&__sub-heading {
+		margin-top: 2rem;
+		font-size: $text-md;
+	}
+
+	&__contact {
+		margin-bottom: 0.5rem;
+
+		& svg {
+			font-size: 2rem;
+			vertical-align: middle;
+			margin-right: 1rem;
+		}
+	}
+
+	&__social-button {
+		font-size: 2.2rem;
+
+		& + & {
+			margin-left: 1rem;
+		}
+	}
+
+	&__link {
+		color: $c-text-light;
+		margin-bottom: 0.4rem;
+	}
+
+	&__heading {
+		text-transform: uppercase;
+		font-size: $text-md;
+
+		&::after {
+			content: "";
+			width: 2.5rem;
+			height: 0.5rem;
+			background-color: $c-red;
+			margin-top: 0.5rem;
+			display: block;
+		}
+	}
+
+	& .newsletter {
+		&__heading {
+			font-size: $text-lg;
+			text-transform: uppercase;
+		}
+
+		&__input {
+			margin-top: 2rem;
+			position: relative;
+
+			& input {
+				width: 80%;
+				padding: 1rem 0;
+				background: none;
+				border-bottom: 0.1rem solid #fff;
+			}
+
+			& span {
+				position: absolute;
+				left: 0;
+				padding-top: 1rem;
+				pointer-events: none;
+				user-select: none;
+				text-transform: uppercase;
+				color: $c-text-gray;
+			}
+
+			& button {
+				width: 20%;
+				padding: 1rem 0;
+				border-bottom: 0.1rem solid #fff;
+			}
+		}
+	}
+
+	& .gutter {
+		width: 100%;
+		background-color: $c-background-black;
+		color: $c-text-gray;
+
+		&__container {
+			@extend %container;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			flex-wrap: nowrap;
+			white-space: nowrap;
+			padding: 2rem 0;
+			text-align: center;
+			font-size: $text-md;
+		}
+
+		&__terms {
+			& > span {
+				display: inline-block;
+				width: 1rem;
+			}
+		}
+
+		&__lang-currency {
+			padding-top: 1rem;
+
+			& button {
+				padding: 0.5rem 1.5rem;
+				box-shadow: inset 0 0 0 0.1rem $c-text-gray;
+
+				& svg {
+					font-size: 2rem;
+					vertical-align: sub;
+				}
+			}
+		}
+	}
+}
