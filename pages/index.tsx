@@ -157,18 +157,7 @@ const Home: NextPage = (props) => {
             <div className="collections__block">
               <Link href="/">
                 <a>
-                  <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/air-jordan-1-high.webp" />
-                  <div className="collections__block-content">
-                    <h3>High</h3>
-                    <button>discover</button>
-                  </div>
-                </a>
-              </Link>
-            </div>
-            <div className="collections__block">
-              <Link href="/">
-                <a>
-                  <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/jordan-1-mid.jpg" />
+                  <Img alt="" layout="fill" src="/assets/images/jordan-1-mid.jpg" />
                   <div className="collections__block-content">
                     <h3>Medium</h3>
                     <button>discover</button>
@@ -179,9 +168,20 @@ const Home: NextPage = (props) => {
             <div className="collections__block">
               <Link href="/">
                 <a>
-                  <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/jordan-1-low-dior.webp" />
+                  <Img alt="" layout="fill" src="/assets/images/jordan-1-low-dior.webp" />
                   <div className="collections__block-content">
                     <h3>Low</h3>
+                    <button>discover</button>
+                  </div>
+                </a>
+              </Link>
+            </div>
+            <div className="collections__block">
+              <Link href="/">
+                <a>
+                  <Img alt="" layout="fill" src="/assets/images/air-jordan-1-high.webp" />
+                  <div className="collections__block-content">
+                    <h3>High</h3>
                     <button>discover</button>
                   </div>
                 </a>
@@ -205,7 +205,7 @@ const Home: NextPage = (props) => {
             <div className="gender__block gender__block-men">
               <Link href="/">
                 <a>
-                  <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/man.jpg" />
+                  <Img alt="" layout="fill" src="/assets/images/man.jpg" />
                   <h3 className="gender__block-heading">Shop Men</h3>
                 </a>
               </Link>
@@ -213,7 +213,7 @@ const Home: NextPage = (props) => {
             <div className="gender__block gender__block-women">
               <Link href="/">
                 <a>
-                  <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/woman.jpg" />
+                  <Img alt="" layout="fill" src="/assets/images/woman.jpg" />
                   <h3 className="gender__block-heading">Shop Women</h3>
                 </a>
               </Link>
@@ -221,7 +221,7 @@ const Home: NextPage = (props) => {
             <div className="gender__block gender__block-kids">
               <Link href="/">
                 <a>
-                  <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/kid.webp" />
+                  <Img alt="" layout="fill" src="/assets/images/kid.webp" />
                   <h3 className="gender__block-heading">Shop Kids</h3>
                 </a>
               </Link>
@@ -229,7 +229,7 @@ const Home: NextPage = (props) => {
             <div className="gender__block gender__block-babies">
               <Link href="/">
                 <a>
-                  <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/baby.jpeg" />
+                  <Img alt="" layout="fill" src="/assets/images/baby.jpeg" />
                   <h3 className="gender__block-heading">Shop Babies</h3>
                 </a>
               </Link>
@@ -237,7 +237,7 @@ const Home: NextPage = (props) => {
             <div className="gender__block gender__block-unisex">
               <Link href="/">
                 <a>
-                  <Img alt="" layout="responsive" width={0} height={0} src="/assets/images/unisex.jpg" />
+                  <Img alt="" layout="fill" src="/assets/images/unisex.jpg" />
                   <h3 className="gender__block-heading">Shop Unisex</h3>
                 </a>
               </Link>
