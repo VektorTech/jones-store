@@ -1,0 +1,51 @@
+@use '../abstracts' as *;
+
+.gender {
+	width: 100%;
+	// background-color: $c-background-dark;
+
+	&__container {
+		@extend %container;
+		padding: 5rem 0;
+	}
+
+	&__heading {
+		@extend %section-heading;
+		// color: #fff;
+	}
+
+	&__sub-text {
+		color: $c-text-gray;
+		font-size: $text-sm;
+		text-transform: capitalize;
+		text-align: center;
+	}
+
+	&__grid {
+		aspect-ratio: 1 / 1;
+		margin-top: 4rem;
+		display: grid;
+		grid-template-columns: repeat(12, 1fr);
+		grid-template-rows: repeat(12, 1fr);
+		gap: 1rem;
+		position: relative;
+	}
+
+	&__block {
+		position: relative;
+
+		& img {
+			object-fit: cover;
+			object-position: top left;
+		}
+
+		&-content {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			text-align: center;
+		}
+	}
+}
