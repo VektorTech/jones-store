@@ -1,0 +1,21 @@
+@use '../abstracts' as *;
+
+.products-section {
+	width: 100%;
+
+	&__container {
+		@extend %container;
+		padding: 5rem 0;
+	}
+
+	&__heading {
+		@extend %section-heading;
+		color: $c-text-black;
+	}
+
+	&__products-link {
+		text-align: center;
+		text-decoration: underline;
+		color: $c-text-dark;
+	}
+}
