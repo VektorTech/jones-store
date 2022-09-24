@@ -52,6 +52,7 @@
 	&__sub-text {
 		font-size: $text-xs;
 		font-style: italic;
+		font-weight: 400;
 
 		& span {
 			color: $c-red;
@@ -102,7 +103,7 @@
 
 		&-element {
 			display: inline-block;
-			border: 0.2rem solid #fff;
+			border: 0.1rem solid #fff;
 			padding-bottom: min(max(8%, 2rem), 4.5rem);
 			padding-right: min(max(35%, 8rem), 23rem);
 			width: 0;
@@ -154,6 +155,7 @@
 
 	&__social-button {
 		font-size: 2.2rem;
-		padding: 0.5rem 0;
+		margin: 1rem 0;
+		height: 2.2rem;
 	}
 }
