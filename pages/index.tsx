@@ -198,7 +198,35 @@ const Home: NextPage = (props) => {
       <section className="products-section">
         <div className="products-section__container">
           <h2 className="products-section__heading">#shop new arrivals</h2>
-          <div className="products-section__products"></div>
+          <div className="products-section__products">
+
+            <div className="product">
+              <div className="product__wrapper">
+                <div className="product__image">
+                  <Img src="/assets/images/jordan-1-product-img.jpeg" layout='fill' />
+                  <span className="product__tag">sale</span>
+                  <div className="product__actions">
+                    <button className="product__add-wishlist"><AiOutlineHeart /></button>
+                  </div>
+                </div>
+                <div className="product__info">
+                  <p className="product__type">jordan</p>
+                  <h3 className="product__title">Zoom Air Comfort High {"(Women)"}</h3>
+                  <div className="product__rating"></div>
+                  <p className="product__price">
+                    <span className="product__currency">JMD</span>
+                    <span className="product__amount">$8,781.80</span>
+                    <span className="product__discount-percentage">{"(40% off)"}</span>
+                  </p>
+                  <p className="product__discount-price">
+                    <span className="product__currency">JMD</span>
+                    <span className="product__amount">14,636.34</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
           <p className="products-section__products-link"><Link href="/"><a>View All Products &gt;</a></Link></p>
         </div>
       </section>
