@@ -5,13 +5,14 @@ import Head from 'next/head';
 import { withSessionSsr } from "@lib/withSession";
 
 import { AiOutlineMenu, AiOutlineTags, AiOutlineHeart } from "react-icons/ai";
-import { BsXLg, BsCart3, BsArrowRight, BsPerson } from "react-icons/bs";
+import { BsXLg, BsCart3, BsPerson } from "react-icons/bs";
 import { TbTruckDelivery } from "react-icons/tb";
 import { MdSupportAgent } from "react-icons/md";
 import { FiHelpCircle, FiSearch } from "react-icons/fi";
 import { BiMap, BiPhone, BiTime } from "react-icons/bi";
 import { HiOutlineMail } from "react-icons/hi";
-import { TbMinusVertical } from "react-icons/tb";
+import { RiSecurePaymentLine } from "react-icons/ri";
+import { CgArrowLongRight } from "react-icons/cg";
 import {
   RiRadioButtonLine,
   RiCheckboxBlankCircleFill,
@@ -210,7 +211,7 @@ const Home: NextPage = (props) => {
               <Link href="/">
                 <a>
                   <Img alt="" layout="fill" src="/assets/images/man.jpg" />
-                  <h3 className="gender__block-heading">Shop Men</h3>
+                  <h3 className="gender__block-heading"><span>shop Men</span></h3>
                 </a>
               </Link>
             </div>
@@ -218,7 +219,7 @@ const Home: NextPage = (props) => {
               <Link href="/">
                 <a>
                   <Img alt="" layout="fill" src="/assets/images/woman.jpg" />
-                  <h3 className="gender__block-heading">Shop Women</h3>
+                  <h3 className="gender__block-heading"><span>shop Women</span></h3>
                 </a>
               </Link>
             </div>
@@ -226,7 +227,7 @@ const Home: NextPage = (props) => {
               <Link href="/">
                 <a>
                   <Img alt="" layout="fill" src="/assets/images/kid.webp" />
-                  <h3 className="gender__block-heading">Shop Kids</h3>
+                  <h3 className="gender__block-heading"><span>shop Kids</span></h3>
                 </a>
               </Link>
             </div>
@@ -234,7 +235,7 @@ const Home: NextPage = (props) => {
               <Link href="/">
                 <a>
                   <Img alt="" layout="fill" src="/assets/images/baby.jpeg" />
-                  <h3 className="gender__block-heading">Shop Babies</h3>
+                  <h3 className="gender__block-heading"><span>shop Babies</span></h3>
                 </a>
               </Link>
             </div>
@@ -242,7 +243,7 @@ const Home: NextPage = (props) => {
               <Link href="/">
                 <a>
                   <Img alt="" layout="fill" src="/assets/images/unisex.jpg" />
-                  <h3 className="gender__block-heading">Shop Unisex</h3>
+                  <h3 className="gender__block-heading"><span>shop Unisex</span></h3>
                 </a>
               </Link>
             </div>
@@ -275,6 +276,11 @@ const Home: NextPage = (props) => {
             <h3 className='features__title'>online support</h3>
             <p className='features__text'>Our customer service is <strong>available 24h</strong>.</p>
           </div>
+          <div className="features__col">
+            <div className="features__icon"><RiSecurePaymentLine /></div>
+            <h3 className='features__title'>secure payment</h3>
+            <p className='features__text'><strong>All cards</strong> accepted.</p>
+          </div>
         </div>
       </section>
 
@@ -289,10 +295,10 @@ const Home: NextPage = (props) => {
               </Link>
             </div>
             <h3 className="footer__sub-heading">Contact</h3>
-            <p className='footer__contact'><BiMap/>46 Lakeshore St. Knoxville, TN 37918</p>
-            <p className='footer__contact'><BiPhone /><a href="tel:13124786691">Call +1 (312) 478 6691</a></p>
-            <p className='footer__contact'><HiOutlineMail /><a href="mailto:support@jones.com?subject=Need%20Support">support@jones.com</a></p>
-            <p className='footer__contact'><BiTime />10:00 &mdash; 18:00, Mon &mdash; Sat</p>
+            <p className='footer__contact'><BiMap/><span>46 Lakeshore St. Knoxville, TN 37918</span></p>
+            <p className='footer__contact'><BiPhone /><span><a href="tel:13124786691">+1 (312) 478 6691</a></span></p>
+            <p className='footer__contact'><HiOutlineMail /><span><a href="mailto:support@jones.com?subject=Need%20Support">support@jones.com</a></span></p>
+            <p className='footer__contact'><BiTime /><span>10:00 &mdash; 18:00, Mon &mdash; Sat</span></p>
             <hr />
             <h3 className="footer__sub-heading">Connect With Us</h3>
             <div className="footer__social-buttons">
@@ -335,19 +341,22 @@ const Home: NextPage = (props) => {
           </div>
           <div className="footer__col">
             <div className="newsletter">
-              <h3 className="newsletter__heading">newsletter</h3>
-              <p className="newsletter__info">Sign up to our newsletter and we&apos;ll keep you up-to-date with the latest arrivals and <strong style={{color:"orange"}}>special offers.</strong></p>
+              <h3 className="footer__heading">newsletter</h3>
+              <p className="newsletter__info">Sign up to our newsletter and we&apos;ll keep you up-to-date with the latest arrivals and special offers.</p>
               <form action="">
                 <div className="newsletter__input">
                   <label><input type="email" name="email" /><span>enter email</span></label>
-                  <button type="submit"><BsArrowRight /></button>
+                  <button type="submit"><CgArrowLongRight /></button>
                 </div>
+                <p className="newsletter__disclaimer">By signing up you are confirming that you have read, understood and accept our <Link href="/"><a>Privacy Policy</a></Link></p>
               </form>
               <div className='footer__payments'>
                 <Img src="/assets/images/payment.png" alt="" width={327} height={30}/>
               </div>
             </div>
+          </div>
         </div>
+
         <div className="gutter">
           <div className="gutter__container">
             <div className="gutter__terms">
@@ -357,7 +366,7 @@ const Home: NextPage = (props) => {
             </div>
             <div className="gutter__copy">&copy; {(new Date()).getFullYear()} Jones LLC. All Rights Reserved</div>
             <div className="gutter__lang-currency">
-              <button>{"English"} <TbMinusVertical /> {"$ USD"}</button>
+              <button>{"English"} <span></span> {"$ USD"}</button>
             </div>
           </div>
         </div>

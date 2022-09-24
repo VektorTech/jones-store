@@ -15,7 +15,12 @@
 
 	&__products-link {
 		text-align: center;
-		text-decoration: underline;
+		font-size: $text-sm;
 		color: $c-text-dark;
+		text-transform: uppercase;
+
+		> a {
+			border-bottom: 0.1rem solid $c-text-dark;
+		}
 	}
 }
