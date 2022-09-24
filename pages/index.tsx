@@ -60,7 +60,7 @@ const Home: NextPage = (props) => {
           <div className="header__logo">
             <Link href="/">
               <a>
-                <Image width={102} height={68} alt="" src={LogoImg} />
+                <Image width={74} height={46} alt="" src={LogoImg} />
               </a>
             </Link>
           </div>
@@ -284,7 +284,7 @@ const Home: NextPage = (props) => {
             <div className="footer__logo">
               <Link href="/">
                 <a>
-                  <Image width={102} height={68} alt="" src={LogoImg} />
+                  <Image width={74} height={46} alt="" src={LogoImg} />
                 </a>
               </Link>
             </div>
