@@ -20,7 +20,7 @@
 
 		& img {
 			margin: auto;
-			transform: scale(0.9);
+			// transform: scale(0.8);
 		}
 	}
 
@@ -44,7 +44,7 @@
 		height: 100%;
 		align-items: center;
 		justify-content: center;
-		font-size: 2.5rem;
+		font-size: 2.2rem;
 		// display: inline-flex;
 
 		&:nth-of-type(n + 2) {
@@ -54,11 +54,11 @@
 		& span {
 			background-color: $c-red;
 			border-radius: 50%;
-			font-size: $text-sm;
-			height: 2rem;
-			width: 2rem;
+			font-size: $text-xs;
+			height: 1.7rem;
+			width: 1.7rem;
 			text-align: center;
-			line-height: 2rem;
+			line-height: 1.7rem;
 			position: absolute;
 			margin-top: -2.5rem;
 			margin-left: 2.5rem;
