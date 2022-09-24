@@ -343,8 +343,10 @@ const Home: NextPage = (props) => {
                   <button type="submit"><BsArrowRight /></button>
                 </div>
               </form>
+              <div className='footer__payments'>
+                <Img src="/assets/images/payment.png" alt="" width={327} height={30}/>
+              </div>
             </div>
-          </div>
         </div>
         <div className="gutter">
           <div className="gutter__container">
