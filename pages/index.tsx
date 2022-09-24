@@ -171,7 +171,7 @@ const Home: NextPage = (props) => {
             <div className="collections__block">
               <Link href="/">
                 <a>
-                  <Img alt="" layout="fill" src="/assets/images/jordan-1-low-dior.webp" />
+                  <Img alt="" layout="fill" src="/assets/images/jordan-1-low.jpg" />
                   <div className="collections__block-content">
                     <h3>Low</h3>
                     <button>discover</button>
