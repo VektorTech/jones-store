@@ -1,0 +1,69 @@
+@use '../abstracts' as *;
+
+.product {
+	flex: 1;
+	font-size: $text-sm;
+
+	&__image {
+		position: relative;
+		height: 25rem; // temp
+	}
+
+	&__actions {
+		position: absolute;
+		top: 1rem;
+		left: 1rem;
+		right: 1rem;
+		bottom: 1rem;
+		font-size: 3rem;
+		text-align: right;
+		color: $c-text-gray;
+	}
+
+	&__add-wishlist {
+		padding: 0.5rem;
+		height: 4rem;
+	}
+
+	&__info {}
+
+	&__type {
+		font-weight: bold;
+		font-variant: small-caps;
+	}
+
+
+	&__title {
+		font-size: $text-md;
+		font-weight: 400;
+		margin: 0;
+		color: $c-text-black;
+		margin-top: 0.5rem;
+	}
+
+	&__price {
+		color: $c-text-red;
+		margin-top: 0.5rem;
+
+		& .product__currency {
+			font-weight: bold;
+		}
+
+		& .product__amount {
+			font-weight: bold;
+		}
+
+		& .product__discount-percentage {
+			margin-left: 0.5rem;
+		}
+	}
+
+	&__amount {
+		margin-left: 0.5rem;
+	}
+
+	&__discount-price {
+		color: $c-text-dark;
+		text-decoration: line-through;
+	}
+}

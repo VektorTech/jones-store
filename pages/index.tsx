@@ -203,6 +203,7 @@ const Home: NextPage = (props) => {
             <div className="product">
               <div className="product__wrapper">
                 <div className="product__image">
+                  {/*onLoadingComplete=(width,height)=>*/}
                   <Img src="/assets/images/jordan-1-product-img.jpeg" layout='fill' />
                   <span className="product__tag">sale</span>
                   <div className="product__actions">
@@ -220,7 +221,7 @@ const Home: NextPage = (props) => {
                   </p>
                   <p className="product__discount-price">
                     <span className="product__currency">JMD</span>
-                    <span className="product__amount">14,636.34</span>
+                    <span className="product__amount">$14,636.34</span>
                   </p>
                 </div>
               </div>

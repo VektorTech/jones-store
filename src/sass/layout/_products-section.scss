@@ -23,4 +23,11 @@
 			border-bottom: 0.1rem solid $c-text-dark;
 		}
 	}
+
+	&__products {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-evenly;
+		padding: 5rem 0;
+	}
 }
