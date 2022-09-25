@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { withSessionSsr } from "@lib/withSession";
 
 import { AiOutlineMenu, AiOutlineTags, AiOutlineHeart } from "react-icons/ai";
-import { BsXLg, BsCart3, BsPerson } from "react-icons/bs";
+import { BsXLg, BsCart3, BsPerson, BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
 import { TbTruckDelivery } from "react-icons/tb";
 import { MdSupportAgent } from "react-icons/md";
 import { FiHelpCircle, FiSearch } from "react-icons/fi";
@@ -201,30 +201,75 @@ const Home: NextPage = (props) => {
           <div className="products-section__products">
 
             <div className="product">
-              <div className="product__wrapper">
-                <div className="product__image">
-                  {/*onLoadingComplete=(width,height)=>*/}
-                  <Img src="/assets/images/jordan-1-product-img.jpeg" layout='fill' />
-                  <span className="product__tag">sale</span>
-                  <div className="product__actions">
-                    <button className="product__add-wishlist"><AiOutlineHeart /></button>
+              <Link href="">
+                <a>
+                <div className="product__wrapper">
+                  <div className="product__image">
+                    <Img src="/assets/images/jordan-1-product-img.jpeg" objectFit='cover' objectPosition={"center top"} layout='fill' />
+                    <span className="product__tag">sale</span>
+                    <div className="product__actions">
+                      <button className="product__add-wishlist"><AiOutlineHeart /></button>
+                    </div>
+                  </div>
+                  <div className="product__info">
+                    <p className="product__type">jordan</p>
+                    <h3 className="product__title">Zoom Air Comfort High {"(Women)"}</h3>
+                    <div className="product__rating">
+                      <BsStarFill />
+                      <BsStarFill />
+                      <BsStarFill />
+                      <BsStarFill />
+                      <BsStarHalf />
+                    </div>
+                    <p className="product__price">
+                      <span className="product__currency">JMD</span>
+                      <span className="product__amount">$8,781.80</span>
+                      <span className="product__discount-percentage">{"(40% off)"}</span>
+
+                      <span className="product__discount-price">
+                        <span className="product__currency">JMD</span>
+                        <span className="product__amount">$14,636.34</span>
+                      </span>
+                    </p>
                   </div>
                 </div>
-                <div className="product__info">
-                  <p className="product__type">jordan</p>
-                  <h3 className="product__title">Zoom Air Comfort High {"(Women)"}</h3>
-                  <div className="product__rating"></div>
-                  <p className="product__price">
-                    <span className="product__currency">JMD</span>
-                    <span className="product__amount">$8,781.80</span>
-                    <span className="product__discount-percentage">{"(40% off)"}</span>
-                  </p>
-                  <p className="product__discount-price">
-                    <span className="product__currency">JMD</span>
-                    <span className="product__amount">$14,636.34</span>
-                  </p>
-                </div>
-              </div>
+                </a>
+              </Link>
+            </div>
+            <div className="product">
+                <Link href="">
+                <a>
+                  <div className="product__wrapper">
+                    <div className="product__image">
+                      <Img src="/assets/images/jordan-1-product-img.jpeg" objectFit='cover' objectPosition={"center top"} layout='fill' />
+                      <span className="product__tag">sale</span>
+                      <div className="product__actions">
+                        <button className="product__add-wishlist"><AiOutlineHeart /></button>
+                      </div>
+                    </div>
+                    <div className="product__info">
+                      <p className="product__type">jordan</p>
+                      <h3 className="product__title">Zoom Air Comfort High {"(Women)"}</h3>
+                      <div className="product__rating">
+                        <BsStarFill />
+                        <BsStarFill />
+                        <BsStarFill />
+                        <BsStarHalf />
+                        <BsStar />
+                      </div>
+                      <p className="product__price">
+                        <span className="product__currency">JMD</span>
+                        <span className="product__amount">$8,781.80</span>
+                        <span className="product__discount-percentage">{"(40% off)"}</span>
+                        <span className="product__discount-price">
+                          <span className="product__currency">JMD</span>
+                          <span className="product__amount">$14,636.34</span>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </a>
+                </Link>
             </div>
 
           </div>
