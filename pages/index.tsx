@@ -164,7 +164,7 @@ const Home: NextPage = (props) => {
                   <Img alt="" layout="fill" src="/assets/images/jordan-1-mid.jpg" />
                   <div className="collections__block-content">
                     <h3>Medium</h3>
-                    <button>discover</button>
+                    <button><span>discover</span></button>
                   </div>
                 </a>
               </Link>
@@ -175,7 +175,7 @@ const Home: NextPage = (props) => {
                   <Img alt="" layout="fill" src="/assets/images/jordan-1-low.jpg" />
                   <div className="collections__block-content">
                     <h3>Low</h3>
-                    <button>discover</button>
+                    <button><span>discover</span></button>
                   </div>
                 </a>
               </Link>
@@ -186,7 +186,7 @@ const Home: NextPage = (props) => {
                   <Img alt="" layout="fill" src="/assets/images/air-jordan-1-high.webp" />
                   <div className="collections__block-content">
                     <h3>High</h3>
-                    <button>discover</button>
+                    <button><span>discover</span></button>
                   </div>
                 </a>
               </Link>
@@ -273,7 +273,7 @@ const Home: NextPage = (props) => {
             </div>
 
           </div>
-          <p className="products-section__products-link"><Link href="/"><a>View All Products &gt;</a></Link></p>
+          <p className="products-section__products-link"><Link href="/"><a>View All New Arrivals</a></Link></p>
         </div>
       </section>
 
@@ -329,7 +329,7 @@ const Home: NextPage = (props) => {
         <div className="products-section__container">
           <h2 className="products-section__heading">#shop best sellers</h2>
           <div className="products-section__products"></div>
-          <p className="products-section__products-link"><Link href="/"><a>View All Products &gt;</a></Link></p>
+          <p className="products-section__products-link"><Link href="/"><a>View All Best Sellers</a></Link></p>
         </div>
       </section>
 

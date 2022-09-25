@@ -80,11 +80,19 @@
 			& button {
 				text-align: left;
 				font-variant: small-caps;
-				position: absolute;
-				bottom: 0;
-				font-size: $text-md;
-				font-weight: bold;
-				border-bottom: 0.2rem solid black;
+					border-bottom: 0.2rem solid black;
+				}
+
+				&::after {
+					content: "";
+					width: 0;
+					height: 0;
+					border-top: 0.5rem solid transparent;
+					border-bottom: 0.5rem solid transparent;
+					border-left: 0.5rem solid black;
+					display: inline-block;
+					margin-left: 0.5rem;
+				}
 			}
 		}
 	}
