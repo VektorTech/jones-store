@@ -1,12 +1,51 @@
 @use '../abstracts' as *;
 
 .product {
-	flex: 1;
+	flex: 1 0 calc(50% - 1rem);
 	font-size: $text-sm;
 
 	&__image {
 		position: relative;
-		height: 25rem; // temp
+		padding-bottom: 60.5%;
+	}
+
+	&__tag {
+		position: absolute;
+		top: 2rem;
+		left: 2rem;
+		background-color: $c-red;
+		color: #fff;
+		text-transform: uppercase;
+		padding: 0.2rem 0.8rem;
+		font-weight: 400;
+		border-radius: 0.5rem;
+
+		&::before {
+			content: "";
+			width: 0;
+			height: 0;
+			display: block;
+			border-right: 0.6rem solid $c-red;
+			border-top: 0.5rem solid transparent;
+			border-bottom: 0.5rem solid transparent;
+			position: absolute;
+			left: -0.5rem;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		&::after {
+			content: "";
+			width: 0.3rem;
+			height: 0.3rem;
+			display: block;
+			background: #fff;
+			border-radius: 50%;
+			position: absolute;
+			left: 0;
+			top: 50%;
+			transform: translateY(-50%);
+		}
 	}
 
 	&__actions {
@@ -15,21 +54,29 @@
 		left: 1rem;
 		right: 1rem;
 		bottom: 1rem;
-		font-size: 3rem;
+		font-size: 2.5rem;
 		text-align: right;
-		color: $c-text-gray;
+		color: $c-text-dark;
 	}
 
 	&__add-wishlist {
 		padding: 0.5rem;
-		height: 4rem;
+		height: 3.5rem;
+		border-radius: 50%;
+		background-color: #fff;
 	}
 
-	&__info {}
+	&__info {
+		> * {
+			margin: 0.5rem 0;
+		}
+	}
 
 	&__type {
 		font-weight: bold;
-		font-variant: small-caps;
+		text-transform: uppercase;
+		color: #082a8a;
+		font-size: $text-xs;
 	}
 
 
@@ -38,12 +85,10 @@
 		font-weight: 400;
 		margin: 0;
 		color: $c-text-black;
-		margin-top: 0.5rem;
 	}
 
 	&__price {
 		color: $c-text-red;
-		margin-top: 0.5rem;
 
 		& .product__currency {
 			font-weight: bold;
@@ -58,6 +103,17 @@
 		}
 	}
 
+	&__discount-price {
+		display: block;
+
+		& .product__currency {
+			font-weight: 300;
+		}
+
+		& .product__amount {
+			font-weight: 300;
+		}
+	}
 
 	&__rating {
 		color: #ffd000;
