@@ -371,7 +371,7 @@ const Home: NextPage = (props) => {
             <h3 className="footer__sub-heading">Contact</h3>
             <p className='footer__contact'><BiMap/><span>46 Lakeshore St. Knoxville, TN 37918</span></p>
             <p className='footer__contact'><BiPhone /><span><a href="tel:13124786691">+1 (312) 478 6691</a></span></p>
-            <p className='footer__contact'><HiOutlineMail /><span><a href="mailto:support@jones.com?subject=Need%20Support">support@jones.com</a></span></p>
+            <p className='footer__contact'><HiOutlineMail /><span><a href="mailto:support@jones.com?subject=Need%20Support">support@<wbr/>jones.com</a></span></p>
             <p className='footer__contact'><BiTime /><span>10:00 &mdash; 18:00, Mon &mdash; Sat</span></p>
             <hr />
             <h3 className="footer__sub-heading">Connect With Us</h3>
@@ -438,7 +438,7 @@ const Home: NextPage = (props) => {
               <span></span>
               <Link href="/"><a>Privacy</a></Link>
             </div>
-            <div className="gutter__copy">&copy; {(new Date()).getFullYear()} Jones LLC. All Rights Reserved</div>
+            <div className="gutter__copy"><small>&copy; {(new Date()).getFullYear()} Jones LLC. All Rights Reserved</small></div>
             <div className="gutter__lang-currency">
               <button>{"English"} <span></span> {"$ USD"}</button>
             </div>
