@@ -22,7 +22,7 @@
 	}
 
 	&__grid {
-		height: calc(80vw * 3);
+		height: calc(70vw * 3);
 		margin-top: 4rem;
 		position: relative;
 		display: grid;
@@ -32,7 +32,13 @@
 	}
 
 	&__block {
-		position: relative;
+
+		> a {
+			position: relative;
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
 
 		// &:nth-of-type(1) {
 		// 	grid-area: 1 / 1 / 7 / 8;
@@ -74,12 +80,20 @@
 			& h3 {
 				text-align: right;
 				text-transform: uppercase;
-				font-size: $text-md;
+				font-size: $text-xl;
+				font-style: italic;
+				mix-blend-mode: soft-light;
 			}
 
 			& button {
+				position: absolute;
+				bottom: 0;
 				text-align: left;
-				font-variant: small-caps;
+
+				& span {
+					font-variant: small-caps;
+					font-size: $text-lg;
+					font-weight: bold;
 					border-bottom: 0.2rem solid black;
 				}
 

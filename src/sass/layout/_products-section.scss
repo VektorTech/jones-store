@@ -2,10 +2,11 @@
 
 .products-section {
 	width: 100%;
+	background-color: #fff;
 
 	&__container {
 		@extend %container;
-		padding: 5rem 0;
+		padding: 3rem 0 5rem 0;
 	}
 
 	&__heading {
@@ -40,5 +41,6 @@
 		flex-flow: row wrap;
 		justify-content: space-evenly;
 		padding: 5rem 0;
+		gap: 1rem;
 	}
 }

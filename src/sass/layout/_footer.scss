@@ -27,11 +27,19 @@
 		}
 	}
 
-	&__logo {}
+	&__logo {
+		float: left;
+
+	}
 
 	&__sub-heading {
 		margin-top: 4rem;
 		font-size: $text-md;
+
+		&:first-of-type {
+			margin-top: 8rem;
+			clear: left;
+		}
 	}
 
 	&__contact {
