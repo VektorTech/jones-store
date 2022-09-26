@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcryptjs";
 
-import prisma from "@lib/prisma";
-import { withSessionRoute } from "@lib/withSession";
-import { userSchema } from "@lib/validations";
+import prisma from "@Lib/prisma";
+import { withSessionRoute } from "@Lib/withSession";
+import { userSchema } from "@Lib/validations";
 import { User } from "@prisma/client";
-import { validateInput } from "@lib/helpers";
+import { validateInput } from "@Lib/helpers";
 import { DefaultResponse } from "src/types/shared";
 
 async function signupRoute(

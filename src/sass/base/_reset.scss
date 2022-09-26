@@ -6,7 +6,6 @@
 	border: 0;
 	outline: none;
 	box-sizing: border-box;
-	vertical-align: baseline;
 }
 
 html, body {
@@ -57,4 +56,8 @@ ul, ol {
 
 #root, #__next {
 	isolation: isolate;
+}
+
+svg {
+	vertical-align: middle;
 }

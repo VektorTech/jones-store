@@ -17,9 +17,10 @@
 
     "baseUrl": ".",
     "paths": {
-      "@lib/*": ["src/lib/*"],
-      "@sass/*": ["src/sass/*"],
-      "@images/*": ["public/assets/images/*"],
+      "@Components/*": ["src/components/*"],
+      "@Lib/*": ["src/lib/*"],
+      "@Sass/*": ["src/sass/*"],
+      "@Images/*": ["public/assets/images/*"],
     }
   },
   "include": ["next-env.d.ts", "src/types/*.d.ts", "**/*.ts", "**/*.tsx"],

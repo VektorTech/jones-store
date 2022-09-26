@@ -1,0 +1,28 @@
+.social-links {
+	$self: &;
+
+	&--sm {
+		font-size: 2.3rem;
+	}
+
+	&--md {
+		font-size: 2.6rem;
+	}
+
+	&--lg {
+		font-size: 3rem;
+	}
+
+	&__link + &__link {
+		margin-left: 1rem;
+	}
+
+	&--vertical {
+		text-align: center;
+
+		#{$self}__link {
+			margin: 0.5rem 0;
+		}
+	}
+}
+
