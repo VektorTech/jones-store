@@ -26,14 +26,14 @@ export default function HeroBanner() {
           </button>
         </div>
 
-        <div className="banner__social-buttons">
+        <div className="banner__social-links">
           <SocialIcons vertical />
         </div>
 
         <div className="banner__main">
           <div className="banner__content">
             <div className="banner__headings">
-              <p className="banner__sub-text">
+              <p className="banner__secondary-text">
                 <span>verified</span> authentic sneakers
               </p>
               <h2 className="banner__title-type">heirloom</h2>

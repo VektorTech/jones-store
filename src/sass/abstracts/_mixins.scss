@@ -1,0 +1,25 @@
+@use './variables' as v;
+
+@mixin link-arrow($text-color) {
+	&::after {
+		content: "";
+		width: 0;
+		height: 0;
+		border-top: 0.5rem solid transparent;
+		border-bottom: 0.5rem solid transparent;
+		border-left: 0.5rem solid $text-color;
+		display: inline-block;
+		margin-left: 0.5rem;
+	}
+}
+
+@mixin respond-to($breakpoint) {
+	@if map-has-key(v.$breakpoints, $breakpoint) {
+		@media #{inspect(map-get(v.$breakpoints, $breakpoint))} {
+			@content;
+		}
+	} @else {
+		@warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+			+ "Available breakpoints are: #{map-keys(v.$breakpoints)}.";
+	}
+}

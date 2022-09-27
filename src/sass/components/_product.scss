@@ -3,6 +3,7 @@
 .product {
 	flex: 1 0 calc(50% - 1rem);
 	font-size: $text-sm;
+	max-width: 26rem;
 
 	&__image {
 		position: relative;
@@ -64,11 +65,15 @@
 		height: 3.5rem;
 		border-radius: 50%;
 		background-color: #fff;
+
+		&-icon {
+			vertical-align: baseline;
+		}
 	}
 
 	&__info {
 		> * {
-			margin: 0.5rem 0;
+			margin: 0.6rem 0;
 		}
 	}
 
@@ -103,14 +108,16 @@
 		}
 	}
 
-	&__discount-price {
+	&__old-price {
 		display: block;
+		color: $c-text-dark;
+		text-decoration: line-through;
 
-		& .product__currency {
+		& .product__old-currency {
 			font-weight: 300;
 		}
 
-		& .product__amount {
+		& .product__old-amount {
 			font-weight: 300;
 		}
 	}
@@ -121,10 +128,5 @@
 
 	&__amount {
 		margin-left: 0.5rem;
-	}
-
-	&__discount-price {
-		color: $c-text-dark;
-		text-decoration: line-through;
 	}
 }

@@ -18,9 +18,13 @@
 		flex-basis: getWidth(8);
 		overflow: hidden;
 
+		& a {
+			display: flex;
+			height: 100%;
+		}
+
 		& img {
 			margin: auto;
-			// transform: scale(0.8);
 		}
 	}
 
@@ -48,7 +52,7 @@
 		// display: inline-flex;
 
 		&:nth-of-type(n + 2) {
-			margin-left: 2rem;
+			// margin-left: 2rem;
 		}
 
 		& span {
@@ -60,8 +64,8 @@
 			text-align: center;
 			line-height: 1.7rem;
 			position: absolute;
-			margin-top: -2.5rem;
-			margin-left: 2.5rem;
+			margin-top: -1.7rem;
+			margin-left: 2rem;
 		}
 	}
 

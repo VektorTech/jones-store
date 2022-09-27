@@ -1,16 +1,16 @@
 @use '../abstracts' as *;
 
+html {
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
+}
+
 body {
 	background-color: $c-background-color;
 }
 
 article {
   overflow: hidden;
-}
-
-html {
-  scroll-behavior: smooth;
-  text-size-adjust: 100%;
 }
 
 html,

@@ -9,7 +9,7 @@ export default function FeaturesSection() {
       <div className="features__container">
         <div className="features__col">
           <div className="features__icon">
-            <AiOutlineTags />
+            <AiOutlineTags className="features__icon-element" />
           </div>
           <h3 className="features__title">100% money-back guarantee</h3>
           <p className="features__text">
@@ -19,7 +19,7 @@ export default function FeaturesSection() {
         </div>
         <div className="features__col">
           <div className="features__icon">
-            <TbTruckDelivery />
+            <TbTruckDelivery className="features__icon-element" />
           </div>
           <h3 className="features__title">free shipping</h3>
           <p className="features__text">
@@ -29,7 +29,7 @@ export default function FeaturesSection() {
         </div>
         <div className="features__col">
           <div className="features__icon">
-            <MdSupportAgent />
+            <MdSupportAgent className="features__icon-element" />
           </div>
           <h3 className="features__title">online support</h3>
           <p className="features__text">
@@ -38,7 +38,7 @@ export default function FeaturesSection() {
         </div>
         <div className="features__col">
           <div className="features__icon">
-            <RiSecurePaymentLine />
+            <RiSecurePaymentLine className="features__icon-element" />
           </div>
           <h3 className="features__title">secure payment</h3>
           <p className="features__text">

@@ -2,22 +2,15 @@
 
 .gender {
 	width: 100%;
-	background-color: #fff;
+	background-color: $c-background-dark;
 
 	&__container {
 		@extend %container;
-		padding: 3rem 0 4rem 0;
+		padding: $section-padding-v 0;
 	}
 
 	&__heading {
 		@extend %section-heading;
-	}
-
-	&__sub-text {
-		color: $c-text-gray;
-		font-size: $text-sm;
-		text-transform: capitalize;
-		text-align: center;
 	}
 
 	&__grid {
@@ -30,7 +23,7 @@
 	}
 
 	&__block {
-		> a {
+		&-link {
 			position: relative;
 			display: block;
 			width: 100%;
@@ -77,6 +70,7 @@
 		// 	grid-area: 6 / 9 / 11 / 13;
 		// }
 
+		// next image element
 		& span {
 			height: calc(100% - 6rem) !important;
 
@@ -87,7 +81,7 @@
 		}
 
 
-		&-heading {
+		&-title {
 			position: absolute;
 			left: 0;
 			right: 0;
@@ -99,7 +93,8 @@
 			font-variant: small-caps;
 
 			& span {
-				border-bottom: 0.2rem solid black;
+				color: #fff;
+				border-bottom: 0.2rem solid #fff;
 			}
 		}
 	}

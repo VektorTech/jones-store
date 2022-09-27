@@ -15,6 +15,7 @@
 	text-transform: uppercase;
 	text-align: center;
 	font-weight: bold;
+	font-style: italic;
 	font-size: v.$text-xl;
 	@extend %text-overflow;
 }

@@ -14,4 +14,15 @@ $text-xs: 1.28rem;
 $text-sm: 1.44rem;
 $text-md: 1.728rem;
 $text-lg: 2.07rem;
-$text-xl: 3.6rem;
+$text-xl: 3.8rem;
+
+$announcement-height: 3.5rem;
+$header-height: 6.5rem;
+$section-padding-v: 5rem;
+
+$breakpoints: (
+  'small':  ( min-width:  576px ),
+  'medium': ( min-width:  768px ),
+  'large':  ( min-width: 992px ),
+  'x-large':  ( min-width: 1200px )
+) !default;

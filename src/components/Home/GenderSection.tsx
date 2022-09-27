@@ -15,9 +15,9 @@ export default function GenderSection() {
         <div className="gender__grid">
           <div className="gender__block gender__block-men">
             <Link href="/">
-              <a>
+              <a className="gender__block-link">
                 <Image alt="" layout="fill" src={manImage} />
-                <h3 className="gender__block-heading">
+                <h3 className="gender__block-title">
                   <span>shop Men</span>
                 </h3>
               </a>
@@ -25,9 +25,9 @@ export default function GenderSection() {
           </div>
           <div className="gender__block gender__block-women">
             <Link href="/">
-              <a>
+              <a className="gender__block-link">
                 <Image alt="" layout="fill" src={womanImage} />
-                <h3 className="gender__block-heading">
+                <h3 className="gender__block-title">
                   <span>shop Women</span>
                 </h3>
               </a>
@@ -35,9 +35,9 @@ export default function GenderSection() {
           </div>
           <div className="gender__block gender__block-kids">
             <Link href="/">
-              <a>
+              <a className="gender__block-link">
                 <Image alt="" layout="fill" src={kidImage} />
-                <h3 className="gender__block-heading">
+                <h3 className="gender__block-title">
                   <span>shop Kids</span>
                 </h3>
               </a>
@@ -45,9 +45,9 @@ export default function GenderSection() {
           </div>
           <div className="gender__block gender__block-babies">
             <Link href="/">
-              <a>
+              <a className="gender__block-link">
                 <Image alt="" layout="fill" src={babyImage} />
-                <h3 className="gender__block-heading">
+                <h3 className="gender__block-title">
                   <span>shop Babies</span>
                 </h3>
               </a>
@@ -55,9 +55,9 @@ export default function GenderSection() {
           </div>
           <div className="gender__block gender__block-unisex">
             <Link href="/">
-              <a>
+              <a className="gender__block-link">
                 <Image alt="" layout="fill" src={unisexImage} />
-                <h3 className="gender__block-heading">
+                <h3 className="gender__block-title">
                   <span>shop Unisex</span>
                 </h3>
               </a>

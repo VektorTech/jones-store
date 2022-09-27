@@ -21,7 +21,7 @@ export default function Product() {
               <span className="product__tag">sale</span>
               <div className="product__actions">
                 <button className="product__add-wishlist">
-                  <AiOutlineHeart />
+                  <AiOutlineHeart className="product__add-wishlist-icon" />
                 </button>
               </div>
             </div>
@@ -40,9 +40,9 @@ export default function Product() {
                   {"(40% off)"}
                 </span>
 
-                <span className="product__discount-price">
-                  <span className="product__currency">JMD</span>
-                  <span className="product__amount">$14,636.34</span>
+                <span className="product__old-price">
+                  <span className="product__old-currency">JMD</span>
+                  <span className="product__old-amount">$14,636.34</span>
                 </span>
               </p>
             </div>

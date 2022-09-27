@@ -2,8 +2,8 @@
 
 .banner {
 	width: 100%;
-	height: calc(100vh - 3.5rem - 5rem);
-	margin-top: -6.5rem;
+	height: calc(100vh - $announcement-height - 5rem);
+	margin-top: -$header-height;
 	position: relative;
 
 	&__container {
@@ -17,7 +17,7 @@
 	&__background {
 		width: 100%;
 		height: 100%;
-		background-image: url(/assets/images/banner-bg-eindhoven.jpg);
+		background-image: url("/assets/images/banner-bg-eindhoven.jpg");
 		background-size: cover;
 		background-repeat: no-repeat;
 		background-position: bottom right;
@@ -36,7 +36,7 @@
 		position: absolute;
 		bottom: 0;
 		width: 100%;
-		height: 65%;
+		height: 70%;
 		color: #fff;
 		text-align: center;
 		text-transform: uppercase;
@@ -49,7 +49,7 @@
 		right: 0;
 	}
 
-	&__sub-text {
+	&__secondary-text {
 		font-size: $text-xs;
 		font-style: italic;
 		font-weight: 400;
@@ -69,11 +69,13 @@
 			font-weight: bold;
 			font-style: italic;
 			color: transparent;
+			height: auto;
+			max-width: 90rem;
 			left: 0;
 			right: 0;
 			margin-top: -3rem;
 
-			@supports (-webkit-text-stroke: 0.1rem  #dddddd22) {
+			@supports (-webkit-text-stroke: 0.1rem  #cecece1f) {
 				& {
 				  -webkit-text-stroke: 0.1rem  #cecece1f;
 				}
@@ -84,14 +86,14 @@
 	&__image {
 		margin: 0 auto;
 		margin-top: 22vh;
-		width: calc(6rem + 10vh + 15vw);
+		width: calc(8rem + 12vh + 16vw);
 
-		& > span {
+		> span {
 			overflow: visible !important;
-		}
 
-		& img {
-			transform: rotate(-25deg);
+			img {
+				transform: rotate(-25deg);
+			}
 		}
 	}
 
@@ -102,6 +104,7 @@
 		right: 0;
 
 		&-element {
+			border-radius: 0.3rem;
 			display: inline-block;
 			border: 0.1rem solid #fff;
 			padding-bottom: min(max(8%, 2rem), 4.5rem);
@@ -110,7 +113,7 @@
 			height: 0;
 			position: relative;
 
-			& span {
+			> span {
 				position: absolute;
 				top: 0;
 				left: 0;
@@ -134,20 +137,20 @@
 	}
 
 	&__indicator {
-		font-size: 1.2rem;
+		font-size: 1.3rem;
 		padding: 0.5rem 0;
 
 		&--active {
 			color: $c-red;
-			transform: scale(1.3);
+			transform: scale(1.5);
 		}
 	}
 
-	&__social-buttons {
+	&__social-links {
 		position: absolute;
 		bottom: 2rem;
 		left: 1rem;
-		width: 2.2rem;
+		width: 0;
 		color: #fff;
 		z-index: 1;
 	}

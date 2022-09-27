@@ -6,7 +6,7 @@
 
 	&__container {
 		@extend %container;
-		padding: 3rem 0 5rem 0;
+		padding: $section-padding-v 0 6rem 0;
 	}
 
 	&__heading {
@@ -24,22 +24,13 @@
 			border-bottom: 0.1rem solid $c-text-dark;
 		}
 
-		&::after {
-			content: "";
-			width: 0;
-			height: 0;
-			border-top: 0.5rem solid transparent;
-			border-bottom: 0.5rem solid transparent;
-			border-left: 0.5rem solid $c-text-dark;
-			display: inline-block;
-			margin-left: 0.5rem;
-		}
+		@include link-arrow($c-text-dark);
 	}
 
 	&__products {
 		display: flex;
 		flex-flow: row wrap;
-		justify-content: space-evenly;
+		justify-content: space-between;
 		padding: 5rem 0;
 		gap: 1rem;
 	}

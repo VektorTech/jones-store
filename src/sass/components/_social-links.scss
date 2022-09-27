@@ -2,15 +2,15 @@
 	$self: &;
 
 	&--sm {
-		font-size: 2.3rem;
+		font-size: 2.4rem;
 	}
 
 	&--md {
-		font-size: 2.6rem;
+		font-size: 2.8rem;
 	}
 
 	&--lg {
-		font-size: 3rem;
+		font-size: 3.2rem;
 	}
 
 	&__link + &__link {
@@ -21,6 +21,7 @@
 		text-align: center;
 
 		#{$self}__link {
+			display: block;
 			margin: 0.5rem 0;
 		}
 	}
