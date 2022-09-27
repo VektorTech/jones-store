@@ -8,3 +8,5 @@ export const sessionOptions: IronSessionOptions = {
     secure: process.env.NODE_ENV === "production",
   },
 };
+
+export const DOMAIN_NAME = "http://localhost:3000";
