@@ -18,11 +18,16 @@ $text-xl: 3.8rem;
 
 $announcement-height: 3.5rem;
 $header-height: 6.5rem;
+$header-height-lg: 10rem;
 $section-padding-v: 5rem;
 
 $breakpoints: (
+  'x-small':  ( min-width:  480px ),
   'small':  ( min-width:  576px ),
   'medium': ( min-width:  768px ),
   'large':  ( min-width: 992px ),
-  'x-large':  ( min-width: 1200px )
+  'x-large':  ( min-width: 1200px ),
+
+  'xx-small-h':  ( max-height: 320px ),
+  'small-h':  ( max-height: 576px )
 ) !default;

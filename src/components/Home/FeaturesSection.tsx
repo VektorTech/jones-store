@@ -19,12 +19,11 @@ export default function FeaturesSection() {
         </div>
         <div className="features__col">
           <div className="features__icon">
-            <TbTruckDelivery className="features__icon-element" />
+            <RiSecurePaymentLine className="features__icon-element" />
           </div>
-          <h3 className="features__title">free shipping</h3>
+          <h3 className="features__title">secure payment</h3>
           <p className="features__text">
-            No matter where you are from, you&apos;ll have <strong>FREE</strong>{" "}
-            shipping purchasing in Jones.
+            <strong>All cards</strong> accepted.
           </p>
         </div>
         <div className="features__col">
@@ -38,11 +37,12 @@ export default function FeaturesSection() {
         </div>
         <div className="features__col">
           <div className="features__icon">
-            <RiSecurePaymentLine className="features__icon-element" />
+            <TbTruckDelivery className="features__icon-element" />
           </div>
-          <h3 className="features__title">secure payment</h3>
+          <h3 className="features__title">free shipping</h3>
           <p className="features__text">
-            <strong>All cards</strong> accepted.
+            No matter where you are from, you&apos;ll have <strong>FREE</strong>{" "}
+            shipping purchasing in Jones.
           </p>
         </div>
       </div>

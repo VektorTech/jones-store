@@ -1,3 +1,5 @@
+@use '../abstracts' as *;
+
 .social-links {
 	$self: &;
 
@@ -13,8 +15,8 @@
 		font-size: 3rem;
 	}
 
-	&__link + &__link {
-		margin-left: 1rem;
+	&__link {
+		margin-right: 1rem;
 	}
 
 	&--vertical {

@@ -23,7 +23,7 @@ export default function Footer() {
           <h3 className="footer__sub-heading">Contact</h3>
           <p className="footer__contact">
             <BiMap className="footer__contact-icon" />
-            <span className="footer__contact-info">46 Lakeshore St. Knoxville, TN 37918</span>
+            <span className="footer__contact-info">46 Lakeshore St. Knoxville,<br/>TN 37918</span>
           </p>
           <p className="footer__contact">
             <BiPhone className="footer__contact-icon" />
@@ -166,7 +166,7 @@ export default function Footer() {
           </div>
           <div className="gutter__lang-currency">
             <button className="gutter__lang-currency-btn">
-              {"English"} <span></span> {"$ USD"}
+              {"English"} <span>|</span> {"$ USD"}
             </button>
           </div>
         </div>

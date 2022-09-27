@@ -30,11 +30,6 @@ export default function HeaderSection() {
             <ul>
               <li className="header__nav-link">
                 <Link href="/">
-                  <a>HOME</a>
-                </Link>
-              </li>
-              <li className="header__nav-link">
-                <Link href="/">
                   <a>MEN</a>
                 </Link>
               </li>

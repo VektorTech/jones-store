@@ -33,5 +33,9 @@
 		justify-content: space-between;
 		padding: 5rem 0;
 		gap: 1rem;
+
+		@include respond-to('small') {
+			gap: 1.5rem;
+		}
 	}
 }

@@ -11,6 +11,11 @@
 		display: flex;
 		flex-direction: column;
 		align-content: center;
+
+		@include respond-to('small') {
+			flex-direction: row;
+			gap: 1rem;
+		}
 	}
 
 	&__col {

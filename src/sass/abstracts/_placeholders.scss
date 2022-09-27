@@ -1,9 +1,14 @@
 @use './variables' as v;
+@use './mixins' as m;
 
 %container {
 	width: calc(100% - 3rem);
 	max-width: 144rem;
 	margin: 0 auto;
+
+	@include m.respond-to('large') {
+		width: calc(100% - 5rem);
+	}
 }
 
 %text-overflow {

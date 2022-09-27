@@ -8,10 +8,14 @@
 
 	&__container {
 		@extend %container;
-		height: 6.5rem;
+		height: $header-height;
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: space-between;
+
+		@include respond-to('medium') {
+			height: $header-height-lg;
+		}
 	}
 
 	&__logo {
@@ -26,20 +30,54 @@
 		& img {
 			margin: auto;
 		}
+
+		@include respond-to('small') {
+			flex-basis: getWidth(4);
+
+			& img {
+				margin: auto 0;
+			}
+		}
 	}
 
 	&__nav {
 		display: none;
+		text-align: center;
+
+		& nav {
+			height: 100%;
+			line-height: $header-height;
+
+			@include respond-to('medium') {
+				line-height: $header-height-lg;
+			}
+		}
+
+		& ul {
+			display: flex;
+			justify-content: space-around;
+		}
+
+		@include respond-to('small') {
+			display: block;
+			flex-basis: getWidth(4);
+		}
 	}
 
-	&__nav-links {
+	&__nav-link {
 		display: inline-block;
+		color: #fff;
 	}
 
 	&__buttons {
 		flex-basis: getWidth(2);
 		text-align: center;
 		white-space: nowrap;
+
+		@include respond-to('small') {
+			flex-basis: getWidth(4);
+			text-align: right;
+		}
 	}
 
 	&__button {
@@ -49,10 +87,17 @@
 		align-items: center;
 		justify-content: center;
 		font-size: 2.2rem;
-		// display: inline-flex;
 
-		&:nth-of-type(n + 2) {
-			// margin-left: 2rem;
+		@include respond-to('small') {
+			display: inline-flex;
+
+			&:nth-of-type(n + 2) {
+				margin-left: 2rem;
+			}
+		}
+
+		@include respond-to('large') {
+			font-size: 2.5rem;
 		}
 
 		& span {
@@ -66,6 +111,20 @@
 			position: absolute;
 			margin-top: -1.7rem;
 			margin-left: 2rem;
+
+			@include respond-to('small') {
+				height: 2rem;
+				width: 2rem;
+				line-height: 2rem;
+				margin-top: -2rem;
+			}
+
+			@include respond-to('large') {
+				height: 2.2rem;
+				width: 2.2rem;
+				line-height: 2.2rem;
+				margin-top: -2.2rem;
+			}
 		}
 	}
 
@@ -76,12 +135,20 @@
 	&__menu-button {
 		text-align: center;
 		flex-basis: getWidth(2);
+
+		@include respond-to('small') {
+			display: none;
+		}
 	}
 
 	&__menu-toggle {
 		height: 100%;
-		line-height: 6.5rem;
+		line-height: $header-height;
 		font-size: 2.2rem;
 		color: #fff;
+
+		@include respond-to('medium') {
+			line-height: $header-height-lg;
+		}
 	}
 }
