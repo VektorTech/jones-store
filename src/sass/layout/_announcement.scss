@@ -1,8 +1,8 @@
 @use '../abstracts' as *;
 
-.promo-banner {
+.announcement {
 	width: 100%;
-	height: 3.5rem;
+	height: $announcement-height;
 	background-color: #fff;
 	color: $c-text-black;
 
@@ -16,7 +16,7 @@
 		height: 100%;
 		font-size: $text-sm;
 		font-weight: bold;
-		line-height: 3.5rem;
+		line-height: $announcement-height;
 		white-space: nowrap;
 		text-align: center;
 	}
@@ -24,19 +24,19 @@
 	&__link, &__link[href], &__link:visited {
 		color: $c-link;
 		text-decoration: underline;
+	}
 
-		& svg {
-			display: inline;
-			font-size: 1.7rem;
-			margin-left: 0.5rem;
-			vertical-align: sub;
-		}
+	&__info-icon {
+		display: inline;
+		font-size: $text-md;
+		margin-left: 0.5rem;
+		vertical-align: sub;
 	}
 
 	&__close {
 		position: absolute;
-		width: 3.5rem;
-		height: 3.5rem;
+		width: $announcement-height;
+		height: $announcement-height;
 		right: 0;
 		top: 0;
 		display: flex;

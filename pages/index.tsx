@@ -5,11 +5,11 @@ import { withSessionSsr } from "@Lib/withSession";
 // import prisma from '@Lib/prisma';
 
 import SEO from "@Components/common/SEO";
-import HeroBanner from "@Components/Home/HeroBanner";
-import CollectionSection from "@Components/Home/CollectionSection";
-import ProductsSection from "@Components/Home/ProductsSection";
-import GenderSection from "@Components/Home/GenderSection";
-import FeaturesSection from "@Components/Home/FeaturesSection";
+import HeroBanner from "@Components/home/HeroBanner";
+import CollectionSection from "@Components/home/CollectionSection";
+import ProductsSection from "@Components/home/ProductsSection";
+import GenderSection from "@Components/home/GenderSection";
+import FeaturesSection from "@Components/home/FeaturesSection";
 
 const Home: NextPage = (props) => {
   return (
