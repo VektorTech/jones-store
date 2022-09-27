@@ -81,9 +81,14 @@
 		& span {
 			height: calc(100% - 6rem) !important;
 
+			&:hover img {
+				transform: scale(1.2);
+			}
+
 			& img {
 				object-fit: cover;
 				object-position: bottom;
+				transition: transform .3s;
 			}
 		}
 

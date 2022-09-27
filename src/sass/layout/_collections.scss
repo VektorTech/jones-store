@@ -60,21 +60,26 @@
 
 		@include respond-to('small') {
 			&:nth-of-type(1) {
-				grid-area: 1 / 1 / 4 / 8;
+				grid-area: 1 / 7 / 5 / 13;
 			}
 
 			&:nth-of-type(2){
-				grid-area: 1 / 8 / 4 / 13;
+				grid-area: 5 / 7 / 7 / 13;
 			}
 
 			&:nth-of-type(3){
-				grid-area: 4 / 1 / 7 / 13;
+				grid-area: 1 / 1 / 7 / 7;
 			}
 		}
 
 		&-image {
 			object-fit: cover;
 			object-position: top left;
+			transition: transform .3s;
+		}
+
+		&:hover &-image {
+			transform: scale(1.2);
 		}
 
 		&-content {

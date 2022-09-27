@@ -17,6 +17,15 @@
 
 	&__link {
 		margin-right: 1rem;
+
+		> svg {
+			transition: transform .3s, color .3s;
+		}
+
+		&:hover > svg {
+			transform: scale(1.2);
+			color: $c-red;
+		}
 	}
 
 	&--vertical {

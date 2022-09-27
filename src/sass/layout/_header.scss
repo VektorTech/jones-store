@@ -67,6 +67,10 @@
 	&__nav-link {
 		display: inline-block;
 		color: #fff;
+
+		> a {
+			@include link-hover(#fff);
+		}
 	}
 
 	&__buttons {
@@ -87,6 +91,11 @@
 		align-items: center;
 		justify-content: center;
 		font-size: 2.2rem;
+		transition: opacity .3s;
+
+		&:hover {
+			opacity: 0.6;
+		}
 
 		@include respond-to('small') {
 			display: inline-flex;
@@ -120,10 +129,10 @@
 			}
 
 			@include respond-to('large') {
-				height: 2.2rem;
-				width: 2.2rem;
-				line-height: 2.2rem;
-				margin-top: -2.2rem;
+				// height: 2.2rem;
+				// width: 2.2rem;
+				// line-height: 2.2rem;
+				// margin-top: -2.2rem;
 			}
 		}
 	}

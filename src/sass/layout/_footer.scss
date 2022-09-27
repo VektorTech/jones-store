@@ -30,6 +30,18 @@
 		& + & {
 			margin-top: 4rem;
 		}
+
+		&:nth-of-type(2),
+		&:nth-of-type(3) {
+			& a {
+				transition: color .3s;
+
+				&:hover {
+					color: #fff;
+				}
+				@include link-hover($c-text-light, 0.1rem);
+			}
+		}
 	}
 
 	&__logo {
@@ -63,6 +75,10 @@
 
 		&-link[href] {
 			text-decoration: underline;
+
+			&:hover {
+				text-decoration: none;
+			}
 		}
 	}
 
@@ -109,6 +125,17 @@
 				padding: 1rem 0;
 				background: none;
 				border-bottom: 0.1rem solid #fff;
+				transition: border-color .3s;
+
+				&:focus,
+				&:focus ~ .newsletter__input-submit {
+					caret-color: $c-red;
+					border-color: $c-red;
+				}
+
+				&:focus + .newsletter__input-placeholder {
+					transform: scale(0.6) translateY(-2.5rem);
+				}
 			}
 
 			&-placeholder {
@@ -120,6 +147,8 @@
 				text-transform: uppercase;
 				font-style: italic;
 				color: $c-text-gray;
+				transform-origin: left;
+				transition: transform .3s;
 			}
 
 			&-submit {
@@ -128,6 +157,11 @@
 				border-bottom: 0.1rem solid #fff;
 				text-align: right;
 				padding-right: 0.5rem;
+				transition: border-color .3s, color .3s;
+
+				&:hover {
+					color: $c-red;
+				}
 
 				&-icon {
 					transform: scale(1.2);

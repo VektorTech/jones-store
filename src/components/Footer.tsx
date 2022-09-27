@@ -120,10 +120,8 @@ export default function Footer() {
             </p>
             <form action="">
               <div className="newsletter__input">
-                <label>
-                  <input className="newsletter__input-box" type="email" name="email" />
-                  <span className="newsletter__input-placeholder">enter email</span>
-                </label>
+                <input id="newsletter_input-label" className="newsletter__input-box" type="email" name="email" />
+                <label htmlFor="newsletter_input-label" className="newsletter__input-placeholder">enter email</label>
                 <button className="newsletter__input-submit" type="submit">
                   <CgArrowLongRight className="newsletter__input-submit-icon" />
                 </button>

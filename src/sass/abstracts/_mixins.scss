@@ -23,3 +23,25 @@
 			+ "Available breakpoints are: #{map-keys($breakpoints)}.";
 	}
 }
+
+@mixin link-hover($line-color, $thickness: 0.2rem) {
+	position: relative;
+
+	&::after {
+		content: "";
+		transition: width .3s;
+		width: 0%;
+		height: $thickness;
+		right: 0;
+		background-color: $line-color;
+		display: block;
+		position: absolute;
+		bottom: 0;
+	}
+
+	&:hover::after {
+		width: 100%;
+		left: 0;
+		right: initial;
+	}
+}

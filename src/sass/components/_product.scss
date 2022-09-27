@@ -61,6 +61,25 @@
 		font-size: 2.5rem;
 		text-align: right;
 		color: $c-text-dark;
+		transition: opacity .3s, transform .3s;
+
+		> button {
+			transition: background-color .3s;
+
+			&:hover {
+				background-color: #eee;
+			}
+		}
+
+		@include respond-to('medium') {
+			opacity: 0;
+			transform: translateY(5%);
+
+			&:hover {
+				transform: translateY(0);
+				opacity: 1;
+			}
+		}
 	}
 
 	&__add-wishlist {

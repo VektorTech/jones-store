@@ -55,6 +55,7 @@
 		top: 0;
 		left: 0rem;
 		right: 0rem;
+		user-select: none;
 
 		@include respond-to('x-small') {
 			left: 10rem;
@@ -170,6 +171,7 @@
 		@include respond-to('large') {
 			margin-top: -10vh;
 			width: calc(15rem + 15vh + 25vw);
+			margin-right: 7rem;
 		}
 
 		@include respond-to('small-h') {
@@ -216,6 +218,13 @@
 			width: 0;
 			height: 0;
 			position: relative;
+			font-weight: 400;
+			transition: color .3s, background-color .3s;
+
+			&:hover {
+				background-color: #fff;
+				color: #000;
+			}
 
 			> span {
 				position: absolute;
@@ -254,6 +263,14 @@
 	&__indicator {
 		font-size: 1.3rem;
 		padding: 0.5rem 0;
+
+		> svg {
+			transition: transform .3s;
+		}
+
+		&:hover > svg{
+			transform: scale(0.7);
+		}
 
 		&--active {
 			color: $c-red;
