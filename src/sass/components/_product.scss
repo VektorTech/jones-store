@@ -8,6 +8,18 @@
 		flex: 1 0 calc(25% - 1.5rem);
 	}
 
+	@include respond-to('medium') {
+		&__actions {
+			opacity: 0;
+			transform: translateY(10%);
+		}
+
+		&:hover &__actions {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	}
+
 	&__image {
 		position: relative;
 		padding-bottom: 60.5%;
@@ -68,16 +80,6 @@
 
 			&:hover {
 				background-color: #eee;
-			}
-		}
-
-		@include respond-to('medium') {
-			opacity: 0;
-			transform: translateY(5%);
-
-			&:hover {
-				transform: translateY(0);
-				opacity: 1;
 			}
 		}
 	}
