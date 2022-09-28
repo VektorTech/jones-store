@@ -22,6 +22,10 @@
 		text-align: center;
 		margin: 2.2rem 0;
 		flex: 1;
+
+		@include respond-to('small') {
+			margin: 0;
+		}
 	}
 
 	&__icon {

@@ -31,6 +31,12 @@
 			margin-top: 4rem;
 		}
 
+		@include respond-to('small') {
+			& + & {
+				margin-top: 0;
+			}
+		}
+
 		&:nth-of-type(2),
 		&:nth-of-type(3) {
 			& a {
@@ -101,8 +107,8 @@
 
 		&::after {
 			content: "";
-			width: 2.5rem;
-			height: 0.5rem;
+			width: 1.8rem;
+			height: 0.4rem;
 			background-color: $c-red;
 			margin-top: 1.4rem;
 			display: block;
