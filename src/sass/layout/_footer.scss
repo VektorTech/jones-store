@@ -42,10 +42,18 @@
 				@include link-hover($c-text-light, 0.1rem);
 			}
 		}
+
+		& a:focus-visible {
+			outline: 0.1rem solid #fff;
+		}
 	}
 
 	&__logo {
 		float: left;
+
+		> a:focus-visible {
+			opacity: 0.5;
+		}
 	}
 
 	&__sub-heading {
@@ -159,7 +167,8 @@
 				padding-right: 0.5rem;
 				transition: border-color .3s, color .3s;
 
-				&:hover {
+				&:hover,
+				&:focus-visible {
 					color: $c-red;
 				}
 
@@ -191,7 +200,6 @@
 			flex-direction: column;
 			justify-content: space-between;
 			flex-wrap: nowrap;
-			// white-space: nowrap;
 			padding: 2rem 0 3rem 0;
 			font-size: $text-sm;
 			text-align: center;
@@ -204,6 +212,10 @@
 
 		&__terms {
 			margin: 0.8rem 0;
+
+			& a:focus-visible {
+				outline: 0.1rem solid #fff;
+			}
 
 			&-space {
 				display: inline-block;
@@ -231,7 +243,13 @@
 		&__lang-currency {
 			padding-top: 0.5rem;
 
+
 			&-btn {
+				&:focus-visible {
+					background-color: $c-text-gray;
+					color: black;
+				}
+
 				padding: 0.5rem 1.5rem;
 				box-shadow: inset 0 0 0 0.1rem $c-text-gray;
 				border-radius: 2rem;

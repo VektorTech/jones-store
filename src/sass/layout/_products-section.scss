@@ -22,6 +22,14 @@
 
 		> a {
 			border-bottom: 0.1rem solid $c-text-dark;
+
+			&:focus-visible {
+				outline: 0.1rem solid $c-text-dark;
+			}
+
+			&:hover {
+				border: none;
+			}
 		}
 
 		@include link-arrow($c-text-dark);
@@ -35,7 +43,7 @@
 		gap: 1rem;
 
 		@include respond-to('small') {
-			gap: 1.5rem;
+			gap: 1rem;
 		}
 	}
 }

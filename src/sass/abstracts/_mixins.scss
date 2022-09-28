@@ -39,6 +39,7 @@
 		bottom: 0;
 	}
 
+	&:focus-visible::after,
 	&:hover::after {
 		width: 100%;
 		left: 0;

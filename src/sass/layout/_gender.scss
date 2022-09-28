@@ -14,7 +14,7 @@
 	}
 
 	&__grid {
-		height: calc(80vw * 5);
+		height: calc(70vw * 5);
 		display: grid;
 		grid-template-columns: repeat(12, 1fr);
 		grid-template-rows: repeat(10, 1fr);
@@ -22,7 +22,8 @@
 		position: relative;
 
 		@include respond-to('small') {
-			height: calc(40vw * 2);
+			max-height: 100rem;
+			height: calc(35vw * 2);
 			gap: 1.5rem;
 		}
 	}
@@ -33,6 +34,11 @@
 			display: block;
 			width: 100%;
 			height: 100%;
+
+			&:focus-visible img,
+			&:hover img {
+				transform: scale(1.1);
+			}
 		}
 
 		&:nth-of-type(1) {
@@ -81,14 +87,10 @@
 		& span {
 			height: calc(100% - 6rem) !important;
 
-			&:hover img {
-				transform: scale(1.2);
-			}
-
 			& img {
 				object-fit: cover;
 				object-position: bottom;
-				transition: transform .3s;
+				transition: transform .6s cubic-bezier(0,0,.2,1);
 			}
 		}
 

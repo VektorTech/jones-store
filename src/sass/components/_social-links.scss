@@ -22,6 +22,7 @@
 			transition: transform .3s, color .3s;
 		}
 
+		&:focus-visible > svg,
 		&:hover > svg {
 			transform: scale(1.2);
 			color: $c-red;

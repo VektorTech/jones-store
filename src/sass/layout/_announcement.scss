@@ -26,6 +26,10 @@
 		text-decoration: underline;
 	}
 
+	&__link:focus-visible {
+		outline: 0.1rem solid $c-text-black;
+	}
+
 	&__info-icon {
 		display: inline;
 		font-size: $text-md;
@@ -44,5 +48,9 @@
 		align-items: center;
 		color: $c-gray;
 		background-color: #fff;
+
+		&:focus-visible {
+			color: $c-text-black;
+		}
 	}
 }

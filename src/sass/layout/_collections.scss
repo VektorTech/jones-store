@@ -22,8 +22,7 @@
 	}
 
 	&__grid {
-		height: calc(70vw * 3);
-		min-height: 90rem;
+		height: calc(60vw * 3);
 		margin-top: 4rem;
 		position: relative;
 		display: grid;
@@ -32,8 +31,9 @@
 		gap: 1rem;
 
 		@include respond-to('small') {
-			min-height: 60rem;
-			height: calc(30vw * 2);
+			// min-height: 60rem;
+			max-height: 70rem;
+			height: calc(25vw * 2);
 			gap: 1.5rem;
 		}
 	}
@@ -74,12 +74,12 @@
 
 		&-image {
 			object-fit: cover;
-			object-position: top left;
-			transition: transform .3s;
+			transition: transform .6s cubic-bezier(0,0,.2,1);
 		}
 
+		& > a:focus-visible &-image,
 		&:hover &-image {
-			transform: scale(1.2);
+			transform: scale(1.1);
 		}
 
 		&-content {
