@@ -162,8 +162,8 @@ export default function Footer() {
               &copy; {new Date().getFullYear()} Jones LLC. All Rights Reserved
             </small>
           </div>
-          <div className="gutter__lang-currency">
-            <button className="gutter__lang-currency-btn">
+          <div className="gutter__lang-currency language-currency">
+            <button className="language-currency__btn">
               {"English"} <span>|</span> {"$ USD"}
             </button>
           </div>

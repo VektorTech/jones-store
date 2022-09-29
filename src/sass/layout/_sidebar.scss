@@ -151,22 +151,5 @@
 	&__lang-currency {
 		margin-top: 5rem;
 		padding-top: 0.5rem;
-
-		&-btn {
-			text-transform: uppercase;
-
-			&:focus-visible {
-				background-color: $c-text-gray;
-				color: black;
-			}
-
-			padding: 0.5rem 1.5rem;
-			box-shadow: inset 0 0 0 0.1rem $c-text-gray;
-			border-radius: 2rem;
-
-			> span {
-				vertical-align: text-bottom;
-			}
-		}
 	}
 }

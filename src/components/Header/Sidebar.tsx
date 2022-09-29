@@ -274,8 +274,8 @@ export default function Sidebar() {
 							</li>
 						</ul>
 					</div>
-					<div className="sidebar__lang-currency">
-						<button className="sidebar__lang-currency-btn">
+					<div className="sidebar__lang-currency language-currency">
+						<button className="language-currency__btn">
 							{"English"} <span>|</span> {"$ USD"}
 						</button>
 					</div>
