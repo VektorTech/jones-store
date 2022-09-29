@@ -4,9 +4,9 @@ import { AiOutlineHeart } from "react-icons/ai";
 
 import RatingStars from "./RatingStars";
 
-export default function Product() {
+export default function Product({ small = false }) {
   return (
-    <div className="product">
+    <div className={`product${ small ? " product--small" : ""}`}>
       <Link href="">
         <a>
           <div className="product__wrapper">

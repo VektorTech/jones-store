@@ -1,6 +1,8 @@
 @use '../abstracts' as *;
 
 .product {
+	$self: &;
+
 	flex: 1 0 calc(50% - 1rem);
 	font-size: $text-sm;
 
@@ -8,7 +10,7 @@
 
 	& > a:focus-visible {
 		outline: 0.2rem solid $c-red;
-		outline-offset: 1rem;
+		outline-offset: 0.4rem;
 	}
 
 	@include respond-to('small') {
@@ -16,22 +18,57 @@
 	}
 
 	@include respond-to('medium') {
-		&__actions {
+		&__actions button {
 			opacity: 0;
 			visibility: hidden;
-			transform: translateY(10%);
+			transform: translateX(50%);
 		}
 
-		&:hover &__actions {
+		&:hover &__actions button {
 			transform: translateY(0);
 			opacity: 1;
 			visibility: visible;
 		}
+
+		&:hover &__image img {
+			transform: scale(1.1);
+		}
+	}
+
+	&--small {
+		#{$self}__title {
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			max-width: 18rem;
+			margin-top: 0.5rem;
+		}
+
+		#{$self}__price {
+			color: $c-text-black;
+		}
+
+		#{$self}__tag,
+		#{$self}__type,
+		#{$self}__old-price,
+		#{$self}__rating {
+			display: none;
+		}
+
+
+	}
+
+	&__wrapper {
+		overflow: hidden;
 	}
 
 	&__image {
 		position: relative;
 		padding-bottom: 60.5%;
+
+		& img {
+			transition: transform .6s cubic-bezier(.15,.75,.5,1);
+		}
 	}
 
 	&__tag {
@@ -82,10 +119,9 @@
 		font-size: 2.5rem;
 		text-align: right;
 		color: $c-text-dark;
-		transition: opacity .3s, transform .3s, visibility .3s;
 
 		> button {
-			transition: background-color .3s;
+			transition: background-color .3s, transform .3s, visibility .3s, opacity .3s;
 
 			&:hover {
 				background-color: #eee;
@@ -156,7 +192,8 @@
 	}
 
 	&__rating {
-		color: #ffd000;
+		color: black;
+		font-size: 1.4rem;
 	}
 
 	&__amount {
