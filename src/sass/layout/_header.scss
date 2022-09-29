@@ -23,20 +23,17 @@
 		overflow: hidden;
 
 		& a {
-			display: flex;
-			height: 100%;
-
 			&:focus-visible {
 				opacity: 0.5;
 			}
 		}
 
 		& img {
-			margin: auto;
+			display: inline;
 		}
 
-		@include respond-to('small') {
-			flex-basis: getWidth(4);
+		@include respond-to('large') {
+			flex-basis: getWidth(3);
 
 			& img {
 				margin: auto 0;
@@ -59,12 +56,13 @@
 
 		& ul {
 			display: flex;
-			justify-content: space-around;
+			justify-content: center;
+			gap: 3.5rem;
 		}
 
-		@include respond-to('small') {
+		@include respond-to('large') {
 			display: block;
-			flex-basis: getWidth(4);
+			flex-basis: getWidth(6);
 		}
 	}
 
@@ -82,8 +80,8 @@
 		text-align: center;
 		white-space: nowrap;
 
-		@include respond-to('small') {
-			flex-basis: getWidth(4);
+		@include respond-to('large') {
+			flex-basis: getWidth(3);
 			text-align: right;
 		}
 	}
@@ -97,21 +95,18 @@
 		font-size: 2.2rem;
 		transition: opacity .3s;
 
-		& > a:focus-visible,
+		&:focus-within,
 		&:hover {
 			opacity: 0.5;
 		}
 
-		@include respond-to('small') {
+		@include respond-to('large') {
 			display: inline-flex;
+			font-size: 2.5rem;
 
 			&:nth-of-type(n + 2) {
 				margin-left: 2rem;
 			}
-		}
-
-		@include respond-to('large') {
-			font-size: 2.5rem;
 		}
 
 		& span {
@@ -126,20 +121,21 @@
 			margin-top: -1.7rem;
 			margin-left: 2rem;
 
-			@include respond-to('small') {
+			@include respond-to('medium') {
 				height: 2rem;
 				width: 2rem;
 				line-height: 2rem;
 				margin-top: -2rem;
 			}
-
-			@include respond-to('large') {
-				// height: 2.2rem;
-				// width: 2.2rem;
-				// line-height: 2.2rem;
-				// margin-top: -2.2rem;
-			}
 		}
+	}
+
+	&__menu-button,
+	&__logo,
+	&__buttons {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 
 	&__button-cart {
@@ -150,19 +146,17 @@
 		text-align: center;
 		flex-basis: getWidth(2);
 
-		@include respond-to('small') {
+		@include respond-to('large') {
 			display: none;
 		}
 	}
 
 	&__menu-toggle {
-		height: 100%;
-		line-height: $header-height;
-		font-size: 2.2rem;
+		font-size: 2.5rem;
 		color: #fff;
 
-		@include respond-to('medium') {
-			line-height: $header-height-lg;
+		&:focus-visible {
+			opacity: 0.5;
 		}
 	}
 }

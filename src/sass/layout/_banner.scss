@@ -158,8 +158,8 @@
 
 	&__image {
 		margin: 0 auto;
-		margin-top: 22vh;
-		width: calc(8rem + 12vh + 16vw);
+		margin-top: 20vh;
+		width: calc(8rem + 12vh + 15vw);
 
 		> span {
 			overflow: visible !important;
@@ -170,7 +170,7 @@
 		}
 
 		@include respond-to('x-small') {
-			margin-top: 5vh;
+			margin-top: 0vh;
 			float: right;
 			margin-right: 5rem;
 
@@ -202,7 +202,7 @@
 		}
 
 		@include respond-to('small-h') {
-			width: calc(10rem + 12vh + 22vw);
+			width: calc(10rem + 10vh + 20vw);
 		}
 	}
 
