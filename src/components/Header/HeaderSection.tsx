@@ -1,19 +1,22 @@
 import Link from "next/link";
 import Image from "next/future/image";
 
-import { AiOutlineMenu, AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineHeart } from "react-icons/ai";
 import { BsCart3, BsPerson } from "react-icons/bs";
-import { FiSearch } from "react-icons/fi";
+import { FiSearch, FiMenu } from "react-icons/fi";
 
 import logoImg from "@Images/jones-logo.png";
+import { useLayout } from "./Sidebar";
 
 export default function HeaderSection() {
+  const {sidebarVisible, setSidebarVisibility} = useLayout();
+
   return (
     <header className="header">
       <div className="header__container">
         <div className="header__menu-button">
-          <button className="header__menu-toggle">
-            <AiOutlineMenu />
+          <button className="header__menu-toggle" onClick={() => setSidebarVisibility(true)}>
+            <FiMenu />
           </button>
         </div>
 
