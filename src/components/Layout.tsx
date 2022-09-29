@@ -1,12 +1,10 @@
-import Announcement from "./header/Announcement";
-import HeaderSection from "./header/HeaderSection";
+import Header from "./header";
 import Footer from "./Footer";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Announcement />
-      <HeaderSection />
+      <Header />
       <main>{children}</main>
       <Footer />
     </>
