@@ -1,0 +1,172 @@
+@use '../abstracts' as *;
+
+.sidebar {
+	$self: &;
+
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 100;
+	pointer-events: none;
+	transition: background-color .3s;
+	text-transform: uppercase;
+
+	&--active {
+		pointer-events: unset;
+		background-color: #22222288;
+
+		#{$self}__nav {
+			transform: translateX(0%);
+		}
+
+		#{$self}__close {
+			visibility: visible;
+		}
+	}
+
+	&__nav {
+		width: calc(100% - 8rem);
+		max-width: 32rem;
+		height: 100%;
+		background-color: #fff;
+		transform: translateX(-100%);
+		transition: transform .3s;
+		overflow-x: hidden;
+		overflow-y: auto;
+
+		&--submenu {
+			#{$self}__container,
+			#{$self}__submenu-container {
+				transform: translateX(-100%);
+			}
+		}
+	}
+
+	&__container {
+		width: 100%;
+		padding: 3.5rem 2rem 5rem 2rem;
+		font-size: $text-sm;
+		position: absolute;
+		transition: transform .6s;
+		top: 0;
+	}
+
+	&__submenu-container {
+		background-color: #fff;
+		left: 100%;
+		transform: translateX(0%);
+	}
+
+	&__back-button {
+
+		& svg {
+			margin-right: 1rem;
+			margin-bottom: 0.3rem;
+		}
+	}
+
+	&__close {
+		position: absolute;
+		width: 3.5rem;
+		height: 3.5rem;
+		top: 0;
+		font-size: $text-sm;
+		left: min(calc(100% - 7rem), 33rem);
+		border-radius: 50%;
+		background-color: #fff;
+		color: #bbb;
+		visibility: hidden;
+	}
+
+	&__search-box {
+		width: 100%;
+		height: 3.5rem;
+		box-shadow: inset 0 0 0 0.1rem #000;
+		user-select: none;
+
+		&-label {
+			width: calc(100% - 3.5em);
+			float: left;
+			text-align: left;
+			height: 100%;
+			line-height: 3.5rem;
+			padding-left: 1rem;
+		}
+
+		&-icon {
+			width: 3.5rem;
+			float: right;
+			height: 100%;
+			line-height: 3.5rem;
+			font-size: $text-md;
+
+			> svg {
+				margin-bottom: 0.2rem;
+			}
+		}
+	}
+
+	&__links {
+		margin: 2rem 0;
+
+		&-item {
+			> button,
+			> a {
+				text-align: left;
+				display: block;
+				padding: 1rem 0;
+				width: 100%;
+				height: 100%;
+			}
+		}
+
+		&-menu {
+			> button {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+		}
+	}
+
+	&__icon-links {
+		margin-top: 2rem;
+
+		&-item {
+			> a {
+				display: block;
+				padding: 1rem 0;
+			}
+
+			& svg {
+				margin-right: 1rem;
+				margin-bottom: 0.2rem;
+				font-size: 2rem;
+			}
+		}
+	}
+
+	&__lang-currency {
+		margin-top: 5rem;
+		padding-top: 0.5rem;
+
+		&-btn {
+			text-transform: uppercase;
+
+			&:focus-visible {
+				background-color: $c-text-gray;
+				color: black;
+			}
+
+			padding: 0.5rem 1.5rem;
+			box-shadow: inset 0 0 0 0.1rem $c-text-gray;
+			border-radius: 2rem;
+
+			> span {
+				vertical-align: text-bottom;
+			}
+		}
+	}
+}
