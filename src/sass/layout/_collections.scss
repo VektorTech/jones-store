@@ -74,7 +74,7 @@
 
 		&-image {
 			object-fit: cover;
-			transition: transform .6s cubic-bezier(0,0,.2,1);
+			transition: transform .6s $timing-func-img;
 		}
 
 		& > a:focus-visible &-image,

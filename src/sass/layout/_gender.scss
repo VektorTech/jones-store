@@ -90,7 +90,7 @@
 			& img {
 				object-fit: cover;
 				object-position: bottom;
-				transition: transform .6s cubic-bezier(0,0,.2,1);
+				transition: transform .6s $timing-func-img;
 			}
 		}
 

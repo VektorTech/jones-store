@@ -10,7 +10,7 @@
 	right: 0;
 	z-index: 100;
 	pointer-events: none;
-	transition: background-color .3s;
+	transition: background-color .3s $timing-func-ui;
 	text-transform: uppercase;
 
 	&--active {
@@ -32,7 +32,7 @@
 		height: 100%;
 		background-color: #fff;
 		transform: translateX(-100%);
-		transition: transform .3s;
+		transition: transform .3s $timing-func-ui;
 		overflow-x: hidden;
 		overflow-y: auto;
 
@@ -49,7 +49,7 @@
 		padding: 3.5rem 2rem 5rem 2rem;
 		font-size: $text-sm;
 		position: absolute;
-		transition: transform .6s;
+		transition: transform .6s $timing-func-ui;
 		top: 0;
 	}
 

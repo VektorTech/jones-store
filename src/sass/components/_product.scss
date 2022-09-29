@@ -67,7 +67,7 @@
 		padding-bottom: 60.5%;
 
 		& img {
-			transition: transform .6s cubic-bezier(.15,.75,.5,1);
+			transition: transform .6s $timing-func-img;
 		}
 	}
 

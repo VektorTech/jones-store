@@ -32,3 +32,6 @@ $breakpoints: (
   'xx-small-h':  ( max-height: 320px ),
   'small-h':  ( max-height: 576px )
 ) !default;
+
+$timing-func-ui: cubic-bezier(.15,.75,.5,1);
+$timing-func-img: cubic-bezier(0,0,.2,1);
