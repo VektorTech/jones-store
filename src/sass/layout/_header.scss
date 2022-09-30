@@ -18,6 +18,14 @@
 		}
 	}
 
+	&__menu-button,
+	&__logo,
+	&__buttons {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
 	&__logo {
 		flex-basis: getWidth(8);
 		overflow: hidden;
@@ -34,6 +42,7 @@
 
 		@include respond-to('large') {
 			flex-basis: getWidth(3);
+			justify-content: flex-start;
 
 			& img {
 				margin: auto 0;
@@ -82,7 +91,7 @@
 
 		@include respond-to('large') {
 			flex-basis: getWidth(3);
-			text-align: right;
+			justify-content: flex-end;
 		}
 	}
 
@@ -128,14 +137,6 @@
 				margin-top: -2rem;
 			}
 		}
-	}
-
-	&__menu-button,
-	&__logo,
-	&__buttons {
-		display: flex;
-		justify-content: center;
-		align-items: center;
 	}
 
 	&__button-cart {

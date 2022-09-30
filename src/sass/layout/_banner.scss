@@ -71,11 +71,6 @@
 			left: 20%;
 			right: 20%;
 		}
-
-		@include respond-to('xx-large') {
-			left: 25%;
-			right: 25%;
-		}
 	}
 
 	&__secondary-text {
@@ -234,11 +229,6 @@
 		@include respond-to('x-large') {
 			left: 20%;
 			right: 20%;
-		}
-
-		@include respond-to('xx-large') {
-			left: 25%;
-			right: 25%;
 		}
 
 		@include respond-to('xx-small-h') {
