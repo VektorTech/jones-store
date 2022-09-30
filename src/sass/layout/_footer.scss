@@ -133,60 +133,6 @@
 		&__input {
 			margin-top: 2rem;
 			position: relative;
-
-			&-box {
-				width: 90%;
-				padding: 1rem 0;
-				background: none;
-				border-bottom: 0.1rem solid #fff;
-				transition: border-color .3s;
-
-				&::placeholder {
-					opacity: 0;
-				}
-
-				&:focus,
-				&:focus ~ .newsletter__input-submit {
-					caret-color: $c-red;
-					border-color: $c-red;
-				}
-
-				&:not(:placeholder-shown) + .newsletter__input-placeholder,
-				&:focus + .newsletter__input-placeholder {
-					transform: scale(0.6) translateY(-4rem);
-				}
-			}
-
-			&-placeholder {
-				position: absolute;
-				left: 0;
-				padding-top: 1rem;
-				pointer-events: none;
-				user-select: none;
-				text-transform: uppercase;
-				font-style: italic;
-				color: $c-text-gray;
-				transform-origin: left;
-				transition: transform .3s;
-			}
-
-			&-submit {
-				width: 10%;
-				padding: 1rem 0;
-				border-bottom: 0.1rem solid #fff;
-				text-align: right;
-				padding-right: 0.5rem;
-				transition: border-color .3s, color .3s;
-
-				&:hover,
-				&:focus-visible {
-					color: $c-red;
-				}
-
-				&-icon {
-					transform: scale(1.2);
-				}
-			}
 		}
 
 		&__disclaimer {

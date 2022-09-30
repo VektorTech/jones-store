@@ -49,26 +49,26 @@
 		position: relative;
 		text-align: left;
 
-		&-box,
-		&-icon {
-			border-bottom: 0.1rem solid #ddd;
-		}
+		// &-box,
+		// &-icon {
+		// 	border-bottom: 0.1rem solid #ddd;
+		// }
 
-		&-box {
-			width: calc(100% - 4rem);
-			padding: 1rem;
-		}
+		// &-box {
+		// 	width: calc(100% - 4rem);
+		// 	padding: 1rem;
+		// }
 
-		&-icon {
-			position: absolute;
-			right: 0;
-			font-size: 2rem;
-			padding: 1rem 0;
-			width: 4rem;
-			height: 100%;
-			color: $c-text-dark;
-			background-color: #fff;
-		}
+		// &-icon {
+		// 	position: absolute;
+		// 	right: 0;
+		// 	font-size: 2rem;
+		// 	padding: 1rem 0;
+		// 	width: 4rem;
+		// 	height: 100%;
+		// 	color: $c-text-dark;
+		// 	background-color: #fff;
+		// }
 	}
 
 	&__trends {

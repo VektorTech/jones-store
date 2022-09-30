@@ -119,11 +119,11 @@ export default function Footer() {
               the latest arrivals and special offers.
             </p>
             <form action="">
-              <div className="newsletter__input">
-                <input id="newsletter_input-label" className="newsletter__input-box" type="email" name="email" inputMode="email" placeholder="ENTER EMAIL" spellCheck={"false"} />
-                <label htmlFor="newsletter_input-label" className="newsletter__input-placeholder">enter email</label>
-                <button className="newsletter__input-submit" type="submit">
-                  <CgArrowLongRight className="newsletter__input-submit-icon" />
+              <div className="newsletter__input input input--red input--bottom">
+                <input id="newsletter_input" className="input__box" type="email" name="email" inputMode="email" placeholder="ENTER EMAIL" spellCheck={"false"} />
+                <label htmlFor="newsletter_input" className="input__placeholder">enter email</label>
+                <button className="input__submit" type="submit">
+                  <CgArrowLongRight className="input__submit-icon" />
                 </button>
               </div>
               <p className="newsletter__disclaimer">

@@ -1,0 +1,115 @@
+@use '../abstracts' as *;
+
+.input {
+	$self: &;
+
+	&::after {
+		content: "";
+		background-color: #000;
+		position: absolute;
+		height: 0.2rem;
+		width: 0%;
+		display: block;
+		left: 50%;
+		transform: translateX(-50%);
+		margin-top: -0.2rem;
+		transition: width 0.3s $timing-func-ui;
+	}
+
+	&:focus-within {
+		&::after {
+			width: 100%;
+		}
+	}
+
+	&__box {
+		width: 90%;
+		padding: 1rem 0;
+		background: none;
+		border: 0.1rem solid #bbb;
+		transition: border-color .3s $timing-func-ui;
+
+		&::placeholder {
+			opacity: 0;
+		}
+
+		&:hover,
+		&:focus,
+		&:hover ~ #{$self}__submit,
+		&:focus ~ #{$self}__submit {
+			caret-color: #888;
+			border-color: #888;
+		}
+
+		&:not(:placeholder-shown) + #{$self}__placeholder,
+		&:focus + #{$self}__placeholder {
+			transform: scale(0.6) translateY(-4rem);
+		}
+	}
+
+	&__placeholder {
+		position: absolute;
+		left: 0;
+		padding-top: 1rem;
+		pointer-events: none;
+		user-select: none;
+		text-transform: uppercase;
+		font-style: italic;
+		transform-origin: left;
+		transition: transform .3s $timing-func-ui;
+		color: $c-text-gray;
+	}
+
+	&__submit {
+		width: 10%;
+		padding: 1rem 0;
+		text-align: right;
+		padding-right: 1rem;
+		transition: border-color .3s, color .3s;
+		border: 0.1rem solid #999;
+
+		&-icon {
+			transform: scale(1.2);
+		}
+	}
+
+	&--bottom {
+		#{$self}__box,
+		#{$self}__submit {
+			border-top: none;
+			border-left: none;
+			border-right: none;
+		}
+	}
+
+	&--red {
+		&::after {
+			background-color: $c-red;
+		}
+
+		#{$self}__placeholder {
+			color: $c-text-gray;
+		}
+
+		#{$self}__box {
+			border-color: #fff;
+
+			&:hover,
+			&:focus,
+			&:hover ~ #{$self}__submit,
+			&:focus ~ #{$self}__submit {
+				caret-color: mix($c-red, white, 60%);
+				border-color: mix($c-red, white, 60%);
+			}
+		}
+
+		#{$self}__submit {
+			border-color: #fff;
+
+			&:hover,
+			&:focus-visible {
+				color: $c-red;
+			}
+		}
+	}
+}
