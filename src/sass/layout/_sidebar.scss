@@ -10,12 +10,14 @@
 	right: 0;
 	z-index: 100;
 	pointer-events: none;
-	transition: background-color .3s $timing-func-ui;
+	transition: background-color .3s $timing-func-ui, visibility .3s;
 	text-transform: uppercase;
+	visibility: hidden;
 
 	&--active {
 		pointer-events: unset;
 		background-color: #22222288;
+		visibility: visible;
 
 		#{$self}__nav {
 			transform: translateX(0%);
