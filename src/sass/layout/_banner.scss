@@ -255,7 +255,7 @@
 			height: 0;
 			position: relative;
 			font-weight: 400;
-			transition: color .3s cubic-bezier(0.6, 0.04, 0.98, 0.335), background-color .3s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+			transition: color .3s $timing-func-ui, background-color .3s $timing-func-ui;
 
 			&:focus-visible,
 			&:hover {
