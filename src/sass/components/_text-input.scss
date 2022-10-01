@@ -113,7 +113,9 @@
 
 			&:hover,
 			&:focus-visible {
-				color: $c-red;
+				#{$self}__submit-icon {
+					color: $c-red;
+				}
 			}
 		}
 	}
