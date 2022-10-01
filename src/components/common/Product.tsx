@@ -16,6 +16,7 @@ export default function Product({ small = false }) {
                 objectFit="cover"
                 objectPosition={"center top"}
                 layout="fill"
+                className="product__image-img"
                 alt=""
               />
               <span className="product__tag">sale</span>
