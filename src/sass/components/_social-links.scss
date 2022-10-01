@@ -19,7 +19,8 @@
 		margin-right: 1rem;
 
 		> svg {
-			transition: transform .3s, color .3s;
+			transition: transform .3s $timing-func-ui,
+						color .3s $timing-func-ui;
 		}
 
 		&:focus-visible > svg,
