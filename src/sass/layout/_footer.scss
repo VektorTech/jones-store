@@ -49,7 +49,7 @@
 			}
 		}
 
-		& a:focus-visible {
+		& a:focus-visible:not(.social-links__link) {
 			outline: 0.1rem solid #fff;
 		}
 	}
