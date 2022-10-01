@@ -87,6 +87,8 @@
 		height: 3.5rem;
 		box-shadow: inset 0 0 0 0.1rem #000;
 		user-select: none;
+		transition: background-color .3s $timing-func-ui;
+		cursor: text;
 
 		&-label {
 			width: calc(100% - 3.5em);
@@ -108,12 +110,19 @@
 				margin-bottom: 0.2rem;
 			}
 		}
+
+		&:focus-visible,
+		&:hover {
+			background-color: #eee;
+		}
 	}
 
 	&__links {
 		margin: 2rem 0;
 
 		&-item {
+			transition: color .3s $timing-func-ui;
+
 			> button,
 			> a {
 				text-align: left;
@@ -121,6 +130,12 @@
 				padding: 1rem 0;
 				width: 100%;
 				height: 100%;
+			}
+
+			> a:focus-visible,
+			> button:focus-visible,
+			&:hover {
+				color: $c-text-red;
 			}
 		}
 
@@ -137,6 +152,8 @@
 		margin-top: 2rem;
 
 		&-item {
+			transition: color .3s $timing-func-ui;
+
 			> a {
 				display: block;
 				padding: 1rem 0;
@@ -146,6 +163,11 @@
 				margin-right: 1rem;
 				margin-bottom: 0.2rem;
 				font-size: 2rem;
+			}
+
+			> a:focus-visible,
+			&:hover {
+				color: $c-text-red;
 			}
 		}
 	}
