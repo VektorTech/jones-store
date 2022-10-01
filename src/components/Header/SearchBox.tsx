@@ -5,7 +5,7 @@ import Product from "@Components/common/Product";
 import { useState } from "react";
 
 export default function SearchBox() {
-	const [active, setActive] = useState(true);
+	const [active, setActive] = useState(false);
 
 	if (!active) return null;
 
