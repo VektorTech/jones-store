@@ -12,9 +12,9 @@
 		padding: 0.5rem 1.5rem;
 		box-shadow: inset 0 0 0 0.1rem $c-text-gray;
 		border-radius: 2rem;
+	}
 
-		> span {
-			vertical-align: text-bottom;
-		}
+	&__separator {
+		vertical-align: text-bottom;
 	}
 }
