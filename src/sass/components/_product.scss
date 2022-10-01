@@ -164,15 +164,15 @@
 	&__price {
 		color: $c-text-red;
 
-		& .product__currency {
+		& #{$self}__currency {
 			font-weight: bold;
 		}
 
-		& .product__amount {
+		& #{$self}__amount {
 			font-weight: bold;
 		}
 
-		& .product__discount-percentage {
+		& #{$self}__discount-percentage {
 			margin-left: 0.5rem;
 		}
 	}
@@ -182,11 +182,11 @@
 		color: $c-text-dark;
 		text-decoration: line-through;
 
-		& .product__old-currency {
+		& #{$self}__old-currency {
 			font-weight: 300;
 		}
 
-		& .product__old-amount {
+		& #{$self}__old-amount {
 			font-weight: 300;
 		}
 	}
