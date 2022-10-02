@@ -5,8 +5,17 @@ import type { AppProps } from "next/app";
 import Layout from "@Components/Layout";
 import SEO from "@Components/common/SEO";
 import Head from "next/head";
+import AdminLayout from "./admin/AdminLayout";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, cookies, isAdmin }: AppPropsWithCookies) {
+  if (isAdmin) {
+    return (
+      <AdminLayout>
+        <Component {...pageProps} />
+      </AdminLayout>
+    );
+  }
+
   return (
     <>
       <Head>
@@ -19,6 +28,21 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Layout>
     </>
   );
+}
+
+MyApp.getInitialProps = async (context: AppContext) => {
+  const appProps = await App.getInitialProps(context);
+
+  const req = context.ctx.req;
+
+  return {
+    ...appProps,
+    isAdmin: req?.url?.startsWith("/admin")
+  };
+}
+
+interface AppPropsWithCookies extends AppProps {
+  isAdmin: boolean;
 }
 
 export default MyApp;
