@@ -10,7 +10,7 @@
 		justify-content: center;
 		padding: $section-padding-v 0;
 
-		@include respond-to('small') {
+		@include respond-to('medium') {
 			flex-direction: row;
 			gap: 1rem;
 		}
@@ -31,7 +31,7 @@
 			margin-top: 4rem;
 		}
 
-		@include respond-to('small') {
+		@include respond-to('medium') {
 			& + & {
 				margin-top: 0;
 			}

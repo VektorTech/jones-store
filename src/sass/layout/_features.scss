@@ -9,6 +9,7 @@
 		@extend %container;
 		padding: $section-padding-v 0;
 		display: flex;
+		flex-wrap: wrap;
 		flex-direction: column;
 		align-content: center;
 
@@ -24,7 +25,12 @@
 		flex: 1;
 
 		@include respond-to('small') {
+			flex-basis: calc(50% - 1rem);
+		}
+
+		@include respond-to('medium') {
 			margin: 0;
+			flex-basis: calc(25% - 1rem);
 		}
 	}
 
