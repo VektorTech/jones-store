@@ -1,40 +1,27 @@
-import Link from "next/link";
+// import Link from "next/link";
+import { useRouter } from 'next/router'
 
 import { VscChromeClose } from "react-icons/vsc";
 import { BsSliders } from "react-icons/bs";
 import { ImArrowDown } from "react-icons/im";
-import { IoIosArrowUp, IoIosArrowBack } from "react-icons/io";
-import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
+
+import Filter from "@Components/product-list/Filter";
+import BreadCrumbs from "@Components/product-list/BreadCrumbs";
+import Pagination from "@Components/product-list/Pagination";
 
 export default function Category() {
+	const router = useRouter();
+	const { categoryId } = router.query;
+
 	return (
 		<div>
-			<div className="breadcrumb">
-				<div className="breadcrumb__container">
-					<ul className="breadcrumb__list">
-						<li className="breadcrumb__list-item">
-							<Link href="">
-								<a>Home</a>
-							</Link>
-						</li>
-						<li className="breadcrumb__list-item">
-							<Link href="">
-								<a>Women</a>
-							</Link>
-						</li>
-						<li className="breadcrumb__list-item">
-							<Link href="">
-								<a>Mids</a>
-							</Link>
-						</li>
-					</ul>
-				</div>
-			</div>
-
+			<BreadCrumbs />
 			<div className="constraints">
 				<div className="constraints__container">
-					<h1 className="constraints__title"></h1>
-					<p className="constraints__results">Showing <span>1</span> &mdash; <span>48</span> of <span>375</span> results</p>
+					<h1 className="constraints__title">{categoryId}</h1>
+					<p className="constraints__summary">
+						Showing <span>1</span> &mdash; <span>48</span> of <span>375</span> results
+					</p>
 					<div className="constraints__filters">
 						<button className="constraints__filter">
 							<span>Brand</span> <span>Jordan</span>
@@ -83,40 +70,11 @@ export default function Category() {
 
 			<div className="results">
 				<div className="results__filter">
-					<div className="filter">
-						<div className="filter__head">
-							<span>Filter</span>
-							<button className="filter__hide">
-								<IoIosArrowBack />
-							</button>
-						</div>
-
-						<div className="filter__param">
-							<label className="filter__param-section">
-								<span className="filter__param-type">
-									<IoIosArrowUp />
-								</span>
-								<input type="checkbox" className="filter__param-hide" />
-								<div className="filter__param-body"></div>
-							</label>
-						</div>
-
-						<div className="filter__confirm">
-							<button className="filter__clear-all">clear all</button>
-							<button className="filter__done">done</button>
-						</div>
-					</div>
+					<Filter />
 				</div>
 
 				<div className="results__grid"></div>
-				<div className="results__pagination">
-					<button className="results__pagination-first"><AiOutlineDoubleLeft /></button>
-					<button className="results__pagination-prev">Prev</button>
-					<button className="results__pagination-page">1</button>
-					<button className="results__pagination-page">2</button>
-					<button className="results__pagination-next">Next</button>
-					<button className="results__pagination-last"><AiOutlineDoubleRight /></button>
-				</div>
+				<Pagination />
 			</div>
 		</div>
 	);
