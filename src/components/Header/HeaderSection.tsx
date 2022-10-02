@@ -7,12 +7,27 @@ import { FiSearch, FiMenu } from "react-icons/fi";
 
 import logoImg from "@Images/jones-logo.png";
 import { useLayout } from "./Sidebar";
+import useScrollTop from "@Lib/hooks/useScrollTop";
+import { useEffect, useRef, useState } from "react";
 
 export default function HeaderSection() {
   const {sidebarVisible, setSidebarVisibility} = useLayout();
 
+  const [pinnedState, setPinnedState] = useState(false);
+  const scrollTop = useScrollTop();
+  const lastScroll = useRef(scrollTop);
+
+  useEffect(() => {
+    if (scrollTop >= 135) {
+      setPinnedState(lastScroll.current > scrollTop);
+      lastScroll.current = scrollTop;
+    } else {
+      setPinnedState(false);
+    }
+  }, [scrollTop]);
+
   return (
-    <header className="header">
+    <header className={`header${pinnedState ? " header--pinned" : ""}`}>
       <div className="header__container">
         <div className="header__menu-button">
           <button className="header__menu-toggle" onClick={() => setSidebarVisibility(true)}>
