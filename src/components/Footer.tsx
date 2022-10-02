@@ -164,7 +164,7 @@ export default function Footer() {
           </div>
           <div className="gutter__lang-currency language-currency">
             <button className="language-currency__btn">
-              {"English"} <span className="language-currency__separator">|</span> {"$ USD"}
+              {"English"} <span className="language-currency__sep">|</span> {"$ USD"}
             </button>
           </div>
         </div>

@@ -1,3 +1,4 @@
+import useTabTrapIn from "@Lib/hooks/useTabTrapIn";
 import Link from "next/link";
 import React, { createContext, useContext, useEffect, useState, useRef, Dispatch, SetStateAction, ReactElement } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
@@ -5,8 +6,6 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { BsCart3, BsPerson, BsXLg } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-
-import { trapTabbingIn } from "@Lib/utils";
 
 const menCategories = [
 	{
@@ -176,20 +175,11 @@ export default function Sidebar() {
 	const {sidebarVisible, setSidebarVisibility} = useLayout();
 
 	const sidebarRef = useRef<HTMLDivElement>(null);
-	const removeTabTrapRef = useRef<() => void>(() => null);
+	useTabTrapIn(sidebarRef.current, sidebarVisible);
 
 	useEffect(() => {
 		setTimeout(() => !submenuActive && setSubmenu(null), 600);
 	}, [submenuActive]);
-
-	useEffect(() => {
-		if (sidebarVisible && sidebarRef.current) {
-			removeTabTrapRef.current = trapTabbingIn(sidebarRef.current);
-		} else {
-			removeTabTrapRef.current?.();
-		}
-		return removeTabTrapRef.current;
-	}, [sidebarVisible]);
 
 	const ColorwaysList = colorways.map(({name, path}) => (
 		<li key={name} className="sidebar__links-item">
@@ -294,7 +284,7 @@ export default function Sidebar() {
 					</div>
 					<div className="sidebar__lang-currency language-currency">
 						<button className="language-currency__btn">
-							{"English"} <span className="language-currency__separator">|</span> {"$ USD"}
+							{"English"} <span classNarename me="language-currency__sep">|</span> {"$ USD"}
 						</button>
 					</div>
 				</div>
