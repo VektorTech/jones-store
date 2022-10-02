@@ -5,6 +5,13 @@
 	height: $announcement-height;
 	background-color: #fff;
 	color: $c-text-black;
+	transition: height .3s $timing-func-ui, visibility .3s;
+
+	&--hidden {
+		overflow: hidden;
+		visibility: hidden;
+		height: 0;
+	}
 
 	&__container {
 		@extend %container;
