@@ -3,7 +3,7 @@ import HeaderSection from "./HeaderSection";
 import Sidebar, { LayoutProvider, useLayout } from "./Sidebar";
 import SearchBox from "./SearchBox";
 
-function Header() {
+function Header({ announcementState }: { announcementState?: boolean }) {
 	useLayout((isVisible) => {
 		document.body.style.overflow = isVisible ? "hidden" : "auto";
 	});
@@ -12,16 +12,16 @@ function Header() {
 		<>
 			<SearchBox />
 			<Sidebar />
-			<Announcement />
+			<Announcement announcementState={announcementState} />
 			<HeaderSection />
 		</>
 	);
 }
 
-export default function _Header() {
+export default function _Header({ announcementState }: { announcementState?: boolean }) {
 	return (
 		<LayoutProvider>
-			<Header />
+			<Header announcementState={announcementState} />
 		</LayoutProvider>
 	);
 }

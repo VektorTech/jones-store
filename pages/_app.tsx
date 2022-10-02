@@ -1,6 +1,6 @@
 import "@Sass/main.scss";
 
-import type { AppProps } from "next/app";
+import App, { AppProps, AppContext } from "next/app";
 
 import Layout from "@Components/Layout";
 import SEO from "@Components/common/SEO";
@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps, cookies, isAdmin }: AppPropsWithCookies) 
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <SEO />
-      <Layout>
+      <Layout announcementState={cookies?.announcementState == "closed"}>
         <Component {...pageProps} />
       </Layout>
     </>
@@ -34,14 +34,20 @@ MyApp.getInitialProps = async (context: AppContext) => {
   const appProps = await App.getInitialProps(context);
 
   const req = context.ctx.req;
+  const cookies = req?.headers.cookie?.split("; ").reduce((batch, cookie) => {
+    const [key, value] = cookie.split("=");
+    return { ...batch, [key]: value };
+  }, {});
 
   return {
     ...appProps,
+    cookies,
     isAdmin: req?.url?.startsWith("/admin")
   };
 }
 
 interface AppPropsWithCookies extends AppProps {
+  cookies: { announcementState: string };
   isAdmin: boolean;
 }
 
