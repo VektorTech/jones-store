@@ -4,22 +4,22 @@ Jones is an e-commerce store for Nike Jordan Ones. It is a responsive, mobile-fi
 
 ## Tech Used
 
-* Next.JS - SSR & SSG & REST API
-* Iron Session - Session Management
-* BCrypt - Password Hashing & Comparison
-* Yup - Schema & Form Validation
-* Sass - Custom Styling
-* Material UI - Form Components
-* React Icons - SVG Icon Library
-* Friendly Username Generator - Random usernames for new users
-* Typescript - Type Safety
-* Prisma - ORM for PostgresSQL
-* ESLint - Code Linting
-* Prettier - Code Formatting
-* Figma - Page Designs
-* Adobe Photoshop - Image Editing
-* Postman - Testing API routes (Auth, products)
-* Chrome & Firefox Dev Tools
+* __Next.JS__ - SSR & SSG & REST API
+* __Iron Session__ - Session Management
+* __BCrypt__ - Password Hashing & Comparison
+* __Yup__ - Schema & Form Validation
+* __Sass__ - Custom Styling
+* __Material UI__ - Form Components
+* __React Icons__ - SVG Icon Library
+* __Friendly Username Generator__ - Random usernames for new users
+* __Typescript__ - Type Safety
+* __Prisma__ - ORM for PostgresSQL
+* __ESLint__ - Code Linting
+* __Prettier__ - Code Formatting
+* __Figma__ - Page Designs
+* __Adobe Photoshop__ - Image Editing
+* __Postman__ - Testing API routes (Auth, products)
+* __Chrome & Firefox Dev Tools__
 
 ## About
 
