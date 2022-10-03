@@ -9,8 +9,8 @@
 	& > a { display: block; }
 
 	& > a:focus-visible {
-		outline: 0.2rem solid $c-red;
-		outline-offset: 0.4rem;
+		box-shadow: 0 0 1rem 0.2rem #999;
+		padding: 0.5rem;
 	}
 
 	@include respond-to('small') {
