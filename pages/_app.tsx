@@ -7,7 +7,12 @@ import SEO from "@Components/common/SEO";
 import Head from "next/head";
 import AdminLayout from "./admin/AdminLayout";
 
-function MyApp({ Component, pageProps, cookies, isAdmin }: AppPropsWithCookies) {
+function MyApp({
+  Component,
+  pageProps,
+  cookies,
+  isAdmin,
+}: AppPropsWithCookies) {
   if (isAdmin) {
     return (
       <AdminLayout>
@@ -42,9 +47,9 @@ MyApp.getInitialProps = async (context: AppContext) => {
   return {
     ...appProps,
     cookies,
-    isAdmin: req?.url?.startsWith("/admin")
+    isAdmin: req?.url?.startsWith("/admin"),
   };
-}
+};
 
 interface AppPropsWithCookies extends AppProps {
   cookies: { announcementState: string };

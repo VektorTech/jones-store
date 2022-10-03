@@ -1,5 +1,5 @@
 // import Link from "next/link";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 import { VscChromeClose } from "react-icons/vsc";
 import { BsSliders } from "react-icons/bs";
@@ -10,72 +10,73 @@ import BreadCrumbs from "@Components/product-list/BreadCrumbs";
 import Pagination from "@Components/product-list/Pagination";
 
 export default function Category() {
-	const router = useRouter();
-	const { categoryId } = router.query;
+  const router = useRouter();
+  const { categoryId } = router.query;
 
-	return (
-		<div>
-			<BreadCrumbs />
-			<div className="constraints">
-				<div className="constraints__container">
-					<h1 className="constraints__title">{categoryId}</h1>
-					<p className="constraints__summary">
-						Showing <span>1</span> &mdash; <span>48</span> of <span>375</span> results
-					</p>
-					<div className="constraints__filters">
-						<button className="constraints__filter">
-							<span>Brand</span> <span>Jordan</span>
-							<span role="button" className="constraints__filter-close">
-								<VscChromeClose />
-							</span>
-						</button>
-						<button className="constraints__filter">
-							<span>Gender</span> <span>Women</span>
-							<span role="button" className="constraints__filter-close">
-								<VscChromeClose />
-							</span>
-						</button>
-						<button className="constraints__clear-all">
-							Clear All
-							<span role="button" className="constraints__filter-close">
-								<VscChromeClose />
-							</span>
-						</button>
-					</div>
-				</div>
-			</div>
+  return (
+    <div>
+      <BreadCrumbs />
+      <div className="constraints">
+        <div className="constraints__container">
+          <h1 className="constraints__title">{categoryId}</h1>
+          <p className="constraints__summary">
+            Showing <span>1</span> &mdash; <span>48</span> of <span>375</span>{" "}
+            results
+          </p>
+          <div className="constraints__filters">
+            <button className="constraints__filter">
+              <span>Brand</span> <span>Jordan</span>
+              <span role="button" className="constraints__filter-close">
+                <VscChromeClose />
+              </span>
+            </button>
+            <button className="constraints__filter">
+              <span>Gender</span> <span>Women</span>
+              <span role="button" className="constraints__filter-close">
+                <VscChromeClose />
+              </span>
+            </button>
+            <button className="constraints__clear-all">
+              Clear All
+              <span role="button" className="constraints__filter-close">
+                <VscChromeClose />
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
 
-			<div className="filter-sort">
-				<div className="filter-sort__container">
-					<button className="filter-sort__toggle">
-						<BsSliders className="filter-sort__toggle-icon" />
-						<span>filter</span>
-					</button>
+      <div className="filter-sort">
+        <div className="filter-sort__container">
+          <button className="filter-sort__toggle">
+            <BsSliders className="filter-sort__toggle-icon" />
+            <span>filter</span>
+          </button>
 
-					<div className="filter-sort__sort-by">
-						<span>Sort By</span>
+          <div className="filter-sort__sort-by">
+            <span>Sort By</span>
 
-						<select className="filter-sort__sort-select" name="" id="">
-							<option value="">Relevance</option>
-							<option value="">Price</option>
-							<option value="">Ratings</option>
-						</select>
+            <select className="filter-sort__sort-select" name="" id="">
+              <option value="">Relevance</option>
+              <option value="">Price</option>
+              <option value="">Ratings</option>
+            </select>
 
-						<button className="filter-sort__order">
-							<ImArrowDown className="filter-sort__order-icon" />
-						</button>
-					</div>
-				</div>
-			</div>
+            <button className="filter-sort__order">
+              <ImArrowDown className="filter-sort__order-icon" />
+            </button>
+          </div>
+        </div>
+      </div>
 
-			<div className="results">
-				<div className="results__filter">
-					<Filter />
-				</div>
+      <div className="results">
+        <div className="results__filter">
+          <Filter />
+        </div>
 
-				<div className="results__grid"></div>
-				<Pagination />
-			</div>
-		</div>
-	);
+        <div className="results__grid"></div>
+        <Pagination />
+      </div>
+    </div>
+  );
 }

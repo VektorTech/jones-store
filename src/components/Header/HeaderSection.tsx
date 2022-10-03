@@ -11,7 +11,7 @@ import useScrollTop from "@Lib/hooks/useScrollTop";
 import { useEffect, useRef, useState } from "react";
 
 export default function HeaderSection() {
-  const {sidebarVisible, setSidebarVisibility} = useLayout();
+  const { sidebarVisible, setSidebarVisibility } = useLayout();
 
   const [pinnedState, setPinnedState] = useState(false);
   const scrollTop = useScrollTop();
@@ -30,7 +30,10 @@ export default function HeaderSection() {
     <header className={`header${pinnedState ? " header--pinned" : ""}`}>
       <div className="header__container">
         <div className="header__menu-button">
-          <button className="header__menu-toggle" onClick={() => setSidebarVisibility(true)}>
+          <button
+            className="header__menu-toggle"
+            onClick={() => setSidebarVisibility(true)}
+          >
             <FiMenu />
           </button>
         </div>

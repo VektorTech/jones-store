@@ -1,9 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  RiRadioButtonLine,
-  RiCheckboxBlankCircleFill
-} from "react-icons/ri";
+import { RiRadioButtonLine, RiCheckboxBlankCircleFill } from "react-icons/ri";
 
 import SocialIcons from "../common/SocialIcons";
 

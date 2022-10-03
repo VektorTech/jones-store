@@ -2,13 +2,23 @@ import { useState } from "react";
 import { BsXLg } from "react-icons/bs";
 import { FiHelpCircle } from "react-icons/fi";
 
-export default function Announcement({ announcementState }: { announcementState?: boolean }) {
-  const [ hidden, setHidden ] = useState(announcementState);
+export default function Announcement({
+  announcementState,
+}: {
+  announcementState?: boolean;
+}) {
+  const [hidden, setHidden] = useState(announcementState);
 
   const handleClose = () => {
     setHidden(true);
-    document.cookie = "announcementState" + "=" + "closed" + "; expires=" + (Date.now() + (14*1000*60*60*24)) + "; path=/";
-  }
+    document.cookie =
+      "announcementState" +
+      "=" +
+      "closed" +
+      "; expires=" +
+      (Date.now() + 14 * 1000 * 60 * 60 * 24) +
+      "; path=/";
+  };
 
   return (
     <div className={`announcement${hidden ? " announcement--hidden" : ""}`}>

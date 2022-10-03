@@ -17,10 +17,17 @@ export default function CollectionSection() {
           <div className="collections__block">
             <Link href="/">
               <a className="collections__block-link">
-                <Image className="collections__block-image" alt="" layout="fill" src={jordanLowImage} />
+                <Image
+                  className="collections__block-image"
+                  alt=""
+                  layout="fill"
+                  src={jordanLowImage}
+                />
                 <div className="collections__block-content">
                   <h3 className="collections__block-title">Low</h3>
-                  <p className="collections__block-action-text"><span>discover</span></p>
+                  <p className="collections__block-action-text">
+                    <span>discover</span>
+                  </p>
                 </div>
               </a>
             </Link>
@@ -28,10 +35,17 @@ export default function CollectionSection() {
           <div className="collections__block">
             <Link href="/">
               <a className="collections__block-link">
-                <Image className="collections__block-image" alt="" layout="fill" src={jordanMidImage} />
+                <Image
+                  className="collections__block-image"
+                  alt=""
+                  layout="fill"
+                  src={jordanMidImage}
+                />
                 <div className="collections__block-content">
                   <h3 className="collections__block-title">Medium</h3>
-                  <p className="collections__block-action-text"><span>discover</span></p>
+                  <p className="collections__block-action-text">
+                    <span>discover</span>
+                  </p>
                 </div>
               </a>
             </Link>
@@ -39,10 +53,17 @@ export default function CollectionSection() {
           <div className="collections__block">
             <Link href="/">
               <a className="collections__block-link">
-                <Image className="collections__block-image" alt="" layout="fill" src={jordanHighImage} />
+                <Image
+                  className="collections__block-image"
+                  alt=""
+                  layout="fill"
+                  src={jordanHighImage}
+                />
                 <div className="collections__block-content">
                   <h3 className="collections__block-title">High</h3>
-                  <p className="collections__block-action-text"><span>discover</span></p>
+                  <p className="collections__block-action-text">
+                    <span>discover</span>
+                  </p>
                 </div>
               </a>
             </Link>

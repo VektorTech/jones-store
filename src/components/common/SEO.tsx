@@ -5,11 +5,11 @@ import { DOMAIN_NAME } from "@Lib/config";
 export default function SEO({
   title = "Shop Jordan Ones",
   description = "",
-  canonical = (DOMAIN_NAME ?? "http://localhost:3000"),
+  canonical = DOMAIN_NAME ?? "http://localhost:3000",
   name = "Jones",
   ogType = "website",
   ogImage = "/assets/images/banner-bg-eindhoven.jpg",
-  twitterHandle = "@creator"
+  twitterHandle = "@creator",
 }) {
   return (
     <Head>
@@ -22,11 +22,7 @@ export default function SEO({
       <meta property="og:url" content={canonical} />
       <meta property="og:description" content={description} />
       <meta property="og:type" content={ogType} />
-      <meta
-        key="og_image"
-        property="og:image"
-        content={ogImage}
-      />
+      <meta key="og_image" property="og:image" content={ogImage} />
       <meta
         key="og_image:alt"
         property="og:image:alt"
@@ -40,21 +36,13 @@ export default function SEO({
         name="twitter:card"
         content="summary_large_image"
       />
-      <meta
-        key="twitter:site"
-        name="twitter:site"
-        content={twitterHandle}
-      />
+      <meta key="twitter:site" name="twitter:site" content={twitterHandle} />
       <meta
         key="twitter:creator"
         name="twitter:creator"
         content={twitterHandle}
       />
-      <meta
-        key="twitter:title"
-        property="twitter:title"
-        content={title}
-      />
+      <meta key="twitter:title" property="twitter:title" content={title} />
       <meta
         key="twitter:description"
         property="twitter:description"

@@ -23,18 +23,27 @@ export default function Footer() {
           <h3 className="footer__sub-heading">Contact</h3>
           <p className="footer__contact">
             <BiMap className="footer__contact-icon" />
-            <span className="footer__contact-info">46 Lakeshore St. Knoxville,<br/>TN 37918</span>
+            <span className="footer__contact-info">
+              46 Lakeshore St. Knoxville,
+              <br />
+              TN 37918
+            </span>
           </p>
           <p className="footer__contact">
             <BiPhone className="footer__contact-icon" />
             <span className="footer__contact-info">
-              <a className="footer__contact-link" href="tel:13124786691">+1 (312) 478 6691</a>
+              <a className="footer__contact-link" href="tel:13124786691">
+                +1 (312) 478 6691
+              </a>
             </span>
           </p>
           <p className="footer__contact">
             <HiOutlineMail className="footer__contact-icon" />
             <span className="footer__contact-info">
-              <a className="footer__contact-link" href="mailto:support@jones.com?subject=Need%20Support">
+              <a
+                className="footer__contact-link"
+                href="mailto:support@jones.com?subject=Need%20Support"
+              >
                 support@
                 <wbr />
                 jones.com
@@ -43,9 +52,11 @@ export default function Footer() {
           </p>
           <p className="footer__contact">
             <BiTime className="footer__contact-icon" />
-            <span className="footer__contact-info">10:00 &mdash; 18:00, Mon &mdash; Sat</span>
+            <span className="footer__contact-info">
+              10:00 &mdash; 18:00, Mon &mdash; Sat
+            </span>
           </p>
-          <hr className="footer__hr"/>
+          <hr className="footer__hr" />
           <h3 className="footer__sub-heading">Connect With Us</h3>
           <div className="footer__social-buttons">
             <SocialIcons size="md" />
@@ -120,8 +131,21 @@ export default function Footer() {
             </p>
             <form action="">
               <div className="newsletter__input input input--red input--bottom">
-                <input id="newsletter_input" className="input__box" type="email" name="email" inputMode="email" placeholder="ENTER EMAIL" spellCheck={"false"} />
-                <label htmlFor="newsletter_input" className="input__placeholder">enter email</label>
+                <input
+                  id="newsletter_input"
+                  className="input__box"
+                  type="email"
+                  name="email"
+                  inputMode="email"
+                  placeholder="ENTER EMAIL"
+                  spellCheck={"false"}
+                />
+                <label
+                  htmlFor="newsletter_input"
+                  className="input__placeholder"
+                >
+                  enter email
+                </label>
                 <button className="input__submit" type="submit">
                   <CgArrowLongRight className="input__submit-icon" />
                 </button>
@@ -164,7 +188,8 @@ export default function Footer() {
           </div>
           <div className="gutter__lang-currency language-currency">
             <button className="language-currency__btn">
-              {"English"} <span className="language-currency__sep">|</span> {"$ USD"}
+              {"English"} <span className="language-currency__sep">|</span>{" "}
+              {"$ USD"}
             </button>
           </div>
         </div>

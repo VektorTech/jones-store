@@ -1,7 +1,13 @@
 import Header from "./header";
 import Footer from "./Footer";
 
-export default function Layout({ children, announcementState }: { children: React.ReactNode, announcementState?: boolean }) {
+export default function Layout({
+  children,
+  announcementState,
+}: {
+  children: React.ReactNode;
+  announcementState?: boolean;
+}) {
   return (
     <>
       <Header announcementState={announcementState} />

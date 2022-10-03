@@ -6,7 +6,7 @@ import RatingStars from "./RatingStars";
 
 export default function Product({ small = false }) {
   return (
-    <div className={`product${ small ? " product--small" : ""}`}>
+    <div className={`product${small ? " product--small" : ""}`}>
       <Link href="">
         <a>
           <div className="product__wrapper">
