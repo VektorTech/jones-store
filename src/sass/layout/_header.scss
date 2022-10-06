@@ -70,7 +70,7 @@
 			line-height: $header-height;
 
 			@include respond-to('medium') {
-				line-height: $header-height-lg;
+				line-height: $header-height-lg; // TODO create a custom prop for JS
 			}
 		}
 
