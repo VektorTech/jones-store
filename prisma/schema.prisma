@@ -51,8 +51,8 @@ model Order {
 
 model OrderLine {
   id Int @id @default(autoincrement())
-  jordanOneId String
-  jordanOne JordanOne @relation(fields: [jordanOneId], references: [id])
+  productId String
+  product Product @relation(fields: [productId], references: [id])
   orderId Int
   order Order @relation(fields: [orderId], references: [id])
   review Review?
@@ -65,10 +65,10 @@ model OrderLine {
 model Wishlist {
   userId String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  jordanOneId String
-  jordanOne JordanOne @relation(fields: [jordanOneId], references: [id], onDelete: Cascade)
+  productId String
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  @@id([userId, jordanOneId])
+  @@id([userId, productId])
   @@map(name: "wishlist")
 }
 
@@ -109,16 +109,16 @@ model Cart {
 
 model CartItem {
   cartId Int
-  jordanOneId String
-  jordanOne JordanOne @relation(fields: [jordanOneId], references: [id], onDelete: Cascade)
+  productId String
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   quantity Int
   total Float
 
-  @@id([cartId, jordanOneId])
+  @@id([cartId, productId])
   @@map(name: "cart_items")
 }
 
-model JordanOne {
+model Product {
   id String @unique
   title String @unique @db.VarChar(255)
   dateAdded DateTime @default(now())
@@ -141,14 +141,14 @@ model JordanOne {
   orderLine OrderLine[]
   cartItem CartItem[]
 
-  @@map(name: "jordan_ones")
+  @@map(name: "product")
 }
 
 model Review {
   userId String
   user User @relation(fields: [userId], references: [id])
-  jordanOneId String
-  jordanOne JordanOne @relation(fields: [jordanOneId], references: [id])
+  productId String
+  product Product @relation(fields: [productId], references: [id])
   comment String?
   rating Int
   addedAt DateTime @default(now())
@@ -156,7 +156,7 @@ model Review {
   orderLineId Int? @unique
   orderLine OrderLine? @relation(fields: [orderLineId], references: [id], onDelete: SetNull)
 
-  @@id([userId, jordanOneId])
+  @@id([userId, productId])
   @@map(name: "reviews")
 }
 
