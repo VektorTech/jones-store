@@ -21,7 +21,14 @@ export default function Product({ small = false }) {
               />
               <span className="product__tag">sale</span>
               <div className="product__actions">
-                <button className="product__add-wishlist">
+                <button onClick={(e) => {
+                    e.preventDefault();
+                  	fetch("/api/wishlist", {
+                    	method:"POST", headers: {
+                    	'Content-Type': 'application/x-www-form-urlencoded'
+                      }, body: new URLSearchParams({ productId: "Homage" })
+                    }).then(res => res.json()).then(console.log).catch(console.log);
+                }} className="product__add-wishlist">
                   <AiOutlineHeart className="product__add-wishlist-icon" />
                 </button>
               </div>
