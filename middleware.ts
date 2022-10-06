@@ -4,7 +4,8 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getIronSession } from "iron-session/edge";
 
-import { sessionOptions } from "@lib/config";
+import { sessionOptions } from "@Lib/config";
+import { Role } from "@prisma/client";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
@@ -17,9 +18,15 @@ export async function middleware(req: NextRequest) {
     }
   }
 
+  if (req.nextUrl.pathname.startsWith("/admin")) {
+    if (!user || user.role != Role.ADMIN) {
+      return NextResponse.redirect(new URL(req.url).origin);
+    }
+  }
+
   return res;
 }
 
 export const config = {
-  matcher: ["/signin"],
+  matcher: ["/signin", "/admin/:path*"],
 };
