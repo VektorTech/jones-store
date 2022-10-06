@@ -1,10 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import bcrypt from "bcryptjs";
 
 import prisma from "@Lib/prisma";
 import { withSessionRoute } from "@Lib/withSession";
 import { userSchema } from "@Lib/validations";
-import { User } from "@prisma/client";
+import { Role, User } from "@prisma/client";
 import { validateInput } from "@Lib/helpers";
 import { DefaultResponse } from "src/types/shared";
 
@@ -12,7 +11,7 @@ async function editUserRoute(
   req: NextApiRequest,
   res: NextApiResponse<DefaultResponse>
 ) {
-  if (req.method == "POST") {
+  if (req.method == "PUT") {
     const error = validateInput(req.body, userSchema);
     if (error) {
       return res.status(400).json({ error: true, message: error });
@@ -21,12 +20,15 @@ async function editUserRoute(
     const { username, email, firstName, lastName, phoneNumber, avatar } =
       userSchema.cast(req.body) as unknown as User;
 
+    const { userId } = req.query;
     const { user } = req.session;
 
-    if (user) {
+    const isAuthorized = userId && user && (userId == user?.id || user?.role == Role.ADMIN);
+
+    if (isAuthorized) {
       prisma.user
         .update({
-          where: { id: user.id },
+          where: { id: userId as string },
           data: {
             username,
             email,
@@ -41,7 +43,7 @@ async function editUserRoute(
           res.status(500).json({ error: true, message: error.message })
         );
     } else
-      res.status(401).json({ error: true, message: "Authentication Required" });
+      res.status(401).json({ error: true, message: "Unauthorized Request" });
   } else res.status(404).json({ error: true, message: "Not Found" });
 }
 
