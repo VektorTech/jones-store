@@ -122,15 +122,15 @@ model JordanOne {
   id String @unique
   title String @unique @db.VarChar(255)
   dateAdded DateTime @default(now())
-  mediaUrls String[]
+  mediaURLs String[]
   price Float
   discount Float?
   shippingCost Float @default(0.0)
   details String
   salesCount Int?
   ratings Int?
-  colors String @default("") @db.VarChar(25)
-  sizes String
+  color String @default("") @db.VarChar(25)
+  sizes Float[]
   year Int?
   sku String @db.VarChar(25)
   stockQty Int
