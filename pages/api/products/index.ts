@@ -1,0 +1,54 @@
+import type { NextApiRequest, NextApiResponse } from "next";
+
+import prisma from "@Lib/prisma";
+import { withSessionRoute } from "@Lib/withSession";
+import { jordanOneSchema } from "@Lib/validations";
+import { JordanOne } from "@prisma/client";
+import { DefaultResponse } from "src/types/shared";
+import { Role } from "@prisma/client";
+
+async function productRoute(
+  req: NextApiRequest,
+  res: NextApiResponse<DefaultResponse>
+) {
+  if (req.method == "POST") {
+	const { user } = req.session;
+
+	if (user && user.role == Role.ADMIN) {
+		try {
+			let data = {
+				...req.body,
+				mediaURLs: req.body?.mediaURLs.split(/[\r\n\s]/g).filter(Boolean),
+			};
+			data = jordanOneSchema.cast(data) as unknown as JordanOne;
+
+			prisma.jordanOne
+				.create({ data })
+				.then(() => {
+					res.json({ message: `Successfully Added ${data.title}` });
+				})
+				.catch((error) => {
+					if (error.meta?.target?.length) {
+						res
+						.status(409)
+						.json({ error: true, message: error.message });
+					} else res.status(500).json({ error: true, message: error.message });
+				});
+		} catch (error) {
+			res.status(500).json({ error: true, message: (error as TypeError).message });
+		}
+	}
+  } else if(req.method == "GET") {
+	const { offset = 0, limit = 10 } = req.query;
+
+	prisma.jordanOne.findMany({
+		select: { id: true, title: true, mediaURLs: true, price: true, ratings: true, gender: true },
+		skip: offset as number,
+		take: limit as number
+	})
+	.then(products => res.json({ message: "Successfully Retrieved Products", data: products }))
+	.catch(error => res.status(500).json({ error: true, message: error.message }));
+  } else res.status(404).json({ error: true, message: "Not Found" });
+}
+
+export default withSessionRoute(productRoute);
