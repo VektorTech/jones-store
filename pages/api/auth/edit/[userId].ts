@@ -17,7 +17,7 @@ async function editUserRoute(
       return res.status(400).json({ error: true, message: error });
     }
 
-    const { username, email, firstName, lastName, phoneNumber, avatar } =
+    const { username, email, firstName, lastName, phoneNumber, avatarURL } =
       userSchema.cast(req.body) as unknown as User;
 
     const { userId } = req.query;
@@ -35,7 +35,7 @@ async function editUserRoute(
             firstName,
             lastName,
             phoneNumber,
-            avatar,
+            avatarURL,
           },
         })
         .then(() => res.json({ message: "User Update Successful" }))
