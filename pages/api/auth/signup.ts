@@ -38,6 +38,13 @@ async function signupRoute(
           role,
         };
 
+        prisma.cart.create({
+          data: {
+            userId: id,
+            total: 0
+          }
+        });
+
         await req.session.save();
 
         res.json({ message: `Successfully Created User Account, ${username}` });
