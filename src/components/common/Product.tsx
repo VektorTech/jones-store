@@ -3,8 +3,9 @@ import Image from "next/image";
 import { AiOutlineHeart } from "react-icons/ai";
 
 import RatingStars from "./RatingStars";
+import { Product as ProductType } from "@prisma/client";
 
-export default function Product({ small = false }) {
+export default function Product({ small = false }: { small?: boolean } & ProductType) {
   return (
     <div className={`product${small ? " product--small" : ""}`}>
       <Link href="">
