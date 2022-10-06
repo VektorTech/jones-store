@@ -10,7 +10,7 @@ export const userSchema = object({
   lastName: string().min(2).max(50),
   phoneNumber: string().matches(phoneRegExp, "Phone number is not valid"),
   password: string().min(7).required(),
-  avatar: string(),
+  avatarURL: string().url(),
 }).required();
 
 export const userLoginSchema = object({
