@@ -18,7 +18,7 @@ async function cartRoute(
 					where: { userId: user.id }
 				});
 
-				const product = await prisma.jordanOne.findUnique({
+				const product = await prisma.product.findUnique({
 					where: { id: productId }
 				});
 
@@ -26,7 +26,7 @@ async function cartRoute(
 					const cartItem = await prisma.cartItem.create({
 						data: {
 							cartId: cart.id,
-							jordanOneId: product.id,
+							productId: product.id,
 							quantity: qty as number,
 							total: product.price * (qty as number)
 						}

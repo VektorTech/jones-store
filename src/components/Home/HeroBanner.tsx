@@ -4,7 +4,7 @@ import { RiRadioButtonLine, RiCheckboxBlankCircleFill } from "react-icons/ri";
 
 import SocialIcons from "../common/SocialIcons";
 
-import jordanOneBanner from "@Images/jordan-1-banner.png";
+import BannerImage from "@Images/jordan-1-banner.png";
 
 export default function HeroBanner() {
   return (
@@ -41,7 +41,7 @@ export default function HeroBanner() {
                 layout="responsive"
                 width={220}
                 height={144}
-                src={jordanOneBanner}
+                src={BannerImage}
                 alt=""
               />
             </div>

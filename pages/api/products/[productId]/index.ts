@@ -10,7 +10,7 @@ export default async function productRoute(
   	if (req.method == "GET") {
 		const { productId } = req.query;
 
-		prisma.jordanOne.findUnique({
+		prisma.product.findUnique({
 			where: {
 				id: productId as string
 			}

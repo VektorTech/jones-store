@@ -10,7 +10,7 @@ export default async function productSearchRoute(
   	if (req.method == "GET") {
 		const { q, offset = 0, limit = 10 } = req.query;
 
-		prisma.jordanOne.findMany({
+		prisma.product.findMany({
 			select: { id: true, title: true, mediaURLs: true, price: true, ratings: true, gender: true },
 			where: {
 				title: {

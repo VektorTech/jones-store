@@ -2,8 +2,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "@Lib/prisma";
 import { withSessionRoute } from "@Lib/withSession";
-import { jordanOneSchema } from "@Lib/validations";
-import { JordanOne } from "@prisma/client";
+import { productSchema } from "@Lib/validations";
+import { product } from "@prisma/client";
 import { DefaultResponse } from "src/types/shared";
 import { Role } from "@prisma/client";
 
@@ -20,9 +20,9 @@ async function productRoute(
 				...req.body,
 				mediaURLs: req.body?.mediaURLs.split(/[\r\n\s]/g).filter(Boolean),
 			};
-			data = jordanOneSchema.cast(data) as unknown as JordanOne;
+			data = productSchema.cast(data) as unknown as product;
 
-			prisma.jordanOne
+			prisma.product
 				.create({ data })
 				.then(() => {
 					res.json({ message: `Successfully Added ${data.title}` });
@@ -41,7 +41,7 @@ async function productRoute(
   } else if(req.method == "GET") {
 	const { offset = 0, limit = 10 } = req.query;
 
-	prisma.jordanOne.findMany({
+	prisma.product.findMany({
 		select: { id: true, title: true, mediaURLs: true, price: true, ratings: true, gender: true },
 		skip: offset as number,
 		take: limit as number

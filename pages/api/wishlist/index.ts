@@ -16,7 +16,7 @@ async function wishlistRoute(
 			prisma.wishlist.create({
 				data: {
 					userId: user.id,
-					jordanOneId: productId as string
+					productId: productId as string
 				}
 			})
 			.then(wishlist => res.json({ message: "Product Successfully Added To Favorites" }))

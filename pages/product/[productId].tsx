@@ -5,7 +5,7 @@ import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 
 import BreadCrumbs from "@Components/product-list/BreadCrumbs";
 
-export default function JordanOne() {
+export default function Product() {
   return (
     <>
       <BreadCrumbs />

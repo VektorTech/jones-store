@@ -64,7 +64,7 @@ const colorways = [ // see sidebar
   },
 ];
 
-export default function AddJordanOne() {
+export default function AddProduct() {
   return (
     <div className="admin__section">
       <form method="POST" action="/api/products">

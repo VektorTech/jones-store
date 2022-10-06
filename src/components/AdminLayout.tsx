@@ -8,8 +8,8 @@ export default function AdminLayout({ children }: { children: ReactElement }) {
         <nav>
           <ul>
             <li>
-              <Link href="/admin/add-jordan-one">
-                <a>Add Jordan</a>
+              <Link href="/admin/add-product">
+                <a>Add Product</a>
               </Link>
             </li>
           </ul>

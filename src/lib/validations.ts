@@ -18,7 +18,7 @@ export const userLoginSchema = object({
   password: string().min(7).required(),
 }).required();
 
-export const jordanOneSchema = object({
+export const productSchema = object({
   id: string().required(),
   title: string().max(255).required(),
   mediaURLs: array().of(string().url()).min(3).required(),
