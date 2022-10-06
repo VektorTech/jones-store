@@ -1,4 +1,5 @@
-import { object, string } from "yup";
+import { Category } from "@prisma/client";
+import { object, string, array, number } from "yup";
 
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -16,3 +17,19 @@ export const userLoginSchema = object({
   email: string().max(255).required(),
   password: string().min(7).required(),
 }).required();
+
+export const jordanOneSchema = object({
+  id: string().required(),
+  title: string().max(255).required(),
+  mediaURLs: array().of(string().url()).min(3).required(),
+  price: number().required().positive(),
+  discount: number().positive(),
+  shippingCost: number().positive(),
+  details: string().required(),
+  color: string().max(25).required(),
+  sizes: array().of(number()).min(1).required(),
+  year: number().min(1985).max(new Date().getFullYear()).required(),
+  sku: string().max(25).required(),
+  stockQty: number().positive().required(),
+  type: string().equals(Object.keys(Category)).required()
+});
