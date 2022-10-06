@@ -8,10 +8,10 @@ async function cartRoute(
   req: NextApiRequest,
   res: NextApiResponse<DefaultResponse>
 ) {
-  	if (req.method == "POST") {
-		const { productId, qty } = req.body;
-		const { user } = req.session;
+	const { productId, qty } = req.body;
+	const { user } = req.session;
 
+  	if (req.method == "POST") {
 		if (user && productId) {
 			try {
 				const cart = await prisma.cart.findUnique({
@@ -41,6 +41,28 @@ async function cartRoute(
 			}
 		} else
 			res.status(401).json({ error: true, message: "Unauthorized Request" });
+	} else if (req.method == "DELETE") {
+		if (user && productId) {
+			try {
+				const cart = await prisma.cart.findUnique({
+					where: { userId: user.id }
+				});
+
+				if (cart) {
+					prisma.cartItem.delete({
+						where: {
+							cartId_productId: {
+								cartId: cart?.id,
+								productId,
+							}
+						}
+					})
+					.then(() => res.json({ message: "Product Successfully Removed From Cart" }));
+				}
+			} catch(error) {
+				res.status(500).json({ error: true, message: (error as Error)?.message })
+			}
+		}
 	} else res.status(404).json({ error: true, message: "Not Found" });
 }
 
