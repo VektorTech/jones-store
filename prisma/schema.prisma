@@ -141,7 +141,7 @@ model Product {
   orderLine OrderLine[]
   cartItem CartItem[]
 
-  @@map(name: "product")
+  @@map(name: "products")
 }
 
 model Review {
