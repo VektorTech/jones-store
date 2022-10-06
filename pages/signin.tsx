@@ -1,5 +1,7 @@
-// export default function SignIn() {
-// 	return (
+import AuthForm from "@Components/user/AuthFrom";
 
-// 	);
-// }
+export default function SignInPage() {
+	return (
+		<AuthForm />
+	);
+}
