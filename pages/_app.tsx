@@ -5,7 +5,7 @@ import App, { AppProps, AppContext } from "next/app";
 import Layout from "@Components/Layout";
 import SEO from "@Components/common/SEO";
 import Head from "next/head";
-import AdminLayout from "./admin/AdminLayout";
+import AdminLayout from "@Components/AdminLayout";
 
 function MyApp({
   Component,
