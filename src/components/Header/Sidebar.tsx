@@ -11,6 +11,7 @@ import React, {
   ReactElement,
 } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
+import useSWR from 'swr';
 
 import { BsCart3, BsPerson, BsXLg } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
@@ -176,7 +177,10 @@ export function useLayout(observer?: (isVisible: boolean) => void) {
   return sidebarState;
 }
 
+const fetcher = (...args: [any, any]) => fetch(...args).then((res) => res.json());
+
 export default function Sidebar() {
+  const { data: userData, error } = useSWR("/api/auth/profile", fetcher);
   const [submenu, setSubmenu] = useState<Array<any> | null>(null);
   const [submenuActive, setSubmenuActive] = useState<boolean>(false);
 
@@ -294,12 +298,23 @@ export default function Sidebar() {
           <div className="sidebar__icon-links">
             <ul>
               <li className="sidebar__icon-links-item">
-                <Link href="/">
-                  <a>
-                    <BsPerson />
-                    <span>Login / Register</span>
-                  </a>
-                </Link>
+                  {
+                    userData?.data ? (
+                      <Link href="/">
+                        <a>
+                          <BsPerson />
+                          <span>Logout</span>
+                        </a>
+                      </Link>
+                    ) : (
+                      <Link href="/">
+                        <a>
+                          <BsPerson />
+                          <span>Login / Register</span>
+                        </a>
+                      </Link>
+                    )
+                  }
               </li>
               <li className="sidebar__icon-links-item">
                 <Link href="/">
