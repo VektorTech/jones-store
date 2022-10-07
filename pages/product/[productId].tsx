@@ -4,8 +4,12 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 
 import BreadCrumbs from "@Components/product-list/BreadCrumbs";
+import { withSessionSsr } from "@Lib/withSession";
+import { Gender, Product } from "@prisma/client";
+import prisma from '@Lib/prisma';
 
-export default function Product() {
+
+export default function Product({ product }: { product: Product }) {
   return (
     <>
       <BreadCrumbs />
@@ -99,3 +103,20 @@ export default function Product() {
     </>
   );
 }
+
+export const getServerSideProps = withSessionSsr(
+	async function ({ params, req, query }) {
+    const productId = (params?.productId as string);
+
+		const results = await prisma.product.findUnique({
+			where: { id: productId },
+		}).catch(console.log);
+
+		return {
+			props: {
+				products: results,
+        reviews: []
+			}
+		}
+	}
+);

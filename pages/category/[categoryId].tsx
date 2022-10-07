@@ -9,9 +9,9 @@ import Filter from "@Components/product-list/Filter";
 import BreadCrumbs from "@Components/product-list/BreadCrumbs";
 import Pagination from "@Components/product-list/Pagination";
 
-export default function Category() {
-  const router = useRouter();
-  const { categoryId } = router.query;
+export default function Category({ categoryId, products }: { categoryId: Gender, products: Product[] }) {
+  // const router = useRouter();
+  // const { categoryId } = router.query;
 
   return (
     <div>
@@ -80,3 +80,27 @@ export default function Category() {
     </div>
   );
 }
+
+import prisma from '@Lib/prisma';
+import { withSessionSsr } from "@Lib/withSession";
+import { Gender, Product } from "@prisma/client";
+
+export const getServerSideProps = withSessionSsr(
+	async function ({ params, req, query }) {
+    const categoryId = (params?.categoryId as string)?.toUpperCase() as Gender;
+		const { offset = 0, limit = 10 } = query;
+
+		const results = await prisma.product.findMany({
+			where: { gender: categoryId },
+			skip: offset as number,
+			take: limit as number
+		}).catch(console.log);
+
+		return {
+			props: {
+				products: results,
+        categoryId: categoryId
+			}
+		}
+	}
+);

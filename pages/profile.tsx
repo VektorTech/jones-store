@@ -1,6 +1,9 @@
+import { withSessionSsr } from "@Lib/withSession";
 import Image from "next/image";
+import { User } from "@prisma/client";
+import prisma from '@Lib/prisma';
 
-export default function Profile() {
+export default function Profile({ user }: { user: User }) {
   return (
     <div className="profile">
       <div className="profile__avatar">
@@ -64,3 +67,19 @@ export default function Profile() {
     </div>
   );
 }
+
+export const getServerSideProps = withSessionSsr(
+	async function ({ params, req, query }) {
+    const { user } = req.session;
+
+		const userRecord = await prisma.user.findUnique({
+			where: { id: user?.id },
+		}).catch(console.log);
+
+		return {
+			props: {
+        user: userRecord
+			}
+		}
+	}
+);
