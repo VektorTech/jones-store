@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@Lib/prisma";
 import { withSessionRoute } from "@Lib/withSession";
 import { productSchema } from "@Lib/validations";
-import { product } from "@prisma/client";
+import { Product } from "@prisma/client";
 import { DefaultResponse } from "src/types/shared";
 import { Role } from "@prisma/client";
 
@@ -20,7 +20,7 @@ async function productRoute(
 				...req.body,
 				mediaURLs: req.body?.mediaURLs.split(/[\r\n\s]/g).filter(Boolean),
 			};
-			data = productSchema.cast(data) as unknown as product;
+			data = productSchema.cast(data) as unknown as Product;
 
 			prisma.product
 				.create({ data })

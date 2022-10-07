@@ -20,7 +20,7 @@ async function usersRoute(
 		take: limit as number,
 		select: {
 			id: true,
-			avatar: true,
+			avatarURL: true,
 			username: true,
 			email: true,
 			firstName: true,
@@ -33,10 +33,10 @@ async function usersRoute(
 		res.json({ message: "Successfully Retrieved Users", data: users });
  	  })
 	  .catch(error => {
-		res.status(500).json({ message: error.message });
+		res.status(500).json({ error: true, message: error.message });
 	  });
-    }
-    res.status(401).json({ error: true, message: "Unauthorized Request" });
+    } else
+		res.status(401).json({ error: true, message: "Unauthorized Request" });
   } else res.status(404).json({ error: true, message: "Not Found" });
 }
 

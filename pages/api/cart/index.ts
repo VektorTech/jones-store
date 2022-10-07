@@ -63,6 +63,17 @@ async function cartRoute(
 				res.status(500).json({ error: true, message: (error as Error)?.message })
 			}
 		}
+	} else if (req.method == "GET") {
+		if (user) {
+			const cart = await prisma.cart.findUnique({
+				where: { userId: user.id }
+			});
+
+			const cartItems = await prisma.cartItem.findMany({
+				where: { cartId: cart?.id },
+				include: { product: true }
+			})
+		}
 	} else res.status(404).json({ error: true, message: "Not Found" });
 }
 

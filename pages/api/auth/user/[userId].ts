@@ -19,7 +19,7 @@ async function userRoute(
 	  prisma.user.findUnique({
 		select: {
 			id: true,
-			avatar: true,
+			avatarURL: true,
 			username: true,
 			email: true,
 			firstName: true,
