@@ -39,7 +39,9 @@ async function wishlistRoute(
 			.then(wishlist => res.json({ message: "Product Successfully Removed From Favorites" }))
 			.catch(error => res.status(500).json({ error: true, message: error.message }));
 		}
-	} else res.status(404).json({ error: true, message: "Not Found" });
+	} else {
+		res.status(404).json({ error: true, message: "Not Found" });
+	}
 }
 
 export default withSessionRoute(wishlistRoute);

@@ -29,15 +29,18 @@ async function userRoute(
 		},
 		where: { id: userId as string },
 	  })
-	  .then(userData => {
-		res.json({ message: "Successfully Retrieved User Record", data: userData });
- 	  })
-	  .catch(error => {
-		res.status(500).json({ message: error.message });
-	  });
-    }
-    res.status(401).json({ error: true, message: "Unauthorized Request" });
-  } else res.status(404).json({ error: true, message: "Not Found" });
+	  .then(userData =>
+		res.json({ message: "Successfully Retrieved User Record", data: userData })
+ 	  )
+	  .catch(error =>
+		res.status(500).json({ message: error.message })
+	  );
+    } else {
+		res.status(401).json({ error: true, message: "Unauthorized Request" });
+	}
+  } else {
+	res.status(404).json({ error: true, message: "Not Found" });
+  }
 }
 
 export default withSessionRoute(userRoute);

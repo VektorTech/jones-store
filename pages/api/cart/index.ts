@@ -11,70 +11,57 @@ async function cartRoute(
 	const { productId, qty } = req.body;
 	const { user } = req.session;
 
-  	if (req.method == "POST") {
-		if (user && productId) {
-			try {
-				const cart = await prisma.cart.findUnique({
-					where: { userId: user.id }
+	let cart = null, product = null;
+
+	if (user) {
+		cart = await prisma.cart.findUnique({
+			where: { userId: user.id }
+		});
+
+		product = await prisma.product.findUnique({
+			where: { id: productId }
+		});
+	} else {
+		return res.status(401).json({ error: true, message: "Unauthorized Request" });
+	}
+
+	if (!cart) { return res.status(500).json({ error: true, message: "User Cart Not Found" }); }
+
+	try {
+		if (req.method == "POST") {
+			if (product) {
+				await prisma.cartItem.create({
+					data: {
+						cartId: cart.id,
+						productId: product.id,
+						quantity: qty as number,
+						total: product.price * (qty as number)
+					}
 				});
-
-				const product = await prisma.product.findUnique({
-					where: { id: productId }
-				});
-
-				if (cart && product) {
-					const cartItem = await prisma.cartItem.create({
-						data: {
-							cartId: cart.id,
-							productId: product.id,
-							quantity: qty as number,
-							total: product.price * (qty as number)
-						}
-					});
-
-					if (cartItem) {
-						res.json({ message: "Product Successfully Added To Cart" });
+				res.json({ message: "Product Successfully Added To Cart" });
+			}
+		} else if (req.method == "DELETE") {
+			await prisma.cartItem.delete({
+				where: {
+					cartId_productId: {
+						cartId: cart?.id,
+						productId,
 					}
 				}
-			} catch(error) {
-				res.status(500).json({ error: true, message: (error as Error)?.message })
-			}
-		} else
-			res.status(401).json({ error: true, message: "Unauthorized Request" });
-	} else if (req.method == "DELETE") {
-		if (user && productId) {
-			try {
-				const cart = await prisma.cart.findUnique({
-					where: { userId: user.id }
-				});
-
-				if (cart) {
-					prisma.cartItem.delete({
-						where: {
-							cartId_productId: {
-								cartId: cart?.id,
-								productId,
-							}
-						}
-					})
-					.then(() => res.json({ message: "Product Successfully Removed From Cart" }));
-				}
-			} catch(error) {
-				res.status(500).json({ error: true, message: (error as Error)?.message })
-			}
-		}
-	} else if (req.method == "GET") {
-		if (user) {
-			const cart = await prisma.cart.findUnique({
-				where: { userId: user.id }
-			});
-
+			})
+			res.json({ message: "Product Successfully Removed From Cart" });
+		} else if (req.method == "GET") {
 			const cartItems = await prisma.cartItem.findMany({
 				where: { cartId: cart?.id },
 				include: { product: true }
-			})
+			});
+			res.json({ message: "Successfully Retrieved Cart Items", data: cartItems });
+		} else {
+			res.status(404).json({ error: true, message: "Not Found" });
 		}
-	} else res.status(404).json({ error: true, message: "Not Found" });
+	} catch(error) {
+		res.status(500).json({ error: true, message: (error as Error)?.message })
+	}
 }
 
 export default withSessionRoute(cartRoute);

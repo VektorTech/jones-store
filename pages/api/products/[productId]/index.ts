@@ -17,5 +17,7 @@ export default async function productRoute(
 		})
 		.then(product => res.json({ message: "Product Found", data: product }))
 		.catch(error => res.status(500).json({ error: true, message: error.message }));
-	} else res.status(404).json({ error: true, message: "Not Found" });
+	} else {
+		res.status(404).json({ error: true, message: "Not Found" });
+	}
 }
