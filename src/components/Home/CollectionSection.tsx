@@ -9,11 +9,13 @@ export default function CollectionSection() {
   return (
     <section className="collections">
       <div className="collections__container">
-        <h2 className="collections__heading">#shop collections</h2>
-        <p className="collections__sub-heading">
-          winter collections &mdash; new modern design
-        </p>
         <div className="collections__grid">
+          <div className="collections__block collections__block--text">
+            <h2 className="collections__heading">check out our collections</h2>
+            <p className="collections__sub-heading">
+              winter collections &mdash; new modern design
+            </p>
+          </div>
           <div className="collections__block">
             <Link href="/">
               <a className="collections__block-link">

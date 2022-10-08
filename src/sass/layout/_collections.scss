@@ -10,15 +10,17 @@
 	}
 
 	&__heading {
-		@extend %section-heading;
 		color: #fff;
+		text-transform: uppercase;
+		text-align: left;
+		font-size: 2.8rem;
 	}
 
 	&__sub-heading {
 		color: $c-text-gray;
 		font-size: $text-md;
 		text-transform: capitalize;
-		text-align: center;
+		font-weight: 400;
 	}
 
 	&__grid {
@@ -32,17 +34,27 @@
 		@include respond-to('small') {
 			flex-direction: row;
 			max-height: 55rem;
-			height: 32vw;
+			height: 28vw;
 			gap: 1.5rem;
 		}
 	}
 
 	&__block {
-		flex: 1 1 33.333%;
+		flex: 1;
 
 		@include respond-to('small') {
-			flex-basis: 100%;
+			flex-basis: 20%;
 			max-height: 47rem;
+		}
+
+		&--text {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+
+			@include respond-to('small') {
+				flex-basis: 40%;
+			}
 		}
 
 		&-link {
@@ -54,6 +66,7 @@
 
 		&-image {
 			object-fit: cover;
+			object-position: 15%;
 			transition: transform .6s $timing-func-img;
 		}
 
@@ -62,36 +75,43 @@
 			transform: scale(1.1);
 		}
 
+		&:hover &-content {
+			background-color: #00000022;
+		}
+
 		&-content {
 			position: absolute;
-			top: 1rem;
-			left: 1rem;
-			right: 1rem;
-			bottom: 1rem;
-			color: black;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			padding: 1.5rem;
+			color: #fff;
+			background-color: #00000044;
+			transform: background-color .3s $timing-func-img;
 		}
 
 		&-title {
-			text-align: right;
+			text-align: left;
 			text-transform: uppercase;
-			font-size: $text-xl;
+			font-size: $text-sm;
 			font-style: italic;
-			mix-blend-mode: soft-light;
 		}
 
 		&-action-text {
 			position: absolute;
-			bottom: 0;
+			bottom: 1.5rem;
+			right: 1.5rem;
 			font-weight: bold;
 			font-variant: small-caps;
 
 			& span {
 				font-variant: small-caps;
 				font-size: $text-lg;
-				border-bottom: 0.2rem solid black;
+				border-bottom: 0.2rem solid #fff;
 			}
 
-			@include link-arrow(black);
+			@include link-arrow(#fff);
 		}
 	}
 }
