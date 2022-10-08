@@ -138,6 +138,7 @@ export default function Footer() {
                   name="email"
                   inputMode="email"
                   placeholder="ENTER EMAIL"
+                  required
                   spellCheck={"false"}
                 />
                 <label
