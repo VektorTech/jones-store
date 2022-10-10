@@ -7,7 +7,7 @@ import Sidebar from "./Sidebar";
 function Header() {
   useDialog((isVisible) => {
     document.body.style.overflow = isVisible ? "hidden" : "auto";
-  }, "SIDEBAR_DIALOG");
+  }, ["SIDEBAR_DIALOG", "SEARCH_BOX"]);
 
   return (
     <>

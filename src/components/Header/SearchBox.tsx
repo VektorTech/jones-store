@@ -2,16 +2,17 @@ import { VscChromeClose } from "react-icons/vsc";
 import { FiSearch } from "react-icons/fi";
 import Product from "@Components/common/Product";
 
-import { useState } from "react";
+import { useDialog } from "@Lib/contexts/UIContext";
 
 export default function SearchBox() {
-  const [active, setActive] = useState(false);
+  const { currentDialog, setDialog } = useDialog();
+  const active = currentDialog == "SEARCH_BOX";
 
   if (!active) return null;
 
   return (
     <div className="search">
-      <button className="search__close" onClick={() => setActive(false)}>
+      <button className="search__close" onClick={() => setDialog(null)}>
         <VscChromeClose className="search__close-icon" />
       </button>
       <div className="search__container">
@@ -40,11 +41,11 @@ export default function SearchBox() {
         </div>
         <h3 className="search__results-info">5 Jordans Found</h3>
         <div className="search__results">
+          {/* <Product small />
           <Product small />
           <Product small />
           <Product small />
-          <Product small />
-          <Product small />
+          <Product small /> */}
         </div>
       </div>
     </div>

@@ -2,7 +2,8 @@ import { createContext, Dispatch, ReactElement, SetStateAction, useContext, useE
 
 export const Dialogs = {
 	SIDEBAR_DIALOG: "SIDEBAR_DIALOG",
-	MODAL_POPUP: "MODAL_POPUP"
+	MODAL_POPUP: "MODAL_POPUP",
+	SEARCH_BOX: "SEARCH_BOX"
 };
 
 export type DialogStates = keyof typeof Dialogs | null;
@@ -19,12 +20,13 @@ const uiState: {
 
 const UIContext = createContext(uiState);
 
-export function useDialog(observer?: (isVisible: boolean) => void, dialog?: DialogStates) {
+export function useDialog(observer?: (isVisible: boolean) => void, dialogDeps?: DialogStates[]) {
 	const _uiState = useContext(UIContext);
 
 	useEffect(() => {
-	  observer?.(_uiState.currentDialog == (dialog || Dialogs.SIDEBAR_DIALOG));
-	}, [_uiState, observer, dialog]);
+	  const isVisible = dialogDeps?.includes(_uiState.currentDialog as DialogStates);
+	  observer?.(!!isVisible);
+	}, [_uiState, observer, dialogDeps]);
 
 	return _uiState;
 }
