@@ -29,9 +29,12 @@ async function userRoute(
 		},
 		where: { id: userId as string },
 	  })
-	  .then(userData =>
-		res.json({ message: "Successfully Retrieved User Record", data: userData })
- 	  )
+	  .then(userData => {
+		if (userData == null) {
+			return res.json({ message: "No User Found!", data: {} });
+		}
+		res.json({ message: "Successfully Retrieved User Record", data: userData });
+	  })
 	  .catch(error =>
 		res.status(500).json({ message: error.message })
 	  );
