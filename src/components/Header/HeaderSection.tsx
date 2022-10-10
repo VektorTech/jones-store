@@ -9,7 +9,7 @@ import logoImg from "@Images/jones-logo.png";
 
 import useScrollTop from "@Lib/hooks/useScrollTop";
 import { useEffect, useRef, useState } from "react";
-import { useDialog } from "@Lib/contexts/UIContext";
+import { useAnnouncementState, useDialog } from "@Lib/contexts/UIContext";
 
 export default function HeaderSection() {
   const { setDialog } = useDialog();
@@ -18,8 +18,10 @@ export default function HeaderSection() {
   const scrollTop = useScrollTop();
   const lastScroll = useRef(scrollTop);
 
+  const announcementVisible = useAnnouncementState();
+
   useEffect(() => {
-    if (scrollTop >= 135) {
+    if (scrollTop >= (announcementVisible ? 135 : 100)) {
       setPinnedState(lastScroll.current > scrollTop);
       lastScroll.current = scrollTop;
     } else {
@@ -82,8 +84,8 @@ export default function HeaderSection() {
         <div className="header__buttons">
           <ul>
             <li className="header__button header__button-search">
-              <Link href="/">
-                <a>
+              <Link href="#">
+                <a onClick={(e) => { e.preventDefault(); setDialog("SEARCH_WIDGET"); }}>
                   <FiSearch />
                 </a>
               </Link>

@@ -34,11 +34,11 @@ export function useAnnouncementState() {
 	return announcementVisible;
 }
 
-export const UIProvider = ({ children, announcementState = true }: { children: ReactElement, announcementState: boolean }) => {
+export const UIProvider = ({ children, announcementHidden = true }: { children: ReactElement, announcementHidden: boolean }) => {
 	const [currentDialog, setDialog] = useState<DialogStates>(null);
 
 	return (
-	  <UIContext.Provider value={{ announcementVisible: announcementState, currentDialog, setDialog }}>
+	  <UIContext.Provider value={{ announcementVisible: !announcementHidden, currentDialog, setDialog }}>
 		{children}
 	  </UIContext.Provider>
 	);

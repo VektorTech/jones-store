@@ -5,8 +5,8 @@ import { BsXLg } from "react-icons/bs";
 import { FiHelpCircle } from "react-icons/fi";
 
 export default function Announcement() {
-  const announcementState = useAnnouncementState();
-  const [hidden, setHidden] = useState(announcementState);
+  const announcementVisible = useAnnouncementState();
+  const [hidden, setHidden] = useState(!announcementVisible);
 
   const handleClose = () => {
     setHidden(true);
