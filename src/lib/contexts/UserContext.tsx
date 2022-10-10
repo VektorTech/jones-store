@@ -27,10 +27,10 @@ const UserContext = createContext(userState);
 export const useUserState = () => useContext(UserContext);
 
 export const UserProvider = ({ children, userId }: { children: ReactElement, userId?: string }) => {
-	const { user, isLoading, isError } = useUser(userId);
+	const { user, isError } = useUser(userId);
 
 	return (
-		<UserContext.Provider value={{ userSessionId: userId, user, isLoading, isError }}>
+		<UserContext.Provider value={{ userSessionId: userId, user, isLoading: !user, isError }}>
 			{ children }
 		</UserContext.Provider>
 	);

@@ -161,7 +161,7 @@ export default function Sidebar() {
   }, [submenuActive]);
 
   const { user, isLoading, userSessionId, isError } = useUserState();
-  // console.log(user, isLoading, isError, userSessionId);
+  console.log(user, isError, userSessionId, isLoading);
 
   const ColorwaysList = colorways.map(({ name, path }) => (
     <li key={name} className="sidebar__links-item">
