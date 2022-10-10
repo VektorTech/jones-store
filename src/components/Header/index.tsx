@@ -1,31 +1,26 @@
+import { useDialog } from "@Lib/contexts/UIContext";
 import Announcement from "./Announcement";
 import HeaderSection from "./HeaderSection";
-import Sidebar, { LayoutProvider, useLayout } from "./Sidebar";
 import SearchBox from "./SearchBox";
+import Sidebar from "./Sidebar";
 
-function Header({ announcementState }: { announcementState?: boolean }) {
-  useLayout((isVisible) => {
+function Header() {
+  useDialog((isVisible) => {
     document.body.style.overflow = isVisible ? "hidden" : "auto";
-  });
+  }, "SIDEBAR_DIALOG");
 
   return (
     <>
       <SearchBox />
       <Sidebar />
-      <Announcement announcementState={announcementState} />
+      <Announcement />
       <HeaderSection />
     </>
   );
 }
 
-export default function _Header({
-  announcementState,
-}: {
-  announcementState?: boolean;
-}) {
+export default function _Header() {
   return (
-    <LayoutProvider>
-      <Header announcementState={announcementState} />
-    </LayoutProvider>
+    <Header />
   );
 }

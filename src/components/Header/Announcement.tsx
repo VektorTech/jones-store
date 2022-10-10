@@ -1,23 +1,16 @@
+import { useAnnouncementState } from "@Lib/contexts/UIContext";
+import { setCookie } from "@Lib/utils";
 import { useState } from "react";
 import { BsXLg } from "react-icons/bs";
 import { FiHelpCircle } from "react-icons/fi";
 
-export default function Announcement({
-  announcementState,
-}: {
-  announcementState?: boolean;
-}) {
+export default function Announcement() {
+  const announcementState = useAnnouncementState();
   const [hidden, setHidden] = useState(announcementState);
 
   const handleClose = () => {
     setHidden(true);
-    document.cookie =
-      "announcementState" +
-      "=" +
-      "closed" +
-      "; expires=" +
-      (Date.now() + 14 * 1000 * 60 * 60 * 24) +
-      "; path=/";
+    setCookie("announcementState", "closed", 14);
   };
 
   return (
