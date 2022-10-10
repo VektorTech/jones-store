@@ -6,12 +6,13 @@ import { BsCart3, BsPerson } from "react-icons/bs";
 import { FiSearch, FiMenu } from "react-icons/fi";
 
 import logoImg from "@Images/jones-logo.png";
-import { useLayout } from "./Sidebar";
+
 import useScrollTop from "@Lib/hooks/useScrollTop";
 import { useEffect, useRef, useState } from "react";
+import { useDialog } from "@Lib/contexts/UIContext";
 
 export default function HeaderSection() {
-  const { sidebarVisible, setSidebarVisibility } = useLayout();
+  const { setDialog } = useDialog();
 
   const [pinnedState, setPinnedState] = useState(false);
   const scrollTop = useScrollTop();
@@ -32,7 +33,7 @@ export default function HeaderSection() {
         <div className="header__menu-button">
           <button
             className="header__menu-toggle"
-            onClick={() => setSidebarVisibility(true)}
+            onClick={() => setDialog("SIDEBAR_DIALOG")}
           >
             <FiMenu />
           </button>
