@@ -4,9 +4,9 @@ import { User } from "@prisma/client";
 import prisma from '@Lib/prisma';
 import { ChangeEvent, useState } from "react";
 import { cloudinaryUpload } from "@Lib/utils";
+import { phoneRegExp, userSchema } from "@Lib/validations";
 
 export default function Profile({ user }: { user: User }) {
-
   const [img, setImg] = useState("/assets/images/user-avatar.jpg");
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
@@ -27,28 +27,41 @@ export default function Profile({ user }: { user: User }) {
         <input type="submit" value="Upload" />
       </form>
 
-      <form>
+      <br/>
+
+      <form action={`/api/auth/edit/${""}`} method="POST">
         <label htmlFor="">
           Username
-          <input type="text" />
+          <input name="username" type="text" />
         </label>
         <label htmlFor="">
           Email
-          <input type="text" />
+          <input name="email" type="email" />
         </label>
         <label htmlFor="">
           First Name
-          <input type="text" />
+          <input name="firstName" type="text" />
         </label>
         <label htmlFor="">
           Last Name
-          <input type="text" />
+          <input name="lastName" type="text" />
         </label>
         <label htmlFor="">
           Phone
-          <input type="text" />
+          <input name="phoneNumber" type="text" />
         </label>
+        <label htmlFor="">
+          Password
+          <input name="password" type="password" />
+        </label>
+        <label htmlFor="">
+          Avatar
+          <input name="avatarURL" type="text" />
+        </label>
+        <input type="submit" value="Save" />
       </form>
+
+      <br/>
 
       <form action="">
         <label htmlFor="">
@@ -94,7 +107,7 @@ export const getServerSideProps = withSessionSsr(
 
 		return {
 			props: {
-        user: userRecord
+        user: userRecord || null
 			}
 		}
 	}
