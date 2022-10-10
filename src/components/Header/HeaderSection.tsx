@@ -27,7 +27,7 @@ export default function HeaderSection() {
     } else {
       setPinnedState(false);
     }
-  }, [scrollTop]);
+  }, [scrollTop, announcementVisible]);
 
   return (
     <header className={`header${pinnedState ? " header--pinned" : ""}`}>
