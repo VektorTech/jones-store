@@ -1,19 +1,15 @@
+import { useDialog, Dialogs } from "@Lib/contexts/UIContext";
+import { useUserState } from "@Lib/contexts/UserContext";
 import useTabTrapIn from "@Lib/hooks/useTabTrapIn";
 import Link from "next/link";
 import React, {
-  createContext,
-  useContext,
   useEffect,
   useState,
-  useRef,
-  Dispatch,
-  SetStateAction,
-  ReactElement,
+  useRef
 } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
-import useSWR from 'swr';
 
-import { BsCart3, BsPerson, BsXLg } from "react-icons/bs";
+import { BsCart3, BsXLg, BsPerson } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
@@ -150,48 +146,22 @@ const colorways = [
   },
 ];
 
-const setSidebarVisibility: Dispatch<SetStateAction<boolean>> = () => {};
-
-const LayoutContext = createContext({
-  sidebarVisible: false,
-  setSidebarVisibility,
-});
-
-export const LayoutProvider = ({ children }: { children: ReactElement }) => {
-  const [sidebarVisible, setSidebarVisibility] = useState(false);
-
-  return (
-    <LayoutContext.Provider value={{ sidebarVisible, setSidebarVisibility }}>
-      {children}
-    </LayoutContext.Provider>
-  );
-};
-
-export function useLayout(observer?: (isVisible: boolean) => void) {
-  const sidebarState = useContext(LayoutContext);
-
-  useEffect(() => {
-    observer?.(sidebarState.sidebarVisible);
-  }, [sidebarState.sidebarVisible, observer]);
-
-  return sidebarState;
-}
-
-const fetcher = (...args: [any, any]) => fetch(...args).then((res) => res.json());
-
 export default function Sidebar() {
-  const { data: userData, error } = useSWR("/api/auth/profile", fetcher);
   const [submenu, setSubmenu] = useState<Array<any> | null>(null);
   const [submenuActive, setSubmenuActive] = useState<boolean>(false);
 
-  const { sidebarVisible, setSidebarVisibility } = useLayout();
+  const { currentDialog, setDialog } = useDialog();
 
   const sidebarRef = useRef<HTMLDivElement>(null);
+  const sidebarVisible = currentDialog == Dialogs.SIDEBAR_DIALOG;
   useTabTrapIn(sidebarRef.current, sidebarVisible);
 
   useEffect(() => {
     setTimeout(() => !submenuActive && setSubmenu(null), 600);
   }, [submenuActive]);
+
+  const { user, isLoading, userSessionId, isError } = useUserState();
+  // console.log(user, isLoading, isError, userSessionId);
 
   const ColorwaysList = colorways.map(({ name, path }) => (
     <li key={name} className="sidebar__links-item">
@@ -218,7 +188,7 @@ export default function Sidebar() {
   return (
     <div
       className={`sidebar${sidebarVisible ? " sidebar--active" : ""}`}
-      onClick={() => setSidebarVisibility(false)}
+      onClick={() => setDialog(null)}
     >
       <button className="sidebar__close">
         <BsXLg className="sidebar__close-icon" />
@@ -230,7 +200,7 @@ export default function Sidebar() {
         onClick={(e) => e.stopPropagation()}
       >
         <div ref={sidebarRef} className="sidebar__container">
-          <button className="sidebar__search-box">
+          <button onClick={() => setDialog("SEARCH_BOX")} className="sidebar__search-box">
             <span className="sidebar__search-box-label">
               Search Jones Store
             </span>
@@ -298,8 +268,7 @@ export default function Sidebar() {
           <div className="sidebar__icon-links">
             <ul>
               <li className="sidebar__icon-links-item">
-                  {
-                    userData?.data ? (
+                  { user ? (
                       <Link href="/">
                         <a>
                           <BsPerson />

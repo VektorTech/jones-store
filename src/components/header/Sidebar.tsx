@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 
-import { BsCart3, BsXLg } from "react-icons/bs";
+import { BsCart3, BsXLg, BsPerson } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
@@ -200,7 +200,7 @@ export default function Sidebar() {
         onClick={(e) => e.stopPropagation()}
       >
         <div ref={sidebarRef} className="sidebar__container">
-          <button className="sidebar__search-box">
+          <button onClick={() => setDialog("SEARCH_BOX")} className="sidebar__search-box">
             <span className="sidebar__search-box-label">
               Search Jones Store
             </span>
@@ -268,7 +268,7 @@ export default function Sidebar() {
           <div className="sidebar__icon-links">
             <ul>
               <li className="sidebar__icon-links-item">
-                  { /* userData?.data ? (
+                  { user ? (
                       <Link href="/">
                         <a>
                           <BsPerson />
@@ -283,7 +283,7 @@ export default function Sidebar() {
                         </a>
                       </Link>
                     )
-                    */ }
+                  }
               </li>
               <li className="sidebar__icon-links-item">
                 <Link href="/">
