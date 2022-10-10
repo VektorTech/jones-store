@@ -3,27 +3,14 @@ import Image from "next/image";
 import { User } from "@prisma/client";
 import prisma from '@Lib/prisma';
 import { ChangeEvent, useState } from "react";
+import { cloudinaryUpload } from "@Lib/utils";
 
 export default function Profile({ user }: { user: User }) {
 
   const [img, setImg] = useState("/assets/images/user-avatar.jpg");
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e?.target?.files?.[0];
-
-    if (file) {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "r1841xex");
-
-      fetch("https://api.cloudinary.com/v1_1/dehtovbpt/image/upload", {
-        method: "POST",
-        body: formData
-      }).then(res => res.json()).then((res) => {
-        // console.log(res.url);
-        setImg(res.secure_url);
-      }).catch(console.log)
-    }
+    cloudinaryUpload(e.target.files, (r) => setImg(r?.secure_url));
   }
 
   return (
