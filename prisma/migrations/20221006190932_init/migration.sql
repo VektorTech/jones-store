@@ -214,7 +214,7 @@ CREATE OR REPLACE FUNCTION add_cart_total()
 	'
 	BEGIN
 		UPDATE users_cart
-			SET total = users_cart.total + (NEW.quantity * NEW.total)
+			SET total = users_cart.total + NEW.total
 			WHERE id = NEW.cartId;
 		RETURN NEW;
 	END;
@@ -226,7 +226,7 @@ CREATE OR REPLACE FUNCTION subtract_cart_total()
 	'
 	BEGIN
 		UPDATE users_cart
-			SET total = users_cart.total - (OLD.quantity * OLD.total)
+			SET total = users_cart.total - OLD.total
 			WHERE id = OLD.cartId;
 		RETURN NEW;
 	END;
