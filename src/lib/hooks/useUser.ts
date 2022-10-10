@@ -1,11 +1,13 @@
 import useSWR from 'swr';
-let fetcher: null = null;
-export default function useUser () {
-	const { data, error } = useSWR(`/api/auth/profile`, fetcher)
+
+const fetcher = (...args: [any, any]) => fetch(...args).then((res) => res.json());
+
+export default function useUser (id?: string) {
+	const { data, error } = useSWR(id ? `/api/auth/user/${id}` : "", fetcher);
 
 	return {
-	  user: data,
-	  isLoading: !error && !data,
+	  user: data?.data,
+	  isLoading: !error && !data?.data,
 	  isError: error
 	}
 }
