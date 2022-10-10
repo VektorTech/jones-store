@@ -45,7 +45,7 @@ function MyApp({
   }
 
   return (
-    <UIProvider announcementState={cookies?.announcementState == "closed"}>
+    <UIProvider announcementHidden={cookies?.announcementState == "closed"}>
       <UserProvider userId={userSession?.id}>
         { FinalRenderComponent }
       </UserProvider>
