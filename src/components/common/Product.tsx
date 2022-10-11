@@ -5,6 +5,7 @@ import { AiOutlineHeart } from "react-icons/ai";
 import RatingStars from "./RatingStars";
 import { Product as ProductType } from "@prisma/client";
 import { MouseEventHandler } from "react";
+import { getURLString } from "@Lib/utils";
 
 export default function Product({
   small = false,
@@ -14,6 +15,7 @@ export default function Product({
   mediaURLs,
   gender,
   ratings,
+  sku,
   id,
 }: { small?: boolean } & ProductType) {
   const wishlistHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -31,7 +33,7 @@ export default function Product({
 
   return (
     <div className={`product${small ? " product--small" : ""}`}>
-      <Link href={`/product/${title}`}>
+      <Link href={`/product/${getURLString(title + " " + sku)}`}>
         <a>
           <div className="product__wrapper">
             <div className="product__image">
