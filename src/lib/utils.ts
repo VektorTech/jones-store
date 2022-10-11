@@ -16,21 +16,27 @@ export function eraseCookie(key: string) {
 	setCookie(key, keyValue || "", -1);
 }
 
-export function cloudinaryUpload(files: FileList | null, cb: (res: { secure_url: string }) => unknown) {
-	if (!files) { return; }
-
+type CloudinaryBatchResultType = Promise<{
+	secure_url?: string;
+	url?: string;
+	width?: number;
+	height?: number;
+	original_filename?: string;
+	format?: string;
+}[]>;
+export function cloudinaryUpload(files: FileList):CloudinaryBatchResultType {
 	const formData = new FormData();
-	[].forEach.call(files, file => formData.append("file", file));
-	formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+	const results = [].map.call(files, file => {
+		formData.append("file", file);
+		formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
 
-	fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-		method: "POST",
-		body: formData
-	})
-	.then(res => res.json())
-	.then((res) => {
-		// console.log(res.url);
-		// cb(res.secure_url);
-		cb(res);
-	}).catch();
+		return fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+			method: "POST",
+			body: formData
+		})
+		.then(res => res.json())
+		.catch();
+	});
+
+	return Promise.all(results) as CloudinaryBatchResultType;
 }
