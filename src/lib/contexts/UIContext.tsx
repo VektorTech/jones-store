@@ -1,4 +1,5 @@
 import { createContext, Dispatch, ReactElement, SetStateAction, useContext, useEffect, useState } from "react";
+import { useRouter } from 'next/router';
 
 export const Dialogs = {
 	SIDEBAR_DIALOG: "SIDEBAR_DIALOG",
@@ -38,6 +39,13 @@ export function useAnnouncementState() {
 
 export const UIProvider = ({ children, announcementHidden = true }: { children: ReactElement, announcementHidden: boolean }) => {
 	const [currentDialog, setDialog] = useState<DialogStates>(null);
+	const router = useRouter();
+
+	useEffect(() => {
+		router.events.on("routeChangeStart", () => {
+			setDialog(null);
+		});
+	}, [router]);
 
 	return (
 	  <UIContext.Provider value={{ announcementVisible: !announcementHidden, currentDialog, setDialog }}>
