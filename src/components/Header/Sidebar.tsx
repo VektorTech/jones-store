@@ -268,15 +268,15 @@ export default function Sidebar() {
           <div className="sidebar__icon-links">
             <ul>
               <li className="sidebar__icon-links-item">
-                  { user ? (
-                      <Link href="/">
+                  { user?.id ? (
+                      <Link href="/api/auth/signout">
                         <a>
                           <BsPerson />
                           <span>Logout</span>
                         </a>
                       </Link>
                     ) : (
-                      <Link href="/">
+                      <Link href="/signin">
                         <a>
                           <BsPerson />
                           <span>Login / Register</span>
