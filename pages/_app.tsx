@@ -1,6 +1,9 @@
 import "@Sass/main.scss";
+import 'nprogress/nprogress.css';
 
 import App, { AppProps, AppContext } from "next/app";
+import Router from 'next/router';
+import NProgress from 'nprogress';
 
 import Layout from "@Components/Layout";
 import SEO from "@Components/common/SEO";
@@ -13,6 +16,11 @@ import { IncomingMessage } from "http";
 import { ReactElement } from "react";
 import { UserProvider } from "@Lib/contexts/UserContext";
 import { UIProvider } from "@Lib/contexts/UIContext";
+
+NProgress.configure({ showSpinner: false });
+Router.events.on('routeChangeStart', () => NProgress.start());
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
 
 function MyApp({
   Component,

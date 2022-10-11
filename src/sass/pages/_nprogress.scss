@@ -1,0 +1,11 @@
+@use '../abstracts' as *;
+
+#nprogress {
+	& .bar {
+		background: $c-red !important;
+	}
+
+	& .peg {
+		box-shadow: 0 0 10px  $c-red, 0 0 5px  $c-red !important;
+	}
+}
