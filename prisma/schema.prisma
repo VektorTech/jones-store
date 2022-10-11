@@ -132,7 +132,7 @@ model Product {
   color String @default("") @db.VarChar(25)
   sizes Float[]
   year Int?
-  sku String @db.VarChar(25)
+  sku String @db.VarChar(10) @unique
   stockQty Int
   gender Gender @default(MEN)
   type Category

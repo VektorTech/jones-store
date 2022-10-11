@@ -29,7 +29,7 @@ export const productSchema = object({
   color: string().max(25).required(),
   sizes: array().of(number()).min(1).required(),
   year: number().min(1985).max(new Date().getFullYear()).required(),
-  sku: string().max(25).required(),
+  sku: string().min(10).max(10).required(),
   stockQty: number().positive().required(),
   type: string().equals(Object.keys(Category)).required(),
 }).required();
