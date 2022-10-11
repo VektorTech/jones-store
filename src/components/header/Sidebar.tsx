@@ -2,11 +2,7 @@ import { useDialog, Dialogs } from "@Lib/contexts/UIContext";
 import { useUserState } from "@Lib/contexts/UserContext";
 import useTabTrapIn from "@Lib/hooks/useTabTrapIn";
 import Link from "next/link";
-import React, {
-  useEffect,
-  useState,
-  useRef
-} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 
 import { BsCart3, BsXLg, BsPerson } from "react-icons/bs";
@@ -200,7 +196,10 @@ export default function Sidebar() {
         onClick={(e) => e.stopPropagation()}
       >
         <div ref={sidebarRef} className="sidebar__container">
-          <button onClick={() => setDialog("SEARCH_BOX")} className="sidebar__search-box">
+          <button
+            onClick={() => setDialog("SEARCH_BOX")}
+            className="sidebar__search-box"
+          >
             <span className="sidebar__search-box-label">
               Search Jones Store
             </span>
@@ -268,22 +267,21 @@ export default function Sidebar() {
           <div className="sidebar__icon-links">
             <ul>
               <li className="sidebar__icon-links-item">
-                  { user?.id ? (
-                      <Link href="/api/auth/signout">
-                        <a>
-                          <BsPerson />
-                          <span>Logout</span>
-                        </a>
-                      </Link>
-                    ) : (
-                      <Link href="/signin">
-                        <a>
-                          <BsPerson />
-                          <span>Login / Register</span>
-                        </a>
-                      </Link>
-                    )
-                  }
+                {user?.id ? (
+                  <Link href="/api/auth/signout">
+                    <a>
+                      <BsPerson />
+                      <span>Logout</span>
+                    </a>
+                  </Link>
+                ) : (
+                  <Link href="/signin">
+                    <a>
+                      <BsPerson />
+                      <span>Login / Register</span>
+                    </a>
+                  </Link>
+                )}
               </li>
               <li className="sidebar__icon-links-item">
                 <Link href="/">

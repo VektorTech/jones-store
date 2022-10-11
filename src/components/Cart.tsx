@@ -1,8 +1,6 @@
 const Cart = () => {
-	// get
-	return (
-		<div></div>
-	);
+  // get
+  return <div></div>;
 };
 
 export default Cart;

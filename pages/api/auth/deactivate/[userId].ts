@@ -10,25 +10,27 @@ async function deactivateUserRoute(
   res: NextApiResponse<DefaultResponse>
 ) {
   if (req.method == "DELETE") {
-	const { userId } = req.query;
-	const { user } = req.session;
+    const { userId } = req.query;
+    const { user } = req.session;
 
-	const isAuthorized = userId && user && (userId == user?.id || user?.role == Role.ADMIN);
+    const isAuthorized =
+      userId && user && (userId == user?.id || user?.role == Role.ADMIN);
 
     if (isAuthorized) {
-      prisma.user.update({
-		where: { id: userId as string },
-		data: { deactivated: false }
-	  })
-	  .then(() => res.json({ message: "User Deactivation Successful" }))
-	  .catch((error) =>
-		res.status(500).json({ error: true, message: error.message })
-	  );
+      prisma.user
+        .update({
+          where: { id: userId as string },
+          data: { deactivated: false },
+        })
+        .then(() => res.json({ message: "User Deactivation Successful" }))
+        .catch((error) =>
+          res.status(500).json({ error: true, message: error.message })
+        );
     } else {
-		res.status(401).json({ error: true, message: "Unauthorized Request" });
-	}
+      res.status(401).json({ error: true, message: "Unauthorized Request" });
+    }
   } else {
-	res.status(404).json({ error: true, message: "Not Found" });
+    res.status(404).json({ error: true, message: "Not Found" });
   }
 }
 

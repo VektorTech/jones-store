@@ -1,7 +1,7 @@
 import { withSessionSsr } from "@Lib/withSession";
 import Image from "next/image";
 import { User } from "@prisma/client";
-import prisma from '@Lib/prisma';
+import prisma from "@Lib/prisma";
 import { ChangeEvent, useState } from "react";
 import { cloudinaryUpload } from "@Lib/utils";
 import { phoneRegExp, userSchema } from "@Lib/validations";
@@ -10,8 +10,8 @@ export default function Profile({ user }: { user: User }) {
   const [img, setImg] = useState("/assets/images/user-avatar.jpg");
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
-    cloudinaryUpload(e.target.files, (r) => setImg(r?.secure_url));
-  }
+    // cloudinaryUpload(e.target.files, (r) => setImg(r[0]?.secure_url));
+  };
 
   return (
     <div className="profile">
@@ -20,14 +20,20 @@ export default function Profile({ user }: { user: User }) {
         <button>Edit</button>
       </div>
 
-      <Image objectFit="cover" src={img} width={200} height={200} alt="profile" />
+      <Image
+        objectFit="cover"
+        src={img}
+        width={200}
+        height={200}
+        alt="profile"
+      />
 
       <form action="">
         <input type="file" accept="image/*" onChange={handleImageUpload} />
         <input type="submit" value="Upload" />
       </form>
 
-      <br/>
+      <br />
 
       <form action={`/api/auth/edit/${""}`} method="POST">
         <label htmlFor="">
@@ -61,7 +67,7 @@ export default function Profile({ user }: { user: User }) {
         <input type="submit" value="Save" />
       </form>
 
-      <br/>
+      <br />
 
       <form action="">
         <label htmlFor="">
@@ -97,18 +103,22 @@ export default function Profile({ user }: { user: User }) {
   );
 }
 
-export const getServerSideProps = withSessionSsr(
-	async function ({ params, req, query }) {
-    const { user } = req.session;
+export const getServerSideProps = withSessionSsr(async function ({
+  params,
+  req,
+  query,
+}) {
+  const { user } = req.session;
 
-		const userRecord = await prisma.user.findUnique({
-			where: { id: user?.id },
-		}).catch(console.log);
+  const userRecord = await prisma.user
+    .findUnique({
+      where: { id: user?.id },
+    })
+    .catch(console.log);
 
-		return {
-			props: {
-        user: userRecord || null
-			}
-		}
-	}
-);
+  return {
+    props: {
+      user: userRecord || null,
+    },
+  };
+});

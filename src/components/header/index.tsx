@@ -5,9 +5,12 @@ import SearchBox from "./SearchBox";
 import Sidebar from "./Sidebar";
 
 function Header() {
-  useDialog((isVisible) => {
-    document.body.style.overflow = isVisible ? "hidden" : "auto";
-  }, ["SIDEBAR_DIALOG", "SEARCH_BOX"]);
+  useDialog(
+    (isVisible) => {
+      document.body.style.overflow = isVisible ? "hidden" : "auto";
+    },
+    ["SIDEBAR_DIALOG", "SEARCH_BOX"]
+  );
 
   return (
     <>
@@ -20,7 +23,5 @@ function Header() {
 }
 
 export default function _Header() {
-  return (
-    <Header />
-  );
+  return <Header />;
 }

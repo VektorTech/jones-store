@@ -1,9 +1,9 @@
 import "@Sass/main.scss";
-import 'nprogress/nprogress.css';
+import "nprogress/nprogress.css";
 
 import App, { AppProps, AppContext } from "next/app";
-import Router from 'next/router';
-import NProgress from 'nprogress';
+import Router from "next/router";
+import NProgress from "nprogress";
 
 import Layout from "@Components/Layout";
 import SEO from "@Components/common/SEO";
@@ -18,9 +18,9 @@ import { UserProvider } from "@Lib/contexts/UserContext";
 import { UIProvider } from "@Lib/contexts/UIContext";
 
 NProgress.configure({ showSpinner: false });
-Router.events.on('routeChangeStart', () => NProgress.start());
-Router.events.on('routeChangeComplete', () => NProgress.done());
-Router.events.on('routeChangeError', () => NProgress.done());
+Router.events.on("routeChangeStart", () => NProgress.start());
+Router.events.on("routeChangeComplete", () => NProgress.done());
+Router.events.on("routeChangeError", () => NProgress.done());
 
 function MyApp({
   Component,
@@ -42,7 +42,10 @@ function MyApp({
       <>
         <Head>
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
         </Head>
         <SEO />
         <Layout>
@@ -55,7 +58,7 @@ function MyApp({
   return (
     <UIProvider announcementHidden={cookies?.announcementState == "closed"}>
       <UserProvider userId={userSession?.id}>
-        { FinalRenderComponent }
+        {FinalRenderComponent}
       </UserProvider>
     </UIProvider>
   );

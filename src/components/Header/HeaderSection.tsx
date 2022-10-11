@@ -9,7 +9,15 @@ import logoImg from "@Images/jones-logo.png";
 
 import useScrollTop from "@Lib/hooks/useScrollTop";
 import { useEffect, useRef, useState } from "react";
-import { useAnnouncementState, useDialog } from "@Lib/contexts/UIContext";
+import {
+  useAnnouncementState,
+  useDialog,
+  useUserProductActivity,
+} from "@Lib/contexts/UIContext";
+import useSWR from "swr";
+
+const fetcher = (...args: [any, any]) =>
+  fetch(...args).then((res) => res.json());
 
 export default function HeaderSection() {
   const { setDialog } = useDialog();
@@ -19,6 +27,10 @@ export default function HeaderSection() {
   const lastScroll = useRef(scrollTop);
 
   const announcementVisible = useAnnouncementState();
+  const { cartCount } = useUserProductActivity();
+  const { data, error } = useSWR("/api/wishlist", fetcher);
+  const wishlistCount = data?.data;
+  // console.log(data);
 
   useEffect(() => {
     if (scrollTop >= (announcementVisible ? 135 : 100)) {
@@ -85,7 +97,12 @@ export default function HeaderSection() {
           <ul>
             <li className="header__button header__button-search">
               <Link href="#">
-                <a onClick={(e) => { e.preventDefault(); setDialog("SEARCH_BOX"); }}>
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setDialog("SEARCH_BOX");
+                  }}
+                >
                   <FiSearch />
                 </a>
               </Link>
@@ -98,7 +115,7 @@ export default function HeaderSection() {
               </Link>
             </li>
             <li className="header__button header__button-wishlist">
-              <span>12</span>
+              {wishlistCount ? <span>{wishlistCount}</span> : null}
               <Link href="/">
                 <a>
                   <AiOutlineHeart />
@@ -106,7 +123,7 @@ export default function HeaderSection() {
               </Link>
             </li>
             <li className="header__button header__button-cart">
-              <span>3</span>
+              {cartCount ? <span>{cartCount}</span> : null}
               <Link href="/">
                 <a>
                   <BsCart3 />

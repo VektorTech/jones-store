@@ -6,8 +6,7 @@ import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 import BreadCrumbs from "@Components/product-list/BreadCrumbs";
 import { withSessionSsr } from "@Lib/withSession";
 import { Gender, Product } from "@prisma/client";
-import prisma from '@Lib/prisma';
-
+import prisma from "@Lib/prisma";
 
 export default function Product({ product }: { product: Product }) {
   return (
@@ -104,19 +103,23 @@ export default function Product({ product }: { product: Product }) {
   );
 }
 
-export const getServerSideProps = withSessionSsr(
-	async function ({ params, req, query }) {
-    const productId = (params?.productId as string);
+export const getServerSideProps = withSessionSsr(async function ({
+  params,
+  req,
+  query,
+}) {
+  const productId = params?.productId as string;
 
-		const results = await prisma.product.findUnique({
-			where: { id: productId },
-		}).catch(console.log);
+  const results = await prisma.product
+    .findUnique({
+      where: { id: productId },
+    })
+    .catch(console.log);
 
-		return {
-			props: {
-				products: results,
-        reviews: []
-			}
-		}
-	}
-);
+  return {
+    props: {
+      products: results,
+      reviews: [],
+    },
+  };
+});

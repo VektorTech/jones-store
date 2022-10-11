@@ -41,8 +41,8 @@ async function signupRoute(
         prisma.cart.create({
           data: {
             userId: id,
-            total: 0
-          }
+            total: 0,
+          },
         });
 
         await req.session.save();

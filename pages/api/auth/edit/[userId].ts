@@ -23,7 +23,8 @@ async function editUserRoute(
     const { userId } = req.query;
     const { user } = req.session;
 
-    const isAuthorized = userId && user && (userId == user?.id || user?.role == Role.ADMIN);
+    const isAuthorized =
+      userId && user && (userId == user?.id || user?.role == Role.ADMIN);
 
     if (isAuthorized) {
       prisma.user

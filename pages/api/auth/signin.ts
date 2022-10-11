@@ -30,7 +30,11 @@ async function signinRoute(
       });
     }
 
-    if (user && !user.deactivated && bcrypt.compareSync(password, user.password)) {
+    if (
+      user &&
+      !user.deactivated &&
+      bcrypt.compareSync(password, user.password)
+    ) {
       req.session.user = {
         id: user.id,
         username: user.username,

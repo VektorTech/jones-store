@@ -1,55 +1,89 @@
-import { createContext, Dispatch, ReactElement, SetStateAction, useContext, useEffect, useState } from "react";
-import { useRouter } from 'next/router';
+import {
+  createContext,
+  Dispatch,
+  ReactElement,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { useRouter } from "next/router";
 
 export const Dialogs = {
-	SIDEBAR_DIALOG: "SIDEBAR_DIALOG",
-	MODAL_POPUP: "MODAL_POPUP",
-	SEARCH_BOX: "SEARCH_BOX"
+  SIDEBAR_DIALOG: "SIDEBAR_DIALOG",
+  MODAL_POPUP: "MODAL_POPUP",
+  SEARCH_BOX: "SEARCH_BOX",
 };
 
 export type DialogStates = keyof typeof Dialogs | null;
 
 const uiState: {
-	announcementVisible?: boolean;
-	currentDialog?: DialogStates;
-	setDialog: Dispatch<SetStateAction<DialogStates>>;
+  cartCount?: number;
+  wishlistCount?: number;
+  announcementVisible?: boolean;
+  currentDialog?: DialogStates;
+  setDialog: Dispatch<SetStateAction<DialogStates>>;
 } = {
-	announcementVisible: true,
-	currentDialog: undefined,
-	setDialog: () => {}
+  cartCount: 0,
+  wishlistCount: 0,
+  announcementVisible: true,
+  currentDialog: undefined,
+  setDialog: () => {},
 };
 
 const UIContext = createContext(uiState);
 
-export function useDialog(observer?: (isVisible: boolean) => void, dialogDeps?: DialogStates[]) {
-	const _uiState = useContext(UIContext);
+export function useDialog(
+  observer?: (isVisible: boolean) => void,
+  dialogDeps?: DialogStates[]
+) {
+  const _uiState = useContext(UIContext);
 
-	useEffect(() => {
-	  const isVisible = dialogDeps?.includes(_uiState.currentDialog as DialogStates);
-	  observer?.(!!isVisible);
-	}, [_uiState, observer, dialogDeps]);
+  useEffect(() => {
+    const isVisible = dialogDeps?.includes(
+      _uiState.currentDialog as DialogStates
+    );
+    observer?.(!!isVisible);
+  }, [_uiState, observer, dialogDeps]);
 
-	return _uiState;
+  return _uiState;
 }
 
 export function useAnnouncementState() {
-	const { announcementVisible } = useContext(UIContext);
-	return announcementVisible;
+  const { announcementVisible } = useContext(UIContext);
+  return announcementVisible;
 }
 
-export const UIProvider = ({ children, announcementHidden = true }: { children: ReactElement, announcementHidden: boolean }) => {
-	const [currentDialog, setDialog] = useState<DialogStates>(null);
-	const router = useRouter();
+export function useUserProductActivity() {
+  const { cartCount, wishlistCount } = useContext(UIContext);
+  return { cartCount, wishlistCount };
+}
 
-	useEffect(() => {
-		router.events.on("routeChangeStart", () => {
-			setDialog(null);
-		});
-	}, [router]);
+export const UIProvider = ({
+  children,
+  announcementHidden = true,
+}: {
+  children: ReactElement;
+  announcementHidden: boolean;
+}) => {
+  const [currentDialog, setDialog] = useState<DialogStates>(null);
+  const router = useRouter();
 
-	return (
-	  <UIContext.Provider value={{ announcementVisible: !announcementHidden, currentDialog, setDialog }}>
-		{children}
-	  </UIContext.Provider>
-	);
+  useEffect(() => {
+    router.events.on("routeChangeStart", () => {
+      setDialog(null);
+    });
+  }, [router]);
+
+  return (
+    <UIContext.Provider
+      value={{
+        announcementVisible: !announcementHidden,
+        currentDialog,
+        setDialog,
+      }}
+    >
+      {children}
+    </UIContext.Provider>
+  );
 };

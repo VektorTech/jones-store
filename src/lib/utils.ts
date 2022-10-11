@@ -1,42 +1,47 @@
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from "./config";
 
 export function setCookie(key: string, value: string, days: number) {
-	const expires = new Date();
-	expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-	document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+  const expires = new Date();
+  expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+  document.cookie = key + "=" + value + ";expires=" + expires.toUTCString();
 }
 
 export function getCookie(key: string) {
-	const keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
-	return keyValue ? keyValue[2] : null;
+  const keyValue = document.cookie.match("(^|;) ?" + key + "=([^;]*)(;|$)");
+  return keyValue ? keyValue[2] : null;
 }
 
 export function eraseCookie(key: string) {
-	const keyValue = getCookie(key);
-	setCookie(key, keyValue || "", -1);
+  const keyValue = getCookie(key);
+  setCookie(key, keyValue || "", -1);
 }
 
-type CloudinaryBatchResultType = Promise<{
-	secure_url?: string;
-	url?: string;
-	width?: number;
-	height?: number;
-	original_filename?: string;
-	format?: string;
-}[]>;
-export function cloudinaryUpload(files: FileList):CloudinaryBatchResultType {
-	const formData = new FormData();
-	const results = [].map.call(files, file => {
-		formData.append("file", file);
-		formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+type CloudinaryBatchResultType = Promise<
+  {
+    secure_url?: string;
+    url?: string;
+    width?: number;
+    height?: number;
+    original_filename?: string;
+    format?: string;
+  }[]
+>;
+export function cloudinaryUpload(files: FileList): CloudinaryBatchResultType {
+  const formData = new FormData();
+  const results = [].map.call(files, (file) => {
+    formData.append("file", file);
+    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
 
-		return fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-			method: "POST",
-			body: formData
-		})
-		.then(res => res.json())
-		.catch();
-	});
+    return fetch(
+      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
+      .then((res) => res.json())
+      .catch();
+  });
 
-	return Promise.all(results) as CloudinaryBatchResultType;
+  return Promise.all(results) as CloudinaryBatchResultType;
 }

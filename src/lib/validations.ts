@@ -19,9 +19,9 @@ export const userLoginSchema = object({
 }).required();
 
 export const productSchema = object({
-  id: string().required(),
+  id: string().min(3).required(),
   title: string().max(255).required(),
-  mediaURLs: array().of(string().url()).min(3).required(),
+  mediaURLs: array().of(string().url()).min(2).required(),
   price: number().required().positive(),
   discount: number().positive(),
   shippingCost: number().positive(),
@@ -31,5 +31,5 @@ export const productSchema = object({
   year: number().min(1985).max(new Date().getFullYear()).required(),
   sku: string().max(25).required(),
   stockQty: number().positive().required(),
-  type: string().equals(Object.keys(Category)).required()
+  type: string().equals(Object.keys(Category)).required(),
 }).required();
