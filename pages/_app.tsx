@@ -58,7 +58,11 @@ MyApp.getInitialProps = async (context: AppContext) => {
   const req = context.ctx.req as IncomingMessage;
   const res = NextResponse.next();
 
-  const session = await getIronSession(req, res, sessionOptions);
+  let session = null;
+
+  if (req) {
+    session = await getIronSession(req, res, sessionOptions).catch();
+  }
 
   const cookies = req?.headers.cookie?.split("; ").reduce((batch, cookie) => {
     const [key, value] = cookie.split("=");
@@ -68,7 +72,7 @@ MyApp.getInitialProps = async (context: AppContext) => {
   return {
     ...appProps,
     cookies,
-    userSession: session.user,
+    userSession: session?.user,
     isAdmin: req?.url?.startsWith("/admin"),
   };
 };
