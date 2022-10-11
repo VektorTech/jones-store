@@ -36,6 +36,7 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
       mediaURLs: true,
       gender: true,
       ratings: true,
+      sku: true,
       id: true,
     };
     const newArrivals = await prisma.product
