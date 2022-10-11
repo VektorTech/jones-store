@@ -1,5 +1,7 @@
+import { cloudinaryUpload } from "@Lib/utils";
 import { TextField, Checkbox, Autocomplete, Select, FormControl, FormControlLabel, InputLabel, Input, MenuItem, Button, FormGroup } from "@mui/material";
 import { Gender, Category } from "@prisma/client";
+import { FormEvent, FormEventHandler } from "react";
 
 const colorways = [ // see sidebar
   {
@@ -65,9 +67,22 @@ const colorways = [ // see sidebar
 ];
 
 export default function AddProduct() {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const { files } = document.getElementById("product-images") as HTMLInputElement;
+    if (files) {
+      const uploads = await cloudinaryUpload(files);
+      form["mediaURLs"].textContent = uploads.map(r => r.secure_url).join("\n");
+      const newForm = form.cloneNode(true) as HTMLFormElement;
+      form.parentNode?.replaceChild(newForm, form);
+      newForm.submit();
+    }
+  };
+
   return (
     <div className="admin__section">
-      <form method="POST" action="/api/products">
+      <form onSubmit={handleSubmit} method="POST" action="/api/products">
         <TextField name="id" label="ID" />
 
         <TextField name="stockQty" label="Stock Quantity" />
@@ -82,7 +97,8 @@ export default function AddProduct() {
 
         <TextField name="details" fullWidth multiline label="Details" />
 
-        <TextField name="mediaURLs" label="Media URLs" fullWidth multiline minRows={3} />
+        <input id="product-images" type="file" accept="image/*" multiple />
+        <textarea style={{ display: "none" }} name="mediaURLs" id="mediaURLs"></textarea>
 
         <Autocomplete
           disablePortal
