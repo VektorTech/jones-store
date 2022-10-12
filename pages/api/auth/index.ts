@@ -15,7 +15,7 @@ async function usersRoute(
     const isAuthorized = user?.role == Role.ADMIN;
 
     if (isAuthorized) {
-      prisma.user
+      await prisma.user
         .findMany({
           skip: offset as number,
           take: limit as number,

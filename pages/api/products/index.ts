@@ -22,7 +22,7 @@ async function productRoute(
         };
         data = productSchema.cast(data) as unknown as Product;
 
-        prisma.product
+        await prisma.product
           .create({ data })
           .then(() => {
             res.json({ message: `Successfully Added ${data.title}` });
@@ -42,7 +42,7 @@ async function productRoute(
   } else if (req.method == "GET") {
     const { offset = 0, limit = 10 } = req.query;
 
-    prisma.product
+    await prisma.product
       .findMany({
         select: {
           id: true,

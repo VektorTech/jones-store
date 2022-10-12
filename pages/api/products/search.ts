@@ -10,7 +10,7 @@ export default async function productSearchRoute(
   if (req.method == "GET") {
     const { q, offset = 0, limit = 10 } = req.query;
 
-    prisma.product
+    await prisma.product
       .findMany({
         select: {
           id: true,

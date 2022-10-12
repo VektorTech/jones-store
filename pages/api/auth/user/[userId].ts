@@ -17,7 +17,7 @@ async function userRoute(
       userId && user && (userId == user?.id || user?.role == Role.ADMIN);
 
     if (isAuthorized) {
-      prisma.user
+      await prisma.user
         .findUnique({
           select: {
             id: true,

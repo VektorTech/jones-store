@@ -13,7 +13,7 @@ async function wishlistRoute(
     const { user } = req.session;
 
     if (user && productId) {
-      prisma.wishlist
+      await prisma.wishlist
         .create({
           data: {
             userId: user.id,
@@ -33,7 +33,7 @@ async function wishlistRoute(
     const { user } = req.session;
 
     if (user && productId) {
-      prisma.wishlist
+      await prisma.wishlist
         .delete({
           where: {
             userId_productId: {
@@ -53,7 +53,7 @@ async function wishlistRoute(
     const { user } = req.session;
 
     if (user) {
-      prisma.wishlist
+      await prisma.wishlist
         .count({
           where: { userId: user.id },
         })

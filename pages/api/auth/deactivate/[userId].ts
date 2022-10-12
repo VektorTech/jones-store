@@ -17,7 +17,7 @@ async function deactivateUserRoute(
       userId && user && (userId == user?.id || user?.role == Role.ADMIN);
 
     if (isAuthorized) {
-      prisma.user
+      await prisma.user
         .update({
           where: { id: userId as string },
           data: { deactivated: false },

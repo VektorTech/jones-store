@@ -23,7 +23,7 @@ async function signupRoute(
     ) as unknown as User;
     const passwordHashed = bcrypt.hashSync(password);
 
-    prisma.user
+    await prisma.user
       .create({
         data: {
           username,
