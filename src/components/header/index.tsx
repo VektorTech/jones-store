@@ -1,8 +1,11 @@
-import { useDialog } from "@Lib/contexts/UIContext";
+import { useAnnouncementState, useDialog } from "@Lib/contexts/UIContext";
+import { useUserState } from "@Lib/contexts/UserContext";
 import Announcement from "./Announcement";
 import HeaderSection from "./HeaderSection";
 import SearchBox from "./SearchBox";
 import Sidebar from "./Sidebar";
+
+
 
 function Header() {
   useDialog(
@@ -12,12 +15,15 @@ function Header() {
     ["SIDEBAR_DIALOG", "SEARCH_BOX"]
   );
 
+  const announcementVisible = useAnnouncementState ();
+  const { user, isLoading, userSessionId, isError } = useUserState();
+
   return (
     <>
       <SearchBox />
-      <Sidebar />
+      <Sidebar userId={user?.id} />
       <Announcement />
-      <HeaderSection />
+      <HeaderSection announcementVisible={announcementVisible} />
     </>
   );
 }
