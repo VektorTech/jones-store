@@ -41,8 +41,7 @@ const fetcher = (...args: [any, any]) =>
 
 export default function useUser(id?: string) {
   const { data, error } = useSWR(id ? `/api/auth/user/${id}` : "", fetcher);
-
-  const [userState, updateUser] = useReducer(authReducer, initUser);
+  const [ userState, updateUser ] = useReducer(authReducer, initUser);
 
   useEffect(() => {
     updateUser({ type: actions.SET_USER as ActionsType, payload: data?.data || {} });
