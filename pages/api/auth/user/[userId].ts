@@ -28,6 +28,7 @@ async function userRoute(
             lastName: true,
             phoneNumber: true,
             deactivated: true,
+            wishlist: true
           },
           where: { id: userId as string },
         })
