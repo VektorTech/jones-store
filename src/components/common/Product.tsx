@@ -3,10 +3,10 @@ import Image from "next/image";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 import RatingStars from "./RatingStars";
-import { Product as ProductType } from "@prisma/client";
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, useEffect, useRef, useState } from "react";
 import { getURLString } from "@Lib/utils";
 import { useAuthState } from "@Lib/contexts/AuthContext";
+import { ProductComponentType } from "src/types/shared";
 
 export default function Product({
   small = false,
@@ -27,16 +27,28 @@ export default function Product({
     onWishlist ? removeFromWishlist(id) : addToWishlist(id);
   };
 
+  const [imageIndex, setImageIndex] = useState(0);
+  const timer = useRef<NodeJS.Timer>();
+
   return (
-    <div className={`product${small ? " product--small" : ""}`}>
+    <div className={`product${small ? " product--small" : ""}`}
+      onPointerEnter={() => {
+        timer.current = setInterval(() => {
+          setImageIndex(index => index + 1);
+        }, 1000);
+      }}
+      onPointerLeave={() => {
+          clearInterval(timer.current);
+          setImageIndex(0);
+      }}
+      >
       <Link href={`/product/${getURLString(title + " " + sku)}`}>
-        <a>
+        <a title={title}>
           <div className="product__wrapper">
             <div className="product__image">
               <Image
-                src={mediaURLs[0]}
+                src={mediaURLs[imageIndex % mediaURLs.length]}
                 objectFit="contain"
-                objectPosition={"center top"}
                 layout="fill"
                 className="product__image-img"
                 alt=""
@@ -82,8 +94,4 @@ export default function Product({
       </Link>
     </div>
   );
-}
-
-interface ProductComponentType extends ProductType {
-  small?: boolean;
 }
