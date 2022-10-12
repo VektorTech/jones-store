@@ -1,3 +1,4 @@
+import { deleteWishlistItem, postWishlistItem } from "@Lib/helpers";
 import { useEffect, useReducer } from "react";
 import { UserType } from "src/types/shared";
 import useSWR from "swr";
@@ -44,16 +45,16 @@ export default function useUser(id?: string) {
   const [userState, updateUser] = useReducer(userReducer, initUser)
 
   const addWishlistItem = async (id: string) => {
-    const r = await _addWishlistItem(id);
+    const r = await postWishlistItem(id);
     if (!r.error) {
-      updateUser({ type: actions.ADD_WISHLIST_ITEMS as ActionsType, payload: r.data })
+      updateUser({ type: actions.ADD_WISHLIST_ITEMS as ActionsType, payload: r.data });
     }
   }
 
   const removeWishlistItem = async (id: string) => {
-    const r = await _removeWishlistItem(id);
+    const r = await deleteWishlistItem(id);
     if (!r.error) {
-      updateUser({ type: actions.REMOVE_WISHLIST_ITEMS as ActionsType, payload: id })
+      updateUser({ type: actions.REMOVE_WISHLIST_ITEMS as ActionsType, payload: id });
     }
   };
 
@@ -68,26 +69,4 @@ export default function useUser(id?: string) {
     addWishlistItem,
     removeWishlistItem
   };
-}
-
-function _addWishlistItem (id: string) {
-  return fetch("/api/wishlist", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({ productId: id }),
-  }).then(res => res.json())
-    .catch(console.log);
-}
-
-function _removeWishlistItem (id: string) {
-  return fetch("/api/wishlist", {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({ productId: id }),
-  }).then(res => res.json())
-    .catch(console.log);
 }
