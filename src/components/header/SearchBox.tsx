@@ -20,11 +20,13 @@ export default function SearchBox() {
   };
 
   useEffect(() => {
-    fetch(`${location.origin}/api/products/search?q=${searchTerm}&limit=5`)
+    if (active) {
+      fetch(`${location.origin}/api/products/search?q=${searchTerm}&limit=5`)
       .then(res => res.json())
       .then(res => setProducts(res.data || []))
       .catch(console.log);
-  }, [searchTerm]);
+    }
+  }, [searchTerm, active]);
 
   useEffect(() => {
     if (active) {
