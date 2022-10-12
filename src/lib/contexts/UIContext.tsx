@@ -18,17 +18,13 @@ export const Dialogs = {
 export type DialogStates = keyof typeof Dialogs | null;
 
 const uiState: {
-  cartCount?: number;
-  wishlistCount?: number;
   announcementVisible?: boolean;
   currentDialog?: DialogStates;
   setDialog: Dispatch<SetStateAction<DialogStates>>;
 } = {
-  cartCount: 0,
-  wishlistCount: 0,
   announcementVisible: true,
   currentDialog: undefined,
-  setDialog: () => {},
+  setDialog: () => {}
 };
 
 const UIContext = createContext(uiState);
@@ -54,11 +50,6 @@ export function useAnnouncementState() {
   return announcementVisible;
 }
 
-export function useUserProductActivity() {
-  const { cartCount, wishlistCount } = useContext(UIContext);
-  return { cartCount, wishlistCount };
-}
-
 export const UIProvider = ({
   children,
   announcementHidden = true,
@@ -70,9 +61,9 @@ export const UIProvider = ({
   const router = useRouter();
 
   useEffect(() => {
-    router.events.on("routeChangeStart", () => {
-      setDialog(null);
-    });
+    const clearDialogState = () => setDialog(null);
+    router.events.on("routeChangeStart", clearDialogState);
+    return () => router.events.off("routeChangeStart", clearDialogState);
   }, [router]);
 
   return (

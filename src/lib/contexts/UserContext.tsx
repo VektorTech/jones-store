@@ -1,5 +1,6 @@
-import { createContext, ReactElement, useContext } from "react";
+import { createContext, ReactElement, useContext, useEffect, useState } from "react";
 import useUser from "@Lib/hooks/useUser";
+import useSWR from "swr";
 
 const userState: {
   userSessionId?: string;
@@ -12,14 +13,20 @@ const userState: {
     lastName: string;
     phoneNumber: string;
     deactivated: boolean;
+    wishlist: any[];
   };
   isLoading?: boolean;
   isError?: boolean;
+  addToWishlist: (id: string) => Promise<void>;
+  removeFromWishlist: (id: string) => Promise<void>;
 } = {
   userSessionId: undefined,
   user: undefined,
   isLoading: undefined,
   isError: undefined,
+
+  addToWishlist: (id) => Promise.resolve(),
+  removeFromWishlist: (id) => Promise.resolve(),
 };
 
 const UserContext = createContext(userState);
@@ -33,11 +40,11 @@ export const UserProvider = ({
   children: ReactElement;
   userId?: string;
 }) => {
-  const { user, isError } = useUser(userId);
+  const { user, isError, addWishlistItem, removeWishlistItem } = useUser(userId);
 
   return (
     <UserContext.Provider
-      value={{ userSessionId: userId, user, isLoading: !user, isError }}
+      value={{ addToWishlist: addWishlistItem, removeFromWishlist: removeWishlistItem, userSessionId: userId, user, isLoading: !user, isError }}
     >
       {children}
     </UserContext.Provider>
