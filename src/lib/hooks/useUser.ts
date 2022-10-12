@@ -23,7 +23,7 @@ const actions = {
 
 type ActionsType = keyof typeof actions;
 
-const userReducer = (user: UserType, action: { type: ActionsType, payload: any }) => {
+const authReducer = (user: UserType, action: { type: ActionsType, payload: any }) => {
   switch (action.type) {
     case actions.SET_USER:
       return action.payload;
@@ -32,7 +32,7 @@ const userReducer = (user: UserType, action: { type: ActionsType, payload: any }
     case actions.REMOVE_WISHLIST_ITEMS:
       return { ...user, wishlist: user.wishlist.filter(({productId = ""}) => productId != action.payload) };
     default:
-      throw new Error();
+      return user;
   }
 };
 
@@ -42,7 +42,7 @@ const fetcher = (...args: [any, any]) =>
 export default function useUser(id?: string) {
   const { data, error } = useSWR(id ? `/api/auth/user/${id}` : "", fetcher);
 
-  const [userState, updateUser] = useReducer(userReducer, initUser);
+  const [userState, updateUser] = useReducer(authReducer, initUser);
 
   useEffect(() => {
     updateUser({ type: actions.SET_USER as ActionsType, payload: data?.data || {} });
