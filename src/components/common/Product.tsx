@@ -18,7 +18,7 @@ export default function Product({
   ratings,
   sku,
   id,
-}: { small?: boolean } & ProductType) {
+}: ProductComponentType) {
   const { addToWishlist, removeFromWishlist, user } = useAuthState();
   const onWishlist = user?.wishlist?.some(({productId}) => productId == id);
 
@@ -81,4 +81,8 @@ export default function Product({
       </Link>
     </div>
   );
+}
+
+interface ProductComponentType extends ProductType {
+  small?: boolean;
 }
