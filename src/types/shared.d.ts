@@ -1,4 +1,4 @@
-import { User, Wishlist } from "@prisma/client";
+import { User, Wishlist, Product } from "@prisma/client";
 
 /* Shared */
 export interface DefaultResponse {
@@ -10,3 +10,7 @@ export interface DefaultResponse {
 export type UserType = Partial<User> & {
   wishlist: Wishlist[] | never[];
 };
+
+export interface ProductComponentType extends Product {
+  small?: boolean;
+}
