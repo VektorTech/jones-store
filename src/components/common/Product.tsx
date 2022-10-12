@@ -1,11 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 import RatingStars from "./RatingStars";
 import { Product as ProductType } from "@prisma/client";
 import { MouseEventHandler } from "react";
 import { getURLString } from "@Lib/utils";
+import { useUserState } from "@Lib/contexts/UserContext";
 
 export default function Product({
   small = false,
@@ -18,17 +19,12 @@ export default function Product({
   sku,
   id,
 }: { small?: boolean } & ProductType) {
+  const { addToWishlist, removeFromWishlist, user } = useUserState();
+  const onWishlist = user?.wishlist?.some(({productId}) => productId == id);
+
   const wishlistHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
-    fetch("/api/wishlist", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({ productId: id }),
-    })
-      .then((res) => res.json())
-      .catch(console.log);
+    onWishlist ? removeFromWishlist(id) : addToWishlist(id);
   };
 
   return (
@@ -51,7 +47,7 @@ export default function Product({
                   onClick={wishlistHandler}
                   className="product__add-wishlist"
                 >
-                  <AiOutlineHeart className="product__add-wishlist-icon" />
+                  { onWishlist ? <AiFillHeart className="product__add-wishlist-icon" /> : <AiOutlineHeart className="product__add-wishlist-icon" /> }
                 </button>
               </div>
             </div>
@@ -59,7 +55,7 @@ export default function Product({
               <p className="product__type">{gender}</p>
               <h3 className="product__title">{title}</h3>
               <div className="product__rating">
-                <RatingStars count={3.8} />
+                <RatingStars count={ratings || 0} />
               </div>
               <p className="product__price">
                 <span className="product__currency">USD</span>
