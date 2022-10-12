@@ -28,7 +28,7 @@ const Home: NextPage<HomePropTypes> = ({ newArrivals, bestSellers }) => {
 export const getServerSideProps: GetServerSideProps = withSessionSsr(
   async function ({ params, req }) {
     // const user = req.session.user;
-    // const results = await prisma.user.findMany();
+
     const productColumns = {
       title: true,
       price: true,
@@ -45,20 +45,20 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
         select: productColumns,
         orderBy: { dateAdded: "desc" },
       })
-      .catch(console.log);
+      .catch(console.log) || null;
+
     const bestSellers = await prisma.product
       .findMany({
         take: 4,
         select: productColumns,
         orderBy: { salesCount: "desc" },
       })
-      .catch(console.log);
+      .catch(console.log) || null;
 
     return {
       props: {
         newArrivals,
         bestSellers,
-        // users: results.map(_ => ({..._, createdAt: "", updatedAt: ""}))
       },
     };
   }
