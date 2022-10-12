@@ -6,7 +6,7 @@ import RatingStars from "./RatingStars";
 import { Product as ProductType } from "@prisma/client";
 import { MouseEventHandler } from "react";
 import { getURLString } from "@Lib/utils";
-import { useUserState } from "@Lib/contexts/UserContext";
+import { useAuthState } from "@Lib/contexts/AuthContext";
 
 export default function Product({
   small = false,
@@ -19,7 +19,7 @@ export default function Product({
   sku,
   id,
 }: { small?: boolean } & ProductType) {
-  const { addToWishlist, removeFromWishlist, user } = useUserState();
+  const { addToWishlist, removeFromWishlist, user } = useAuthState();
   const onWishlist = user?.wishlist?.some(({productId}) => productId == id);
 
   const wishlistHandler: MouseEventHandler<HTMLButtonElement> = (event) => {

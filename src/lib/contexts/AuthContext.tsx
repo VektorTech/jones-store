@@ -1,8 +1,8 @@
-import { createContext, ReactElement, useContext, useEffect, useState } from "react";
+import { createContext, ReactElement, useContext } from "react";
 import useUser from "@Lib/hooks/useUser";
 import { UserType } from "src/types/shared";
 
-const userState: {
+const authState: {
   userSessionId?: string;
   user?: UserType;
   isLoading?: boolean;
@@ -19,11 +19,11 @@ const userState: {
   removeFromWishlist: (id) => Promise.resolve(),
 };
 
-const UserContext = createContext(userState);
+const AuthContext = createContext(authState);
 
-export const useUserState = () => useContext(UserContext);
+export const useAuthState = () => useContext(AuthContext);
 
-export const UserProvider = ({
+export const AuthProvider = ({
   children,
   userId,
 }: {
@@ -33,10 +33,10 @@ export const UserProvider = ({
   const { user, isError, addWishlistItem, removeWishlistItem } = useUser(userId);
 
   return (
-    <UserContext.Provider
+    <AuthContext.Provider
       value={{ addToWishlist: addWishlistItem, removeFromWishlist: removeWishlistItem, userSessionId: userId, user, isLoading: !user, isError }}
     >
       {children}
-    </UserContext.Provider>
+    </AuthContext.Provider>
   );
 };

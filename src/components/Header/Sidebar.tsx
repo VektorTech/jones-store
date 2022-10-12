@@ -1,5 +1,5 @@
 import { useDialog, Dialogs } from "@Lib/contexts/UIContext";
-import { useUserState } from "@Lib/contexts/UserContext";
+import { useAuthState } from "@Lib/contexts/AuthContext";
 import useTabTrapIn from "@Lib/hooks/useTabTrapIn";
 import Link from "next/link";
 import React, { useEffect, useState, useRef } from "react";
@@ -149,7 +149,7 @@ export default function Sidebar({ userId }: {userId?: string}) {
   const { currentDialog, setDialog } = useDialog();
 
   // const { wishlistCount } = useWishlist();
-  const { user } = useUserState();
+  const { user } = useAuthState();
   const wishlistCount = user?.wishlist?.length;
   const cartCount = 0;
 

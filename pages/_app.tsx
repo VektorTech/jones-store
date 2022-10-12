@@ -14,7 +14,7 @@ import { NextResponse } from "next/server";
 import { sessionOptions } from "@Lib/config";
 import { IncomingMessage } from "http";
 import { ReactElement } from "react";
-import { UserProvider } from "@Lib/contexts/UserContext";
+import { AuthProvider } from "@Lib/contexts/AuthContext";
 import { UIProvider } from "@Lib/contexts/UIContext";
 
 NProgress.configure({ showSpinner: false });
@@ -57,9 +57,9 @@ function MyApp({
 
   return (
     <UIProvider announcementHidden={cookies?.announcementState == "closed"}>
-      <UserProvider userId={userSession?.id}>
+      <AuthProvider userId={userSession?.id}>
         {FinalRenderComponent}
-      </UserProvider>
+      </AuthProvider>
     </UIProvider>
   );
 }

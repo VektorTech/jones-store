@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   useDialog
 } from "@Lib/contexts/UIContext";
-import { useUserState } from "@Lib/contexts/UserContext";
+import { useAuthState } from "@Lib/contexts/AuthContext";
 
 export default function HeaderSection({announcementVisible }: {announcementVisible?: boolean }) {
   const { setDialog } = useDialog();
@@ -22,7 +22,7 @@ export default function HeaderSection({announcementVisible }: {announcementVisib
   const lastScroll = useRef(scrollTop);
 
   // const { wishlistCount } = useWishlist();
-  const { user } = useUserState();
+  const { user } = useAuthState();
   const wishlistCount = user?.wishlist?.length;
   const cartCount = 0;
 

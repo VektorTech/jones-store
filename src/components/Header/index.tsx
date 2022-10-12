@@ -1,5 +1,5 @@
 import { useAnnouncementState, useDialog } from "@Lib/contexts/UIContext";
-import { useUserState } from "@Lib/contexts/UserContext";
+import { useAuthState } from "@Lib/contexts/AuthContext";
 import Announcement from "./Announcement";
 import HeaderSection from "./HeaderSection";
 import SearchBox from "./SearchBox";
@@ -16,7 +16,7 @@ function Header() {
   );
 
   const announcementVisible = useAnnouncementState ();
-  const { user, isLoading, userSessionId, isError } = useUserState();
+  const { user, isLoading, userSessionId, isError } = useAuthState();
 
   return (
     <>
