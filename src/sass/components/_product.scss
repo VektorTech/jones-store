@@ -31,10 +31,6 @@
 			opacity: 1;
 			visibility: visible;
 		}
-
-		&:hover &__image img {
-			transform: scale(1.1);
-		}
 	}
 
 	&--small {
@@ -67,10 +63,6 @@
 	&__image {
 		position: relative;
 		padding-bottom: 60.5%;
-
-		&-img {
-			transition: transform .6s $timing-func-img;
-		}
 	}
 
 	&__tag {
@@ -190,6 +182,7 @@
 
 		& #{$self}__old-amount {
 			font-weight: 300;
+			margin-left: 0.5rem;
 		}
 	}
 
