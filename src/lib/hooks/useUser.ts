@@ -1,26 +1,15 @@
 import { useEffect, useReducer } from "react";
+import { UserType } from "src/types/shared";
 import useSWR from "swr";
 
-type UserType = {
-  id?: string;
-  avatarURL?: string;
-  username?: string;
-  email?: string;
-  firstName?: string;
-  lastName?: string;
-  phoneNumber?: string;
-  deactivated?: boolean;
-  wishlist: any[];
-};
-
-const initUser = {
-  id: undefined,
-  avatarURL: undefined,
-  username: undefined,
-  email: undefined,
-  firstName: undefined,
-  lastName: undefined,
-  phoneNumber: undefined,
+const initUser: UserType = {
+  id: "",
+  avatarURL: "",
+  username: "",
+  email: "",
+  firstName: "",
+  lastName: "",
+  phoneNumber: "",
   deactivated: false,
   wishlist: [],
 };

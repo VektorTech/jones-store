@@ -1,19 +1,10 @@
 import { createContext, ReactElement, useContext, useEffect, useState } from "react";
 import useUser from "@Lib/hooks/useUser";
+import { UserType } from "src/types/shared";
 
 const userState: {
   userSessionId?: string;
-  user?: {
-    id: string;
-    avatarURL: string;
-    username: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    phoneNumber: string;
-    deactivated: boolean;
-    wishlist: any[];
-  };
+  user?: UserType;
   isLoading?: boolean;
   isError?: boolean;
   addToWishlist: (id: string) => Promise<void>;
