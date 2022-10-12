@@ -28,8 +28,8 @@ export default async function productSearchRoute(
         orderBy: {
           salesCount: "asc",
         },
-        skip: offset as number,
-        take: limit as number,
+        skip: Number(offset),
+        take: Number(limit),
       })
       .then((products) =>
         res.json({ message: "Products Found", data: products })

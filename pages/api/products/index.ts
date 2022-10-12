@@ -52,8 +52,8 @@ async function productRoute(
           ratings: true,
           gender: true,
         },
-        skip: offset as number,
-        take: limit as number,
+        skip: Number(offset),
+        take: Number(limit),
       })
       .then((products) =>
         res.json({ message: "Successfully Retrieved Products", data: products })

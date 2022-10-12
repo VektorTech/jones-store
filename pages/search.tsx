@@ -16,8 +16,8 @@ export const getServerSideProps = withSessionSsr(async function ({
 
   const results = await prisma.product.findMany({
     where: { title: { contains: q as string } },
-    skip: offset as number,
-    take: limit as number,
+    skip: Number(offset),
+    take: Number(limit),
   });
 
   return {
