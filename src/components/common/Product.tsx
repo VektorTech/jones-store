@@ -44,6 +44,7 @@ export default function Product({
               {discount ? <span className="product__tag">sale</span> : null}
               <div className="product__actions">
                 <button
+                  tabIndex={-1}
                   onClick={wishlistHandler}
                   className="product__add-wishlist"
                 >
