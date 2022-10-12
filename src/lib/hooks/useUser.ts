@@ -42,14 +42,18 @@ const fetcher = (...args: [any, any]) =>
 export default function useUser(id?: string) {
   const { data, error } = useSWR(id ? `/api/auth/user/${id}` : "", fetcher);
 
-  const [userState, updateUser] = useReducer(userReducer, initUser)
+  const [userState, updateUser] = useReducer(userReducer, initUser);
+
+  useEffect(() => {
+    updateUser({ type: actions.SET_USER as ActionsType, payload: data?.data || {} });
+  }, [data]);
 
   const addWishlistItem = async (id: string) => {
     const r = await postWishlistItem(id);
     if (!r.error) {
       updateUser({ type: actions.ADD_WISHLIST_ITEMS as ActionsType, payload: r.data });
     }
-  }
+  };
 
   const removeWishlistItem = async (id: string) => {
     const r = await deleteWishlistItem(id);
@@ -58,15 +62,13 @@ export default function useUser(id?: string) {
     }
   };
 
-  useEffect(() => {
-    updateUser({ type: actions.SET_USER as ActionsType, payload: data?.data || {} });
-  }, [data])
-
+  const useSelector = (callback: (user: UserType) => void) => callback(userState);
 
   return {
     user: userState,
     isError: error,
     addWishlistItem,
-    removeWishlistItem
+    removeWishlistItem,
+    useSelector
   };
 }

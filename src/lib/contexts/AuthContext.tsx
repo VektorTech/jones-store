@@ -9,6 +9,7 @@ const authState: {
   isError?: boolean;
   addToWishlist: (id: string) => Promise<void>;
   removeFromWishlist: (id: string) => Promise<void>;
+  useSelector: (callback: (user: UserType) => void) => void;
 } = {
   userSessionId: undefined,
   user: undefined,
@@ -17,6 +18,7 @@ const authState: {
 
   addToWishlist: (id) => Promise.resolve(),
   removeFromWishlist: (id) => Promise.resolve(),
+  useSelector: () => null
 };
 
 const AuthContext = createContext(authState);
@@ -30,11 +32,11 @@ export const AuthProvider = ({
   children: ReactElement;
   userId?: string;
 }) => {
-  const { user, isError, addWishlistItem, removeWishlistItem } = useUser(userId);
+  const { user, isError, addWishlistItem, removeWishlistItem, useSelector } = useUser(userId);
 
   return (
     <AuthContext.Provider
-      value={{ addToWishlist: addWishlistItem, removeFromWishlist: removeWishlistItem, userSessionId: userId, user, isLoading: !user, isError }}
+      value={{ useSelector, addToWishlist: addWishlistItem, removeFromWishlist: removeWishlistItem, userSessionId: userId, user, isLoading: !user, isError }}
     >
       {children}
     </AuthContext.Provider>
