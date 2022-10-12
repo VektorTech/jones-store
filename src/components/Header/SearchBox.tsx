@@ -3,10 +3,36 @@ import { FiSearch } from "react-icons/fi";
 import Product from "@Components/common/Product";
 
 import { useDialog } from "@Lib/contexts/UIContext";
+import { ChangeEventHandler, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
+import { ProductComponentType } from "src/types/shared";
 
 export default function SearchBox() {
   const { currentDialog, setDialog } = useDialog();
   const active = currentDialog == "SEARCH_BOX";
+
+  const [ searchTerm, setSearchTerm ] = useState("");
+  const [ products, setProducts ] = useState<ProductComponentType[] | Array<never>>([]);
+  const address = useRef(typeof location == "object" ? location.href : null);
+
+  const searchChangedHandler: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setSearchTerm(event.currentTarget.value);
+  };
+
+  useEffect(() => {
+    fetch(`${location.origin}/api/products/search?q=${searchTerm}&limit=5`)
+      .then(res => res.json())
+      .then(res => setProducts(res.data || []))
+      .catch(console.log);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    if (active) {
+      window.history.replaceState(null, "", `/search?q=${searchTerm}`);
+    } else {
+      window.history.replaceState(null, "", address.current);
+    }
+  }, [searchTerm, active]);
 
   if (!active) return null;
 
@@ -25,6 +51,8 @@ export default function SearchBox() {
             type="text"
             name="search"
             placeholder="Search Jones Store for..."
+            onChange={searchChangedHandler}
+            value={searchTerm}
           />
           <label htmlFor="search-input" className="input__placeholder">
             Search Jones Store for...
@@ -41,11 +69,9 @@ export default function SearchBox() {
         </div>
         <h3 className="search__results-info">5 Jordans Found</h3>
         <div className="search__results">
-          {/* <Product small />
-          <Product small />
-          <Product small />
-          <Product small />
-          <Product small /> */}
+          {
+            products.map(product => <Product key={product.id} small {...product} />)
+          }
         </div>
       </div>
     </div>
