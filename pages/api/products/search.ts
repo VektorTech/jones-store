@@ -23,10 +23,11 @@ export default async function productSearchRoute(
         where: {
           title: {
             contains: q as string,
+            mode: 'insensitive'
           },
         },
         orderBy: {
-          salesCount: "asc",
+          salesCount: "desc",
         },
         skip: Number(offset),
         take: Number(limit),
