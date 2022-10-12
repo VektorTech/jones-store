@@ -10,27 +10,21 @@ import logoImg from "@Images/jones-logo.png";
 import useScrollTop from "@Lib/hooks/useScrollTop";
 import { useEffect, useRef, useState } from "react";
 import {
-  useAnnouncementState,
-  useDialog,
-  useUserProductActivity,
+  useDialog
 } from "@Lib/contexts/UIContext";
-import useSWR from "swr";
+import { useUserState } from "@Lib/contexts/UserContext";
 
-const fetcher = (...args: [any, any]) =>
-  fetch(...args).then((res) => res.json());
-
-export default function HeaderSection() {
+export default function HeaderSection({announcementVisible }: {announcementVisible?: boolean }) {
   const { setDialog } = useDialog();
 
   const [pinnedState, setPinnedState] = useState(false);
   const scrollTop = useScrollTop();
   const lastScroll = useRef(scrollTop);
 
-  const announcementVisible = useAnnouncementState();
-  const { cartCount } = useUserProductActivity();
-  const { data, error } = useSWR("/api/wishlist", fetcher);
-  const wishlistCount = data?.data;
-  // console.log(data);
+  // const { wishlistCount } = useWishlist();
+  const { user } = useUserState();
+  const wishlistCount = user?.wishlist?.length;
+  const cartCount = 0;
 
   useEffect(() => {
     if (scrollTop >= (announcementVisible ? 135 : 100)) {

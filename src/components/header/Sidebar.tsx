@@ -142,11 +142,16 @@ const colorways = [
   },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ userId }: {userId?: string}) {
   const [submenu, setSubmenu] = useState<Array<any> | null>(null);
   const [submenuActive, setSubmenuActive] = useState<boolean>(false);
 
   const { currentDialog, setDialog } = useDialog();
+
+  // const { wishlistCount } = useWishlist();
+  const { user } = useUserState();
+  const wishlistCount = user?.wishlist?.length;
+  const cartCount = 0;
 
   const sidebarRef = useRef<HTMLDivElement>(null);
   const sidebarVisible = currentDialog == Dialogs.SIDEBAR_DIALOG;
@@ -155,9 +160,6 @@ export default function Sidebar() {
   useEffect(() => {
     setTimeout(() => !submenuActive && setSubmenu(null), 600);
   }, [submenuActive]);
-
-  const { user, isLoading, userSessionId, isError } = useUserState();
-  console.log(user, isError, userSessionId, isLoading);
 
   const ColorwaysList = colorways.map(({ name, path }) => (
     <li key={name} className="sidebar__links-item">
@@ -267,7 +269,7 @@ export default function Sidebar() {
           <div className="sidebar__icon-links">
             <ul>
               <li className="sidebar__icon-links-item">
-                {user?.id ? (
+                {userId ? (
                   <Link href="/api/auth/signout">
                     <a>
                       <BsPerson />
@@ -287,7 +289,7 @@ export default function Sidebar() {
                 <Link href="/">
                   <a>
                     <AiOutlineHeart />
-                    <span>Wishlist</span>
+                    <span>Wishlist{wishlistCount ? ` (${wishlistCount})` : ""}</span>
                   </a>
                 </Link>
               </li>
