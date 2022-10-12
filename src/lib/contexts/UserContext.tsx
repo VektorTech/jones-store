@@ -1,6 +1,5 @@
 import { createContext, ReactElement, useContext, useEffect, useState } from "react";
 import useUser from "@Lib/hooks/useUser";
-import useSWR from "swr";
 
 const userState: {
   userSessionId?: string;
