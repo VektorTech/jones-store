@@ -98,21 +98,21 @@ export const getServerSideProps = withSessionSsr(async function ({
   req,
   query,
 }) {
-  const categoryId = (params?.categoryId as string)?.toUpperCase() as Gender;
+  const [ category, type ] = (params?.categoryId as string[]);
   const { offset = 0, limit = 10 } = query;
 
-  const results = await prisma.product
-    .findMany({
-      where: { gender: categoryId },
-      skip: offset as number,
-      take: limit as number,
-    })
-    .catch(console.log);
+  // const results = await prisma.product
+  //   .findMany({
+  //     where: { gender: categoryId },
+  //     skip: offset as number,
+  //     take: limit as number,
+  //   })
+  //   .catch(console.log);
 
   return {
     props: {
-      products: results,
-      categoryId: categoryId,
+      // products: results,
+      categoryId: type?.toUpperCase() as Gender,
     },
   };
 });
