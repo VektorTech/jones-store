@@ -17,7 +17,7 @@ export default function CollectionSection() {
             </p>
           </div>
           <div className="collections__block">
-            <Link href="/">
+            <Link href="/category/type/low">
               <a className="collections__block-link">
                 <Image
                   className="collections__block-image"
@@ -35,7 +35,7 @@ export default function CollectionSection() {
             </Link>
           </div>
           <div className="collections__block">
-            <Link href="/">
+            <Link href="/category/type/mid">
               <a className="collections__block-link">
                 <Image
                   className="collections__block-image"
@@ -44,7 +44,7 @@ export default function CollectionSection() {
                   src={jordanMidImage}
                 />
                 <div className="collections__block-content">
-                  <h3 className="collections__block-title">Medium</h3>
+                  <h3 className="collections__block-title">Mid</h3>
                   <p className="collections__block-action-text">
                     <span>discover</span>
                   </p>
@@ -53,7 +53,7 @@ export default function CollectionSection() {
             </Link>
           </div>
           <div className="collections__block">
-            <Link href="/">
+            <Link href="/category/type/high">
               <a className="collections__block-link">
                 <Image
                   className="collections__block-image"

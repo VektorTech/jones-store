@@ -66,32 +66,32 @@ export default function Footer() {
           <h3 className="footer__heading">about</h3>
           <ul>
             <li className="footer__link">
-              <Link href="/">
+              <Link href="/about">
                 <a>About Us</a>
               </Link>
             </li>
             <li className="footer__link">
-              <Link href="/">
+              <Link href="/delivery-info">
                 <a>Delivery Information</a>
               </Link>
             </li>
             <li className="footer__link">
-              <Link href="/">
+              <Link href="/contact">
                 <a>Contact Us</a>
               </Link>
             </li>
             <li className="footer__link">
-              <Link href="/">
+              <Link href="/returns">
                 <a>Returns</a>
               </Link>
             </li>
             <li className="footer__link">
-              <Link href="/">
+              <Link href="/faq">
                 <a>F.A.Q</a>
               </Link>
             </li>
             <li className="footer__link">
-              <Link href="/">
+              <Link href="/sitemap.xml">
                 <a>Site Map</a>
               </Link>
             </li>
@@ -101,7 +101,7 @@ export default function Footer() {
           <h3 className="footer__heading">my account</h3>
           <ul>
             <li className="footer__link">
-              <Link href="/">
+              <Link href="/signin">
                 <a>Sign In</a>
               </Link>
             </li>
@@ -111,12 +111,12 @@ export default function Footer() {
               </Link>
             </li>
             <li className="footer__link">
-              <Link href="/">
+              <Link href="/wishlist">
                 <a>My Wishlist</a>
               </Link>
             </li>
             <li className="footer__link">
-              <Link href="/">
+              <Link href="/track-order">
                 <a>Track My Order</a>
               </Link>
             </li>
@@ -154,7 +154,7 @@ export default function Footer() {
               <p className="newsletter__disclaimer">
                 By signing up you are confirming that you have read, understood
                 and accept our{" "}
-                <Link href="/">
+                <Link href="/privacy">
                   <a>Privacy Policy</a>
                 </Link>
               </p>
@@ -174,11 +174,11 @@ export default function Footer() {
       <div className="gutter">
         <div className="gutter__container">
           <div className="gutter__terms">
-            <Link href="/">
+            <Link href="/terms">
               <a className="gutter__terms-link">Terms</a>
             </Link>
             <span className="gutter__terms-space"></span>
-            <Link href="/">
+            <Link href="/privacy">
               <a className="gutter__terms-link">Privacy</a>
             </Link>
           </div>

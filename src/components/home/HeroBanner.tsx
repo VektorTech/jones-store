@@ -46,7 +46,7 @@ export default function HeroBanner() {
               />
             </div>
             <div className="banner__action-button">
-              <Link href="/">
+              <Link href="/category/men/retro-high-og">
                 <a className="banner__action-button-element">
                   <span>buy yours</span>
                 </a>

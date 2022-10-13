@@ -16,9 +16,9 @@ const Home: NextPage<HomePropTypes> = ({ newArrivals, bestSellers }) => {
     <>
       <HeroBanner />
       <CollectionSection />
-      <ProductsSection products={newArrivals} title="new arrivals" />
+      <ProductsSection products={newArrivals} title="new arrivals" url="/category/new" />
       <GenderSection />
-      <ProductsSection products={bestSellers} title="best sellers" />
+      <ProductsSection products={bestSellers} title="best sellers" url="/category/best" />
       <FeaturesSection />
     </>
   );

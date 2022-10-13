@@ -59,27 +59,27 @@ export default function HeaderSection({announcementVisible }: {announcementVisib
           <nav>
             <ul>
               <li className="header__nav-link">
-                <Link href="/">
+                <Link href="/category/men">
                   <a>MEN</a>
                 </Link>
               </li>
               <li className="header__nav-link">
-                <Link href="/">
+                <Link href="/category/women">
                   <a>WOMEN</a>
                 </Link>
               </li>
               <li className="header__nav-link">
-                <Link href="/">
+                <Link href="/category/kids">
                   <a>KIDS</a>
                 </Link>
               </li>
               <li className="header__nav-link">
-                <Link href="/">
+                <Link href="/category/baby">
                   <a>BABY</a>
                 </Link>
               </li>
               <li className="header__nav-link">
-                <Link href="/">
+                <Link href="/category/unisex">
                   <a>UNISEX</a>
                 </Link>
               </li>
@@ -102,7 +102,7 @@ export default function HeaderSection({announcementVisible }: {announcementVisib
               </Link>
             </li>
             <li className="header__button header__button-account">
-              <Link href="/">
+              <Link href="/profile">
                 <a>
                   <BsPerson />
                 </a>
@@ -110,7 +110,7 @@ export default function HeaderSection({announcementVisible }: {announcementVisib
             </li>
             <li className="header__button header__button-wishlist">
               {wishlistCount ? <span>{wishlistCount}</span> : null}
-              <Link href="/">
+              <Link href="/wishlist">
                 <a>
                   <AiOutlineHeart />
                 </a>

@@ -6,9 +6,11 @@ import Product from "../common/Product";
 export default function ProductsSection({
   title,
   products,
+  url
 }: {
   title: string;
   products: ProductType[];
+  url: string;
 }) {
   return (
     <section className="products-section">
@@ -20,7 +22,7 @@ export default function ProductsSection({
           ))}
         </div>
         <p className="products-section__products-link">
-          <Link href="/">
+          <Link href={url}>
             <a>View All {title}</a>
           </Link>
         </p>

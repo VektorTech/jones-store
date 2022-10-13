@@ -11,10 +11,9 @@ export default function GenderSection() {
   return (
     <section className="gender">
       <div className="gender__container">
-        {/* <h2 className="gender__heading">#shop gender</h2> */}
         <div className="gender__grid">
           <div className="gender__block gender__block-men">
-            <Link href="/">
+            <Link href="/category/men">
               <a className="gender__block-link">
                 <Image alt="" layout="fill" src={manImage} />
                 <h3 className="gender__block-title">
@@ -24,7 +23,7 @@ export default function GenderSection() {
             </Link>
           </div>
           <div className="gender__block gender__block-women">
-            <Link href="/">
+            <Link href="/category/women">
               <a className="gender__block-link">
                 <Image alt="" layout="fill" src={womanImage} />
                 <h3 className="gender__block-title">
@@ -34,7 +33,7 @@ export default function GenderSection() {
             </Link>
           </div>
           <div className="gender__block gender__block-kids">
-            <Link href="/">
+            <Link href="/category/kids">
               <a className="gender__block-link">
                 <Image alt="" layout="fill" src={kidImage} />
                 <h3 className="gender__block-title">
@@ -44,7 +43,7 @@ export default function GenderSection() {
             </Link>
           </div>
           <div className="gender__block gender__block-babies">
-            <Link href="/">
+            <Link href="/category/baby">
               <a className="gender__block-link">
                 <Image alt="" layout="fill" src={babyImage} />
                 <h3 className="gender__block-title">
@@ -54,7 +53,7 @@ export default function GenderSection() {
             </Link>
           </div>
           <div className="gender__block gender__block-unisex">
-            <Link href="/">
+            <Link href="/category/unisex">
               <a className="gender__block-link">
                 <Image alt="" layout="fill" src={unisexImage} />
                 <h3 className="gender__block-title">

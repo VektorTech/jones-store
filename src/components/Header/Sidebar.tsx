@@ -84,7 +84,7 @@ export default function Sidebar({ userId }: {userId?: string}) {
           <div className="sidebar__links">
             <ul>
               <li className="sidebar__links-item">
-                <Link href="">
+                <Link href="/">
                   <a>HOME</a>
                 </Link>
               </li>
@@ -122,17 +122,17 @@ export default function Sidebar({ userId }: {userId?: string}) {
                 </button>
               </li>
               <li className="sidebar__links-item">
-                <Link href="/">
+                <Link href="/category/kids">
                   <a>KIDS</a>
                 </Link>
               </li>
               <li className="sidebar__links-item">
-                <Link href="/">
+                <Link href="/category/baby">
                   <a>BABY</a>
                 </Link>
               </li>
               <li className="sidebar__links-item">
-                <Link href="/">
+                <Link href="/category/unisex">
                   <a>UNISEX</a>
                 </Link>
               </li>
@@ -158,7 +158,7 @@ export default function Sidebar({ userId }: {userId?: string}) {
                 )}
               </li>
               <li className="sidebar__icon-links-item">
-                <Link href="/">
+                <Link href="/wishlist">
                   <a>
                     <AiOutlineHeart />
                     <span>Wishlist{wishlistCount ? ` (${wishlistCount})` : ""}</span>

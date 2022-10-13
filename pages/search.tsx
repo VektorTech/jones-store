@@ -15,13 +15,25 @@ export const getServerSideProps = withSessionSsr(async function ({
   req,
   query,
 }) {
-  const { q, offset = 0, limit = 10 } = query;
+  const { q = "", offset = 0, limit = 10 } = query;
+
+  const productColumns = {
+    title: true,
+    price: true,
+    discount: true,
+    mediaURLs: true,
+    gender: true,
+    ratings: true,
+    sku: true,
+    id: true,
+  };
 
   const results = await prisma.product.findMany({
+    select: productColumns,
     where: { title: { contains: q as string } },
     skip: Number(offset),
     take: Number(limit),
-  });
+  }) || null;
 
   return {
     props: {

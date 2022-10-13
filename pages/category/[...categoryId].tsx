@@ -101,6 +101,8 @@ export const getServerSideProps = withSessionSsr(async function ({
   const [ category, type ] = (params?.categoryId as string[]);
   const { offset = 0, limit = 10 } = query;
 
+  // women, men, kids, baby, unisex women/*, men/*, colorways/*, new, best, type - low, mid, high
+
   // const results = await prisma.product
   //   .findMany({
   //     where: { gender: categoryId },
