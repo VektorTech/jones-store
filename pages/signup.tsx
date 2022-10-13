@@ -1,5 +1,5 @@
 import SEO from "@Components/common/SEO";
-import AuthForm from "@Components/user/AuthFrom";
+import AuthForm from "@Components/user/AuthForm";
 
 export default function SignUpPage() {
   return (

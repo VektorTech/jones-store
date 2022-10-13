@@ -5,9 +5,9 @@ import { VscChromeClose } from "react-icons/vsc";
 import { BsSliders } from "react-icons/bs";
 import { ImArrowDown } from "react-icons/im";
 
-import Filter from "@Components/product-list/Filter";
-import BreadCrumbs from "@Components/product-list/BreadCrumbs";
-import Pagination from "@Components/product-list/Pagination";
+import Filter from "@Components/productList/Filter";
+import BreadCrumbs from "@Components/productList/BreadCrumbs";
+import Pagination from "@Components/productList/Pagination";
 
 export default function Category({
   categoryId,

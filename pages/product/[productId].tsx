@@ -3,7 +3,7 @@ import Image from "next/image";
 import { AiOutlineHeart } from "react-icons/ai";
 import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 
-import BreadCrumbs from "@Components/product-list/BreadCrumbs";
+import BreadCrumbs from "@Components/productList/BreadCrumbs";
 import { withSessionSsr } from "@Lib/withSession";
 import { Gender, Product } from "@prisma/client";
 import prisma from "@Lib/prisma";
