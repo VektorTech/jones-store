@@ -8,6 +8,12 @@ import { getURLString } from "@Lib/utils";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import { ProductComponentType } from "src/types/shared";
 
+const currencyFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  // currencyDisplay: "narrowSymbol"
+});
+
 export default function Product({
   small = false,
   title,
@@ -71,9 +77,8 @@ export default function Product({
                 <RatingStars count={ratings || 0} />
               </div>
               <p className="product__price">
-                <span className="product__currency">USD</span>
                 <span className="product__amount">
-                  ${price - (discount || 0)}
+                  {currencyFormatter.format(price - (discount || 0))}
                 </span>
 
                 {discount ? (
@@ -82,8 +87,9 @@ export default function Product({
                       {Math.floor((discount / price) * 100)}% off
                     </span>
                     <span className="product__old-price">
-                      <span className="product__old-currency">USD</span>
-                      <span className="product__old-amount">${price}</span>
+                      <span className="product__old-amount">
+                        {currencyFormatter.format(price)}
+                      </span>
                     </span>
                   </>
                 ) : null}

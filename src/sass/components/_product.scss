@@ -158,10 +158,6 @@
 	&__price {
 		color: $c-text-red;
 
-		& #{$self}__currency {
-			font-weight: bold;
-		}
-
 		& #{$self}__amount {
 			font-weight: bold;
 		}
@@ -176,22 +172,13 @@
 		color: $c-text-dark;
 		text-decoration: line-through;
 
-		& #{$self}__old-currency {
-			font-weight: 300;
-		}
-
 		& #{$self}__old-amount {
 			font-weight: 300;
-			margin-left: 0.5rem;
 		}
 	}
 
 	&__rating {
 		color: black;
 		font-size: 1.4rem;
-	}
-
-	&__amount {
-		margin-left: 0.5rem;
 	}
 }
