@@ -26,7 +26,7 @@ export default function Product({
   id,
 }: ProductComponentType) {
   const { addToWishlist, removeFromWishlist, user } = useAuthState();
-  const onWishlist = user?.wishlist?.some(({productId}) => productId == id);
+  const onWishlist = user?.wishlist?.some(({ productId }) => productId == id);
 
   const wishlistHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
@@ -37,17 +37,18 @@ export default function Product({
   const timer = useRef<NodeJS.Timer>();
 
   return (
-    <div className={`product${small ? " product--small" : ""}`}
+    <div
+      className={`product${small ? " product--small" : ""}`}
       onPointerEnter={() => {
         timer.current = setInterval(() => {
-          setImageIndex(index => index + 1);
+          setImageIndex((index) => index + 1);
         }, 1000);
       }}
       onPointerLeave={() => {
-          clearInterval(timer.current);
-          setImageIndex(0);
+        clearInterval(timer.current);
+        setImageIndex(0);
       }}
-      >
+    >
       <Link href={`/product/${getPathString(title + " " + sku)}`}>
         <a title={title}>
           <div className="product__wrapper">
@@ -66,7 +67,11 @@ export default function Product({
                   onClick={wishlistHandler}
                   className="product__add-wishlist"
                 >
-                  { onWishlist ? <AiFillHeart className="product__add-wishlist-icon" /> : <AiOutlineHeart className="product__add-wishlist-icon" /> }
+                  {onWishlist ? (
+                    <AiFillHeart className="product__add-wishlist-icon" />
+                  ) : (
+                    <AiOutlineHeart className="product__add-wishlist-icon" />
+                  )}
                 </button>
               </div>
             </div>

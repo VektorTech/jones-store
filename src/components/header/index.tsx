@@ -5,8 +5,6 @@ import HeaderSection from "./HeaderSection";
 import SearchBox from "./SearchBox";
 import Sidebar from "./Sidebar";
 
-
-
 function Header() {
   useDialog(
     (isVisible) => {
@@ -15,7 +13,7 @@ function Header() {
     ["SIDEBAR_DIALOG", "SEARCH_BOX"]
   );
 
-  const announcementVisible = useAnnouncementState ();
+  const announcementVisible = useAnnouncementState();
   const { user, isLoading, userSessionId, isError } = useAuthState();
 
   return (

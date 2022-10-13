@@ -46,4 +46,8 @@ export function cloudinaryUpload(files: FileList): CloudinaryBatchResultType {
   return Promise.all(results) as CloudinaryBatchResultType;
 }
 
-export const getPathString = (url: string) => url.toLowerCase().replace(/[^\sa-zA-Z0-9]/g, "").replace(/\s/g, "-");
+export const getPathString = (url: string) =>
+  url
+    .toLowerCase()
+    .replace(/[^\sa-zA-Z0-9]/g, "")
+    .replace(/\s/g, "-");

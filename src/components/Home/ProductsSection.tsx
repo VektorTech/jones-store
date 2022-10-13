@@ -6,7 +6,7 @@ import Product from "../common/Product";
 export default function ProductsSection({
   title,
   products,
-  url
+  url,
 }: {
   title: string;
   products: ProductType[];

@@ -5,9 +5,11 @@ import { withSessionSsr } from "@Lib/withSession";
 import SEO from "@Components/common/SEO";
 
 const SearchPage: NextPage<{ query: string }> = ({ query }) => {
-  return <div>
-    <SEO title={`"${query}"`} />
-  </div>;
+  return (
+    <div>
+      <SEO title={`"${query}"`} />
+    </div>
+  );
 };
 
 export const getServerSideProps = withSessionSsr(async function ({
@@ -28,12 +30,13 @@ export const getServerSideProps = withSessionSsr(async function ({
     id: true,
   };
 
-  const results = await prisma.product.findMany({
-    select: productColumns,
-    where: { title: { contains: q as string } },
-    skip: Number(offset),
-    take: Number(limit),
-  }) || null;
+  const results =
+    (await prisma.product.findMany({
+      select: productColumns,
+      where: { title: { contains: q as string } },
+      skip: Number(offset),
+      take: Number(limit),
+    })) || null;
 
   return {
     props: {

@@ -16,9 +16,17 @@ const Home: NextPage<HomePropTypes> = ({ newArrivals, bestSellers }) => {
     <>
       <HeroBanner />
       <CollectionSection />
-      <ProductsSection products={newArrivals} title="new arrivals" url="/category/new" />
+      <ProductsSection
+        products={newArrivals}
+        title="new arrivals"
+        url="/category/new"
+      />
       <GenderSection />
-      <ProductsSection products={bestSellers} title="best sellers" url="/category/best" />
+      <ProductsSection
+        products={bestSellers}
+        title="best sellers"
+        url="/category/best"
+      />
       <FeaturesSection />
     </>
   );
@@ -39,21 +47,23 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
       sku: true,
       id: true,
     };
-    const newArrivals = await prisma.product
-      .findMany({
-        take: 4,
-        select: productColumns,
-        orderBy: { dateAdded: "desc" },
-      })
-      .catch(console.log) || null;
+    const newArrivals =
+      (await prisma.product
+        .findMany({
+          take: 4,
+          select: productColumns,
+          orderBy: { dateAdded: "desc" },
+        })
+        .catch(console.log)) || null;
 
-    const bestSellers = await prisma.product
-      .findMany({
-        take: 4,
-        select: productColumns,
-        orderBy: { salesCount: "desc" },
-      })
-      .catch(console.log) || null;
+    const bestSellers =
+      (await prisma.product
+        .findMany({
+          take: 4,
+          select: productColumns,
+          orderBy: { salesCount: "desc" },
+        })
+        .catch(console.log)) || null;
 
     return {
       props: {

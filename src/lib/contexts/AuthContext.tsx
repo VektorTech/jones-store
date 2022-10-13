@@ -18,7 +18,7 @@ const authState: {
 
   addToWishlist: (id) => Promise.resolve(),
   removeFromWishlist: (id) => Promise.resolve(),
-  useSelector: () => null
+  useSelector: () => null,
 };
 
 const AuthContext = createContext(authState);
@@ -32,11 +32,20 @@ export const AuthProvider = ({
   children: ReactElement;
   userId?: string;
 }) => {
-  const { user, isError, addWishlistItem, removeWishlistItem, useSelector } = useUser(userId);
+  const { user, isError, addWishlistItem, removeWishlistItem, useSelector } =
+    useUser(userId);
 
   return (
     <AuthContext.Provider
-      value={{ useSelector, addToWishlist: addWishlistItem, removeFromWishlist: removeWishlistItem, userSessionId: userId, user, isLoading: !user, isError }}
+      value={{
+        useSelector,
+        addToWishlist: addWishlistItem,
+        removeFromWishlist: removeWishlistItem,
+        userSessionId: userId,
+        user,
+        isLoading: !user,
+        isError,
+      }}
     >
       {children}
     </AuthContext.Provider>

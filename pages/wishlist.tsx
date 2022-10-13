@@ -7,9 +7,11 @@ import { Wishlist, Product } from "@prisma/client";
 import SEO from "@Components/common/SEO";
 
 const Wishlist: NextPage<WishlistPageProps> = ({ wishlistItems }) => {
-  return <div>
-    <SEO title="Wishlist" />
-  </div>;
+  return (
+    <div>
+      <SEO title="Wishlist" />
+    </div>
+  );
 };
 
 export const getServerSideProps = withSessionSsr(async function ({

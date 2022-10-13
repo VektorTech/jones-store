@@ -19,5 +19,5 @@ export const SocialHandles = {
   instagram: "jonesstore",
   youtube: "jonesstore",
   twitter: "jonesstore",
-  pinterest: "jonesstore"
-}
+  pinterest: "jonesstore",
+};

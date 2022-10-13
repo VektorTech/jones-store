@@ -21,7 +21,10 @@ async function wishlistRoute(
           },
         })
         .then((wishlist) =>
-          res.json({ message: "Product Successfully Added To Favorites", data: wishlist })
+          res.json({
+            message: "Product Successfully Added To Favorites",
+            data: wishlist,
+          })
         )
         .catch((error) =>
           res.status(500).json({ error: true, message: error.message })

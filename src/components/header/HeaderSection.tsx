@@ -9,12 +9,14 @@ import logoImg from "@Images/jones-logo.png";
 
 import useScrollTop from "@Lib/hooks/useScrollTop";
 import { useEffect, useRef, useState } from "react";
-import {
-  useDialog
-} from "@Lib/contexts/UIContext";
+import { useDialog } from "@Lib/contexts/UIContext";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 
-export default function HeaderSection({announcementVisible }: {announcementVisible?: boolean }) {
+export default function HeaderSection({
+  announcementVisible,
+}: {
+  announcementVisible?: boolean;
+}) {
   const { setDialog } = useDialog();
 
   const [pinnedState, setPinnedState] = useState(false);

@@ -36,7 +36,7 @@ const WomenCategoriesList = CategoriesData.women.map((name: string) => (
   </li>
 ));
 
-export default function Sidebar({ userId }: {userId?: string}) {
+export default function Sidebar({ userId }: { userId?: string }) {
   const [submenu, setSubmenu] = useState<Array<any> | null>(null);
   const [submenuActive, setSubmenuActive] = useState<boolean>(false);
 
@@ -161,7 +161,9 @@ export default function Sidebar({ userId }: {userId?: string}) {
                 <Link href="/wishlist">
                   <a>
                     <AiOutlineHeart />
-                    <span>Wishlist{wishlistCount ? ` (${wishlistCount})` : ""}</span>
+                    <span>
+                      Wishlist{wishlistCount ? ` (${wishlistCount})` : ""}
+                    </span>
                   </a>
                 </Link>
               </li>

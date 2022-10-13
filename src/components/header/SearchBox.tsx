@@ -11,20 +11,24 @@ export default function SearchBox() {
   const { currentDialog, setDialog } = useDialog();
   const active = currentDialog == "SEARCH_BOX";
 
-  const [ searchTerm, setSearchTerm ] = useState("");
-  const [ products, setProducts ] = useState<ProductComponentType[] | Array<never>>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [products, setProducts] = useState<
+    ProductComponentType[] | Array<never>
+  >([]);
   const address = useRef(typeof location == "object" ? location.href : null);
 
-  const searchChangedHandler: ChangeEventHandler<HTMLInputElement> = (event) => {
+  const searchChangedHandler: ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
     setSearchTerm(event.currentTarget.value);
   };
 
   useEffect(() => {
     if (active) {
       fetch(`${location.origin}/api/products/search?q=${searchTerm}&limit=5`)
-      .then(res => res.json())
-      .then(res => setProducts(res.data || []))
-      .catch(console.log);
+        .then((res) => res.json())
+        .then((res) => setProducts(res.data || []))
+        .catch(console.log);
     }
   }, [searchTerm, active]);
 
@@ -73,9 +77,9 @@ export default function SearchBox() {
         </div>
         <h3 className="search__results-info">5 Jordans Found</h3>
         <div className="search__results">
-          {
-            products.map(product => <Product key={product.id} small {...product} />)
-          }
+          {products.map((product) => (
+            <Product key={product.id} small {...product} />
+          ))}
         </div>
       </div>
     </div>

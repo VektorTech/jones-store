@@ -23,7 +23,7 @@ export default async function productSearchRoute(
         where: {
           title: {
             contains: q as string,
-            mode: 'insensitive'
+            mode: "insensitive",
           },
         },
         orderBy: {

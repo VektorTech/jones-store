@@ -24,7 +24,7 @@ const uiState: {
 } = {
   announcementVisible: true,
   currentDialog: undefined,
-  setDialog: () => {}
+  setDialog: () => {},
 };
 
 const UIContext = createContext(uiState);
