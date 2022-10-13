@@ -8,8 +8,33 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { BsCart3, BsXLg, BsPerson } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import { getPathString } from "@Lib/utils";
 
 const CategoriesData = require("@Lib/CategoriesData.json");
+
+const ColorwaysList = CategoriesData.colorways.map((name: string) => (
+  <li key={name} className="sidebar__links-item">
+    <Link href={"/category/colorways/" + getPathString(name)}>
+      <a>{name}</a>
+    </Link>
+  </li>
+));
+
+const MenCategoriesList = CategoriesData.men.map((name: string) => (
+  <li key={name} className="sidebar__links-item">
+    <Link href={"/category/men/" + getPathString(name)}>
+      <a>{name}</a>
+    </Link>
+  </li>
+));
+
+const WomenCategoriesList = CategoriesData.women.map((name: string) => (
+  <li key={name} className="sidebar__links-item">
+    <Link href={"/category/women/" + getPathString(name)}>
+      <a>{name}</a>
+    </Link>
+  </li>
+));
 
 export default function Sidebar({ userId }: {userId?: string}) {
   const [submenu, setSubmenu] = useState<Array<any> | null>(null);
@@ -29,28 +54,6 @@ export default function Sidebar({ userId }: {userId?: string}) {
   useEffect(() => {
     setTimeout(() => !submenuActive && setSubmenu(null), 600);
   }, [submenuActive]);
-
-  const ColorwaysList = CategoriesData.colorways.map((name: string) => (
-    <li key={name} className="sidebar__links-item">
-      <Link href={name}>
-        <a>{name}</a>
-      </Link>
-    </li>
-  ));
-  const MenCategoriesList = CategoriesData.men.map((name: string) => (
-    <li key={name} className="sidebar__links-item">
-      <Link href={name}>
-        <a>{name}</a>
-      </Link>
-    </li>
-  ));
-  const WomenCategoriesList = CategoriesData.women.map((name: string) => (
-    <li key={name} className="sidebar__links-item">
-      <Link href={name}>
-        <a>{name}</a>
-      </Link>
-    </li>
-  ));
 
   return (
     <div
