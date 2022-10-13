@@ -4,7 +4,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 import RatingStars from "./RatingStars";
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
-import { getURLString } from "@Lib/utils";
+import { getPathString } from "@Lib/utils";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import { ProductComponentType } from "src/types/shared";
 
@@ -48,7 +48,7 @@ export default function Product({
           setImageIndex(0);
       }}
       >
-      <Link href={`/product/${getURLString(title + " " + sku)}`}>
+      <Link href={`/product/${getPathString(title + " " + sku)}`}>
         <a title={title}>
           <div className="product__wrapper">
             <div className="product__image">
