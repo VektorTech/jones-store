@@ -15,109 +15,7 @@ import {
 import { Gender, Category } from "@prisma/client";
 import { FormEvent, FormEventHandler } from "react";
 
-const colorways = [
-  // see sidebar
-  {
-    name: "Dark Mocha",
-    path: "",
-  },
-  {
-    name: "Brown",
-    path: "",
-  },
-  {
-    name: "University Blue Black",
-    path: "",
-  },
-  {
-    name: "University Blue",
-    path: "",
-  },
-  {
-    name: "Blue",
-    path: "",
-  },
-  {
-    name: "Chicago",
-    path: "",
-  },
-  {
-    name: "Lucky Green",
-    path: "",
-  },
-  {
-    name: "Pink Glaze",
-    path: "",
-  },
-  {
-    name: "Court Purple",
-    path: "",
-  },
-  {
-    name: "Clay Green",
-    path: "",
-  },
-  {
-    name: "Twist W Panda",
-    path: "",
-  },
-  {
-    name: "Midnight Navy",
-    path: "",
-  },
-  {
-    name: "Yellow Toe",
-    path: "",
-  },
-  {
-    name: "Multi Color",
-    path: "",
-  },
-  {
-    name: "Shadow",
-    path: "",
-  },
-  {
-    name: "Black",
-    path: "",
-  },
-  {
-    name: "Bred",
-    path: "",
-  },
-  {
-    name: "Varsity Red",
-    path: "",
-  },
-  {
-    name: "Black Red",
-    path: "",
-  },
-  {
-    name: "Fire Red",
-    path: "",
-  },
-  {
-    name: "White",
-    path: "",
-  },
-  {
-    name: "Denim",
-    path: "",
-  },
-  {
-    name: "Pinksicle",
-    path: "",
-  },
-  {
-    name: "Wolf Grey",
-    path: "",
-  },
-  {
-    name: "Grey",
-    path: "",
-  },
-];
+const CategoriesData = require("@Lib/CategoriesData.json");
 
 async function submitForm(form: HTMLFormElement) {
   const inputElements = form.querySelectorAll("[name]");
@@ -188,7 +86,7 @@ export default function AddProduct() {
         <Autocomplete
           disablePortal
           id=""
-          options={colorways.map(({ name }) => name)}
+          options={CategoriesData.colorways}
           sx={{ width: 300 }}
           renderInput={(params) => (
             <TextField {...params} name="color" label="Main Color" />

@@ -9,138 +9,7 @@ import { BsCart3, BsXLg, BsPerson } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
-const menCategories = [
-  {
-    name: "OG LOW",
-    path: "",
-  },
-  {
-    name: "LOW PHAT",
-    path: "",
-  },
-  {
-    name: "MID PHAT",
-    path: "",
-  },
-  {
-    name: "ALPHA",
-    path: "",
-  },
-  {
-    name: "85",
-    path: "",
-  },
-  {
-    name: "RETRO HIGH SB",
-    path: "",
-  },
-  {
-    name: "HIGH ZOOM",
-    path: "",
-  },
-  {
-    name: "RARE AIR",
-    path: "",
-  },
-  {
-    name: "FLYKNIT",
-    path: "",
-  },
-  {
-    name: "STRAP",
-    path: "",
-  },
-  {
-    name: "ULTRA",
-    path: "",
-  },
-];
-
-const womenCategories = [
-  {
-    name: "OG LOW",
-    path: "",
-  },
-  {
-    name: "LOW SLIP",
-    path: "",
-  },
-  {
-    name: "LOW LIFT",
-    path: "",
-  },
-  {
-    name: "NEW RETRO",
-    path: "",
-  },
-  {
-    name: "MIDS",
-    path: "",
-  },
-  {
-    name: "OG HIGH",
-    path: "",
-  },
-  {
-    name: "ZOOM COMFORT",
-    path: "",
-  },
-  {
-    name: "WILD",
-    path: "",
-  },
-];
-
-const colorways = [
-  {
-    name: "Dark Mocha",
-    path: "",
-  },
-  {
-    name: "University Blue Black",
-    path: "",
-  },
-  {
-    name: "Chicago",
-    path: "",
-  },
-  {
-    name: "Lucky Green",
-    path: "",
-  },
-  {
-    name: "Pink Glaze",
-    path: "",
-  },
-  {
-    name: "Court Purple",
-    path: "",
-  },
-  {
-    name: "Clay Green",
-    path: "",
-  },
-  {
-    name: "Twist W Panda",
-    path: "",
-  },
-  {
-    name: "Midnight Navy",
-    path: "",
-  },
-  {
-    name: "Yellow Toe",
-    path: "",
-  },
-  {
-    name: "Shadow",
-    path: "",
-  },
-  {
-    name: "Bred",
-    path: "",
-  },
-];
+const CategoriesData = require("@Lib/CategoriesData.json");
 
 export default function Sidebar({ userId }: {userId?: string}) {
   const [submenu, setSubmenu] = useState<Array<any> | null>(null);
@@ -161,23 +30,23 @@ export default function Sidebar({ userId }: {userId?: string}) {
     setTimeout(() => !submenuActive && setSubmenu(null), 600);
   }, [submenuActive]);
 
-  const ColorwaysList = colorways.map(({ name, path }) => (
+  const ColorwaysList = CategoriesData.colorways.map((name: string) => (
     <li key={name} className="sidebar__links-item">
-      <Link href={path}>
+      <Link href={name}>
         <a>{name}</a>
       </Link>
     </li>
   ));
-  const MenCategoriesList = menCategories.map(({ name, path }) => (
+  const MenCategoriesList = CategoriesData.men.map((name: string) => (
     <li key={name} className="sidebar__links-item">
-      <Link href={path}>
+      <Link href={name}>
         <a>{name}</a>
       </Link>
     </li>
   ));
-  const WomenCategoriesList = womenCategories.map(({ name, path }) => (
+  const WomenCategoriesList = CategoriesData.women.map((name: string) => (
     <li key={name} className="sidebar__links-item">
-      <Link href={path}>
+      <Link href={name}>
         <a>{name}</a>
       </Link>
     </li>
