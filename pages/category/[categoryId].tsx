@@ -21,6 +21,7 @@ export default function Category({
 
   return (
     <div>
+      <SEO title={categoryId} />
       <BreadCrumbs />
       <div className="constraints">
         <div className="constraints__container">
@@ -90,6 +91,7 @@ export default function Category({
 import prisma from "@Lib/prisma";
 import { withSessionSsr } from "@Lib/withSession";
 import { Gender, Product } from "@prisma/client";
+import SEO from "@Components/common/SEO";
 
 export const getServerSideProps = withSessionSsr(async function ({
   params,

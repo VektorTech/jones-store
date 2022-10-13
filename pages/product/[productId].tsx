@@ -7,10 +7,12 @@ import BreadCrumbs from "@Components/product-list/BreadCrumbs";
 import { withSessionSsr } from "@Lib/withSession";
 import { Gender, Product } from "@prisma/client";
 import prisma from "@Lib/prisma";
+import SEO from "@Components/common/SEO";
 
 export default function Product({ product }: { product: Product }) {
   return (
     <>
+      <SEO title={product.title} />
       <BreadCrumbs />
 
       <div className="product-view">

@@ -2,9 +2,12 @@ import { NextPage } from "next";
 
 import prisma from "@Lib/prisma";
 import { withSessionSsr } from "@Lib/withSession";
+import SEO from "@Components/common/SEO";
 
-const SearchPage: NextPage = () => {
-  return <div></div>;
+const SearchPage: NextPage<{ query: string }> = ({ query }) => {
+  return <div>
+    <SEO title={`"${query}"`} />
+  </div>;
 };
 
 export const getServerSideProps = withSessionSsr(async function ({
@@ -22,6 +25,7 @@ export const getServerSideProps = withSessionSsr(async function ({
 
   return {
     props: {
+      query: q,
       products: results,
     },
   };
