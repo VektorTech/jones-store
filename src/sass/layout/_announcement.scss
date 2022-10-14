@@ -26,19 +26,17 @@
 		line-height: $announcement-height;
 		white-space: nowrap;
 		text-align: center;
+		cursor: pointer;
 	}
 
-	&__link, &__link[href], &__link:visited {
+	& em {
 		color: $c-link;
 		text-decoration: underline;
 	}
 
-	&__link:focus-visible {
-		outline: 0.1rem solid $c-text-black;
-	}
-
 	&__info-icon {
 		display: inline;
+		color: $c-link;
 		font-size: $text-md;
 		margin-left: 0.5rem;
 		vertical-align: sub;

@@ -160,6 +160,13 @@ model Review {
   @@map(name: "reviews")
 }
 
+model Announcement {
+  id Int @id @default(autoincrement())
+  headline String @default("") @db.VarChar(255)
+  details String
+  addedAt DateTime @default(now())
+}
+
 enum Role {
   USER
   ADMIN

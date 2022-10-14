@@ -6,12 +6,12 @@ import { VscChromeClose } from "react-icons/vsc";
 
 export default function Modal({
   children,
-  title,
+  title = "",
   onClose,
   visible = true,
 }: {
   children: ReactElement;
-  title: string;
+  title?: string;
   onClose?: () => void;
   visible?: boolean;
 }) {
