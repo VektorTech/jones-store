@@ -167,6 +167,14 @@ model Announcement {
   addedAt DateTime @default(now())
 }
 
+model NewsletterRecipient {
+  email String @id
+  subscribed Boolean @default(true)
+  addedAt DateTime @default(now())
+
+  @@map(name: "newsletter_recipient")
+}
+
 enum Role {
   USER
   ADMIN

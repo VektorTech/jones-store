@@ -129,7 +129,7 @@ export default function Footer() {
               Sign up to our newsletter and we&apos;ll keep you up-to-date with
               the latest arrivals and special offers.
             </p>
-            <form action="">
+            <form action="/api/newsletter">
               <div className="newsletter__input input input--red input--bottom">
                 <input
                   id="newsletter_input"

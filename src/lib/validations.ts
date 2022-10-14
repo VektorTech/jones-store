@@ -33,3 +33,7 @@ export const productSchema = object({
   stockQty: number().positive().required(),
   type: string().equals(Object.keys(Category)).required(),
 }).required();
+
+export const newsletterRecipientSchema = object({
+  email: string().email().max(255).required()
+}).required();
