@@ -5,11 +5,22 @@ import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 
 import BreadCrumbs from "@Components/productList/BreadCrumbs";
 import { withSessionSsr } from "@Lib/withSession";
-import { Gender, Product } from "@prisma/client";
 import prisma from "@Lib/prisma";
 import SEO from "@Components/common/SEO";
+import RatingStars from "@Components/common/RatingStars";
+import Product from "@Components/common/Product";
+import { Gender, Product as ProductType, Category } from "@prisma/client";
 
-export default function Product({ product }: { product: Product }) {
+export default function ProductPage({ product, relatedProducts }: { product: ProductType, relatedProducts: ProductType[] }) {
+  const {
+    id,
+    title,
+    gender,
+    ratings,
+    price,
+    discount
+  } = product;
+
   return (
     <>
       <SEO title={product.title} />
@@ -45,19 +56,24 @@ export default function Product({ product }: { product: Product }) {
         </div>
 
         <div className="product-view__cart">
-          <form action="">
-            <h1 className="product-view__name"></h1>
-            <p className="product-view__gender"></p>
-            <div className="product-view__ratings"></div>
-            <p className="product-view__price"></p>
+          <h1 className="product-view__name">{title}</h1>
+          <p className="product-view__gender">{gender}</p>
+          <div className="product-view__ratings">
+            <RatingStars count={ratings || 0} />
+          </div>
+          <p className="product-view__price">{price - (discount || 0)}</p>
 
-            <div className="product-view__size-selector"></div>
+          <form method="POST" action="/api/cart">
+            <div className="product-view__size-selector">
+              <input type="text" name="size" defaultValue="10" />
+            </div>
             <div className="product-view__amount">
               <button> - </button>
-              <span> 0 </span>
+              <input type="number" name="qty" id="" defaultValue={"3"} />
               <button> + </button>
             </div>
-            <button className="product-view__add-cart">Add To Cart</button>
+            <input type="hidden" name="productId" defaultValue={id} />
+            <button type="submit" className="product-view__add-cart">Add To Cart</button>
           </form>
           {/* Share Icons */}
         </div>
@@ -99,7 +115,11 @@ export default function Product({ product }: { product: Product }) {
       <div className="related-products">
         <h2 className="related-products__heading">Related Products</h2>
 
-        <div className="related-products__list"></div>
+        <div className="related-products__list">
+          {
+            relatedProducts.map(product => <Product key={product.id} {...product} />)
+          }
+        </div>
       </div>
     </>
   );
@@ -111,16 +131,56 @@ export const getServerSideProps = withSessionSsr(async function ({
   query,
 }) {
   const productId = params?.productId as string;
+  const sku = productId.substring(productId.length - 10).replace("-", " ");
 
-  const results = await prisma.product
-    .findUnique({
-      where: { id: productId },
+  const select = {
+    title: true,
+    price: true,
+    discount: true,
+    mediaURLs: true,
+    gender: true,
+    ratings: true,
+    details: true,
+    color: true,
+    year: true,
+    stockQty: true,
+    salesCount: true,
+    shippingCost: true,
+    sizes: true,
+    type: true,
+    // review: true,
+    sku: true,
+    id: true,
+  };
+
+  const product = await prisma.product
+    .findMany({
+      select,
+      where: { sku: {
+        equals: sku,
+        mode: "insensitive"
+      } },
+    })
+    .then(products => products[0])
+    .catch(console.log);
+
+  const relatedProducts = await prisma.product
+    .findMany({
+      select,
+      where: {
+        id: { not: product?.id },
+        gender: (product?.gender || Gender.MEN),
+        type: (product?.type || Category.MID),
+        color: (product?.color || "white")
+      },
+      take: 4
     })
     .catch(console.log);
 
   return {
     props: {
-      products: results,
+      product,
+      relatedProducts,
       reviews: [],
     },
   };

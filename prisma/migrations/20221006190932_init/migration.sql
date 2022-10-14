@@ -214,8 +214,8 @@ CREATE OR REPLACE FUNCTION add_cart_total()
 	'
 	BEGIN
 		UPDATE users_cart
-			SET total = users_cart.total + NEW.total
-			WHERE id = NEW.cartId;
+			SET total = users_cart.total + NEW."total"
+			WHERE id = NEW."cartId";
 		RETURN NEW;
 	END;
 	'
@@ -226,18 +226,20 @@ CREATE OR REPLACE FUNCTION subtract_cart_total()
 	'
 	BEGIN
 		UPDATE users_cart
-			SET total = users_cart.total - OLD.total
-			WHERE id = OLD.cartId;
-		RETURN NEW;
+			SET total = users_cart.total - OLD."total"
+			WHERE id = OLD."cartId";
+		RETURN OLD;
 	END;
 	'
 	LANGUAGE 'plpgsql';
 
+DROP TRIGGER IF EXISTS watch_cart_items_add on cart_items;
 CREATE TRIGGER watch_cart_items_add
 	AFTER INSERT ON cart_items
 	FOR EACH ROW
 	EXECUTE PROCEDURE add_cart_total();
 
+DROP TRIGGER IF EXISTS watch_cart_items_remove on cart_items;
 CREATE TRIGGER watch_cart_items_remove
 	BEFORE DELETE ON cart_items
 	FOR EACH ROW

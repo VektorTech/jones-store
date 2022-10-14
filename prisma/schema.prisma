@@ -110,6 +110,7 @@ model Cart {
 model CartItem {
   cartId Int
   productId String
+  size Float
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   quantity Int
   total Float

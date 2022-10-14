@@ -8,16 +8,28 @@ async function cartRoute(
   req: NextApiRequest,
   res: NextApiResponse<DefaultResponse>
 ) {
-  const { productId, qty } = req.body;
+  const { productId, qty, size } = req.body;
   const { user } = req.session;
+
+  // TODO: create case for malformed request.
+  console.log({ productId, qty, size });
 
   let cart = null,
     product = null;
 
-  if (user) {
+  if (user) { // TODO handle db errors
     cart = await prisma.cart.findUnique({
       where: { userId: user.id },
     });
+
+    if (!cart) {
+      cart = await prisma.cart.create({
+        data: {
+          userId: user.id,
+          total: 0,
+        },
+      });
+    }
 
     product = await prisma.product.findUnique({
       where: { id: productId },
@@ -29,9 +41,12 @@ async function cartRoute(
   }
 
   if (!cart) {
-    return res
-      .status(500)
-      .json({ error: true, message: "User Cart Not Found" });
+    cart = await prisma.cart.create({
+      data: {
+        userId: user.id,
+        total: 0,
+      },
+    });
   }
 
   try {
@@ -41,8 +56,9 @@ async function cartRoute(
           data: {
             cartId: cart.id,
             productId: product.id,
-            quantity: qty as number,
-            total: product.price * (qty as number),
+            size: Number(size),
+            quantity: Number(qty),
+            total: product.price * Number(qty),
           },
         });
         res.json({ message: "Product Successfully Added To Cart" });

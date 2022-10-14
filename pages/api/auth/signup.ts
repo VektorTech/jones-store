@@ -38,7 +38,7 @@ async function signupRoute(
           role,
         };
 
-        prisma.cart.create({
+        await prisma.cart.create({
           data: {
             userId: id,
             total: 0,
