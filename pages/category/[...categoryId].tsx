@@ -9,15 +9,16 @@ import Filter from "@Components/productList/Filter";
 import BreadCrumbs from "@Components/productList/BreadCrumbs";
 import Pagination from "@Components/productList/Pagination";
 
-export default function Category({
+export default function CategoryPage({
   categoryId,
   products,
 }: {
-  categoryId: Gender;
+  categoryId: string;
   products: Product[];
 }) {
   // const router = useRouter();
   // const { categoryId } = router.query;
+  console.log(products);
 
   return (
     <div>
@@ -90,7 +91,7 @@ export default function Category({
 
 import prisma from "@Lib/prisma";
 import { withSessionSsr } from "@Lib/withSession";
-import { Gender, Product } from "@prisma/client";
+import { Gender, Product, Category } from "@prisma/client";
 import SEO from "@Components/common/SEO";
 
 export const getServerSideProps = withSessionSsr(async function ({
@@ -99,22 +100,76 @@ export const getServerSideProps = withSessionSsr(async function ({
   query,
 }) {
   const [category, type] = params?.categoryId as string[];
-  const { offset = 0, limit = 10 } = query;
+  const { offset = 0, limit = 20 } = query;
 
-  // women, men, kids, baby, unisex women/*, men/*, colorways/*, new, best, type - low, mid, high
+  const select = {
+    title: true,
+    price: true,
+    discount: true,
+    mediaURLs: true,
+    gender: true,
+    ratings: true,
+    sku: true,
+    id: true,
+  };
 
-  // const results = await prisma.product
-  //   .findMany({
-  //     where: { gender: categoryId },
-  //     skip: offset as number,
-  //     take: limit as number,
-  //   })
-  //   .catch(console.log);
+  let products = [];
+  let gender = category.toUpperCase() as Gender;
+  if (gender in Gender) {
+    if (typeof type == "string") {
+      products = await prisma.product.findMany({
+        select,
+        where: { gender, title: { contains: type, mode: "insensitive" } },
+        skip: Number(offset),
+        take: Number(limit)
+      });
+    } else {
+      products = await prisma.product.findMany({
+        select,
+        where: { gender },
+        skip: Number(offset),
+        take: Number(limit)
+      });
+    }
+  } else if (category == "colorways" && typeof type == "string") {
+    products = await prisma.product.findMany({
+      select,
+      where: { color: { equals: type, mode: "insensitive" } },
+      skip: Number(offset),
+      take: Number(limit)
+    });
+  } else if (category == "new") {
+    products = await prisma.product.findMany({
+      select,
+      orderBy: { year: "desc", dateAdded: "desc" },
+      skip: Number(offset),
+      take: Number(limit)
+    });
+  } else if (category == "best") {
+    products = await prisma.product.findMany({
+      select,
+      orderBy: { salesCount: "desc" },
+      skip: Number(offset),
+      take: Number(limit)
+    });
+  } else if (category == "type" && typeof type == "string") {
+    const cType = type.toUpperCase() as Category;
+    products = await prisma.product.findMany({
+      select,
+      where: { type: cType },
+      skip: Number(offset),
+      take: Number(limit)
+    });
+  } else {
+    return {
+      notFound: true
+    }
+  }
 
   return {
     props: {
-      // products: results,
-      categoryId: type?.toUpperCase() as Gender,
+      products,
+      categoryId: category || "",
     },
   };
 });
