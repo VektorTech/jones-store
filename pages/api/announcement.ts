@@ -15,7 +15,7 @@ async function AnnouncementRoute(
 	const { user } = req.session;
 
 	if (user && user.role == Role.ADMIN) {
-		const allowedTags = [ 'b', 'i', 'em', 'strong', 'span', 'sub', 'sup' ];
+		const allowedTags = [ 'b', 'i', 'em', 'strong', 'span', 'sub', 'sup', 'a'];
 
 		await prisma.announcement.create({
 			data: {
