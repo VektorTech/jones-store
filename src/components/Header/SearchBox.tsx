@@ -3,8 +3,7 @@ import { FiSearch } from "react-icons/fi";
 import Product from "@Components/common/Product";
 
 import { useDialog } from "@Lib/contexts/UIContext";
-import { ChangeEventHandler, useEffect, useRef, useState } from "react";
-import { useRouter } from "next/router";
+import { ChangeEventHandler, useEffect, useRef, useState, useMemo } from "react";
 import { ProductComponentType } from "src/types/shared";
 
 export default function SearchBox() {
@@ -24,13 +23,17 @@ export default function SearchBox() {
   };
 
   useEffect(() => {
-    if (active) {
-      fetch(`${location.origin}/api/products/search?q=${searchTerm}&limit=5`)
-        .then((res) => res.json())
-        .then((res) => setProducts(res.data || []))
-        .catch(console.log);
-    }
-  }, [searchTerm, active]);
+    const timerID = setTimeout(() => {
+      if (active) {
+        fetch(`${location.origin}/api/products/search?q=${searchTerm}&limit=5`)
+          .then((res) => res.json())
+          .then((res) => setProducts(res.data || []))
+          .catch(console.log);
+      }
+    }, 500);
+
+    return () => clearTimeout(timerID);
+  }, [active, searchTerm]);
 
   useEffect(() => {
     if (active) {
