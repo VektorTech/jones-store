@@ -1,5 +1,4 @@
 import { withSessionSsr } from "@Lib/withSession";
-import {} from "@Lib/prisma";
 import { NextPage } from "next";
 import prisma from "@Lib/prisma";
 
