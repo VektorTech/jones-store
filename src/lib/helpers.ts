@@ -35,3 +35,27 @@ export function deleteWishlistItem(id: string) {
     .then((res) => res.json())
     .catch(console.log);
 }
+
+export function postCartItem(id: string, quantity: number, size: number) {
+  return fetch("/api/cart", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({ productId: id, qty: quantity.toString(), size: size.toString() }),
+  })
+    .then((res) => res.json())
+    .catch(console.log);
+}
+
+export function deleteCartItem(id: string) {
+  return fetch("/api/cart", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({ productId: id }),
+  })
+    .then((res) => res.json())
+    .catch(console.log);
+}

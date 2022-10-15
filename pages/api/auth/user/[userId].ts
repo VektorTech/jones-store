@@ -29,16 +29,22 @@ async function userRoute(
             phoneNumber: true,
             deactivated: true,
             wishlist: true,
+            cart: true
           },
           where: { id: userId as string },
         })
-        .then((userData) => {
+        .then(async (userData) => {
           if (userData == null) {
             return res.json({ message: "No User Found!", data: {} });
           }
+
+          const cartItems = await prisma.cartItem.findMany({
+            where: { cartId: userData.cart?.id }
+          });
+
           res.json({
             message: "Successfully Retrieved User Record",
-            data: userData,
+            data: { ...userData, cart: cartItems },
           });
         })
         .catch((error) => res.status(500).json({ message: error.message }));

@@ -42,10 +42,9 @@ export default function Sidebar({ userId }: { userId?: string }) {
 
   const { currentDialog, setDialog } = useDialog();
 
-  // const { wishlistCount } = useWishlist();
   const { user } = useAuthState();
   const wishlistCount = user?.wishlist?.length;
-  const cartCount = 0;
+  const cartCount = user?.cart?.length;
 
   const sidebarRef = useRef<HTMLDivElement>(null);
   const sidebarVisible = currentDialog == Dialogs.SIDEBAR_DIALOG;
@@ -171,7 +170,9 @@ export default function Sidebar({ userId }: { userId?: string }) {
                 <Link href="/cart">
                   <a>
                     <BsCart3 />
-                    <span>Cart</span>
+                    <span>
+                      Cart{cartCount ? ` (${cartCount})` : ""}
+                    </span>
                   </a>
                 </Link>
               </li>

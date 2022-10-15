@@ -11,13 +11,10 @@ async function cartRoute(
   const { productId, qty, size } = req.body;
   const { user } = req.session;
 
-  // TODO: create case for malformed request.
-  console.log({ productId, qty, size });
-
   let cart = null,
     product = null;
 
-  if (user) { // TODO handle db errors
+  if (user) {
     cart = await prisma.cart.findUnique({
       where: { userId: user.id },
     });

@@ -23,10 +23,9 @@ export default function HeaderSection({
   const scrollTop = useScrollTop();
   const lastScroll = useRef(scrollTop);
 
-  // const { wishlistCount } = useWishlist();
   const { user } = useAuthState();
   const wishlistCount = user?.wishlist?.length;
-  const cartCount = 0;
+  const cartCount = user?.cart?.length;
 
   useEffect(() => {
     if (scrollTop >= (announcementVisible ? 135 : 100)) {

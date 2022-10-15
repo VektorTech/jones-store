@@ -5,18 +5,10 @@ import prisma from "@Lib/prisma";
 import { CartItem, Product as ProductType } from "@prisma/client";
 import SEO from "@Components/common/SEO";
 import Product from "@Components/common/Product";
+import { useAuthState } from "@Lib/contexts/AuthContext";
 
 const CartPage: NextPage<CartPageProps> = ({ products }) => {
-
- const removeItemHandler = (productId: string) => {
-	fetch("/api/cart", {
-		method: "DELETE",
-		body: new URLSearchParams({ productId })
-	})
-	  .then(res => res.json())
-	  .then(console.log)
-	  .catch(console.log);
- };
+  const { removeFromCart } = useAuthState();
 
   return (
     <div>
@@ -27,7 +19,7 @@ const CartPage: NextPage<CartPageProps> = ({ products }) => {
 		<div key={product.id}>
 			<Product {...product} />
 			<div>Quantity: {quantity}</div>
-			<button onClick={() => removeItemHandler(product.id)}>Remove</button>
+			<button onClick={() => removeFromCart(product.id).then(() => location?.reload())}>Remove</button>
 		</div>
 		)
 	  }

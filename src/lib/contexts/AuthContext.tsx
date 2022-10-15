@@ -9,6 +9,8 @@ const authState: {
   isError?: boolean;
   addToWishlist: (id: string) => Promise<void>;
   removeFromWishlist: (id: string) => Promise<void>;
+  addToCart: (id: string, quantity: number, size: number) => Promise<void>;
+  removeFromCart: (id: string) => Promise<void>;
   useSelector: (callback: (user: UserType) => void) => void;
 } = {
   userSessionId: undefined,
@@ -18,6 +20,8 @@ const authState: {
 
   addToWishlist: (id) => Promise.resolve(),
   removeFromWishlist: (id) => Promise.resolve(),
+  addToCart: (id, quanity, size) => Promise.resolve(),
+  removeFromCart: (id) => Promise.resolve(),
   useSelector: () => null,
 };
 
@@ -32,7 +36,7 @@ export const AuthProvider = ({
   children: ReactElement;
   userId?: string;
 }) => {
-  const { user, isError, addWishlistItem, removeWishlistItem, useSelector } =
+  const { user, isError, addWishlistItem, removeWishlistItem, addCartItem, removeCartItem, useSelector } =
     useUser(userId);
 
   return (
@@ -41,6 +45,8 @@ export const AuthProvider = ({
         useSelector,
         addToWishlist: addWishlistItem,
         removeFromWishlist: removeWishlistItem,
+        addToCart: addCartItem,
+        removeFromCart: removeCartItem,
         userSessionId: userId,
         user,
         isLoading: !user,

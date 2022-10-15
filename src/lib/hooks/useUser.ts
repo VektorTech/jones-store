@@ -1,4 +1,4 @@
-import { deleteWishlistItem, postWishlistItem } from "@Lib/helpers";
+import { deleteWishlistItem, postWishlistItem, postCartItem, deleteCartItem } from "@Lib/helpers";
 import { useEffect, useReducer } from "react";
 import { UserType } from "src/types/shared";
 import useSWR from "swr";
@@ -13,12 +13,15 @@ const initUser: UserType = {
   phoneNumber: "",
   deactivated: false,
   wishlist: [],
+  cart: [],
 };
 
 const actions = {
   SET_USER: "SET_USER",
-  ADD_WISHLIST_ITEMS: "ADD_WISHLIST_ITEMS",
-  REMOVE_WISHLIST_ITEMS: "REMOVE_WISHLIST_ITEMS",
+  ADD_WISHLIST_ITEM: "ADD_WISHLIST_ITEM",
+  REMOVE_WISHLIST_ITEM: "REMOVE_WISHLIST_ITEM",
+  ADD_CART_ITEM: "ADD_CART_ITEM",
+  REMOVE_CART_ITEM: "REMOVE_CART_ITEM"
 };
 
 type ActionsType = keyof typeof actions;
@@ -30,12 +33,21 @@ const authReducer = (
   switch (action.type) {
     case actions.SET_USER:
       return action.payload;
-    case actions.ADD_WISHLIST_ITEMS:
+    case actions.ADD_WISHLIST_ITEM:
       return { ...user, wishlist: [...user.wishlist, action.payload] };
-    case actions.REMOVE_WISHLIST_ITEMS:
+    case actions.ADD_CART_ITEM:
+      return { ...user, cart: [...user.cart, action.payload] };
+    case actions.REMOVE_WISHLIST_ITEM:
       return {
         ...user,
         wishlist: user.wishlist.filter(
+          ({ productId = "" }) => productId != action.payload
+        ),
+      };
+    case actions.REMOVE_CART_ITEM:
+      return {
+        ...user,
+        cart: user.cart.filter(
           ({ productId = "" }) => productId != action.payload
         ),
       };
@@ -62,7 +74,7 @@ export default function useUser(id?: string) {
     const r = await postWishlistItem(id);
     if (!r.error) {
       updateUser({
-        type: actions.ADD_WISHLIST_ITEMS as ActionsType,
+        type: actions.ADD_WISHLIST_ITEM as ActionsType,
         payload: r.data,
       });
     }
@@ -72,7 +84,27 @@ export default function useUser(id?: string) {
     const r = await deleteWishlistItem(id);
     if (!r.error) {
       updateUser({
-        type: actions.REMOVE_WISHLIST_ITEMS as ActionsType,
+        type: actions.REMOVE_WISHLIST_ITEM as ActionsType,
+        payload: id,
+      });
+    }
+  };
+
+  const addCartItem = async (id: string, quantity: number, size: number) => {
+    const r = await postCartItem(id, quantity, size);
+    if (!r.error) {
+      updateUser({
+        type: actions.ADD_CART_ITEM as ActionsType,
+        payload: r.data,
+      });
+    }
+  };
+
+  const removeCartItem = async (id: string) => {
+    const r = await deleteCartItem(id);
+    if (!r.error) {
+      updateUser({
+        type: actions.REMOVE_CART_ITEM as ActionsType,
         payload: id,
       });
     }
@@ -86,6 +118,8 @@ export default function useUser(id?: string) {
     isError: error,
     addWishlistItem,
     removeWishlistItem,
+    addCartItem,
+    removeCartItem,
     useSelector,
   };
 }

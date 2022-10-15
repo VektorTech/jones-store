@@ -10,6 +10,7 @@ import SEO from "@Components/common/SEO";
 import RatingStars from "@Components/common/RatingStars";
 import Product from "@Components/common/Product";
 import { Gender, Product as ProductType, Category } from "@prisma/client";
+import { useAuthState } from "@Lib/contexts/AuthContext";
 
 export default function ProductPage({ product, relatedProducts }: { product: ProductType, relatedProducts: ProductType[] }) {
   const {
@@ -20,6 +21,8 @@ export default function ProductPage({ product, relatedProducts }: { product: Pro
     price,
     discount
   } = product;
+
+  const { addToCart } = useAuthState();
 
   return (
     <>
@@ -73,7 +76,10 @@ export default function ProductPage({ product, relatedProducts }: { product: Pro
               <button> + </button>
             </div>
             <input type="hidden" name="productId" defaultValue={id} />
-            <button type="submit" className="product-view__add-cart">Add To Cart</button>
+            <button onClick={e => {
+              e.preventDefault();
+              addToCart(id, 3, 10);
+            }} className="product-view__add-cart">Add To Cart</button>
           </form>
           {/* Share Icons */}
         </div>
