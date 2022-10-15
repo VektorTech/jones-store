@@ -6,7 +6,7 @@ import prisma from "@Lib/prisma";
 import { Wishlist, Product } from "@prisma/client";
 import SEO from "@Components/common/SEO";
 
-const Wishlist: NextPage<WishlistPageProps> = ({ wishlistItems }) => {
+const WishlistPage: NextPage<WishlistPageProps> = ({ wishlistItems }) => {
   return (
     <div>
       <SEO title="Wishlist" />
@@ -26,6 +26,7 @@ export const getServerSideProps = withSessionSsr(async function ({
       where: { userId: user?.id },
       include: { product: true },
     })
+    .then(list => list.map(({product}) => ({...product, dateAdded: null})))
     .catch(console.log);
 
   return {
@@ -38,3 +39,5 @@ export const getServerSideProps = withSessionSsr(async function ({
 interface WishlistPageProps {
   wishlistItems: (Wishlist & { product: Product })[];
 }
+
+export default WishlistPage;

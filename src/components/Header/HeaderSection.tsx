@@ -120,7 +120,7 @@ export default function HeaderSection({
             </li>
             <li className="header__button header__button-cart">
               {cartCount ? <span>{cartCount}</span> : null}
-              <Link href="/">
+              <Link href="/cart">
                 <a>
                   <BsCart3 />
                 </a>

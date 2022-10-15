@@ -67,7 +67,7 @@ async function cartRoute(
       await prisma.cartItem.delete({
         where: {
           cartId_productId: {
-            cartId: cart?.id,
+            cartId: cart.id,
             productId,
           },
         },
@@ -75,7 +75,7 @@ async function cartRoute(
       res.json({ message: "Product Successfully Removed From Cart" });
     } else if (req.method == "GET") {
       const cartItems = await prisma.cartItem.findMany({
-        where: { cartId: cart?.id },
+        where: { cartId: cart.id },
         include: { product: true },
       });
       res.json({

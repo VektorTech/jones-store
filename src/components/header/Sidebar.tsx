@@ -168,7 +168,7 @@ export default function Sidebar({ userId }: { userId?: string }) {
                 </Link>
               </li>
               <li className="sidebar__icon-links-item">
-                <Link href="/">
+                <Link href="/cart">
                   <a>
                     <BsCart3 />
                     <span>Cart</span>
