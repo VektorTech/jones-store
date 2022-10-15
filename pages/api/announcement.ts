@@ -2,12 +2,37 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "@Lib/prisma";
 import { DefaultResponse } from "src/types/shared";
+import { withSessionRoute } from "@Lib/withSession";
+import { Role } from "@prisma/client";
+import sanitizeHtml from 'sanitize-html';
 
-export default async function AnnouncementRoute(
+async function AnnouncementRoute(
   req: NextApiRequest,
   res: NextApiResponse<DefaultResponse>
 ) {
-  if (req.method == "GET") {
+  if (req.method == "POST") {
+	const { headline, details } = req.body;
+	const { user } = req.session;
+
+	if (user && user.role == Role.ADMIN) {
+		const allowedTags = [ 'b', 'i', 'em', 'strong', 'span', 'sub', 'sup' ];
+
+		await prisma.announcement.create({
+			data: {
+				headline: sanitizeHtml(headline, { allowedTags }),
+				details: sanitizeHtml(details, { allowedTags })
+			}
+		})
+		.then(() =>
+			res.json({
+				message: "Successfully Created Announcement",
+			})
+		)
+		.catch((error) =>
+			res.status(500).json({ error: true, message: error.message })
+		);
+	}
+  } else if (req.method == "GET") {
 	await prisma.announcement
 		.findMany({
 			orderBy: { addedAt: "desc" }
@@ -25,3 +50,5 @@ export default async function AnnouncementRoute(
     res.status(404).json({ error: true, message: "Not Found" });
   }
 }
+
+export default withSessionRoute(AnnouncementRoute);
