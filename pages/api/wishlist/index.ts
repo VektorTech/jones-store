@@ -2,77 +2,69 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "@Lib/prisma";
 import { DefaultResponse } from "src/types/shared";
-import { withSessionRoute } from "@Lib/withSession";
+import { RouteHandler } from "@Lib/RouteHandler";
+import { isAuthenticated } from "@Lib/apiMiddleware";
+import { ServerError } from "@Lib/utils";
 
-async function wishlistRoute(
-  req: NextApiRequest,
-  res: NextApiResponse<DefaultResponse>
-) {
-  if (req.method == "POST") {
-    const { productId } = req.body;
-    const { user } = req.session;
+const wishlistPostRoute = async (req: NextApiRequest, res: NextApiResponse<DefaultResponse>, next: Function) => {
+  const { productId } = req.body;
+  const { user } = req.session;
 
-    if (user && productId) {
-      await prisma.wishlist
-        .create({
-          data: {
-            userId: user.id,
-            productId: productId as string,
-          },
-        })
-        .then((wishlist) =>
-          res.json({
-            message: "Product Successfully Added To Favorites",
-            data: wishlist,
-          })
-        )
-        .catch((error) =>
-          res.status(500).json({ error: true, message: error.message })
-        );
-    } else
-      res.status(401).json({ error: true, message: "Unauthorized Request" });
-  } else if (req.method == "DELETE") {
-    const { productId } = req.body;
-    const { user } = req.session;
+  if (productId) {
+    const wishlist = await prisma.wishlist
+      .create({
+        data: {
+          userId: user?.id as string,
+          productId: productId as string,
+        },
+      });
 
-    if (user && productId) {
-      await prisma.wishlist
-        .delete({
-          where: {
-            userId_productId: {
-              userId: user.id,
-              productId: productId,
-            },
-          },
-        })
-        .then((wishlist) =>
-          res.json({ message: "Product Successfully Removed From Favorites" })
-        )
-        .catch((error) =>
-          res.status(500).json({ error: true, message: error.message })
-        );
-    }
-  } else if (req.method == "GET") {
-    const { user } = req.session;
-
-    if (user) {
-      await prisma.wishlist
-        .count({
-          where: { userId: user.id },
-        })
-        .then((wishlistCount) =>
-          res.json({
-            message: "Favorites: " + wishlistCount,
-            data: wishlistCount,
-          })
-        )
-        .catch((error) =>
-          res.status(500).json({ error: true, message: error.message })
-        );
-    }
-  } else {
-    res.status(404).json({ error: true, message: "Not Found" });
+    return res.json({
+      message: "Product Successfully Added To Favorites",
+      data: wishlist,
+    });
   }
+
+  next(new ServerError("Malformed Request", 400));
+};
+
+const wishlistDeleteRoute = async (req: NextApiRequest, res: NextApiResponse<DefaultResponse>, next: Function) => {
+  const { productId } = req.body;
+  const { user } = req.session;
+
+  if (productId) {
+    await prisma.wishlist
+      .delete({
+        where: {
+          userId_productId: {
+            userId: user?.id as string,
+            productId: productId,
+          },
+        },
+      });
+
+    return res.json({ message: "Product Successfully Removed From Favorites" });
+  }
+
+  next(new ServerError("Malformed Request", 400));
+};
+
+const wishlistGetRoute = async (req: NextApiRequest, res: NextApiResponse<DefaultResponse>, next: Function) => {
+  const { user } = req.session;
+
+  const wishlistCount = await prisma.wishlist
+    .count({
+      where: { userId: user?.id as string },
+    });
+
+    res.json({
+      message: "Favorites: " + wishlistCount,
+      data: wishlistCount,
+    });
 }
 
-export default withSessionRoute(wishlistRoute);
+export default new RouteHandler()
+  .post(isAuthenticated, wishlistPostRoute)
+  .delete(isAuthenticated, wishlistDeleteRoute)
+  .get(isAuthenticated, wishlistGetRoute)
+  .init();
