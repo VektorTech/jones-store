@@ -15,3 +15,5 @@ export type UserType = Partial<User> & {
 export interface ProductComponentType extends Product {
   small?: boolean;
 }
+
+export type AsyncAPIHandler = (req: NextApiRequest, res: NextApiResponse, next: Function) => Promise<void>;

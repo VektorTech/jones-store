@@ -1,3 +1,4 @@
+import type { NextApiRequest, NextApiResponse } from "next";
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from "./config";
 
 export function setCookie(key: string, value: string, days: number) {
@@ -51,3 +52,18 @@ export const getPathString = (url: string) =>
     .toLowerCase()
     .replace(/[^\sa-zA-Z0-9]/g, "")
     .replace(/\s/g, "-");
+
+export class ServerError extends Error {
+	status: number;
+	constructor (message: string, status: number) {
+		super(message);
+		this.name = "ServerError";
+		this.status = status;
+	}
+}
+
+export const catchAsyncErrors = (func: Function) => (req: NextApiRequest, res: NextApiResponse, next: Function) => {
+	Promise
+		.resolve(func(req, res, next))
+		.catch((e) => next(e));
+}
