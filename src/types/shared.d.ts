@@ -3,6 +3,7 @@ import { User, Wishlist, Product, CartItem } from "@prisma/client";
 /* Shared */
 export interface DefaultResponse {
   error?: boolean;
+  success?: boolean;
   message: string | string[];
   data?: unknown;
 }
