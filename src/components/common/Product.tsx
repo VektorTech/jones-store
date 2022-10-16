@@ -26,7 +26,7 @@ export default function Product({
   id,
 }: ProductComponentType) {
   const { addToWishlist, removeFromWishlist, user } = useAuthState();
-  const onWishlist = user?.wishlist?.some(({ productId }) => productId == id);
+  const onWishlist = user?.wishlist?.some((item) => item?.productId == id);
 
   const wishlistHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
