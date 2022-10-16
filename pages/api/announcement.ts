@@ -24,7 +24,7 @@ async function AnnouncementRoute(
 			}
 		})
 		.then(() =>
-			res.json({
+			res.status(201).json({
 				message: "Successfully Created Announcement",
 			})
 		)
