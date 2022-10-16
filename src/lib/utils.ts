@@ -56,6 +56,7 @@ export const getPathString = (url: string) =>
 
 export class ServerError extends Error {
   status: number;
+  meta?: any;
   constructor(message: string, status: number) {
     super(message);
     this.name = "ServerError";

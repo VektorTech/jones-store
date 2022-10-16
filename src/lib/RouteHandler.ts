@@ -22,8 +22,17 @@ export class RouteHandler {
 
   private async next(error?: ServerError, actionIndex = 0) {
     if (error && this.response) {
+      if (error.meta?.target?.[0] == "username") {
+        error.status = 409;
+        error.message = "Username Already Exists";
+      } else if (error.meta?.target?.[0] == "email") {
+        error.status = 409;
+        error.message = "Email Already Exists";
+      }
+
       this.response?.status(error.status || 500).json({
         success: false,
+        error: true,
         message: error.message || "Internal Server Error",
       });
     } else {
