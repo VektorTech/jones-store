@@ -64,6 +64,5 @@ export class ServerError extends Error {
 
 export const catchAsyncErrors =
   (func: Function) =>
-  (req: NextApiRequest, res: NextApiResponse, next: Function) => {
+  (req: NextApiRequest, res: NextApiResponse, next: Function) =>
     Promise.resolve(func(req, res, next)).catch((e) => next(e));
-  };
