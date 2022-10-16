@@ -29,7 +29,7 @@ async function userRoute(
             phoneNumber: true,
             deactivated: true,
             wishlist: true,
-            cart: true
+            cart: true,
           },
           where: { id: userId as string },
         })
@@ -39,7 +39,7 @@ async function userRoute(
           }
 
           const cartItems = await prisma.cartItem.findMany({
-            where: { cartId: userData.cart?.id }
+            where: { cartId: userData.cart?.id },
           });
 
           res.json({

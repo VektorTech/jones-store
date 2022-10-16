@@ -12,15 +12,14 @@ import Product from "@Components/common/Product";
 import { Gender, Product as ProductType, Category } from "@prisma/client";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 
-export default function ProductPage({ product, relatedProducts }: { product: ProductType, relatedProducts: ProductType[] }) {
-  const {
-    id,
-    title,
-    gender,
-    ratings,
-    price,
-    discount
-  } = product;
+export default function ProductPage({
+  product,
+  relatedProducts,
+}: {
+  product: ProductType;
+  relatedProducts: ProductType[];
+}) {
+  const { id, title, gender, ratings, price, discount } = product;
 
   const { addToCart } = useAuthState();
 
@@ -76,10 +75,15 @@ export default function ProductPage({ product, relatedProducts }: { product: Pro
               <button> + </button>
             </div>
             <input type="hidden" name="productId" defaultValue={id} />
-            <button onClick={e => {
-              e.preventDefault();
-              addToCart(id, 3, 10);
-            }} className="product-view__add-cart">Add To Cart</button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                addToCart(id, 3, 10);
+              }}
+              className="product-view__add-cart"
+            >
+              Add To Cart
+            </button>
           </form>
           {/* Share Icons */}
         </div>
@@ -122,9 +126,9 @@ export default function ProductPage({ product, relatedProducts }: { product: Pro
         <h2 className="related-products__heading">Related Products</h2>
 
         <div className="related-products__list">
-          {
-            relatedProducts.map(product => <Product key={product.id} {...product} />)
-          }
+          {relatedProducts.map((product) => (
+            <Product key={product.id} {...product} />
+          ))}
         </div>
       </div>
     </>
@@ -162,12 +166,14 @@ export const getServerSideProps = withSessionSsr(async function ({
   const product = await prisma.product
     .findMany({
       select,
-      where: { sku: {
-        equals: sku,
-        mode: "insensitive"
-      } },
+      where: {
+        sku: {
+          equals: sku,
+          mode: "insensitive",
+        },
+      },
     })
-    .then(products => products[0])
+    .then((products) => products[0])
     .catch(console.log);
 
   const relatedProducts = await prisma.product
@@ -175,11 +181,11 @@ export const getServerSideProps = withSessionSsr(async function ({
       select,
       where: {
         id: { not: product?.id },
-        gender: (product?.gender || Gender.MEN),
-        type: (product?.type || Category.MID),
-        color: (product?.color || "white")
+        gender: product?.gender || Gender.MEN,
+        type: product?.type || Category.MID,
+        color: product?.color || "white",
       },
-      take: 4
+      take: 4,
     })
     .catch(console.log);
 

@@ -25,7 +25,9 @@ export const getServerSideProps = withSessionSsr(async function ({
       where: { userId: user?.id },
       include: { product: true },
     })
-    .then(list => list.map(({product}) => ({...product, dateAdded: null})))
+    .then((list) =>
+      list.map(({ product }) => ({ ...product, dateAdded: null }))
+    )
     .catch(console.log);
 
   return {

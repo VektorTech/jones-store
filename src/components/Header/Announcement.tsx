@@ -22,7 +22,7 @@ export default function Announcement() {
   useEffect(() => {
     if (!hidden) {
       fetch("/api/announcement")
-        .then(res => res.json())
+        .then((res) => res.json())
         .then(({ data }: { data: AnnouncementType[] }) => {
           setContent(data[0]);
         })
@@ -33,12 +33,26 @@ export default function Announcement() {
   return (
     <div className={`announcement${hidden ? " announcement--hidden" : ""}`}>
       <div className="announcement__container">
-        <div onClickCapture={(e) => { e.preventDefault(); setDialog("MODAL_POPUP"); }} className="announcement__content">
-          <span dangerouslySetInnerHTML={{ __html: content?.headline || "" }}></span>
-          { content ? <FiHelpCircle className="announcement__info-icon" /> : "Loading..." }
+        <div
+          onClickCapture={(e) => {
+            e.preventDefault();
+            setDialog("MODAL_POPUP");
+          }}
+          className="announcement__content"
+        >
+          <span
+            dangerouslySetInnerHTML={{ __html: content?.headline || "" }}
+          ></span>
+          {content ? (
+            <FiHelpCircle className="announcement__info-icon" />
+          ) : (
+            "Loading..."
+          )}
         </div>
         <Modal onClose={() => setDialog(null)} visible={visible}>
-          <div dangerouslySetInnerHTML={{ __html: content?.details || "" }}></div>
+          <div
+            dangerouslySetInnerHTML={{ __html: content?.details || "" }}
+          ></div>
         </Modal>
         <button onClick={handleClose} className="announcement__close">
           <BsXLg className="announcement__close-icon" />

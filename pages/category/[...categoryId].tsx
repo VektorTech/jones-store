@@ -121,14 +121,14 @@ export const getServerSideProps = withSessionSsr(async function ({
         select,
         where: { gender, title: { contains: type, mode: "insensitive" } },
         skip: Number(offset),
-        take: Number(limit)
+        take: Number(limit),
       });
     } else {
       products = await prisma.product.findMany({
         select,
         where: { gender },
         skip: Number(offset),
-        take: Number(limit)
+        take: Number(limit),
       });
     }
   } else if (category == "colorways" && typeof type == "string") {
@@ -136,21 +136,21 @@ export const getServerSideProps = withSessionSsr(async function ({
       select,
       where: { color: { equals: type, mode: "insensitive" } },
       skip: Number(offset),
-      take: Number(limit)
+      take: Number(limit),
     });
   } else if (category == "new") {
     products = await prisma.product.findMany({
       select,
       orderBy: { year: "desc", dateAdded: "desc" },
       skip: Number(offset),
-      take: Number(limit)
+      take: Number(limit),
     });
   } else if (category == "best") {
     products = await prisma.product.findMany({
       select,
       orderBy: { salesCount: "desc" },
       skip: Number(offset),
-      take: Number(limit)
+      take: Number(limit),
     });
   } else if (category == "type" && typeof type == "string") {
     const cType = type.toUpperCase() as Category;
@@ -158,12 +158,12 @@ export const getServerSideProps = withSessionSsr(async function ({
       select,
       where: { type: cType },
       skip: Number(offset),
-      take: Number(limit)
+      take: Number(limit),
     });
   } else {
     return {
-      notFound: true
-    }
+      notFound: true,
+    };
   }
 
   return {

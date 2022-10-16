@@ -25,7 +25,9 @@ async function productRoute(
         await prisma.product
           .create({ data })
           .then(() => {
-            res.status(201).json({ message: `Successfully Added ${data.title}` });
+            res
+              .status(201)
+              .json({ message: `Successfully Added ${data.title}` });
           })
           .catch((error) => {
             if (error.meta?.target?.length) {

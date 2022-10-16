@@ -1,4 +1,9 @@
-import { deleteWishlistItem, postWishlistItem, postCartItem, deleteCartItem } from "@Lib/helpers";
+import {
+  deleteWishlistItem,
+  postWishlistItem,
+  postCartItem,
+  deleteCartItem,
+} from "@Lib/helpers";
 import { useEffect, useReducer } from "react";
 import { UserType } from "src/types/shared";
 import useSWR from "swr";
@@ -21,7 +26,7 @@ const actions = {
   ADD_WISHLIST_ITEM: "ADD_WISHLIST_ITEM",
   REMOVE_WISHLIST_ITEM: "REMOVE_WISHLIST_ITEM",
   ADD_CART_ITEM: "ADD_CART_ITEM",
-  REMOVE_CART_ITEM: "REMOVE_CART_ITEM"
+  REMOVE_CART_ITEM: "REMOVE_CART_ITEM",
 };
 
 type ActionsType = keyof typeof actions;

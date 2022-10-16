@@ -10,11 +10,15 @@ export interface DefaultResponse {
 
 export type UserType = Partial<User> & {
   wishlist: Wishlist[] | never[];
-  cart: CartItem[] | never[]
+  cart: CartItem[] | never[];
 };
 
 export interface ProductComponentType extends Product {
   small?: boolean;
 }
 
-export type AsyncAPIHandler = (req: NextApiRequest, res: NextApiResponse, next: Function) => Promise<void>;
+export type AsyncAPIHandler = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  next: Function
+) => Promise<void>;

@@ -54,16 +54,16 @@ export const getPathString = (url: string) =>
     .replace(/\s/g, "-");
 
 export class ServerError extends Error {
-	status: number;
-	constructor (message: string, status: number) {
-		super(message);
-		this.name = "ServerError";
-		this.status = status;
-	}
+  status: number;
+  constructor(message: string, status: number) {
+    super(message);
+    this.name = "ServerError";
+    this.status = status;
+  }
 }
 
-export const catchAsyncErrors = (func: Function) => (req: NextApiRequest, res: NextApiResponse, next: Function) => {
-	Promise
-		.resolve(func(req, res, next))
-		.catch((e) => next(e));
-}
+export const catchAsyncErrors =
+  (func: Function) =>
+  (req: NextApiRequest, res: NextApiResponse, next: Function) => {
+    Promise.resolve(func(req, res, next)).catch((e) => next(e));
+  };

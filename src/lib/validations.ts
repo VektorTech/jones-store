@@ -35,5 +35,5 @@ export const productSchema = object({
 }).required();
 
 export const newsletterRecipientSchema = object({
-  email: string().email().max(255).required()
+  email: string().email().max(255).required(),
 }).required();

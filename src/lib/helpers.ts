@@ -42,7 +42,11 @@ export function postCartItem(id: string, quantity: number, size: number) {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: new URLSearchParams({ productId: id, qty: quantity.toString(), size: size.toString() }),
+    body: new URLSearchParams({
+      productId: id,
+      qty: quantity.toString(),
+      size: size.toString(),
+    }),
   })
     .then((res) => res.json())
     .catch(console.log);

@@ -6,18 +6,21 @@ import { RouteHandler } from "@Lib/RouteHandler";
 import { isAuthenticated } from "@Lib/apiMiddleware";
 import { ServerError } from "@Lib/utils";
 
-const wishlistPostRoute = async (req: NextApiRequest, res: NextApiResponse<DefaultResponse>, next: Function) => {
+const wishlistPostRoute = async (
+  req: NextApiRequest,
+  res: NextApiResponse<DefaultResponse>,
+  next: Function
+) => {
   const { productId } = req.body;
   const { user } = req.session;
 
   if (productId) {
-    const wishlist = await prisma.wishlist
-      .create({
-        data: {
-          userId: user?.id as string,
-          productId: productId as string,
-        },
-      });
+    const wishlist = await prisma.wishlist.create({
+      data: {
+        userId: user?.id as string,
+        productId: productId as string,
+      },
+    });
 
     return res.json({
       message: "Product Successfully Added To Favorites",
@@ -28,20 +31,23 @@ const wishlistPostRoute = async (req: NextApiRequest, res: NextApiResponse<Defau
   next(new ServerError("Malformed Request", 400));
 };
 
-const wishlistDeleteRoute = async (req: NextApiRequest, res: NextApiResponse<DefaultResponse>, next: Function) => {
+const wishlistDeleteRoute = async (
+  req: NextApiRequest,
+  res: NextApiResponse<DefaultResponse>,
+  next: Function
+) => {
   const { productId } = req.body;
   const { user } = req.session;
 
   if (productId) {
-    await prisma.wishlist
-      .delete({
-        where: {
-          userId_productId: {
-            userId: user?.id as string,
-            productId: productId,
-          },
+    await prisma.wishlist.delete({
+      where: {
+        userId_productId: {
+          userId: user?.id as string,
+          productId: productId,
         },
-      });
+      },
+    });
 
     return res.json({ message: "Product Successfully Removed From Favorites" });
   }
@@ -49,19 +55,22 @@ const wishlistDeleteRoute = async (req: NextApiRequest, res: NextApiResponse<Def
   next(new ServerError("Malformed Request", 400));
 };
 
-const wishlistGetRoute = async (req: NextApiRequest, res: NextApiResponse<DefaultResponse>, next: Function) => {
+const wishlistGetRoute = async (
+  req: NextApiRequest,
+  res: NextApiResponse<DefaultResponse>,
+  next: Function
+) => {
   const { user } = req.session;
 
-  const wishlistCount = await prisma.wishlist
-    .count({
-      where: { userId: user?.id as string },
-    });
+  const wishlistCount = await prisma.wishlist.count({
+    where: { userId: user?.id as string },
+  });
 
-    res.json({
-      message: "Favorites: " + wishlistCount,
-      data: wishlistCount,
-    });
-}
+  res.json({
+    message: "Favorites: " + wishlistCount,
+    data: wishlistCount,
+  });
+};
 
 export default new RouteHandler()
   .post(isAuthenticated, wishlistPostRoute)

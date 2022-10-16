@@ -47,7 +47,9 @@ async function signupRoute(
 
         await req.session.save();
 
-        res.status(201).json({ message: `Successfully Created User Account, ${username}` });
+        res
+          .status(201)
+          .json({ message: `Successfully Created User Account, ${username}` });
       })
       .catch((error) => {
         if (error.meta?.target?.[0] == "username") {

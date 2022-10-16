@@ -3,7 +3,13 @@ import { FiSearch } from "react-icons/fi";
 import Product from "@Components/common/Product";
 
 import { useDialog } from "@Lib/contexts/UIContext";
-import { ChangeEventHandler, useEffect, useRef, useState, useMemo } from "react";
+import {
+  ChangeEventHandler,
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+} from "react";
 import { ProductComponentType } from "src/types/shared";
 
 export default function SearchBox() {

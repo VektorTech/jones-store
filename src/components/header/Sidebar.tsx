@@ -170,9 +170,7 @@ export default function Sidebar({ userId }: { userId?: string }) {
                 <Link href="/cart">
                   <a>
                     <BsCart3 />
-                    <span>
-                      Cart{cartCount ? ` (${cartCount})` : ""}
-                    </span>
+                    <span>Cart{cartCount ? ` (${cartCount})` : ""}</span>
                   </a>
                 </Link>
               </li>

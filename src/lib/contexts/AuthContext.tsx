@@ -36,8 +36,15 @@ export const AuthProvider = ({
   children: ReactElement;
   userId?: string;
 }) => {
-  const { user, isError, addWishlistItem, removeWishlistItem, addCartItem, removeCartItem, useSelector } =
-    useUser(userId);
+  const {
+    user,
+    isError,
+    addWishlistItem,
+    removeWishlistItem,
+    addCartItem,
+    removeCartItem,
+    useSelector,
+  } = useUser(userId);
 
   return (
     <AuthContext.Provider
