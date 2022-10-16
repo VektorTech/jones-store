@@ -9,12 +9,12 @@ export default function SignIn() {
   return (
     <form method="POST" action="/api/auth/signin">
       <TextField
-        value={defaultUserCred.user}
+        defaultValue={defaultUserCred.user}
         name="email"
         label="Email or User"
       />
       <TextField
-        value={defaultUserCred.pass}
+        defaultValue={defaultUserCred.pass}
         name="password"
         type="password"
         label="Password"
