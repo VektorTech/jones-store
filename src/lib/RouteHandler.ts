@@ -36,7 +36,7 @@ export class RouteHandler {
         this.restMethodActions[method]?.[actionIndex]
       ) {
         await catchAsyncErrors(
-          this.restMethodActions[method]?.[actionIndex] as Function
+          this.restMethodActions[method]?.[actionIndex] as AsyncAPIHandler
         )(this.request, this.response, (err: ServerError) =>
           this.next.call(this, err, actionIndex + 1)
         );

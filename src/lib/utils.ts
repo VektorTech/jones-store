@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { AsyncAPIHandler } from "src/types/shared";
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from "./config";
 
 export function setCookie(key: string, value: string, days: number) {
@@ -63,6 +64,6 @@ export class ServerError extends Error {
 }
 
 export const catchAsyncErrors =
-  (func: Function) =>
+  (func: AsyncAPIHandler) =>
   (req: NextApiRequest, res: NextApiResponse, next: Function) =>
     Promise.resolve(func(req, res, next)).catch((e) => next(e));
