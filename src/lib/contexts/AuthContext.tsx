@@ -20,7 +20,7 @@ const authState: {
 
   addToWishlist: (id) => Promise.resolve(),
   removeFromWishlist: (id) => Promise.resolve(),
-  addToCart: (id, quanity, size) => Promise.resolve(),
+  addToCart: (id, quantity, size) => Promise.resolve(),
   removeFromCart: (id) => Promise.resolve(),
   useSelector: () => null,
 };
