@@ -60,24 +60,25 @@ const authReducer = (
   }
 };
 
-const useUserFetch = (id: string): { data: any, error: any } => {
+const useProfile = (id?: string): { data: any, error?: Error, isLoading: boolean } => {
   const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState();
+  const [isLoading, setLoading] = useState(false)
 
   useEffect(() => {
+    setLoading(true);
     fetch(id ? `/api/auth/user/${id}` : "")
       .then((res) => res.json())
-      .then(res => {
-        setData(res);
-      })
-      .catch(setError);
+      .then(setData)
+      .catch(setError)
+      .finally(() => setLoading(false));
   }, [id]);
 
-  return { data, error };
+  return { data, error, isLoading };
 };
 
 export default function useUser(id?: string) {
-  const { data, error } = useUserFetch(id);
+  const { data, error } = useProfile(id);
   const [userState, updateUser] = useReducer(authReducer, initUser);
 
   useEffect(() => {
