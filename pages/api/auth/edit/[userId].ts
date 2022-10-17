@@ -24,22 +24,19 @@ async function editUserRoute(
 
   const { userId } = req.query;
 
-  await prisma.user
-    .update({
-      where: { id: userId as string },
-      data: {
-        username,
-        email,
-        firstName,
-        lastName,
-        phoneNumber,
-        avatarURL,
-      },
-    });
+  await prisma.user.update({
+    where: { id: userId as string },
+    data: {
+      username,
+      email,
+      firstName,
+      lastName,
+      phoneNumber,
+      avatarURL,
+    },
+  });
 
   res.json({ message: "User Update Successful" });
 }
 
-export default new RouteHandler()
-  .put(isAuthorizedUser, editUserRoute)
-  .init();
+export default new RouteHandler().put(isAuthorizedUser, editUserRoute).init();

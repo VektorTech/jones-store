@@ -60,10 +60,12 @@ const authReducer = (
   }
 };
 
-const useProfile = (id?: string): { data: any, error?: Error, isLoading: boolean } => {
+const useProfile = (
+  id?: string
+): { data: any; error?: Error; isLoading: boolean } => {
   const [data, setData] = useState(null);
   const [error, setError] = useState();
-  const [isLoading, setLoading] = useState(false)
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);

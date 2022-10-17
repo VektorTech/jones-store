@@ -11,32 +11,29 @@ async function productSearchRoute(
 ) {
   const { q, offset = 0, limit = 10 } = req.query;
 
-  const products = await prisma.product
-    .findMany({
-      select: {
-        id: true,
-        title: true,
-        mediaURLs: true,
-        price: true,
-        ratings: true,
-        gender: true,
+  const products = await prisma.product.findMany({
+    select: {
+      id: true,
+      title: true,
+      mediaURLs: true,
+      price: true,
+      ratings: true,
+      gender: true,
+    },
+    where: {
+      title: {
+        contains: q as string,
+        mode: "insensitive",
       },
-      where: {
-        title: {
-          contains: q as string,
-          mode: "insensitive",
-        },
-      },
-      orderBy: {
-        salesCount: "desc",
-      },
-      skip: Number(offset),
-      take: Number(limit),
-    });
+    },
+    orderBy: {
+      salesCount: "desc",
+    },
+    skip: Number(offset),
+    take: Number(limit),
+  });
 
-  res.json({ message: "Products Found", data: products })
+  res.json({ message: "Products Found", data: products });
 }
 
-export default new RouteHandler()
-  .get(productSearchRoute)
-  .init();
+export default new RouteHandler().get(productSearchRoute).init();

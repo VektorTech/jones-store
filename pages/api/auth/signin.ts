@@ -50,7 +50,4 @@ const signinRoute = async (
   next(new ServerError("Authentication Failed", 401));
 };
 
-export default new RouteHandler()
-  .post(signinRoute)
-  .init();
-
+export default new RouteHandler().post(signinRoute).init();

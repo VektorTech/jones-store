@@ -12,15 +12,14 @@ async function deactivateUserRoute(
 ) {
   const { userId } = req.query;
 
-  await prisma.user
-    .update({
-      where: { id: userId as string },
-      data: { deactivated: false },
-    });
+  await prisma.user.update({
+    where: { id: userId as string },
+    data: { deactivated: false },
+  });
 
   res.json({ message: "User Deactivation Successful" });
 }
 
 export default new RouteHandler()
- .delete(isAuthorizedUser, deactivateUserRoute)
- .init();
+  .delete(isAuthorizedUser, deactivateUserRoute)
+  .init();

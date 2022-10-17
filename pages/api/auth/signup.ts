@@ -24,14 +24,13 @@ async function signupRoute(
   ) as unknown as User;
   const passwordHashed = bcrypt.hashSync(password);
 
-  const {id, role} = await prisma.user
-    .create({
-      data: {
-        username,
-        email: email,
-        password: passwordHashed,
-      },
-    });
+  const { id, role } = await prisma.user.create({
+    data: {
+      username,
+      email: email,
+      password: passwordHashed,
+    },
+  });
 
   req.session.user = {
     id,
@@ -53,6 +52,4 @@ async function signupRoute(
     .json({ message: `Successfully Created User Account, ${username}` });
 }
 
-export default new RouteHandler()
-  .post(signupRoute)
-  .init();
+export default new RouteHandler().post(signupRoute).init();

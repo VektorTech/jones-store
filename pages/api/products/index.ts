@@ -15,19 +15,18 @@ async function getProductRoute(
 ) {
   const { offset = 0, limit = 10 } = req.query;
 
-  const products = await prisma.product
-    .findMany({
-      select: {
-        id: true,
-        title: true,
-        mediaURLs: true,
-        price: true,
-        ratings: true,
-        gender: true,
-      },
-      skip: Number(offset),
-      take: Number(limit),
-    });
+  const products = await prisma.product.findMany({
+    select: {
+      id: true,
+      title: true,
+      mediaURLs: true,
+      price: true,
+      ratings: true,
+      gender: true,
+    },
+    skip: Number(offset),
+    take: Number(limit),
+  });
 
   res.json({ message: "Successfully Retrieved Products", data: products });
 }
@@ -43,12 +42,9 @@ async function postProductRoute(
   };
   data = productSchema.cast(data) as unknown as Product;
 
-  await prisma.product
-    .create({ data });
+  await prisma.product.create({ data });
 
-  res
-    .status(201)
-    .json({ message: `Successfully Added ${data.title}` });
+  res.status(201).json({ message: `Successfully Added ${data.title}` });
 }
 
 export default new RouteHandler()

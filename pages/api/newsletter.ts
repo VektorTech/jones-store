@@ -18,16 +18,13 @@ async function NewsletterRoute(
     return next(new ServerError(error, 400));
   }
 
-  await prisma.newsletterRecipient
-    .create({
-      data: { email: email as string },
-    });
+  await prisma.newsletterRecipient.create({
+    data: { email: email as string },
+  });
 
   res.json({
     message: "Successfully Added Recipient, " + email,
   });
 }
 
-export default new RouteHandler()
-  .get(NewsletterRoute)
-  .init();
+export default new RouteHandler().get(NewsletterRoute).init();

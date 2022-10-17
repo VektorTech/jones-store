@@ -3,12 +3,7 @@ import { FiSearch } from "react-icons/fi";
 import Product from "@Components/common/Product";
 
 import { useDialog } from "@Lib/contexts/UIContext";
-import {
-  ChangeEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEventHandler, useEffect, useRef, useState } from "react";
 import { ProductComponentType } from "src/types/shared";
 import { useThrottle } from "@Lib/hooks/useThrottle";
 
@@ -28,14 +23,18 @@ export default function SearchBox() {
     setSearchTerm(event.currentTarget.value);
   };
 
-  useThrottle(() => {
-    if (active) {
-      fetch(`${location.origin}/api/products/search?q=${searchTerm}&limit=5`)
-        .then((res) => res.json())
-        .then((res) => setProducts(res.data || []))
-        .catch(console.log);
-    }
-  }, 500, [active, searchTerm]);
+  useThrottle(
+    () => {
+      if (active) {
+        fetch(`${location.origin}/api/products/search?q=${searchTerm}&limit=5`)
+          .then((res) => res.json())
+          .then((res) => setProducts(res.data || []))
+          .catch(console.log);
+      }
+    },
+    500,
+    [active, searchTerm]
+  );
 
   useEffect(() => {
     if (active) {

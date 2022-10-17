@@ -13,21 +13,20 @@ async function usersRoute(
 ) {
   const { offset = 0, limit = 10 } = req.query;
 
-  const users = await prisma.user
-    .findMany({
-      skip: Number(offset),
-      take: Number(limit),
-      select: {
-        id: true,
-        avatarURL: true,
-        username: true,
-        email: true,
-        firstName: true,
-        lastName: true,
-        phoneNumber: true,
-        deactivated: true,
-      },
-    });
+  const users = await prisma.user.findMany({
+    skip: Number(offset),
+    take: Number(limit),
+    select: {
+      id: true,
+      avatarURL: true,
+      username: true,
+      email: true,
+      firstName: true,
+      lastName: true,
+      phoneNumber: true,
+      deactivated: true,
+    },
+  });
 
   res.json({ message: "Successfully Retrieved Users", data: users });
 }

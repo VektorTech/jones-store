@@ -13,22 +13,21 @@ async function userRoute(
 ) {
   const { userId } = req.query;
 
-  const userData = await prisma.user
-    .findUnique({
-      select: {
-        id: true,
-        avatarURL: true,
-        username: true,
-        email: true,
-        firstName: true,
-        lastName: true,
-        phoneNumber: true,
-        deactivated: true,
-        wishlist: true,
-        cart: true,
-      },
-      where: { id: userId as string },
-    });
+  const userData = await prisma.user.findUnique({
+    select: {
+      id: true,
+      avatarURL: true,
+      username: true,
+      email: true,
+      firstName: true,
+      lastName: true,
+      phoneNumber: true,
+      deactivated: true,
+      wishlist: true,
+      cart: true,
+    },
+    where: { id: userId as string },
+  });
 
   if (userData == null) {
     return next(new ServerError("No User Found!", 404));
@@ -45,6 +44,4 @@ async function userRoute(
   });
 }
 
-export default new RouteHandler()
-  .get(isAuthorizedUser, userRoute)
-  .init();
+export default new RouteHandler().get(isAuthorizedUser, userRoute).init();

@@ -19,6 +19,4 @@ async function signoutRoute(
   });
 }
 
-export default new RouteHandler()
-  .get(isAuthenticated, signoutRoute)
-  .init();
+export default new RouteHandler().get(isAuthenticated, signoutRoute).init();

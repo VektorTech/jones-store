@@ -116,12 +116,13 @@ export const getServerSideProps = withSessionSsr(async function ({
     })
     .catch(console.log);
 
-  if(!userRecord) return {
-    redirect: {
-      destination: "/signin",
-      permanent: false,
-    }
-  }
+  if (!userRecord)
+    return {
+      redirect: {
+        destination: "/signin",
+        permanent: false,
+      },
+    };
 
   return {
     props: {

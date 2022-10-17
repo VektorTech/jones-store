@@ -29,7 +29,7 @@ async function postWishlistRoute(
   }
 
   next(new ServerError("Malformed Request", 400));
-};
+}
 
 async function deleteWishlistRoute(
   req: NextApiRequest,
@@ -53,7 +53,7 @@ async function deleteWishlistRoute(
   }
 
   next(new ServerError("Malformed Request", 400));
-};
+}
 
 async function getWishlistRoute(
   req: NextApiRequest,
@@ -70,7 +70,7 @@ async function getWishlistRoute(
     message: "Favorites: " + wishlistCount,
     data: wishlistCount,
   });
-};
+}
 
 export default new RouteHandler()
   .post(isAuthenticated, postWishlistRoute)
