@@ -5,7 +5,7 @@ import Product from "@Components/common/Product";
 import { useDialog } from "@Lib/contexts/UIContext";
 import { ChangeEventHandler, useEffect, useRef, useState } from "react";
 import { ProductComponentType } from "src/types/shared";
-import { useThrottle } from "@Lib/hooks/useThrottle";
+import { useDebounce } from "@Lib/hooks/useDebounce";
 
 export default function SearchBox() {
   const { currentDialog, setDialog } = useDialog();
@@ -23,7 +23,7 @@ export default function SearchBox() {
     setSearchTerm(event.currentTarget.value);
   };
 
-  useThrottle(
+  useDebounce(
     () => {
       if (active) {
         fetch(`${location.origin}/api/products/search?q=${searchTerm}&limit=5`)

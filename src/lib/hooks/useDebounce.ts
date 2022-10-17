@@ -1,6 +1,6 @@
 import { useEffect, DependencyList } from "react";
 
-export const useThrottle = (
+export const useDebounce = (
   callback: Function,
   delay: number,
   deps: DependencyList
