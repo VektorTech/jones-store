@@ -4,9 +4,8 @@ import {
   postCartItem,
   deleteCartItem,
 } from "@Lib/helpers";
-import { useEffect, useReducer } from "react";
+import { useState, useEffect, useReducer } from "react";
 import { UserType } from "src/types/shared";
-import useSWR from "swr";
 
 const initUser: UserType = {
   id: "",
@@ -61,11 +60,24 @@ const authReducer = (
   }
 };
 
-const fetcher = (...args: [any, any]) =>
-  fetch(...args).then((res) => res.json());
+const useUserFetch = (id: string): { data: any, error: any } => {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch(id ? `/api/auth/user/${id}` : "")
+      .then((res) => res.json())
+      .then(res => {
+        setData(res);
+      })
+      .catch(setError);
+  }, [id]);
+
+  return { data, error };
+};
 
 export default function useUser(id?: string) {
-  const { data, error } = useSWR(id ? `/api/auth/user/${id}` : "", fetcher);
+  const { data, error } = useUserFetch(id);
   const [userState, updateUser] = useReducer(authReducer, initUser);
 
   useEffect(() => {
