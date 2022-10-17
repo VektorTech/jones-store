@@ -8,9 +8,9 @@ import {
   useEffect,
   useRef,
   useState,
-  useMemo,
 } from "react";
 import { ProductComponentType } from "src/types/shared";
+import { useThrottle } from "@Lib/hooks/useThrottle";
 
 export default function SearchBox() {
   const { currentDialog, setDialog } = useDialog();
@@ -28,18 +28,14 @@ export default function SearchBox() {
     setSearchTerm(event.currentTarget.value);
   };
 
-  useEffect(() => {
-    const timerID = setTimeout(() => {
-      if (active) {
-        fetch(`${location.origin}/api/products/search?q=${searchTerm}&limit=5`)
-          .then((res) => res.json())
-          .then((res) => setProducts(res.data || []))
-          .catch(console.log);
-      }
-    }, 500);
-
-    return () => clearTimeout(timerID);
-  }, [active, searchTerm]);
+  useThrottle(() => {
+    if (active) {
+      fetch(`${location.origin}/api/products/search?q=${searchTerm}&limit=5`)
+        .then((res) => res.json())
+        .then((res) => setProducts(res.data || []))
+        .catch(console.log);
+    }
+  }, 500, [active, searchTerm]);
 
   useEffect(() => {
     if (active) {
