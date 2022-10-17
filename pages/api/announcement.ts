@@ -4,12 +4,13 @@ import { DefaultResponse } from "src/types/shared";
 import sanitizeHtml from "sanitize-html";
 import { RouteHandler } from "@Lib/RouteHandler";
 import { authorizeRole, isAuthenticated } from "@Lib/apiMiddleware";
+import { Role } from "@prisma/client";
 
 export default new RouteHandler()
   .post(
     isAuthenticated,
-    authorizeRole("ADMIN"),
-    async function AnnouncementPostRoute(
+    authorizeRole(Role.ADMIN),
+    async function postAnnouncementRoute(
       req: NextApiRequest,
       res: NextApiResponse<DefaultResponse>,
       next: Function
@@ -30,7 +31,7 @@ export default new RouteHandler()
       });
     }
   )
-  .get(async function AnnouncementGetRoute(
+  .get(async function getAnnouncementRoute(
     req: NextApiRequest,
     res: NextApiResponse<DefaultResponse>,
     next: Function

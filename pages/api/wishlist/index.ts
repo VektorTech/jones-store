@@ -6,11 +6,11 @@ import { RouteHandler } from "@Lib/RouteHandler";
 import { isAuthenticated } from "@Lib/apiMiddleware";
 import { ServerError } from "@Lib/utils";
 
-const wishlistPostRoute = async (
+async function postWishlistRoute(
   req: NextApiRequest,
   res: NextApiResponse<DefaultResponse>,
   next: Function
-) => {
+) {
   const { productId } = req.body;
   const { user } = req.session;
 
@@ -31,11 +31,11 @@ const wishlistPostRoute = async (
   next(new ServerError("Malformed Request", 400));
 };
 
-const wishlistDeleteRoute = async (
+async function deleteWishlistRoute(
   req: NextApiRequest,
   res: NextApiResponse<DefaultResponse>,
   next: Function
-) => {
+) {
   const { productId } = req.body;
   const { user } = req.session;
 
@@ -55,11 +55,11 @@ const wishlistDeleteRoute = async (
   next(new ServerError("Malformed Request", 400));
 };
 
-const wishlistGetRoute = async (
+async function getWishlistRoute(
   req: NextApiRequest,
   res: NextApiResponse<DefaultResponse>,
   next: Function
-) => {
+) {
   const { user } = req.session;
 
   const wishlistCount = await prisma.wishlist.count({
@@ -73,7 +73,7 @@ const wishlistGetRoute = async (
 };
 
 export default new RouteHandler()
-  .post(isAuthenticated, wishlistPostRoute)
-  .delete(isAuthenticated, wishlistDeleteRoute)
-  .get(isAuthenticated, wishlistGetRoute)
+  .post(isAuthenticated, postWishlistRoute)
+  .delete(isAuthenticated, deleteWishlistRoute)
+  .get(isAuthenticated, getWishlistRoute)
   .init();

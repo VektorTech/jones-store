@@ -4,32 +4,30 @@ import prisma from "@Lib/prisma";
 import { DefaultResponse } from "src/types/shared";
 import { newsletterRecipientSchema } from "@Lib/validations";
 import { validateInput } from "@Lib/helpers";
+import { RouteHandler } from "@Lib/RouteHandler";
+import { ServerError } from "@Lib/utils";
 
-export default async function NewsletterRoute(
+async function NewsletterRoute(
   req: NextApiRequest,
-  res: NextApiResponse<DefaultResponse>
+  res: NextApiResponse<DefaultResponse>,
+  next: Function
 ) {
   const { email } = req.query;
-
   const error = validateInput({ email }, newsletterRecipientSchema);
   if (error) {
-    return res.status(400).json({ error: true, message: error });
+    return next(new ServerError(error, 400));
   }
 
-  if (req.method == "GET") {
-    await prisma.newsletterRecipient
-      .create({
-        data: { email: email as string },
-      })
-      .then(() =>
-        res.json({
-          message: "Successfully Added Recipient, " + email,
-        })
-      )
-      .catch((error) =>
-        res.status(500).json({ error: true, message: error.message })
-      );
-  } else {
-    res.status(404).json({ error: true, message: "Not Found" });
-  }
+  await prisma.newsletterRecipient
+    .create({
+      data: { email: email as string },
+    });
+
+  res.json({
+    message: "Successfully Added Recipient, " + email,
+  });
 }
+
+export default new RouteHandler()
+  .get(NewsletterRoute)
+  .init();

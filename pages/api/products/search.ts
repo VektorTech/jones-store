@@ -2,43 +2,41 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "@Lib/prisma";
 import { DefaultResponse } from "src/types/shared";
+import { RouteHandler } from "@Lib/RouteHandler";
 
-export default async function productSearchRoute(
+async function productSearchRoute(
   req: NextApiRequest,
-  res: NextApiResponse<DefaultResponse>
+  res: NextApiResponse<DefaultResponse>,
+  next: Function
 ) {
-  if (req.method == "GET") {
-    const { q, offset = 0, limit = 10 } = req.query;
+  const { q, offset = 0, limit = 10 } = req.query;
 
-    await prisma.product
-      .findMany({
-        select: {
-          id: true,
-          title: true,
-          mediaURLs: true,
-          price: true,
-          ratings: true,
-          gender: true,
+  const products = await prisma.product
+    .findMany({
+      select: {
+        id: true,
+        title: true,
+        mediaURLs: true,
+        price: true,
+        ratings: true,
+        gender: true,
+      },
+      where: {
+        title: {
+          contains: q as string,
+          mode: "insensitive",
         },
-        where: {
-          title: {
-            contains: q as string,
-            mode: "insensitive",
-          },
-        },
-        orderBy: {
-          salesCount: "desc",
-        },
-        skip: Number(offset),
-        take: Number(limit),
-      })
-      .then((products) =>
-        res.json({ message: "Products Found", data: products })
-      )
-      .catch((error) =>
-        res.status(500).json({ error: true, message: error.message })
-      );
-  } else {
-    res.status(404).json({ error: true, message: "Not Found" });
-  }
+      },
+      orderBy: {
+        salesCount: "desc",
+      },
+      skip: Number(offset),
+      take: Number(limit),
+    });
+
+  res.json({ message: "Products Found", data: products })
 }
+
+export default new RouteHandler()
+  .get(productSearchRoute)
+  .init();

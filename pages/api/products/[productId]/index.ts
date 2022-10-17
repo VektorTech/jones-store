@@ -2,25 +2,25 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "@Lib/prisma";
 import { DefaultResponse } from "src/types/shared";
+import { RouteHandler } from "@Lib/RouteHandler";
 
-export default async function productRoute(
+async function productRoute(
   req: NextApiRequest,
-  res: NextApiResponse<DefaultResponse>
+  res: NextApiResponse<DefaultResponse>,
+  next: Function
 ) {
-  if (req.method == "GET") {
-    const { productId } = req.query;
+  const { productId } = req.query;
 
-    await prisma.product
-      .findUnique({
-        where: {
-          id: productId as string,
-        },
-      })
-      .then((product) => res.json({ message: "Product Found", data: product }))
-      .catch((error) =>
-        res.status(500).json({ error: true, message: error.message })
-      );
-  } else {
-    res.status(404).json({ error: true, message: "Not Found" });
-  }
+  const product = await prisma.product
+    .findUnique({
+      where: {
+        id: productId as string,
+      },
+    })
+
+  res.json({ message: "Product Found", data: product });
 }
+
+export default new RouteHandler()
+  .get(productRoute)
+  .init();

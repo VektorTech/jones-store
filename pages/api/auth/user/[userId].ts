@@ -1,59 +1,50 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "@Lib/prisma";
-import { withSessionRoute } from "@Lib/withSession";
-import { Role } from "@prisma/client";
 import { DefaultResponse } from "src/types/shared";
+import { RouteHandler } from "@Lib/RouteHandler";
+import { isAuthorizedUser } from "@Lib/apiMiddleware";
+import { ServerError } from "@Lib/utils";
 
 async function userRoute(
   req: NextApiRequest,
-  res: NextApiResponse<DefaultResponse>
+  res: NextApiResponse<DefaultResponse>,
+  next: Function
 ) {
-  if (req.method == "GET") {
-    const { userId } = req.query;
-    const { user } = req.session;
+  const { userId } = req.query;
 
-    const isAuthorized =
-      userId && user && (userId == user?.id || user?.role == Role.ADMIN);
+  const userData = await prisma.user
+    .findUnique({
+      select: {
+        id: true,
+        avatarURL: true,
+        username: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        phoneNumber: true,
+        deactivated: true,
+        wishlist: true,
+        cart: true,
+      },
+      where: { id: userId as string },
+    });
 
-    if (isAuthorized) {
-      await prisma.user
-        .findUnique({
-          select: {
-            id: true,
-            avatarURL: true,
-            username: true,
-            email: true,
-            firstName: true,
-            lastName: true,
-            phoneNumber: true,
-            deactivated: true,
-            wishlist: true,
-            cart: true,
-          },
-          where: { id: userId as string },
-        })
-        .then(async (userData) => {
-          if (userData == null) {
-            return res.json({ message: "No User Found!", data: {} });
-          }
-
-          const cartItems = await prisma.cartItem.findMany({
-            where: { cartId: userData.cart?.id },
-          });
-
-          res.json({
-            message: "Successfully Retrieved User Record",
-            data: { ...userData, cart: cartItems },
-          });
-        })
-        .catch((error) => res.status(500).json({ message: error.message }));
-    } else {
-      res.status(401).json({ error: true, message: "Unauthorized Request" });
-    }
-  } else {
-    res.status(404).json({ error: true, message: "Not Found" });
+  if (userData == null) {
+    return next(new ServerError("No User Found!", 404));
   }
+
+  const cartItems = await prisma.cartItem.findMany({
+    where: { cartId: userData.cart?.id },
+  });
+
+  res.json({
+    success: true,
+    message: "Successfully Retrieved User Record",
+    data: { ...userData, cart: cartItems },
+  });
 }
 
-export default withSessionRoute(userRoute);
+export default new RouteHandler()
+  .get(isAuthorizedUser, userRoute)
+  .init();
