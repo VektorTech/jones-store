@@ -4,7 +4,7 @@ import prisma from "@Lib/prisma";
 import { withSessionSsr } from "@Lib/withSession";
 import SEO from "@Components/common/SEO";
 
-const SearchPage: NextPage<{ query: string }> = ({ query }) => {
+const SearchPage: NextPage<{ query: string, products?: any }> = ({ query }) => {
   return (
     <div>
       <SEO title={`"${query}"`} />
