@@ -1,5 +1,5 @@
 // import Link from "next/link";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 
 import { VscChromeClose } from "react-icons/vsc";
 import { BsSliders } from "react-icons/bs";
@@ -8,6 +8,11 @@ import { ImArrowDown } from "react-icons/im";
 import Filter from "@Components/productList/Filter";
 import BreadCrumbs from "@Components/productList/BreadCrumbs";
 import Pagination from "@Components/productList/Pagination";
+
+import prisma from "@Lib/prisma";
+import { withSessionSsr } from "@Lib/withSession";
+import { Gender, Product, Category } from "@prisma/client";
+import SEO from "@Components/common/SEO";
 
 export default function CategoryPage({
   categoryId,
@@ -88,11 +93,6 @@ export default function CategoryPage({
     </div>
   );
 }
-
-import prisma from "@Lib/prisma";
-import { withSessionSsr } from "@Lib/withSession";
-import { Gender, Product, Category } from "@prisma/client";
-import SEO from "@Components/common/SEO";
 
 export const getServerSideProps = withSessionSsr(async function ({
   params,
