@@ -3,7 +3,7 @@ import Image from "next/future/image";
 import NextImage from "next/image";
 import { BiMap, BiPhone, BiTime } from "react-icons/bi";
 import { HiOutlineMail } from "react-icons/hi";
-import { CgArrowLongRight } from "react-icons/cg";
+import { FaPaperPlane } from "react-icons/fa";
 
 import logoImg from "@Images/jones-logo.png";
 import SocialIcons from "./common/SocialIcons";
@@ -148,7 +148,7 @@ export default function Footer() {
                   enter email
                 </label>
                 <button className="input__submit" type="submit">
-                  <CgArrowLongRight className="input__submit-icon" />
+                  <FaPaperPlane className="input__submit-icon" />
                 </button>
               </div>
               <p className="newsletter__disclaimer">
