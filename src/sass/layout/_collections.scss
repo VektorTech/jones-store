@@ -102,13 +102,13 @@
 			position: absolute;
 			bottom: 1.5rem;
 			right: 1.5rem;
-			font-weight: bold;
+			font-weight: 600;
 			font-variant: small-caps;
 
 			& span {
 				font-variant: small-caps;
 				font-size: $text-lg;
-				border-bottom: 0.2rem solid #fff;
+				border-bottom: 0.1rem solid #fff;
 			}
 
 			@include link-arrow(#fff);

@@ -38,6 +38,14 @@ export default function SocialButtons({
         </Link>
       ) : null}
 
+      {SocialHandles.tiktok ? (
+        <Link href={`https://www.tiktok.com/@${SocialHandles.tiktok}`}>
+          <a className="social-links__link social-links__link--tiktok">
+            <SiTiktok />
+          </a>
+        </Link>
+      ) : null}
+
       {SocialHandles.youtube ? (
         <Link href={`https://www.youtube.com/c/${SocialHandles.youtube}`}>
           <a className="social-links__link">
@@ -58,14 +66,6 @@ export default function SocialButtons({
         <Link href={`https://www.pinterest.com/${SocialHandles.pinterest}/`}>
           <a className="social-links__link">
             <RiPinterestFill />
-          </a>
-        </Link>
-      ) : null}
-
-      {SocialHandles.tiktok ? (
-        <Link href={`https://www.tiktok.com/@${SocialHandles.tiktok}`}>
-          <a className="social-links__link social-links__link--tiktok">
-            <SiTiktok />
           </a>
         </Link>
       ) : null}

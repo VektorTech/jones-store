@@ -43,7 +43,7 @@
 		gap: 1rem;
 
 		@include respond-to('small') {
-			gap: 1rem;
+			gap: 2rem;
 		}
 	}
 }

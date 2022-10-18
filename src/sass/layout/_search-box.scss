@@ -27,12 +27,18 @@
 		font-size: 3rem;
 		top: 1rem;
 		right: 2rem;
-		width: 4rem;
-		height: 4rem;
-		line-height: 4rem;
+		width: 5rem;
+		height: 5rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		background-color: #fff;
 		border-radius: 50%;
 		color: $c-text-dark;
+
+		&:hover {
+			background-color: #eee;
+		}
 	}
 
 	&__title {
@@ -84,6 +90,6 @@
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
 		min-height: 4rem;
-		gap: 1rem;
+		gap: 2rem;
 	}
 }

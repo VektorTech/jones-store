@@ -14,11 +14,11 @@
 	}
 
 	@include respond-to('small') {
-		flex-basis: calc(50% - 1rem);
+		flex-basis: calc(50% - 2rem);
 	}
 
 	@include respond-to('medium') {
-		flex-basis: calc(25% - 1rem);
+		flex-basis: calc(25% - 2rem);
 
 		&__actions button {
 			opacity: 0;
@@ -141,7 +141,7 @@
 	}
 
 	&__type {
-		font-weight: bold;
+		font-weight: 600;
 		text-transform: uppercase;
 		color: #082a8a;
 		font-size: $text-xs;
@@ -159,7 +159,7 @@
 		color: $c-text-red;
 
 		& #{$self}__amount {
-			font-weight: bold;
+			font-weight: 600;
 		}
 
 		& #{$self}__discount-percentage {

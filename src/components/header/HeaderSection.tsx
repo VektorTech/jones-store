@@ -28,7 +28,7 @@ export default function HeaderSection({
   const cartCount = user?.cart?.length;
 
   useEffect(() => {
-    if (scrollTop >= (announcementVisible ? 135 : 100)) {
+    if (scrollTop >= (announcementVisible ? 115 : 80)) {
       setPinnedState(lastScroll.current > scrollTop);
       lastScroll.current = scrollTop;
     } else {

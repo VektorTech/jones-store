@@ -93,11 +93,11 @@
 
 	&__title {
 		font-size: $text-xl;
-		font-weight: bold;
+		font-weight: 600;
 
 		&-type {
 			position: absolute;
-			font-size: 20vw;
+			font-size: 16vw;
 			font-weight: bold;
 			font-style: italic;
 			color: #ffffff15;
@@ -117,19 +117,19 @@
 			@include respond-to('x-small') {
 				text-align: left;
 				left: -4rem;
-				margin-top: -4rem;
-				font-size: 15vw;
+				margin-top: -2rem;
+				font-size: 12.5vw;
 			}
 
 			@include respond-to('medium') {
-				font-size: 14vw;
+				font-size: 11.2vw;
 			}
 
 			@include respond-to('large') {
 				left: -5rem;
 				margin-top: 0.5rem;
 				transform: translateY(-20%);
-				font-size: 10.5vw;
+				font-size: 8.5vw;
 			}
 		}
 
@@ -236,13 +236,10 @@
 		}
 
 		&-element {
-			border-radius: 0.3rem;
 			display: inline-block;
 			border: 0.1rem solid #fff;
-			padding-bottom: min(max(8%, 2rem), 4.5rem);
-			padding-right: min(max(35%, 8rem), 23rem);
-			width: 0;
-			height: 0;
+			width: min(23rem, max(20%, 15rem));
+			height: 4.5rem;
 			position: relative;
 			font-weight: 400;
 			transition: color .3s $timing-func-ui, background-color .3s $timing-func-ui;
@@ -262,25 +259,11 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				font-size: $text-sm;
-
-				@include respond-to('medium') {
-					font-size: $text-md;
-				}
+				font-size: $text-md;
 
 				@include respond-to('xx-large') {
 					font-size: $text-lg;
 				}
-			}
-
-			@include respond-to('medium') {
-				padding-bottom: min(max(4%, 2rem), 4.5rem);
-				padding-right: min(max(15%, 8rem), 23rem);
-			}
-
-			@include respond-to('large') {
-				padding-bottom: min(max(3%, 2rem), 4.5rem);
-				padding-right: min(max(13%, 8rem), 23rem);
 			}
 		}
 	}

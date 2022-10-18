@@ -35,8 +35,13 @@
 	}
 
 	&__icon {
-		font-size: 6rem;
+		font-size: 5.5rem;
 		color: $c-red;
+		transition: transform .3s $timing-func-ui;
+
+		&:hover {
+			transform: translateY(-15%);
+		}
 
 		&-element {
 			width: 100%;
@@ -44,7 +49,7 @@
 	}
 
 	&__title {
-		font-weight: bold;
+		font-weight: 600;
 		text-transform: uppercase;
 		font-size: $text-lg;
 		margin: 0;
@@ -55,5 +60,6 @@
 	&__text {
 		font-size: $text-md;
 		color: $c-text-dark;
+		margin-top: 0.5rem;
 	}
 }

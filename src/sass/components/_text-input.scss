@@ -7,12 +7,12 @@
 		content: "";
 		background-color: #000;
 		position: absolute;
-		height: 0.2rem;
+		height: 0.1rem;
 		width: 0%;
 		display: block;
 		left: 50%;
 		transform: translateX(-50%);
-		margin-top: -0.2rem;
+		margin-top: -0.1rem;
 		transition: width 0.3s $timing-func-ui;
 	}
 
@@ -26,7 +26,7 @@
 		width: 90%;
 		padding: 1rem 0;
 		background: none;
-		border: 0.1rem solid #bbb;
+		border: 0.1rem solid #ddd;
 		transition: border-color .3s $timing-func-ui;
 
 		&::placeholder {
@@ -37,13 +37,13 @@
 		&:focus,
 		&:hover ~ #{$self}__submit,
 		&:focus ~ #{$self}__submit {
-			caret-color: #888;
-			border-color: #888;
+			caret-color: #bbb;
+			border-color: #bbb;
 		}
 
 		&:not(:placeholder-shown) + #{$self}__placeholder,
 		&:focus + #{$self}__placeholder {
-			transform: scale(0.6) translateY(-4rem);
+			transform: scale(0.65) translateY(-4rem);
 		}
 	}
 
@@ -66,7 +66,7 @@
 		text-align: right;
 		padding-right: 1rem;
 		transition: border-color .3s, color .3s;
-		border: 0.1rem solid #999;
+		border: 0.1rem solid #ddd;
 
 		&-icon {
 			transform: scale(1.2);
@@ -99,8 +99,8 @@
 			&:focus,
 			&:hover ~ #{$self}__submit,
 			&:focus ~ #{$self}__submit {
-				caret-color: mix($c-red, white, 60%);
-				border-color: mix($c-red, white, 60%);
+				caret-color: mix($c-red, white, 40%);
+				border-color: mix($c-red, white, 40%);
 			}
 		}
 
