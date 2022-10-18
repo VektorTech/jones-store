@@ -17,7 +17,12 @@ export class RouteHandler {
     DELETE: null,
   };
 
-  private async next(request: NextApiRequest, response: NextApiResponse, error?: ServerError, actionIndex = 0) {
+  private async next(
+    request: NextApiRequest,
+    response: NextApiResponse,
+    error?: ServerError,
+    actionIndex = 0
+  ) {
     if (error && response && response?.headersSent == false) {
       if (error.meta?.target?.length) {
         error.status = 409;

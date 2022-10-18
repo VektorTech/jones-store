@@ -22,65 +22,53 @@ export default function SocialButtons({
         vertical ? " social-links--vertical " : " "
       }social-links--${size}`}
     >
-      { SocialHandles.facebook ?
+      {SocialHandles.facebook ? (
         <Link href={`https://www.facebook.com/${SocialHandles.facebook}/`}>
           <a className="social-links__link">
             <RiFacebookBoxFill />
           </a>
         </Link>
-        :
-        null
-      }
+      ) : null}
 
-      { SocialHandles.instagram ?
+      {SocialHandles.instagram ? (
         <Link href={`https://www.instagram.com/${SocialHandles.instagram}/`}>
           <a className="social-links__link">
             <RiInstagramFill />
           </a>
         </Link>
-        :
-        null
-      }
+      ) : null}
 
-      { SocialHandles.youtube ?
+      {SocialHandles.youtube ? (
         <Link href={`https://www.youtube.com/c/${SocialHandles.youtube}`}>
           <a className="social-links__link">
             <RiYoutubeFill />
           </a>
         </Link>
-        :
-        null
-      }
+      ) : null}
 
-      { SocialHandles.twitter ?
+      {SocialHandles.twitter ? (
         <Link href={`https://twitter.com/${SocialHandles.twitter}`}>
           <a className="social-links__link">
             <RiTwitterFill />
           </a>
         </Link>
-        :
-        null
-      }
+      ) : null}
 
-      { SocialHandles.pinterest ?
+      {SocialHandles.pinterest ? (
         <Link href={`https://www.pinterest.com/${SocialHandles.pinterest}/`}>
           <a className="social-links__link">
             <RiPinterestFill />
           </a>
         </Link>
-        :
-        null
-      }
+      ) : null}
 
-      { SocialHandles.tiktok ?
+      {SocialHandles.tiktok ? (
         <Link href={`https://www.tiktok.com/@${SocialHandles.tiktok}`}>
           <a className="social-links__link">
             <SiTiktok fontSize={23} />
           </a>
         </Link>
-        :
-        null
-      }
+      ) : null}
     </div>
   );
 }
