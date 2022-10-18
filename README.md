@@ -1,20 +1,20 @@
 # Jones (Jordan Ones) Shoe Store
 
-Jones is an online store for Nike Jordan Ones &mdash; seamless e-commerce marketplace. It is a responsive, mobile-first website featuring multiple currency, pop-up search option (Ajax live search), Ajax add to cart and add to wishlist, newsletter form, announcement banner for live updates, customer reviews, product slideshow on hover and is SEO friendly.
+Jones is an online store for Nike Jordan Ones &mdash; a seamless e-commerce marketplace. It is a responsive, mobile-first website featuring multiple currency, pop-up search option (Ajax live search), Ajax add to cart and add to wishlist, newsletter form, announcement banner for live updates, customer reviews, product slideshow on hover and is SEO friendly.
 
 ## Tech Used
 
 - **Next.JS** &mdash; React Framework - SSR, SSG & REST API
+- **Typescript** &mdash; Static Typing, Type Inference & Type Guarding
 - **Iron Session** &mdash; Session Management
 - **BCrypt** &mdash; Password Hashing & Comparison
 - **Yup** &mdash; Schema & Form Validation
+- **PostgreSQL** &mdash; Relational Database Management System
+- **Prisma** &mdash; ORM for PostgreSQL
 - **Sass** &mdash; Custom Styling
 - **React Icons** &mdash; SVG Icon Library
 - **nProgress** &mdash; Progress Bar For Navigation Indication
 - **Friendly Username Generator** &mdash; Generates random usernames for new users
-- **Typescript** &mdash; Static Typing, Type Inference & Type Guarding
-- **PostgreSQL** &mdash; Relational Database Management System
-- **Prisma** &mdash; ORM for PostgreSQL
 - **ESLint** &mdash; Code Linting
 - **Prettier** &mdash; Enforce Consistent Code Format
 - **Figma** &mdash; Page Designs
@@ -27,19 +27,19 @@ Jones is an online store for Nike Jordan Ones &mdash; seamless e-commerce market
 
 - Because this is an e-commerce website, SEO plays a significant factor in it's success, but the standard client-side rendered React would seriously hinder search engines from properly crawling each page. So I chose Next.JS for this project as it provides a quick and simple way for writing server-side rendered react applications without much overhead.
 
-- React's `useState` & `useReducer` hooks coupled with the Context API provided a sufficient means for managing and centralizing state in this application, as there wasn't much information that needed to be kept in memory on the client that would demand a complex library like Redux. Pages are regularly refreshed and data is already being rendered onto pages from server(`getServerSideProps` & `getStaticProps`), which further reduced the need for alternate state management strategies. User preferences are persisted through cookie to allow for pre-rendering on the server.
+- React's `useState` & `useReducer` hooks coupled with the Context API provided a sufficient means for managing and centralizing state in this application as there wasn't much information that needed to be kept in memory on the client that would demand a complex library like Redux. Pages are regularly refreshed and data is already being rendered onto pages from server(`getServerSideProps` & `getStaticProps`), which further reduced the need for alternate state management strategies. User preferences are persisted through cookie to allow for pre-rendering on the server.
 
 - For managing the user state, I switched from using multiple `useState` to a single `useReducer` as it's a more convenient option for working with state objects that have multiple sub-values, like the wishlist and cart array on the user object.
 
 - Used Postgres trigger functions for updating cart total whenever a cart item is added or removed.
 
-- After recognizing a repeating pattern in how I was writing API routes and wanting to improve the process, I decided to build a method routing class, `RouteHandler`, to arrange request handlers in a similar fashion to `express` routers. It allows all handlers to be composed with a custom error catcher and session middleware and also allows authentication and role-based access control. This reduced the boilerplate code inside API routes and made writing async code much cleaner.
+- After recognizing a repeating pattern in how API routes were being written and wanting to improve the process, I decided to build a method routing class, `RouteHandler`, to arrange request handlers in a similar fashion to `express` routers. It allows all handlers to be composed with a custom error catcher and session middleware and also allows authentication and role-based access control. This reduced boilerplate code inside API routes and made writing async code much cleaner.
 
-- The website UI diverted in a few areas from the original Figma design.
+- The website UI diverted from the original Figma design in a few areas.
 
 ## Issues Encountered
 
-- I had issues with programmatically setting first focusable element as the active element in the document when authoring the code that tab traps a dom container element. Had to place wrap the code in a `setTimeout`, which I still don't understand.
+- I had issues with programmatically setting first focusable element as the active element in the document when authoring the code that tab traps a dom container element. Had to wrap the code in a `setTimeout`, which I still don't quite understand.
 
 - No way to add custom constraints onto table columns inside prisma, so I had to resort to hand written SQL Commands.
 
@@ -47,9 +47,7 @@ Jones is an online store for Nike Jordan Ones &mdash; seamless e-commerce market
 
 - Learning to work with `next/image` was a bit difficult, especially when trying to resize images.
 
-- I initially intended on writing all styles and components from scratch but later tapped out and resorted to Material UI due to time constraints.
-
-- While implementing the slideshow feature of the product component, I ran into a problem where state wasn't updating as intended. After a while, I realized that the callback passed to the `setInterval` was using a outdated value of state held inside its closure &mdash; the value initialized during the first render. I later discovered an different way to update state by passing a callback to `setState` instead of a value. The callback accepts the current value of state to calculate and return a new state. [Further details by Dan Abramov...](https://overreacted.io/making-setinterval-declarative-with-react-hooks/)
+- While implementing the slideshow feature of the product component, I ran into a problem where state wasn't updating as intended. After some point, I realized that the callback being passed to `setInterval` was using an outdated value of state held inside its closure &mdash; the value assigned during the first render. I later discovered a different way of updating state by passing a callback to `setState` instead of a value. The callback accepts the current value of state to calculate and return a new state. [Further details by Dan Abramov...](https://overreacted.io/making-setinterval-declarative-with-react-hooks/)
 
 - Made some changes to UI in areas that were not accounted for during design, also for layout and stylistic improvements.
 
@@ -105,7 +103,7 @@ Jones is an online store for Nike Jordan Ones &mdash; seamless e-commerce market
 
 4. Then run `npx prisma db push`. This will use the schema (from `./prisma/schema.prisma`) to add the relevant tables to your `jones_db` database.
 
-5. If you make any changes to `schema.prisma`, run `npx prisma migrate dev --name <name_of_migration>` maintain a history of each update. You may also run `npx prisma generate` to manually sync `@prisma/client` with the database after updating the table schemas. Use `npx prisma studio` to launch the prisma client to observe and manipulate the database.
+5. If you make any changes to `schema.prisma`, run `npx prisma migrate dev --name <name_of_migration>` to further maintain a history of each update to the database. You may also run `npx prisma generate` to manually sync `@prisma/client` with the database after updating the table schemas. Use `npx prisma studio` to launch the prisma client to observe and manipulate the database.
 
 ## Getting Started
 
