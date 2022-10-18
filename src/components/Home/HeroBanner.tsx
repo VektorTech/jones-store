@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { RiRadioButtonLine, RiCheckboxBlankCircleFill } from "react-icons/ri";
 
-import SocialIcons from "../common/SocialIcons";
+import SocialIcons from "../common/SocialButtons";
 
 import BannerImage from "@Images/jordan-1-banner.png";
 

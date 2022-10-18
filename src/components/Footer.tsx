@@ -6,7 +6,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { FaPaperPlane } from "react-icons/fa";
 
 import logoImg from "@Images/jones-logo.png";
-import SocialIcons from "./common/SocialIcons";
+import SocialIcons from "./common/SocialButtons";
 
 export default function Footer() {
   return (
