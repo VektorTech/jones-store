@@ -3,7 +3,7 @@ import Image from "next/image";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 import RatingStars from "./RatingStars";
-import { MouseEventHandler, useEffect, useRef, useState } from "react";
+import { MouseEventHandler, useRef, useState } from "react";
 import { getPathString } from "@Lib/utils";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import { ProductComponentType } from "src/types/shared";
