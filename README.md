@@ -1,57 +1,72 @@
 # Jones (Jordan Ones) Shoe Store
 
-Jones is an e-commerce store for Nike Jordan Ones. It is a responsive, mobile-first website featuring an admin dashboard for viewing website analytics and managing the backend.
+Jones is an online store for Nike Jordan Ones &mdash; seamless e-commerce marketplace. It is a responsive, mobile-first website featuring multiple currency, pop-up search option (Ajax live search), Ajax add to cart and add to wishlist, newsletter form, announcement banner for live updates, customer reviews, product slideshow on hover and is SEO friendly.
 
 ## Tech Used
 
-* __Next.JS__ - SSR & SSG & REST API
-* __Iron Session__ - Session Management
-* __BCrypt__ - Password Hashing & Comparison
-* __Yup__ - Schema & Form Validation
-* __Sass__ - Custom Styling
-* __Material UI__ - Form Components
-* __React Icons__ - SVG Icon Library
-* __Friendly Username Generator__ - Random usernames for new users
-* __Typescript__ - Type Safety
-* __Prisma__ - ORM for PostgresSQL
-* __ESLint__ - Code Linting
-* __Prettier__ - Code Formatting
-* __Figma__ - Page Designs
-* __Adobe Photoshop__ - Image Editing
-* __Postman__ - Testing API routes (Auth, products)
-* __Chrome & Firefox Dev Tools__
+- **Next.JS** &mdash; React Framework - SSR, SSG & REST API
+- **Iron Session** &mdash; Session Management
+- **BCrypt** &mdash; Password Hashing & Comparison
+- **Yup** &mdash; Schema & Form Validation
+- **Sass** &mdash; Custom Styling
+- **React Icons** &mdash; SVG Icon Library
+- **nProgress** &mdash; Progress Bar For Navigation Indication
+- **Friendly Username Generator** &mdash; Generates random usernames for new users
+- **Typescript** &mdash; Static Typing, Type Inference & Type Guarding
+- **PostgreSQL** &mdash; Relational Database Management System
+- **Prisma** &mdash; ORM for PostgreSQL
+- **ESLint** &mdash; Code Linting
+- **Prettier** &mdash; Enforce Consistent Code Format
+- **Figma** &mdash; Page Designs
+- **Adobe Photoshop** &mdash; Design & Image Editing
+- **TinyPng** &mdash; Image Optimization
+- **Postman** &mdash; Testing API routes (Auth, Products)
+- **Chrome & Firefox Dev Tools**
 
-## About
+## Design Decisions
 
-Because this is an e-commerce website, SEO plays a significant factor in it's success, but the standard client-side rendered React would seriously hinder search engines from properly crawling each page. So I chose Next.JS for this project as it provides a quick and simple way for writing server-side rendered react applications without much overhead.
+- Because this is an e-commerce website, SEO plays a significant factor in it's success, but the standard client-side rendered React would seriously hinder search engines from properly crawling each page. So I chose Next.JS for this project as it provides a quick and simple way for writing server-side rendered react applications without much overhead.
 
-React Context API was a sufficient option for managing state in this application, as there wasn't much information that needed to be kept in memory on the client that would demand a complex library like Redux. Pages are regularly refreshed and data is already being rendered onto pages from server(`getServerSideProps` & `getStaticProps`), which further reduced the need for alternate state management strategies. User preferences are persisted through cookie to allow for pre-rendering on the server.
+- React's `useState` & `useReducer` hooks coupled with the Context API provided a sufficient means for managing and centralizing state in this application, as there wasn't much information that needed to be kept in memory on the client that would demand a complex library like Redux. Pages are regularly refreshed and data is already being rendered onto pages from server(`getServerSideProps` & `getStaticProps`), which further reduced the need for alternate state management strategies. User preferences are persisted through cookie to allow for pre-rendering on the server.
 
-# Issues Encountered
+- For managing the user state, I switched from using multiple `useState` to a single `useReducer` as it's a more convenient option for working with state objects that have multiple sub-values, like the wishlist and cart array on the user object.
 
-* I had issues with programmatically setting first focusable element as the active element in the document when authoring the code that tab traps a dom container element. Had to place wrap the code in a `setTimeout`, which I still don't understand.
+- Used Postgres trigger functions for updating cart total whenever a cart item is added or removed.
 
-* Need a solution for elegantly hiding the pinned header when user scrolls down.
+- After recognizing a repeating pattern in how I was writing API routes and wanting to improve the process, I decided to build a method routing class, `RouteHandler`, to arrange request handlers in a similar fashion to `express` routers. It allows all handlers to be composed with a custom error catcher and session middleware and also allows authentication and role-based access control. This reduced the boilerplate code inside API routes and made writing async code much cleaner.
 
-* No way to add custom constraints onto table columns inside prisma, so I had to resort to hand written SQL Commands.
+- The website UI diverted in a few areas from the original Figma design.
 
-* The Sass team is deprecating the `@import()` statement in favor of `@use()`, which forced me to import (with `@use()`) all variables, functions, placeholders and mixins into all sass files that depends on them.
+## Issues Encountered
 
-* Took me some time getting used to `next/image`, especially resizing.
+- I had issues with programmatically setting first focusable element as the active element in the document when authoring the code that tab traps a dom container element. Had to place wrap the code in a `setTimeout`, which I still don't understand.
 
-* I initially intended on writing all styles and components from scratch but later tapped out and resorted to Material UI due to time constraints.
+- No way to add custom constraints onto table columns inside prisma, so I had to resort to hand written SQL Commands.
+
+- The Sass team is deprecating the `@import()` statement in favor of `@use()`, which forced me to import (with `@use()`) all variables, functions, placeholders and mixins into all sass files that depends on them.
+
+- Learning to work with `next/image` was a bit difficult, especially when trying to resize images.
+
+- I initially intended on writing all styles and components from scratch but later tapped out and resorted to Material UI due to time constraints.
+
+- While implementing the slideshow feature of the product component, I ran into a problem where state wasn't updating as intended. After a while, I realized that the callback passed to the `setInterval` was using a outdated value of state held inside its closure &mdash; the value initialized during the first render. I later discovered an different way to update state by passing a callback to `setState` instead of a value. The callback accepts the current value of state to calculate and return a new state. [Further details by Dan Abramov...](https://overreacted.io/making-setinterval-declarative-with-react-hooks/)
+
+- Made some changes to UI in areas that were not accounted for during design, also for layout and stylistic improvements.
 
 ## What I've Learned
 
-* Further developed my intuition for writing custom hooks.
-* Dynamic routing strategies through Next JS
-* `:focus-visible` selector for keyboard only focus, and `:focus-within` for elements with actively focused descendant.
-* Better approaches to BEM naming and component design.
-* Canonical tag to signal main version of (near) duplicate pages to search engines.
+- Further developed my intuition for writing custom hooks.
+- Dynamic routing strategies through Next JS
+- `:focus-visible` selector for keyboard tabbing focus, and `:focus-within` for elements with actively focused descendant.
+- Better approaches to BEM naming and component design.
+- Canonical tag to signal main version of (near) duplicate pages to search engines.
+- Native internationalization(`Intl`) class that has a method for formatting currency
+- It's probably best not to program the database using triggers or procedure because they tend to become invisible (may forget or not be aware of them during development), it's probably best to perform calculations on the server instead.
+- Alternative way to update state `setState(state => ...)`
 
 ## Setup
 
-1. Create a `.env` file in the root directory and set the following keys:
+1. Create a `touch .env` file in the root directory and set the following keys:
 	```python
 	# Database string for PostgreSQL
 	DATABASE_URL="postgres://{user}:{password}@{hostname}:{port}/{database_name}"
@@ -60,23 +75,37 @@ React Context API was a sufficient option for managing state in this application
 	SECRET_COOKIE_PASSWORD="complex_password_at_least_32_characters_long"
 	```
 
-2. Run `npm install` to install all dependencies for the project.
+2. You may edit the following variables inside the `./src/lib/config.ts` file:
+	```js
+	// name for session cookie
+	export const sessionOptions: IronSessionOptions = {
+		cookieName: "<site_name>/user",
+		// ...
+	}
 
-3. Then run `npx prisma db push`. This will use the schema (from `./prisma/schema.prisma`) to add the relevant tables to your `jones_db`, database. You can use `npx prisma generate` to manually sync `@prisma/client` with the database after updating the table schemas.
+	// name of domain
+	export const DOMAIN_NAME = "";
 
-5. (Optional) Run code inside `./prisma/constraints.sql` on database.
+	// https://cloudinary.com upload preset & cloud name
+	export const CLOUDINARY_UPLOAD_PRESET = "";
+	export const CLOUDINARY_CLOUD_NAME = "";
 
-4. `npm run dev` to start development server.
+	// handles for social media pages
+	export const SocialHandles = {
+		facebook: "",
+		instagram: "",
+		youtube: "",
+		twitter: "",
+		pinterest: "",
+		tiktok: ""
+	};
+	```
 
-## Credits & Attributions
+3. Run `npm install` to install all dependencies for the project.
 
-* Banner background image by [Jos Hoppenbrouwers](https://www.joshoppenbrouwers.com/) - Image was then manipulated using Photoshop.
+4. Then run `npx prisma db push`. This will use the schema (from `./prisma/schema.prisma`) to add the relevant tables to your `jones_db` database.
 
-* Website design Inspired By [8theme XStore](https://xstore.8theme.com/elementor/demos/sneakers/).
-
----
-
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+5. If you make any changes to `schema.prisma`, run `npx prisma migrate dev --name <name_of_migration>` maintain a history of each update. You may also run `npx prisma generate` to manually sync `@prisma/client` with the database after updating the table schemas. Use `npx prisma studio` to launch the prisma client to observe and manipulate the database.
 
 ## Getting Started
 
@@ -89,11 +118,24 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Todo
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- [ ] Find a way to elegantly hide the pinned header when user scrolls down.
+- [ ] Build Admin Dashboard
+- [ ] Add Google Auth
+- [ ] Internationalize
+- [ ] Password Recovery Feature
+- [ ] Order Tracking
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Credits & Attributions
+
+- Banner background image by [Jos Hoppenbrouwers](https://www.joshoppenbrouwers.com/) - Image was then manipulated using Photoshop.
+
+- Website design Inspired By [8theme XStore](https://xstore.8theme.com/elementor/demos/sneakers/).
+
+---
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`npx create-next-app@latest . --ts`](https://github.com/vercel/next.js/blob/canary/docs/basic-features/typescript.md).
 
 ## Learn More
 
