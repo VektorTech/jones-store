@@ -17,42 +17,36 @@ export class RouteHandler {
     DELETE: null,
   };
 
-  private request?: NextApiRequest;
-  private response?: NextApiResponse;
-
-  private async next(error?: ServerError, actionIndex = 0) {
-    if (error && this.response && this.response?.headersSent == false) {
+  private async next(request: NextApiRequest, response: NextApiResponse, error?: ServerError, actionIndex = 0) {
+    if (error && response && response?.headersSent == false) {
       if (error.meta?.target?.length) {
         error.status = 409;
       }
 
-      this.response?.status(error.status || 500).json({
+      response?.status(error.status || 500).json({
         success: false,
         error: true,
         message: error.message || "Internal Server Error",
       });
     } else {
-      const method = this.request?.method || "";
+      const method = request?.method || "";
 
       if (
-        this.request &&
-        this.response &&
+        request &&
+        response &&
         this.restMethodActions &&
         this.restMethodActions[method]?.[actionIndex]
       ) {
         await catchAsyncErrors(
           this.restMethodActions[method]?.[actionIndex] as AsyncAPIHandler
-        )(this.request, this.response, (err: ServerError) =>
-          this.next.call(this, err, actionIndex + 1)
+        )(request, response, (err: ServerError) =>
+          this.next.call(this, request, response, err, actionIndex + 1)
         );
       }
     }
   }
 
   private start(req: NextApiRequest, res: NextApiResponse) {
-    this.request = req;
-    this.response = res;
-
     const action: Function | null = this.methodActions[req.method || ""];
 
     if (action) {
@@ -67,12 +61,12 @@ export class RouteHandler {
     handlers: AsyncAPIHandler[],
     method: string
   ) {
-    this.restMethodActions[method] = handlers;
     this.methodActions[method] = withSessionRoute((req, res) =>
       catchAsyncErrors(handler)(req, res, (err: ServerError) =>
-        this.next.call(this, err, 0)
+        this.next.call(this, req, res, err, 0)
       )
     );
+    this.restMethodActions[method] = handlers;
   }
 
   get(handler: AsyncAPIHandler, ...handlers: AsyncAPIHandler[]) {
