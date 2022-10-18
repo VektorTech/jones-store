@@ -1,3 +1,4 @@
+import Form, { beforeSubmitType } from "@Components/Form";
 import { cloudinaryUpload } from "@Lib/utils";
 import {
   TextField,
@@ -13,55 +14,32 @@ import {
   FormGroup,
 } from "@mui/material";
 import { Gender, Category } from "@prisma/client";
-import { FormEvent, FormEventHandler } from "react";
 
 const CategoriesData = require("@Lib/CategoriesData.json");
 
-async function submitForm(form: HTMLFormElement) {
-  const inputElements = form.querySelectorAll("[name]");
-  const params = new URLSearchParams();
-  new Array<HTMLInputElement>().forEach.call(inputElements, (input) => {
-    if (input.type == "checkbox" || input.type == "radio") {
-      input.checked && params.append(input.name, input.value);
-    } else {
-      params.append(input.name, input.value);
-    }
-  });
-  // return console.log(params.toString());
-  return fetch(form.action, {
-    method: form.method,
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-    },
-    body: params,
-  }).then((res) => res.json());
-}
-
 export default function AddProduct() {
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (
-    event: FormEvent<HTMLFormElement>
-  ) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const { files } = document.getElementById(
+
+  const handleSubmit: beforeSubmitType = async (params, formElement)  => {
+    const { files } = formElement.getElementById(
       "product-images"
     ) as HTMLInputElement;
+
     if (files) {
       const uploads = await cloudinaryUpload(files);
-      form["mediaURLs"].textContent = uploads
+      params["mediaURLs"] = uploads
         .map((r) => r.secure_url)
         .join("\n");
-      const message = await submitForm(form);
-      console.log(message);
-      // const newForm = form.cloneNode(true) as HTMLFormElement;
-      // form.parentNode?.replaceChild(newForm, form);
-      // newForm.submit();
+
+      return [params, true];
     }
   };
 
   return (
     <div className="admin__section">
-      <form onSubmit={handleSubmit} method="POST" action="/api/products">
+      <Form beforeSubmit={handleSubmit} method="POST" action="/api/products">
+        {/* <fieldset>
+          <legend></legend>
+        </fieldset> */}
         <TextField name="id" label="ID" />
 
         <TextField name="stockQty" label="Stock Quantity" />
@@ -77,11 +55,6 @@ export default function AddProduct() {
         <TextField name="details" fullWidth multiline label="Details" />
 
         <input id="product-images" type="file" accept="image/*" multiple />
-        <textarea
-          style={{ display: "none" }}
-          name="mediaURLs"
-          id="mediaURLs"
-        ></textarea>
 
         <Autocomplete
           disablePortal
@@ -159,7 +132,9 @@ export default function AddProduct() {
         </FormControl>
 
         <Button type="submit">Add To Inventory</Button>
-      </form>
+
+        <input type="reset" value="Reset Form" />
+      </Form>
     </div>
   );
 }

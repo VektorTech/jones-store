@@ -2,9 +2,19 @@ import { ReactElement, FormEventHandler, useRef } from "react";
 import { DefaultResponse } from "src/types/shared";
 
 type beforeSubmitReturnType = [
-  updatedParams: { [key: string]: string } | void,
-  shouldContinue: boolean
-];
+  updatedParams?: { [key: string]: string },
+  shouldContinue?: boolean
+] | void;
+
+export type beforeSubmitType = (
+  params: { [key: string]: string },
+  form: HTMLFormElement
+) => beforeSubmitReturnType | Promise<beforeSubmitReturnType>;
+
+export type afterSubmitType = (
+  responseData: DefaultResponse,
+  statusCode: number
+) => void | Promise<void>;
 
 export default function Form({
   children,
@@ -16,14 +26,8 @@ export default function Form({
   children: ReactElement[];
   method: "GET" | "POST" | "PUT" | "DELETE";
   action: string;
-  beforeSubmit?: (
-    params: { [key: string]: string },
-    form: HTMLFormElement
-  ) => beforeSubmitReturnType | Promise<beforeSubmitReturnType>;
-  afterSubmit?: (
-    responseData: DefaultResponse,
-    statusCode: number
-  ) => void | Promise<void>;
+  beforeSubmit?: beforeSubmitType;
+  afterSubmit?: afterSubmitType;
 }) {
   const ref = useRef<HTMLFormElement>(null);
 
