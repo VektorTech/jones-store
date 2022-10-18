@@ -1,7 +1,7 @@
 @use '../abstracts' as *;
 
 .footer {
-	background-color: #000;
+	background-color: #151515;
 
 	&__container {
 		@extend %container;
@@ -17,7 +17,7 @@
 	}
 
 	&__hr {
-		background-color: #333;
+		background-color: #444;
 		height: 0.1rem;
 		margin: 4rem 0;
 	}
@@ -88,10 +88,8 @@
 		}
 
 		&-link[href] {
-			text-decoration: underline;
-
 			&:hover {
-				text-decoration: none;
+				text-decoration: underline;
 			}
 		}
 	}

@@ -64,8 +64,8 @@ export default function SocialButtons({
 
       {SocialHandles.tiktok ? (
         <Link href={`https://www.tiktok.com/@${SocialHandles.tiktok}`}>
-          <a className="social-links__link">
-            <SiTiktok fontSize={23} />
+          <a className="social-links__link social-links__link--tiktok">
+            <SiTiktok />
           </a>
         </Link>
       ) : null}

@@ -4,15 +4,27 @@
 	$self: &;
 
 	&--sm {
-		font-size: 2.2rem;
+		font-size: 2rem;
+
+		& #{ $self }__link--tiktok {
+			font-size: 1.8rem;
+		}
 	}
 
 	&--md {
-		font-size: 2.6rem;
+		font-size: 2.4rem;
+
+		& #{ $self }__link--tiktok {
+			font-size: 2.1rem;
+		}
 	}
 
 	&--lg {
-		font-size: 3rem;
+		font-size: 2.7rem;
+
+		& #{ $self }__link--tiktok {
+			font-size: 2.4rem;
+		}
 	}
 
 	&__link {

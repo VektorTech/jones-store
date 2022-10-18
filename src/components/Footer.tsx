@@ -163,7 +163,7 @@ export default function Footer() {
               <NextImage
                 src="/assets/images/payment.png"
                 alt=""
-                width={327}
+                width={362}
                 height={30}
               />
             </div>
