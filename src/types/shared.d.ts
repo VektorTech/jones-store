@@ -15,6 +15,8 @@ export type UserType = Partial<User> & {
 
 export interface ProductComponentType extends Product {
   small?: boolean;
+  isOnWishlist?: boolean;
+  onWishlistAction?: Function;
 }
 
 export type AsyncAPIHandler = (

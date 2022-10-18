@@ -5,7 +5,6 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import RatingStars from "./RatingStars";
 import { MouseEventHandler, useRef, useState } from "react";
 import { getPathString } from "@Lib/utils";
-import { useAuthState } from "@Lib/contexts/AuthContext";
 import { ProductComponentType } from "src/types/shared";
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
@@ -24,13 +23,12 @@ export default function Product({
   ratings,
   sku,
   id,
+  isOnWishlist,
+  onWishlistAction
 }: ProductComponentType) {
-  const { addToWishlist, removeFromWishlist, user } = useAuthState();
-  const onWishlist = user?.wishlist?.some((item) => item?.productId == id);
-
   const wishlistHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
-    onWishlist ? removeFromWishlist(id) : addToWishlist(id);
+    onWishlistAction?.(id, isOnWishlist);
   };
 
   const [imageIndex, setImageIndex] = useState(0);
@@ -67,7 +65,7 @@ export default function Product({
                   onClick={wishlistHandler}
                   className="product__add-wishlist"
                 >
-                  {onWishlist ? (
+                  {isOnWishlist ? (
                     <AiFillHeart className="product__add-wishlist-icon" />
                   ) : (
                     <AiOutlineHeart className="product__add-wishlist-icon" />
