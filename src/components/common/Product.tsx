@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useEffect } from "react";
 import Image from "next/image";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
@@ -33,6 +34,8 @@ export default function Product({
 
   const [imageIndex, setImageIndex] = useState(0);
   const timer = useRef<NodeJS.Timer>();
+
+  useEffect(() => () => clearInterval(timer.current), []);
 
   return (
     <div
