@@ -41,6 +41,7 @@ export default function Product({
     <div
       className={`product${small ? " product--small" : ""}`}
       onPointerEnter={() => {
+        setImageIndex(imageIndex + 1);
         timer.current = setInterval(() => {
           setImageIndex((index) => index + 1);
         }, 1000);
