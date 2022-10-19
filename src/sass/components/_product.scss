@@ -63,8 +63,14 @@
 		padding-bottom: 60.5%;
 		border: 0.1rem solid #dfdfdf;
 
-		& img {
+		&-img {
+			opacity: 0;
+			transition: opacity .6s ease-out;
 			padding: 0.5rem !important;
+
+			&--active {
+				opacity: 1;
+			}
 		}
 	}
 
