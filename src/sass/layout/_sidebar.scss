@@ -62,7 +62,6 @@
 	}
 
 	&__back-button {
-
 		& svg {
 			margin-right: 1rem;
 			margin-bottom: 0.3rem;
@@ -124,7 +123,7 @@
 			transition: color .3s $timing-func-ui;
 
 			> button,
-			> a {
+			& #{$self}__anchor {
 				text-align: left;
 				display: block;
 				padding: 1rem 0;
@@ -154,9 +153,16 @@
 		&-item {
 			transition: color .3s $timing-func-ui;
 
-			> a {
+			& #{$self}__anchor,
+			& #{$self}__link-btn {
 				display: block;
 				padding: 1rem 0;
+			}
+
+			#{$self}__link-btn {
+				text-align: left;
+				text-transform: uppercase;
+				width: 100%;
 			}
 
 			& svg {
@@ -166,6 +172,7 @@
 			}
 
 			> a:focus-visible,
+			#{$self}__link-btn:focus-visible,
 			&:hover {
 				color: $c-text-red;
 			}

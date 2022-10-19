@@ -9,6 +9,7 @@ import { BsCart3, BsXLg, BsPerson } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { getPathString } from "@Lib/utils";
+import Form from "@Components/Form";
 
 const CategoriesData = require("@Lib/CategoriesData.json");
 
@@ -60,7 +61,7 @@ export default function Sidebar({ userId }: { userId?: string }) {
             <ul>
               <li className="sidebar__links-item">
                 <Link href="/">
-                  <a>HOME</a>
+                  <a className="sidebar__anchor">HOME</a>
                 </Link>
               </li>
               <li className="sidebar__links-item sidebar__links-menu">
@@ -98,17 +99,17 @@ export default function Sidebar({ userId }: { userId?: string }) {
               </li>
               <li className="sidebar__links-item">
                 <Link href="/category/kids">
-                  <a>KIDS</a>
+                  <a className="sidebar__anchor">KIDS</a>
                 </Link>
               </li>
               <li className="sidebar__links-item">
                 <Link href="/category/baby">
-                  <a>BABY</a>
+                  <a className="sidebar__anchor">BABY</a>
                 </Link>
               </li>
               <li className="sidebar__links-item">
                 <Link href="/category/unisex">
-                  <a>UNISEX</a>
+                  <a className="sidebar__anchor">UNISEX</a>
                 </Link>
               </li>
             </ul>
@@ -117,15 +118,22 @@ export default function Sidebar({ userId }: { userId?: string }) {
             <ul>
               <li className="sidebar__icon-links-item">
                 {userId ? (
-                  <Link href="/api/auth/signout">
-                    <a>
+                  <Form
+                    afterSubmit={(data) => {
+                      if (data.success) { location.reload(); }
+                    }}
+                    action="/api/auth/signout"
+                  >
+                    <button
+                      className="sidebar__link-btn"
+                      type="submit">
                       <BsPerson />
-                      <span>Logout</span>
-                    </a>
-                  </Link>
+                      Logout
+                    </button>
+                  </Form>
                 ) : (
                   <Link href="/signin">
-                    <a>
+                    <a className="sidebar__anchor">
                       <BsPerson />
                       <span>Login / Register</span>
                     </a>
@@ -134,7 +142,7 @@ export default function Sidebar({ userId }: { userId?: string }) {
               </li>
               <li className="sidebar__icon-links-item">
                 <Link href="/wishlist">
-                  <a>
+                  <a className="sidebar__anchor">
                     <AiOutlineHeart />
                     <span>
                       Wishlist{wishlistCount ? ` (${wishlistCount})` : ""}
@@ -144,7 +152,7 @@ export default function Sidebar({ userId }: { userId?: string }) {
               </li>
               <li className="sidebar__icon-links-item">
                 <Link href="/cart">
-                  <a>
+                  <a className="sidebar__anchor">
                     <BsCart3 />
                     <span>Cart{cartCount ? ` (${cartCount})` : ""}</span>
                   </a>
@@ -181,7 +189,7 @@ export default function Sidebar({ userId }: { userId?: string }) {
 const ColorwaysList = CategoriesData.colorways.map((name: string) => (
   <li key={name} className="sidebar__links-item">
     <Link href={"/category/colorways/" + getPathString(name)}>
-      <a>{name}</a>
+      <a className="sidebar__anchor">{name}</a>
     </Link>
   </li>
 ));
@@ -189,7 +197,7 @@ const ColorwaysList = CategoriesData.colorways.map((name: string) => (
 const MenCategoriesList = CategoriesData.men.map((name: string) => (
   <li key={name} className="sidebar__links-item">
     <Link href={"/category/men/" + getPathString(name)}>
-      <a>{name}</a>
+      <a className="sidebar__anchor">{name}</a>
     </Link>
   </li>
 ));
@@ -197,7 +205,7 @@ const MenCategoriesList = CategoriesData.men.map((name: string) => (
 const WomenCategoriesList = CategoriesData.women.map((name: string) => (
   <li key={name} className="sidebar__links-item">
     <Link href={"/category/women/" + getPathString(name)}>
-      <a>{name}</a>
+      <a className="sidebar__anchor">{name}</a>
     </Link>
   </li>
 ));
