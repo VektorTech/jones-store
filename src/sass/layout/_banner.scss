@@ -193,7 +193,7 @@
 
 		@include respond-to('xx-large') {
 			width: calc(20rem + 20vh + 28vw);
-			margin-right: 15rem;
+			margin-right: 18rem;
 		}
 
 		@include respond-to('small-h') {
@@ -263,10 +263,6 @@
 
 				@include respond-to('large') {
 					font-size: $text-lg;
-				}
-
-				@include respond-to('xx-large') {
-					font-size: $text-xl;
 				}
 			}
 		}
