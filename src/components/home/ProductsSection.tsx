@@ -16,24 +16,29 @@ export default function ProductsSection({
   const { addToWishlist, removeFromWishlist, user } = useAuthState();
 
   const handleWishlistAction = (id: string, isWishlistItem: boolean) => {
-    isWishlistItem ? removeFromWishlist(id) : addToWishlist(id);
+    if (isWishlistItem) {
+      return removeFromWishlist(id);
+    }
+    addToWishlist(id);
   };
+
+  const isOnWishlist = (id: string) => user?.wishlist?.some((item) => item.productId == id);
+
+  const productsComponent = products?.map((product) => (
+    <Product
+      {...product}
+      onWishlistAction={handleWishlistAction}
+      isOnWishlist={isOnWishlist(product.id)}
+      key={product.id}
+    />
+  ));
 
   return (
     <section className="products-section">
       <div className="products-section__container">
         <h2 className="products-section__heading">#shop {title}</h2>
         <div className="products-section__products">
-          {products?.map((product) => (
-            <Product
-              {...product}
-              onWishlistAction={handleWishlistAction}
-              isOnWishlist={user?.wishlist?.some(
-                (item) => item.productId == product.id
-              )}
-              key={product.id}
-            />
-          ))}
+          { productsComponent }
         </div>
         <p className="products-section__products-link">
           <Link href={url}>

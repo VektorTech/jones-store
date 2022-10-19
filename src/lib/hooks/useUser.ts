@@ -6,6 +6,7 @@ import {
 } from "@Lib/helpers";
 import { useState, useEffect, useReducer } from "react";
 import { UserType } from "src/types/shared";
+import useLocalStorage from "./useLocalStorage";
 
 const initUser: UserType = {
   id: "",
@@ -81,32 +82,50 @@ const useProfile = (
 
 export default function useUser(id?: string) {
   const { data, isError } = useProfile(id);
-  const [userState, updateUser] = useReducer(authReducer, initUser);
+  const [ wishlist, setWishlist ] = useLocalStorage("wishlist");
+  const [ userState, updateUser ] = useReducer(authReducer, initUser);
 
   useEffect(() => {
+    const _wishlist = JSON.parse(wishlist || "[]");
+    let payload = null;
+
+    if (data?.data) {
+      payload = data.data;
+    } else {
+      payload = { wishlist: _wishlist.map(({ productId }: { productId: string }) => ({ productId })) };
+    }
+
     updateUser({
       type: actions.SET_USER as ActionsType,
-      payload: data?.data || {},
+      payload
     });
-  }, [data]);
+  }, [data, wishlist]);
 
   const addWishlistItem = async (id: string) => {
-    const r = await postWishlistItem(id);
-    if (!r.error) {
-      updateUser({
-        type: actions.ADD_WISHLIST_ITEM as ActionsType,
-        payload: r.data,
-      });
+    if (userState.id) {
+      const r = await postWishlistItem(id);
+      if (!r.error) {
+        updateUser({
+          type: actions.ADD_WISHLIST_ITEM as ActionsType,
+          payload: r.data,
+        });
+      }
+    } else {
+      setWishlist( JSON.stringify([...userState.wishlist, { productId: id }]) );
     }
   };
 
   const removeWishlistItem = async (id: string) => {
-    const r = await deleteWishlistItem(id);
-    if (!r.error) {
-      updateUser({
-        type: actions.REMOVE_WISHLIST_ITEM as ActionsType,
-        payload: id,
-      });
+    if (userState.id) {
+      const r = await deleteWishlistItem(id);
+      if (!r.error) {
+        updateUser({
+          type: actions.REMOVE_WISHLIST_ITEM as ActionsType,
+          payload: id,
+        });
+      }
+    } else {
+      setWishlist( JSON.stringify(userState.wishlist.filter(({ productId }: { productId: string }) => productId != id)) );
     }
   };
 
