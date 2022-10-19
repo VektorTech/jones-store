@@ -23,8 +23,8 @@ export default function Form({
   beforeSubmit,
   afterSubmit,
 }: {
-  children: ReactElement[];
-  method: "GET" | "POST" | "PUT" | "DELETE";
+  children: ReactElement | ReactElement[];
+  method?: "GET" | "POST" | "PUT" | "DELETE";
   action: string;
   beforeSubmit?: beforeSubmitType;
   afterSubmit?: afterSubmitType;
@@ -63,12 +63,14 @@ export default function Form({
         return;
       }
 
-      const response = await fetch(action, {
+      const searchParams = new URLSearchParams(updatedParams);
+
+      const response = await fetch(action + (method == "GET" ? searchParams : ""), {
         method: method,
         headers: {
           "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
         },
-        body: new URLSearchParams(updatedParams),
+        body: (method != "GET" ? searchParams : null),
       });
 
       afterSubmit?.(await response.json(), response.status);
