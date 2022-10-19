@@ -20,6 +20,7 @@
 		color: $c-text-gray;
 		font-size: $text-md;
 		font-weight: 400;
+		margin-bottom: 1.4rem;
 	}
 
 	&__grid {
@@ -33,7 +34,7 @@
 		@include respond-to('medium') {
 			flex-direction: row;
 			max-height: 55rem;
-			height: 28vw;
+			height: 31vw;
 			gap: 1.5rem;
 		}
 	}
