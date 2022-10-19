@@ -62,9 +62,9 @@ const authReducer = (
 
 const useProfile = (
   id?: string
-): { data: any; error?: Error; isLoading: boolean } => {
+): { data: any; isError: boolean; isLoading: boolean } => {
   const [data, setData] = useState(null);
-  const [error, setError] = useState();
+  const [isError, setError] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -72,15 +72,15 @@ const useProfile = (
     fetch(id ? `/api/auth/user/${id}` : "")
       .then((res) => res.json())
       .then(setData)
-      .catch(setError)
+      .catch(e => setError(true))
       .finally(() => setLoading(false));
   }, [id]);
 
-  return { data, error, isLoading };
+  return { data, isError, isLoading };
 };
 
 export default function useUser(id?: string) {
-  const { data, error } = useProfile(id);
+  const { data, isError } = useProfile(id);
   const [userState, updateUser] = useReducer(authReducer, initUser);
 
   useEffect(() => {
@@ -135,7 +135,7 @@ export default function useUser(id?: string) {
 
   return {
     user: userState,
-    isError: error,
+    isError,
     addWishlistItem,
     removeWishlistItem,
     addCartItem,
