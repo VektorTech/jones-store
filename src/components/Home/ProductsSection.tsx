@@ -28,8 +28,11 @@ export default function ProductsSection({
             <Product
               {...product}
               onWishlistAction={handleWishlistAction}
-              isOnWishlist={user?.wishlist?.some(item => item.productId == product.id)}
-              key={product.id} />
+              isOnWishlist={user?.wishlist?.some(
+                (item) => item.productId == product.id
+              )}
+              key={product.id}
+            />
           ))}
         </div>
         <p className="products-section__products-link">

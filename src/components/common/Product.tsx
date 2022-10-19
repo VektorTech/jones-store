@@ -11,7 +11,7 @@ import { ProductComponentType } from "src/types/shared";
 const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
-  currencyDisplay: "code"
+  currencyDisplay: "code",
 });
 
 export default function Product({
@@ -25,7 +25,7 @@ export default function Product({
   sku,
   id,
   isOnWishlist,
-  onWishlistAction
+  onWishlistAction,
 }: ProductComponentType) {
   const wishlistHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
@@ -54,18 +54,20 @@ export default function Product({
         <a title={title}>
           <div className="product__wrapper">
             <div className="product__image">
-              {
-                mediaURLs.map((url, i) => (
-                  <Image
-                    key={url}
-                    src={url}
-                    objectFit="contain"
-                    layout="fill"
-                    className={`product__image-img${ i == (imageIndex % mediaURLs.length) ? " product__image-img--active" : ""}`}
-                    alt=""
-                  />
-                ))
-              }
+              {mediaURLs.map((url, i) => (
+                <Image
+                  key={url}
+                  src={url}
+                  objectFit="contain"
+                  layout="fill"
+                  className={`product__image-img${
+                    i == imageIndex % mediaURLs.length
+                      ? " product__image-img--active"
+                      : ""
+                  }`}
+                  alt=""
+                />
+              ))}
               {discount ? <span className="product__tag">sale</span> : null}
               <div className="product__actions">
                 <button

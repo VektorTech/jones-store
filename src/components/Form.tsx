@@ -1,10 +1,9 @@
 import { ReactElement, FormEventHandler, useRef } from "react";
 import { DefaultResponse } from "src/types/shared";
 
-type beforeSubmitReturnType = [
-  updatedParams?: { [key: string]: string },
-  shouldContinue?: boolean
-] | void;
+type beforeSubmitReturnType =
+  | [updatedParams?: { [key: string]: string }, shouldContinue?: boolean]
+  | void;
 
 export type beforeSubmitType = (
   params: { [key: string]: string },
@@ -65,13 +64,16 @@ export default function Form({
 
       const searchParams = new URLSearchParams(updatedParams);
 
-      const response = await fetch(action + (method == "GET" ? searchParams : ""), {
-        method: method,
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-        },
-        body: (method != "GET" ? searchParams : null),
-      });
+      const response = await fetch(
+        action + (method == "GET" ? searchParams : ""),
+        {
+          method: method,
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+          },
+          body: method != "GET" ? searchParams : null,
+        }
+      );
 
       afterSubmit?.(await response.json(), response.status);
     } catch (e) {

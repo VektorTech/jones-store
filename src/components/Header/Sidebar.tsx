@@ -120,13 +120,13 @@ export default function Sidebar({ userId }: { userId?: string }) {
                 {userId ? (
                   <Form
                     afterSubmit={(data) => {
-                      if (data.success) { location.reload(); }
+                      if (data.success) {
+                        location.reload();
+                      }
                     }}
                     action="/api/auth/signout"
                   >
-                    <button
-                      className="sidebar__link-btn"
-                      type="submit">
+                    <button className="sidebar__link-btn" type="submit">
                       <BsPerson />
                       Logout
                     </button>

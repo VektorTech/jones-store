@@ -23,7 +23,9 @@ export class RouteHandler {
     error?: ServerError,
     actionIndex = 0
   ) {
-    if (response.headersSent) { return; }
+    if (response.headersSent) {
+      return;
+    }
 
     if (error && response) {
       if (error.meta?.target?.length) {

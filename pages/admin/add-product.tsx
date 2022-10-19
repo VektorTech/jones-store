@@ -18,17 +18,14 @@ import { Gender, Category } from "@prisma/client";
 const CategoriesData = require("@Lib/CategoriesData.json");
 
 export default function AddProduct() {
-
-  const handleSubmit: beforeSubmitType = async (params, formElement)  => {
+  const handleSubmit: beforeSubmitType = async (params, formElement) => {
     const { files } = formElement.getElementById(
       "product-images"
     ) as HTMLInputElement;
 
     if (files) {
       const uploads = await cloudinaryUpload(files);
-      params["mediaURLs"] = uploads
-        .map((r) => r.secure_url)
-        .join("\n");
+      params["mediaURLs"] = uploads.map((r) => r.secure_url).join("\n");
 
       return [params, true];
     }

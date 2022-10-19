@@ -72,7 +72,7 @@ const useProfile = (
     fetch(id ? `/api/auth/user/${id}` : "")
       .then((res) => res.json())
       .then(setData)
-      .catch(e => setError(true))
+      .catch((e) => setError(true))
       .finally(() => setLoading(false));
   }, [id]);
 

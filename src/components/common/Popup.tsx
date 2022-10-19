@@ -1,9 +1,7 @@
-import {ReactElement} from "react";
+import { ReactElement } from "react";
 
-const Popup = ({children}:{children:ReactElement[]}) => {
-	return (
-		<div>{children}</div>
-	);
+const Popup = ({ children }: { children: ReactElement[] }) => {
+  return <div>{children}</div>;
 };
 
 export default Popup;
