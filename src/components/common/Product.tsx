@@ -24,7 +24,7 @@ export default function Product({
   ratings,
   sku,
   id,
-  isOnWishlist,
+  isOnWishlist = false,
   onWishlistAction,
 }: ProductComponentType) {
   const wishlistHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -35,13 +35,12 @@ export default function Product({
   const [imageIndex, setImageIndex] = useState(0);
   const timer = useRef<NodeJS.Timer>();
 
-  useEffect(() => () => clearInterval(timer.current), []);
-
   return (
     <div
       className={`product${small ? " product--small" : ""}`}
       onPointerEnter={() => {
-        setImageIndex(imageIndex + 1);
+        clearInterval(timer.current);
+        setImageIndex(1);
         timer.current = setInterval(() => {
           setImageIndex((index) => index + 1);
         }, 1000);
