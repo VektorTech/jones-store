@@ -93,23 +93,23 @@
 
 	&__title {
 		font-size: $text-xl;
-		font-weight: 600;
+		font-weight: 700;
 
 		&-type {
 			position: absolute;
 			font-size: 16vw;
 			font-weight: bold;
 			font-style: italic;
-			color: #ffffff15;
+			color: #ffffff16;
 			height: auto;
 			max-width: 90rem;
 			left: 0;
 			right: 0;
 			margin-top: -3rem;
 
-			@supports (-webkit-text-stroke: 0.1rem  #cecece1f) {
+			@supports (-webkit-text-stroke: 0.1rem  #cecece2a) {
 				& {
-				  -webkit-text-stroke: 0.1rem  #cecece20;
+				  -webkit-text-stroke: 0.1rem  #cecece2a;
 				  color: transparent;
 				}
 			}
@@ -126,10 +126,10 @@
 			}
 
 			@include respond-to('large') {
-				left: -5rem;
-				margin-top: 0.5rem;
+				left: -4rem;
+				margin-top: 1rem;
 				transform: translateY(-20%);
-				font-size: 8.5vw;
+				font-size: 9vw;
 			}
 		}
 
@@ -143,7 +143,7 @@
 
 		@include respond-to('x-large') {
 			margin-top: 6rem;
-			font-size: calc(2rem + 2.5vw);
+			font-size: calc(2rem + 2vw);
 		}
 
 		@include respond-to('xx-small-h') {
@@ -238,8 +238,8 @@
 		&-element {
 			display: inline-block;
 			border: 0.1rem solid #fff;
-			width: min(23rem, max(20%, 15rem));
-			height: 4.5rem;
+			width: min(22rem, max(15%, 15rem));
+			height: 4rem;
 			position: relative;
 			font-weight: 400;
 			transition: color .3s $timing-func-ui, background-color .3s $timing-func-ui;
@@ -261,8 +261,12 @@
 				align-items: center;
 				font-size: $text-md;
 
-				@include respond-to('xx-large') {
+				@include respond-to('large') {
 					font-size: $text-lg;
+				}
+
+				@include respond-to('xx-large') {
+					font-size: $text-xl;
 				}
 			}
 		}

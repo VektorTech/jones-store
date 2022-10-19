@@ -11,7 +11,7 @@ import { ProductComponentType } from "src/types/shared";
 const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
-  // currencyDisplay: "narrowSymbol"
+  currencyDisplay: "code"
 });
 
 export default function Product({

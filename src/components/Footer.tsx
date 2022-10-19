@@ -16,7 +16,7 @@ export default function Footer() {
           <div className="footer__logo">
             <Link href="/">
               <a>
-                <Image width={74} height={46} alt="" src={logoImg} />
+                <Image width={80} height={46} alt="" src={logoImg} />
               </a>
             </Link>
           </div>

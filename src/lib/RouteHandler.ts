@@ -23,18 +23,20 @@ export class RouteHandler {
     error?: ServerError,
     actionIndex = 0
   ) {
-    if (error && response && response?.headersSent == false) {
+    if (response.headersSent) { return; }
+
+    if (error && response) {
       if (error.meta?.target?.length) {
         error.status = 409;
       }
 
-      response?.status(error.status || 500).json({
+      response.status(error.status || 500).json({
         success: false,
         error: true,
         message: error.message || "Internal Server Error",
       });
     } else {
-      const method = request?.method || "";
+      const method = request.method || "";
 
       if (
         request &&

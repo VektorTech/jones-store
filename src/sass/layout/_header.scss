@@ -89,6 +89,7 @@
 	&__nav-link {
 		display: inline-block;
 		color: #fff;
+		font-size: $text-sm;
 
 		> a {
 			@include link-hover(#fff);
@@ -122,7 +123,7 @@
 
 		@include respond-to('large') {
 			display: inline-flex;
-			font-size: 2.5rem;
+			font-size: 2.4rem;
 
 			&:nth-of-type(n + 2) {
 				margin-left: 2rem;
@@ -133,19 +134,19 @@
 			background-color: $c-red;
 			border-radius: 50%;
 			font-size: $text-xs;
-			height: 1.7rem;
-			width: 1.7rem;
+			height: 1.6rem;
+			width: 1.6rem;
 			text-align: center;
-			line-height: 1.7rem;
+			line-height: 1.6rem;
 			position: absolute;
-			margin-top: -1.7rem;
-			margin-left: 2rem;
+			margin-top: -1.6rem;
+			margin-left: 2.2rem;
 
 			@include respond-to('medium') {
-				height: 2rem;
-				width: 2rem;
-				line-height: 2rem;
-				margin-top: -2rem;
+				height: 1.8rem;
+				width: 1.8rem;
+				line-height: 1.8rem;
+				margin-top: -1.8rem;
 			}
 		}
 	}

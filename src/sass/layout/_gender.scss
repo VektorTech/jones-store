@@ -23,7 +23,7 @@
 
 		@include respond-to('small') {
 			max-height: 100rem;
-			height: calc(35vw * 2);
+			height: calc(33vw * 2);
 			gap: 1.5rem;
 		}
 	}
@@ -37,6 +37,7 @@
 
 			&:focus-visible img,
 			&:hover img {
+				opacity: 1;
 				transform: scale(1.1);
 			}
 		}
@@ -90,7 +91,13 @@
 			& img {
 				object-fit: cover;
 				object-position: bottom;
-				transition: transform .6s $timing-func-img;
+				opacity: 1;
+				transition: transform .6s $timing-func-img,
+				opacity .6s $timing-func-img;
+
+				@include respond-to('small') {
+					opacity: 0.8;
+				}
 			}
 		}
 
@@ -105,10 +112,11 @@
 			text-transform: lowercase;
 			font-variant: small-caps;
 			font-weight: normal;
+			font-size: $text-lg;
 
 			& span {
 				color: #fff;
-				border-bottom: 0.2rem solid #fff;
+				border-bottom: 0.1rem solid #fff;
 			}
 		}
 	}

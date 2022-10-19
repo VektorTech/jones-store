@@ -16,22 +16,21 @@
 		font-size: 2.8rem;
 	}
 
-	&__sub-heading {
+	&__sub-text {
 		color: $c-text-gray;
 		font-size: $text-md;
-		text-transform: capitalize;
 		font-weight: 400;
 	}
 
 	&__grid {
-		height: calc(60vw * 3);
+		height: calc(70vw * 3);
 		margin-top: 4rem;
 		position: relative;
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
 
-		@include respond-to('small') {
+		@include respond-to('medium') {
 			flex-direction: row;
 			max-height: 55rem;
 			height: 28vw;
@@ -42,7 +41,7 @@
 	&__block {
 		flex: 1;
 
-		@include respond-to('small') {
+		@include respond-to('medium') {
 			flex-basis: 20%;
 			max-height: 47rem;
 		}
@@ -52,7 +51,7 @@
 			flex-direction: column;
 			justify-content: center;
 
-			@include respond-to('small') {
+			@include respond-to('medium') {
 				flex-basis: 40%;
 			}
 		}
@@ -87,14 +86,19 @@
 			bottom: 0;
 			padding: 1.5rem;
 			color: #fff;
-			background-color: #00000044;
+			background-color: #00000022;
 			transform: background-color .3s $timing-func-img;
+
+
+			@include respond-to('medium') {
+				background-color: #00000044;
+			}
 		}
 
 		&-title {
 			text-align: left;
 			text-transform: uppercase;
-			font-size: $text-sm;
+			font-size: $text-lg;
 			font-style: italic;
 		}
 
@@ -104,6 +108,7 @@
 			right: 1.5rem;
 			font-weight: 600;
 			font-variant: small-caps;
+			white-space: nowrap;
 
 			& span {
 				font-variant: small-caps;

@@ -11,9 +11,14 @@ export default function CollectionSection() {
       <div className="collections__container">
         <div className="collections__grid">
           <div className="collections__block collections__block--text">
-            <h2 className="collections__heading">check out our collections</h2>
-            <p className="collections__sub-heading">
-              winter collections &mdash; new modern design
+            <h2 className="collections__heading">check out our winter collections</h2>
+            <p className="collections__sub-text">
+              Winter Collections &mdash; New Modern Design
+            </p>
+            <br />
+            <p className="collections__sub-text">
+              We&rsquo;ve gathered the latest models for you to consider adding to your winter lineup,
+              check and see which Jordan&rsquo;s can complete your wardrobe this season.
             </p>
           </div>
           <div className="collections__block">

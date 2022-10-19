@@ -28,7 +28,7 @@ export default function HeaderSection({
   const cartCount = user?.cart?.length;
 
   useEffect(() => {
-    if (scrollTop >= (announcementVisible ? 115 : 80)) {
+    if (scrollTop >= (announcementVisible ? 100 : 65)) {
       setPinnedState(lastScroll.current > scrollTop);
       lastScroll.current = scrollTop;
     } else {
@@ -51,7 +51,7 @@ export default function HeaderSection({
         <div className="header__logo">
           <Link href="/">
             <a>
-              <Image width={74} height={46} alt="" src={logoImg} />
+              <Image width={80} height={46} alt="" src={logoImg} />
             </a>
           </Link>
         </div>

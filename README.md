@@ -10,7 +10,7 @@ Jones is an online store for Nike Jordan Ones &mdash; a seamless e-commerce mark
 - **BCrypt** &mdash; Password Hashing & Comparison
 - **Yup** &mdash; Schema & Form Validation
 - **PostgreSQL** &mdash; Relational Database Management System
-- **Prisma** &mdash; ORM for PostgreSQL
+- **Prisma** &mdash; ORM for accessing PostgreSQL
 - **Sass** &mdash; Custom Styling
 - **React Icons** &mdash; SVG Icon Library
 - **nProgress** &mdash; Progress Bar For Navigation Indication
@@ -33,7 +33,7 @@ Jones is an online store for Nike Jordan Ones &mdash; a seamless e-commerce mark
 
 - Used Postgres trigger functions for updating cart total whenever a cart item is added or removed.
 
-- After recognizing a repeating pattern in how API routes were being written and wanting to improve the process, I decided to build a method routing class, `RouteHandler`, to arrange request handlers in a similar fashion to `express` routers. It allows all handlers to be composed with a custom error catcher and session middleware and also allows authentication and role-based access control. This reduced boilerplate code inside API routes and made writing async code much cleaner.
+- After recognizing a repeating pattern in how API routes were being written and wanting to improve the process, I decided to build a method routing class, `RouteHandler`, to arrange request handlers in a similar fashion to `express` routers. It allows all handlers to be composed with a custom error catcher and session middleware and also allows authentication and role-based access control. This abstraction reduced boilerplate code inside API routes and made writing async code much cleaner.
 
 - The website UI diverted from the original Figma design in a few areas.
 
@@ -101,7 +101,7 @@ Jones is an online store for Nike Jordan Ones &mdash; a seamless e-commerce mark
 
 3. Run `npm install` to install all dependencies for the project.
 
-4. Then run `npx prisma db push`. This will use the schema (from `./prisma/schema.prisma`) to add the relevant tables to your `jones_db` database.
+4. Then run `npx prisma db push`. This will use the schema (from `./prisma/schema.prisma`) to add the relevant tables to your `jonesdb` database.
 
 5. If you make any changes to `schema.prisma`, run `npx prisma migrate dev --name <name_of_migration>` to further maintain a history of each update to the database. You may also run `npx prisma generate` to manually sync `@prisma/client` with the database after updating the table schemas. Use `npx prisma studio` to launch the prisma client to observe and manipulate the database.
 

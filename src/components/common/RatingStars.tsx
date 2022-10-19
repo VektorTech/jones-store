@@ -5,11 +5,11 @@ export default function RatingStars({ count = 0 }) {
     <>
       {[...Array(5)].map((empty, i) => {
         let key = `${count}:${i}`;
-        empty = <BsStar key={key} />;
+        empty = <BsStar className="star" key={key} />;
         if (count - i >= 1) {
-          empty = <BsStarFill key={key} />;
+          empty = <BsStarFill className="star" key={key} />;
         } else if (count - i >= 0.5) {
-          empty = <BsStarHalf key={key} />;
+          empty = <BsStarHalf className="star" key={key} />;
         }
         return empty;
       })}
