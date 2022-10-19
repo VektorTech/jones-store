@@ -12,30 +12,6 @@ import { getPathString } from "@Lib/utils";
 
 const CategoriesData = require("@Lib/CategoriesData.json");
 
-const ColorwaysList = CategoriesData.colorways.map((name: string) => (
-  <li key={name} className="sidebar__links-item">
-    <Link href={"/category/colorways/" + getPathString(name)}>
-      <a>{name}</a>
-    </Link>
-  </li>
-));
-
-const MenCategoriesList = CategoriesData.men.map((name: string) => (
-  <li key={name} className="sidebar__links-item">
-    <Link href={"/category/men/" + getPathString(name)}>
-      <a>{name}</a>
-    </Link>
-  </li>
-));
-
-const WomenCategoriesList = CategoriesData.women.map((name: string) => (
-  <li key={name} className="sidebar__links-item">
-    <Link href={"/category/women/" + getPathString(name)}>
-      <a>{name}</a>
-    </Link>
-  </li>
-));
-
 export default function Sidebar({ userId }: { userId?: string }) {
   const [submenu, setSubmenu] = useState<Array<any> | null>(null);
   const [submenuActive, setSubmenuActive] = useState<boolean>(false);
@@ -201,3 +177,27 @@ export default function Sidebar({ userId }: { userId?: string }) {
     </div>
   );
 }
+
+const ColorwaysList = CategoriesData.colorways.map((name: string) => (
+  <li key={name} className="sidebar__links-item">
+    <Link href={"/category/colorways/" + getPathString(name)}>
+      <a>{name}</a>
+    </Link>
+  </li>
+));
+
+const MenCategoriesList = CategoriesData.men.map((name: string) => (
+  <li key={name} className="sidebar__links-item">
+    <Link href={"/category/men/" + getPathString(name)}>
+      <a>{name}</a>
+    </Link>
+  </li>
+));
+
+const WomenCategoriesList = CategoriesData.women.map((name: string) => (
+  <li key={name} className="sidebar__links-item">
+    <Link href={"/category/women/" + getPathString(name)}>
+      <a>{name}</a>
+    </Link>
+  </li>
+));
