@@ -1,325 +1,326 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 .banner {
-	$self: &;
+  $self: &;
 
-	width: 100%;
-	height: calc(100vh - 5rem);
-	margin-top: calc(var(--header-height) * -1);
-	position: relative;
+  width: 100%;
+  height: calc(100vh - 5rem);
+  margin-top: calc(var(--header-height) * -1);
+  position: relative;
 
-	&--with-announcement {
-		height: calc(100vh - $announcement-height - 5rem);
-	}
+  &--with-announcement {
+    height: calc(100vh - $announcement-height - 5rem);
+  }
 
-	&--short {
-		height: var(--header-height);
-	}
+  &--short {
+    height: var(--header-height);
+  }
 
-	&__container {
-		position: absolute;
-		left: 0;
-		right: 0;
-		top: 0;
-		bottom: 0;
-	}
+  &__container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
 
-	&__background {
-		width: 100%;
-		height: 100%;
-		background-image: url("/assets/images/banner-bg-eindhoven.jpg");
-		background-size: cover;
-		background-repeat: no-repeat;
-		background-position: top right;
-	}
+  &__background {
+    width: 100%;
+    height: 100%;
+    background-image: url("/assets/images/banner-bg-eindhoven.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top right;
+  }
 
-	&__main {
-		position: absolute;
-		overflow: hidden;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-	}
+  &__main {
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
 
-	&__content {
-		position: absolute;
-		bottom: 0;
-		width: 100%;
-		height: 70%;
-		color: #fff;
-		text-align: center;
-		text-transform: uppercase;
+  &__content {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 70%;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
 
-		@include respond-to('medium') {
-			height: 60%;
-		}
-	}
+    @include respond-to("medium") {
+      height: 60%;
+    }
+  }
 
-	&__headings {
-		position: absolute;
-		top: 0;
-		left: 0rem;
-		right: 0rem;
-		user-select: none;
+  &__headings {
+    position: absolute;
+    top: 0;
+    left: 0rem;
+    right: 0rem;
+    user-select: none;
 
-		@include respond-to('x-small') {
-			left: 10rem;
-			right: 10rem;
-		}
+    @include respond-to("x-small") {
+      left: 10rem;
+      right: 10rem;
+    }
 
-		@include respond-to('medium') {
-			left: 15%;
-			right: 15%;
-		}
+    @include respond-to("medium") {
+      left: 15%;
+      right: 15%;
+    }
 
-		@include respond-to('x-large') {
-			left: 20%;
-			right: 20%;
-		}
-	}
+    @include respond-to("x-large") {
+      left: 20%;
+      right: 20%;
+    }
+  }
 
-	&__secondary-text {
-		font-size: $text-xs;
-		font-style: italic;
-		font-weight: 400;
+  &__secondary-text {
+    font-size: $text-xs;
+    font-style: italic;
+    font-weight: 400;
 
-		& span {
-			color: $c-red;
-		}
+    & span {
+      color: $c-red;
+    }
 
-		@include respond-to('x-small') {
-			text-align: left;
-		}
+    @include respond-to("x-small") {
+      text-align: left;
+    }
 
-		@include respond-to('xx-large') {
-			font-size: $text-lg;
-		}
-	}
+    @include respond-to("xx-large") {
+      font-size: $text-lg;
+    }
+  }
 
-	&__title {
-		font-size: $text-xl;
-		font-weight: 700;
+  &__title {
+    font-size: $text-xl;
+    font-weight: 700;
 
-		&-type {
-			position: absolute;
-			font-size: 16vw;
-			font-weight: bold;
-			font-style: italic;
-			color: #ffffff16;
-			height: auto;
-			max-width: 90rem;
-			left: 0;
-			right: 0;
-			margin-top: -3rem;
+    &-type {
+      position: absolute;
+      font-size: 16vw;
+      font-weight: bold;
+      font-style: italic;
+      color: #ffffff16;
+      height: auto;
+      max-width: 90rem;
+      left: 0;
+      right: 0;
+      margin-top: -3rem;
 
-			@supports (-webkit-text-stroke: 0.1rem  #cecece2a) {
-				& {
-				  -webkit-text-stroke: 0.1rem  #cecece2a;
-				  color: transparent;
-				}
-			}
+      @supports (-webkit-text-stroke: 0.1rem #cecece2a) {
+        & {
+          -webkit-text-stroke: 0.1rem #cecece2a;
+          color: transparent;
+        }
+      }
 
-			@include respond-to('x-small') {
-				text-align: left;
-				left: -4rem;
-				margin-top: -2rem;
-				font-size: 12.5vw;
-			}
+      @include respond-to("x-small") {
+        text-align: left;
+        left: -4rem;
+        margin-top: -2rem;
+        font-size: 12.5vw;
+      }
 
-			@include respond-to('medium') {
-				font-size: 11.2vw;
-			}
+      @include respond-to("medium") {
+        font-size: 11.2vw;
+      }
 
-			@include respond-to('large') {
-				left: -4rem;
-				margin-top: 1rem;
-				transform: translateY(-20%);
-				font-size: 9vw;
-			}
-		}
+      @include respond-to("large") {
+        left: -4rem;
+        margin-top: 1rem;
+        transform: translateY(-20%);
+        font-size: 9vw;
+      }
+    }
 
-		@include respond-to('x-small') {
-			text-align: left;
-		}
+    @include respond-to("x-small") {
+      text-align: left;
+    }
 
-		@include respond-to('medium') {
-			margin-top: 5rem;
-		}
+    @include respond-to("medium") {
+      margin-top: 5rem;
+    }
 
-		@include respond-to('x-large') {
-			margin-top: 6rem;
-			font-size: calc(2rem + 2vw);
-		}
+    @include respond-to("x-large") {
+      margin-top: 6rem;
+      font-size: calc(2rem + 2vw);
+    }
 
-		@include respond-to('xx-small-h') {
-			margin-top: 2rem;
-		}
-	}
+    @include respond-to("xx-small-h") {
+      margin-top: 2rem;
+    }
+  }
 
-	&__image {
-		margin: 0 auto;
-		margin-top: 20vh;
-		width: calc(8rem + 12vh + 15vw);
+  &__image {
+    margin: 0 auto;
+    margin-top: 20vh;
+    width: calc(8rem + 12vh + 15vw);
 
-		> span {
-			overflow: visible !important;
+    > span {
+      overflow: visible !important;
 
-			img {
-				transform: rotate(-25deg);
-			}
-		}
+      img {
+        transform: rotate(-25deg);
+      }
+    }
 
-		@include respond-to('x-small') {
-			margin-top: 0vh;
-			float: right;
-			margin-right: 5rem;
+    @include respond-to("x-small") {
+      margin-top: 0vh;
+      float: right;
+      margin-right: 5rem;
 
-			> span img {
-				transform: rotate(-25deg) scale(0.8);
-			}
-		}
+      > span img {
+        transform: rotate(-25deg) scale(0.8);
+      }
+    }
 
-		@include respond-to('medium') {
-			margin-top: -8vh;
-			width: calc(12rem + 12vh + 22vw);
-		}
+    @include respond-to("medium") {
+      margin-top: -8vh;
+      width: calc(12rem + 12vh + 22vw);
+    }
 
-		@include respond-to('large') {
-			margin-top: -10vh;
-			width: calc(15rem + 15vh + 25vw);
-			margin-right: 8rem;
-		}
+    @include respond-to("large") {
+      margin-top: -10vh;
+      width: calc(15rem + 15vh + 25vw);
+      margin-right: 8rem;
+    }
 
-		@include respond-to('x-large') {
-			margin-top: -15vh;
-			width: calc(18rem + 15vh + 25vw);
-			margin-right: 10rem;
-		}
+    @include respond-to("x-large") {
+      margin-top: -15vh;
+      width: calc(18rem + 15vh + 25vw);
+      margin-right: 10rem;
+    }
 
-		@include respond-to('xx-large') {
-			width: calc(20rem + 20vh + 28vw);
-			margin-right: 18rem;
-		}
+    @include respond-to("xx-large") {
+      width: calc(20rem + 20vh + 28vw);
+      margin-right: 18rem;
+    }
 
-		@include respond-to('small-h') {
-			width: calc(10rem + 10vh + 20vw);
-		}
-	}
+    @include respond-to("small-h") {
+      width: calc(10rem + 10vh + 20vw);
+    }
+  }
 
-	&__action-button {
-		position: absolute;
-		bottom: 2.5rem;
-		left: 0rem;
-		right: 0rem;
+  &__action-button {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 0rem;
+    right: 0rem;
 
-		@include respond-to('x-small') {
-			top: 40%;
-			bottom: unset;
-			text-align: left;
-			left: 10rem;
-			right: 10rem;
-		}
+    @include respond-to("x-small") {
+      top: 40%;
+      bottom: unset;
+      text-align: left;
+      left: 10rem;
+      right: 10rem;
+    }
 
-		@include respond-to('medium') {
-			position: relative;
-			top: 12rem;
-			left: 15%;
-			right: 15%;
-		}
+    @include respond-to("medium") {
+      position: relative;
+      top: 12rem;
+      left: 15%;
+      right: 15%;
+    }
 
-		@include respond-to('large') {
-			top: calc(14rem + 4vw);
-		}
+    @include respond-to("large") {
+      top: calc(14rem + 4vw);
+    }
 
-		@include respond-to('x-large') {
-			left: 20%;
-			right: 20%;
-		}
+    @include respond-to("x-large") {
+      left: 20%;
+      right: 20%;
+    }
 
-		@include respond-to('xx-small-h') {
-			top: 8rem;
-		}
+    @include respond-to("xx-small-h") {
+      top: 8rem;
+    }
 
-		&-element {
-			display: inline-block;
-			border: 0.1rem solid #fff;
-			width: min(22rem, max(15%, 15rem));
-			height: 4rem;
-			position: relative;
-			font-weight: 400;
-			transition: color .3s $timing-func-ui, background-color .3s $timing-func-ui;
+    &-element {
+      display: inline-block;
+      border: 0.1rem solid #fff;
+      width: min(22rem, max(15%, 15rem));
+      height: 4rem;
+      position: relative;
+      font-weight: 400;
+      transition: color 0.3s $timing-func-ui,
+        background-color 0.3s $timing-func-ui;
 
-			&:focus-visible,
-			&:hover {
-				background-color: #fff;
-				color: #000;
-			}
+      &:focus-visible,
+      &:hover {
+        background-color: #fff;
+        color: #000;
+      }
 
-			> span {
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				font-size: $text-md;
+      > span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: $text-md;
 
-				@include respond-to('large') {
-					font-size: $text-lg;
-				}
-			}
-		}
-	}
+        @include respond-to("large") {
+          font-size: $text-lg;
+        }
+      }
+    }
+  }
 
-	&__indicators {
-		position: absolute;
-		top: 45%;
-		right: 2rem;
-		width: 1.2rem;
-		color: #fff;
-		text-align: center;
-		z-index: 1;
-	}
+  &__indicators {
+    position: absolute;
+    top: 45%;
+    right: 2rem;
+    width: 1.2rem;
+    color: #fff;
+    text-align: center;
+    z-index: 1;
+  }
 
-	&__indicator {
-		font-size: 1.3rem;
-		padding: 0.5rem 0;
+  &__indicator {
+    font-size: 1.3rem;
+    padding: 0.5rem 0;
 
-		> svg {
-			transition: transform .3s;
-		}
+    > svg {
+      transition: transform 0.3s;
+    }
 
-		&:focus-visible > svg,
-		&:hover > svg {
-			transform: scale(0.7);
-		}
+    &:focus-visible > svg,
+    &:hover > svg {
+      transform: scale(0.7);
+    }
 
-		&--active {
-			color: $c-red;
-			transform: scale(1.5);
-		}
-	}
+    &--active {
+      color: $c-red;
+      transform: scale(1.5);
+    }
+  }
 
-	&__social-links {
-		position: absolute;
-		bottom: 2rem;
-		left: 1rem;
-		width: 0;
-		color: #fff;
-		z-index: 1;
+  &__social-links {
+    position: absolute;
+    bottom: 2rem;
+    left: 1rem;
+    width: 0;
+    color: #fff;
+    z-index: 1;
 
-		@include respond-to('small-h') {
-			bottom: 0rem;
-			transform: scale(0.9);
-		}
+    @include respond-to("small-h") {
+      bottom: 0rem;
+      transform: scale(0.9);
+    }
 
-		@include respond-to('xx-small-h') {
-			bottom: -1rem;
-			transform-origin: bottom left;
-			transform: scale(0.7);
-		}
-	}
+    @include respond-to("xx-small-h") {
+      bottom: -1rem;
+      transform-origin: bottom left;
+      transform: scale(0.7);
+    }
+  }
 }

@@ -1,66 +1,66 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 .features {
-	width: 100%;
-	background-color: #fafafa;
-	font-weight: 400;
+  width: 100%;
+  background-color: #fafafa;
+  font-weight: 400;
 
-	&__container {
-		@extend %container;
-		padding: $section-padding-v 0;
-		display: flex;
-		flex-wrap: wrap;
-		flex-direction: column;
-		align-content: center;
+  &__container {
+    @extend %container;
+    padding: $section-padding-v 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
 
-		@include respond-to('small') {
-			flex-direction: row;
-			gap: 1rem;
-		}
-	}
+    @include respond-to("small") {
+      flex-direction: row;
+      gap: 1rem;
+    }
+  }
 
-	&__col {
-		margin: 2.2rem 0;
-		flex: 1;
+  &__col {
+    margin: 2.2rem 0;
+    flex: 1;
 
-		@include respond-to('small') {
-			flex-basis: calc(50% - 1rem);
-		}
+    @include respond-to("small") {
+      flex-basis: calc(50% - 1rem);
+    }
 
-		@include respond-to('medium') {
-			margin: 0;
-			flex-basis: calc(25% - 1rem);
-		}
-	}
+    @include respond-to("medium") {
+      margin: 0;
+      flex-basis: calc(25% - 1rem);
+    }
+  }
 
-	&__icon {
-		font-size: 3.5rem;
-		color: $c-red;
-		transition: transform .3s $timing-func-ui;
+  &__icon {
+    font-size: 3.5rem;
+    color: $c-red;
+    transition: transform 0.3s $timing-func-ui;
 
-		&:hover {
-			transform: translateY(-15%);
-		}
+    &:hover {
+      transform: translateY(-15%);
+    }
 
-		&-element {
-			box-sizing: content-box;
-			border-radius: 50%;
-			padding: 1.3rem;
-			margin-bottom: 2rem;
-			background-color: mix($c-red, #fff, 10%);
-		}
-	}
+    &-element {
+      box-sizing: content-box;
+      border-radius: 50%;
+      padding: 1.3rem;
+      margin-bottom: 2rem;
+      background-color: mix($c-red, #fff, 10%);
+    }
+  }
 
-	&__title {
-		font-weight: 700;
-		text-transform: uppercase;
-		font-size: $text-lg;
-		font-style: italic;
-		@extend %text-overflow;
-	}
+  &__title {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: $text-lg;
+    font-style: italic;
+    @extend %text-overflow;
+  }
 
-	&__text {
-		font-size: $text-md;
-		color: $c-text-dark;
-	}
+  &__text {
+    font-size: $text-md;
+    color: $c-text-dark;
+  }
 }

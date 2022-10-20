@@ -1,25 +1,43 @@
 html {
-	font-size: 62.5%;
+  font-size: 62.5%;
 }
 
 body {
-	font: 300 1.6rem/1.4 'Rubik', sans-serif;
-	letter-spacing: 0.02rem;
-	-webkit-font-smoothing: antialiased;
+  font: 300 1.6rem/1.4 "Rubik", sans-serif;
+  letter-spacing: 0.02rem;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3 {
-	font-weight: 600;
-	letter-spacing: 0.01rem;
-	line-height: 1.2;
-	margin-bottom: 1.4rem;
-
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  letter-spacing: 0.01rem;
+  line-height: 1.2;
+  margin-bottom: 1.4rem;
 }
 
-h1 { font-size: 4.209rem; }
-h2 { font-size: 3.157rem; }
-h3 { font-size: 2.2rem; }
+h1 {
+  font-size: 4.209rem;
+}
+h2 {
+  font-size: 3.157rem;
+}
+h3 {
+  font-size: 2.2rem;
+}
 
-p, span, button, label, input, textarea, select, a, ul, ol, *::before, *::after {
-	text-rendering: optimizeLegibility;
+p,
+span,
+button,
+label,
+input,
+textarea,
+select,
+a,
+ul,
+ol,
+*::before,
+*::after {
+  text-rendering: optimizeLegibility;
 }

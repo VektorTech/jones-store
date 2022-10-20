@@ -1,48 +1,48 @@
-@use './variables' as *;
+@use "./variables" as *;
 
 @mixin link-arrow($text-color) {
-	&::after {
-		content: "";
-		width: 0;
-		height: 0;
-		border-top: 0.5rem solid transparent;
-		border-bottom: 0.5rem solid transparent;
-		border-left: 0.5rem solid $text-color;
-		display: inline-block;
-		margin-left: 0.5rem;
-	}
+  &::after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 0.5rem solid transparent;
+    border-bottom: 0.5rem solid transparent;
+    border-left: 0.5rem solid $text-color;
+    display: inline-block;
+    margin-left: 0.5rem;
+  }
 }
 
 @mixin respond-to($breakpoint) {
-	@if map-has-key($breakpoints, $breakpoint) {
-		@media #{inspect(map-get($breakpoints, $breakpoint))} {
-			@content;
-		}
-	} @else {
-		@warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media #{inspect(map-get($breakpoints, $breakpoint))} {
+      @content;
+    }
+  } @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
 			+ "Available breakpoints are: #{map-keys($breakpoints)}.";
-	}
+  }
 }
 
-@mixin link-hover($line-color, $thickness: 0.1rem) {
-	position: relative;
+@mixin link-hover($line-color, $thickness: 0rem) {
+  position: relative;
 
-	&::after {
-		content: "";
-		transition: width .3s;
-		width: 0%;
-		height: $thickness;
-		right: 0;
-		background-color: $line-color;
-		display: block;
-		position: absolute;
-		bottom: 0;
-	}
+  &::after {
+    content: "";
+    transition: width 0.3s;
+    width: 0%;
+    height: $thickness;
+    right: 0;
+    background-color: $line-color;
+    display: block;
+    position: absolute;
+    bottom: 0;
+  }
 
-	&:focus-visible::after,
-	&:hover::after {
-		width: 100%;
-		left: 0;
-		right: initial;
-	}
+  &:focus-visible::after,
+  &:hover::after {
+    width: 100%;
+    left: 0;
+    right: initial;
+  }
 }

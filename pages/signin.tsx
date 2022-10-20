@@ -17,18 +17,22 @@ export default function SignInPage() {
       <HeroBanner short />
       <SEO title="Sign In" />
       <AuthForm />
-
       ----------
       <br />
       ----------
-
       <div>
         <TextField multiline label="Email" />
         <Button>Test</Button>
         <Dropdown options={["red", "blue", "green", "indigo", "violet"]} />
         <AutoComplete options={["red", "blue", "green", "indigo", "violet"]} />
-        <RadioList label="Select Colors" checkbox values={["red", "blue", "green", "indigo", "violet"]} />
-        <IconButtonRound><GrCloudDownload /></IconButtonRound>
+        <RadioList
+          label="Select Colors"
+          checkbox
+          values={["red", "blue", "green", "indigo", "violet"]}
+        />
+        <IconButtonRound>
+          <GrCloudDownload />
+        </IconButtonRound>
       </div>
     </>
   );

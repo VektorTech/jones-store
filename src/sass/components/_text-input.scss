@@ -1,122 +1,122 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 .input {
-	$self: &;
+  $self: &;
 
-	&::after {
-		content: "";
-		background-color: #000;
-		position: absolute;
-		height: 0.1rem;
-		width: 0%;
-		display: block;
-		left: 50%;
-		transform: translateX(-50%);
-		margin-top: -0.1rem;
-		transition: width 0.3s $timing-func-ui;
-	}
+  &::after {
+    content: "";
+    background-color: #000;
+    position: absolute;
+    height: 0.1rem;
+    width: 0%;
+    display: block;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: -0.1rem;
+    transition: width 0.3s $timing-func-ui;
+  }
 
-	&:focus-within {
-		&::after {
-			width: 100%;
-		}
-	}
+  &:focus-within {
+    &::after {
+      width: 100%;
+    }
+  }
 
-	&__box {
-		width: 90%;
-		padding: 1rem 0;
-		background: none;
-		border: 0.1rem solid #ddd;
-		transition: border-color .3s $timing-func-ui;
+  &__box {
+    width: 90%;
+    padding: 1rem 0;
+    background: none;
+    border: 0.1rem solid #ddd;
+    transition: border-color 0.3s $timing-func-ui;
 
-		&::placeholder {
-			opacity: 0;
-		}
+    &::placeholder {
+      opacity: 0;
+    }
 
-		&:hover,
-		&:focus,
-		&:hover ~ #{$self}__submit,
-		&:focus ~ #{$self}__submit {
-			caret-color: #bbb;
-			border-color: #bbb;
-		}
+    &:hover,
+    &:focus,
+    &:hover ~ #{$self}__submit,
+    &:focus ~ #{$self}__submit {
+      caret-color: #bbb;
+      border-color: #bbb;
+    }
 
-		&:not(:placeholder-shown) + #{$self}__placeholder,
-		&:focus + #{$self}__placeholder {
-			transform: scale(0.65) translateY(-4rem);
-		}
-	}
+    &:not(:placeholder-shown) + #{$self}__placeholder,
+    &:focus + #{$self}__placeholder {
+      transform: scale(0.65) translateY(-4rem);
+    }
+  }
 
-	&__placeholder {
-		position: absolute;
-		left: 0;
-		padding-top: 1rem;
-		pointer-events: none;
-		user-select: none;
-		text-transform: uppercase;
-		font-style: italic;
-		transform-origin: left;
-		transition: transform .3s $timing-func-ui;
-		color: $c-text-gray;
-	}
+  &__placeholder {
+    position: absolute;
+    left: 0;
+    padding-top: 1rem;
+    pointer-events: none;
+    user-select: none;
+    text-transform: uppercase;
+    font-style: italic;
+    transform-origin: left;
+    transition: transform 0.3s $timing-func-ui;
+    color: $c-text-gray;
+  }
 
-	&__submit {
-		width: 10%;
-		padding: 1rem 0;
-		text-align: right;
-		padding-right: 1rem;
-		transition: border-color .3s, color .3s;
-		border: 0.1rem solid #ddd;
+  &__submit {
+    width: 10%;
+    padding: 1rem 0;
+    text-align: right;
+    padding-right: 1rem;
+    transition: border-color 0.3s, color 0.3s;
+    border: 0.1rem solid #ddd;
 
-		&-icon {
-			transform: scale(1.2);
-			color: $c-text-dark;
-		}
-	}
+    &-icon {
+      transform: scale(1.2);
+      color: $c-text-dark;
+    }
+  }
 
-	&--bottom {
-		#{$self}__box,
-		#{$self}__submit {
-			border-top: none;
-			border-left: none;
-			border-right: none;
-		}
-	}
+  &--bottom {
+    #{$self}__box,
+    #{$self}__submit {
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+  }
 
-	&--red {
-		&::after {
-			background-color: $c-red;
-		}
+  &--red {
+    &::after {
+      background-color: $c-red;
+    }
 
-		#{$self}__placeholder {
-			color: $c-text-gray;
-		}
+    #{$self}__placeholder {
+      color: $c-text-gray;
+    }
 
-		#{$self}__box {
-			border-color: #fff;
+    #{$self}__box {
+      border-color: #fff;
 
-			&:hover,
-			&:focus,
-			&:hover ~ #{$self}__submit,
-			&:focus ~ #{$self}__submit {
-				caret-color: mix($c-red, white, 40%);
-				border-color: mix($c-red, white, 40%);
-			}
-		}
+      &:hover,
+      &:focus,
+      &:hover ~ #{$self}__submit,
+      &:focus ~ #{$self}__submit {
+        caret-color: mix($c-red, white, 40%);
+        border-color: mix($c-red, white, 40%);
+      }
+    }
 
-		#{$self}__submit {
-			border-color: #fff;
+    #{$self}__submit {
+      border-color: #fff;
 
-			&-icon {
-				color: #fff;
-			}
+      &-icon {
+        color: #fff;
+      }
 
-			&:hover,
-			&:focus-visible {
-				#{$self}__submit-icon {
-					color: $c-red;
-				}
-			}
-		}
-	}
+      &:hover,
+      &:focus-visible {
+        #{$self}__submit-icon {
+          color: $c-red;
+        }
+      }
+    }
+  }
 }

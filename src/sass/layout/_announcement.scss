@@ -1,61 +1,61 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 .announcement {
-	width: 100%;
-	height: $announcement-height;
-	background-color: #fff;
-	color: $c-text-black;
-	transition: height .3s $timing-func-ui, visibility .3s;
+  width: 100%;
+  height: $announcement-height;
+  background-color: #fff;
+  color: $c-text-black;
+  transition: height 0.3s $timing-func-ui, visibility 0.3s;
 
-	&--hidden {
-		overflow: hidden;
-		visibility: hidden;
-		height: 0;
-	}
+  &--hidden {
+    overflow: hidden;
+    visibility: hidden;
+    height: 0;
+  }
 
-	&__container {
-		@extend %container;
-		overflow: hidden;
-		height: 100%;
-	}
+  &__container {
+    @extend %container;
+    overflow: hidden;
+    height: 100%;
+  }
 
-	&__content {
-		height: 100%;
-		font-size: $text-sm;
-		font-weight: 600;
-		line-height: $announcement-height;
-		white-space: nowrap;
-		text-align: center;
-		cursor: pointer;
-	}
+  &__content {
+    height: 100%;
+    font-size: $text-sm;
+    font-weight: 600;
+    line-height: $announcement-height;
+    white-space: nowrap;
+    text-align: center;
+    cursor: pointer;
+  }
 
-	& a {
-		color: $c-link;
-		text-decoration: underline;
-	}
+  & a {
+    color: $c-link;
+    text-decoration: underline;
+  }
 
-	&__info-icon {
-		display: inline;
-		color: $c-link;
-		font-size: $text-md;
-		margin-left: 0.5rem;
-		vertical-align: sub;
-	}
+  &__info-icon {
+    display: inline;
+    color: $c-link;
+    font-size: $text-md;
+    margin-left: 0.5rem;
+    vertical-align: sub;
+  }
 
-	&__close {
-		position: absolute;
-		width: $announcement-height;
-		height: $announcement-height;
-		right: 0;
-		top: 0;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		color: $c-gray;
-		background-color: #fff;
+  &__close {
+    position: absolute;
+    width: $announcement-height;
+    height: $announcement-height;
+    right: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $c-gray;
+    background-color: #fff;
 
-		&:focus-visible {
-			color: $c-text-black;
-		}
-	}
+    &:focus-visible {
+      color: $c-text-black;
+    }
+  }
 }

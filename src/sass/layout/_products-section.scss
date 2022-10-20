@@ -1,53 +1,52 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 .products-section {
-	width: 100%;
-	background-color: #fff;
+  width: 100%;
+  background-color: #fff;
 
-	&__container {
-		@extend %container;
-		padding: $section-padding-v 0 6rem 0;
-	}
+  &__container {
+    @extend %container;
+    padding: $section-padding-v 0 6rem 0;
+  }
 
-	&__heading {
-		@extend %section-heading;
-		color: $c-text-black;
-	}
+  &__heading {
+    @extend %section-heading;
+    color: $c-text-black;
+  }
 
-	&__products-link {
-		text-align: center;
-		font-size: $text-sm;
-		text-transform: uppercase;
+  &__products-link {
+    text-align: center;
+    font-size: $text-sm;
+    text-transform: uppercase;
 
-		> a {
-			font-weight: 400;
-			color: $c-text-dark;
-			transition: border-color 0.6s $timing-func-ui,
-						color 0.6s $timing-func-ui;
-			border-bottom: 0.1rem solid $c-text-dark;
+    > a {
+      font-weight: 400;
+      color: $c-text-dark;
+      transition: border-color 0.6s $timing-func-ui, color 0.6s $timing-func-ui;
+      border-bottom: 0.1rem solid $c-text-dark;
 
-			&:focus-visible {
-				outline: 0.1rem solid $c-text-dark;
-			}
+      &:focus-visible {
+        outline: 0.1rem solid $c-text-dark;
+      }
 
-			&:hover {
-				color: #000;
-				border-color: transparent;
-			}
-		}
+      &:hover {
+        color: #000;
+        border-color: transparent;
+      }
+    }
 
-		@include link-arrow($c-text-dark);
-	}
+    @include link-arrow($c-text-dark);
+  }
 
-	&__products {
-		display: flex;
-		flex-flow: row wrap;
-		justify-content: space-between;
-		padding: 3rem 0;
-		gap: 1rem;
+  &__products {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    padding: 3rem 0;
+    gap: 1rem;
 
-		@include respond-to('small') {
-			gap: 1.5rem;
-		}
-	}
+    @include respond-to("small") {
+      gap: 1.5rem;
+    }
+  }
 }

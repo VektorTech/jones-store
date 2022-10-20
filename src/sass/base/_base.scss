@@ -1,4 +1,4 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 html {
   scroll-behavior: smooth;
@@ -6,7 +6,7 @@ html {
 }
 
 body {
-	background-color: $c-background-color;
+  background-color: $c-background-color;
 }
 
 article {

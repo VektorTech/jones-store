@@ -1,186 +1,186 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 .sidebar {
-	$self: &;
+  $self: &;
 
-	position: fixed;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	z-index: 100;
-	pointer-events: none;
-	transition: background-color .3s $timing-func-ui, visibility .3s;
-	text-transform: uppercase;
-	visibility: hidden;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  pointer-events: none;
+  transition: background-color 0.3s $timing-func-ui, visibility 0.3s;
+  text-transform: uppercase;
+  visibility: hidden;
 
-	&--active {
-		pointer-events: unset;
-		background-color: #22222288;
-		visibility: visible;
+  &--active {
+    pointer-events: unset;
+    background-color: #22222288;
+    visibility: visible;
 
-		#{$self}__nav {
-			transform: translateX(0%);
-		}
+    #{$self}__nav {
+      transform: translateX(0%);
+    }
 
-		#{$self}__close {
-			visibility: visible;
-		}
-	}
+    #{$self}__close {
+      visibility: visible;
+    }
+  }
 
-	&__nav {
-		width: calc(100% - 8rem);
-		max-width: 32rem;
-		height: 100%;
-		background-color: #fff;
-		transform: translateX(-100%);
-		transition: transform .3s $timing-func-ui;
-		overflow-x: hidden;
-		overflow-y: scroll;
+  &__nav {
+    width: calc(100% - 8rem);
+    max-width: 32rem;
+    height: 100%;
+    background-color: #fff;
+    transform: translateX(-100%);
+    transition: transform 0.3s $timing-func-ui;
+    overflow-x: hidden;
+    overflow-y: scroll;
 
-		&--submenu {
-			#{$self}__container,
-			#{$self}__submenu-container {
-				transform: translateX(-100%);
-			}
-		}
-	}
+    &--submenu {
+      #{$self}__container,
+      #{$self}__submenu-container {
+        transform: translateX(-100%);
+      }
+    }
+  }
 
-	&__container {
-		width: 100%;
-		padding: 3.5rem 2rem 5rem 2rem;
-		font-size: $text-sm;
-		position: absolute;
-		transition: transform .6s $timing-func-ui;
-		top: 0;
-	}
+  &__container {
+    width: 100%;
+    padding: 3.5rem 2rem 5rem 2rem;
+    font-size: $text-sm;
+    position: absolute;
+    transition: transform 0.6s $timing-func-ui;
+    top: 0;
+  }
 
-	&__submenu-container {
-		background-color: #fff;
-		left: 100%;
-		transform: translateX(0%);
-	}
+  &__submenu-container {
+    background-color: #fff;
+    left: 100%;
+    transform: translateX(0%);
+  }
 
-	&__back-button {
-		& svg {
-			margin-right: 1rem;
-			margin-bottom: 0.3rem;
-		}
-	}
+  &__back-button {
+    & svg {
+      margin-right: 1rem;
+      margin-bottom: 0.3rem;
+    }
+  }
 
-	&__close {
-		position: absolute;
-		width: 3.5rem;
-		height: 3.5rem;
-		top: 0;
-		font-size: $text-sm;
-		left: min(calc(100% - 7rem), 33rem);
-		border-radius: 50%;
-		background-color: #fff;
-		color: #bbb;
-		visibility: hidden;
-	}
+  &__close {
+    position: absolute;
+    width: 3.5rem;
+    height: 3.5rem;
+    top: 0;
+    font-size: $text-sm;
+    left: min(calc(100% - 7rem), 33rem);
+    border-radius: 50%;
+    background-color: #fff;
+    color: #bbb;
+    visibility: hidden;
+  }
 
-	&__search-box {
-		width: 100%;
-		height: 3.5rem;
-		box-shadow: inset 0 0 0 0.1rem #000;
-		user-select: none;
-		transition: background-color .3s $timing-func-ui;
-		cursor: text;
+  &__search-box {
+    width: 100%;
+    height: 3.5rem;
+    box-shadow: inset 0 0 0 0.1rem #000;
+    user-select: none;
+    transition: background-color 0.3s $timing-func-ui;
+    cursor: text;
 
-		&-label {
-			width: calc(100% - 3.5em);
-			float: left;
-			text-align: left;
-			height: 100%;
-			line-height: 3.5rem;
-			padding-left: 1rem;
-		}
+    &-label {
+      width: calc(100% - 3.5em);
+      float: left;
+      text-align: left;
+      height: 100%;
+      line-height: 3.5rem;
+      padding-left: 1rem;
+    }
 
-		&-icon {
-			width: 3.5rem;
-			float: right;
-			height: 100%;
-			line-height: 3.5rem;
-			font-size: $text-md;
+    &-icon {
+      width: 3.5rem;
+      float: right;
+      height: 100%;
+      line-height: 3.5rem;
+      font-size: $text-md;
 
-			> svg {
-				margin-bottom: 0.2rem;
-			}
-		}
+      > svg {
+        margin-bottom: 0.2rem;
+      }
+    }
 
-		&:focus-visible,
-		&:hover {
-			background-color: #f5f5f5;
-		}
-	}
+    &:focus-visible,
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
 
-	&__links {
-		margin: 2rem 0;
+  &__links {
+    margin: 2rem 0;
 
-		&-item {
-			transition: color .3s $timing-func-ui;
+    &-item {
+      transition: color 0.3s $timing-func-ui;
 
-			> button,
-			& #{$self}__anchor {
-				text-align: left;
-				display: block;
-				padding: 1rem 0;
-				width: 100%;
-				height: 100%;
-			}
+      > button,
+      & #{$self}__anchor {
+        text-align: left;
+        display: block;
+        padding: 1rem 0;
+        width: 100%;
+        height: 100%;
+      }
 
-			> a:focus-visible,
-			> button:focus-visible,
-			&:hover {
-				color: $c-text-red;
-			}
-		}
+      > a:focus-visible,
+      > button:focus-visible,
+      &:hover {
+        color: $c-text-red;
+      }
+    }
 
-		&-menu {
-			> button {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-			}
-		}
-	}
+    &-menu {
+      > button {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+  }
 
-	&__icon-links {
-		margin-top: 2rem;
+  &__icon-links {
+    margin-top: 2rem;
 
-		&-item {
-			transition: color .3s $timing-func-ui;
+    &-item {
+      transition: color 0.3s $timing-func-ui;
 
-			& #{$self}__anchor,
-			& #{$self}__link-btn {
-				display: block;
-				padding: 1rem 0;
-			}
+      & #{$self}__anchor,
+      & #{$self}__link-btn {
+        display: block;
+        padding: 1rem 0;
+      }
 
-			#{$self}__link-btn {
-				text-align: left;
-				text-transform: uppercase;
-				width: 100%;
-			}
+      #{$self}__link-btn {
+        text-align: left;
+        text-transform: uppercase;
+        width: 100%;
+      }
 
-			& svg {
-				margin-right: 1rem;
-				margin-bottom: 0.2rem;
-				font-size: 2rem;
-			}
+      & svg {
+        margin-right: 1rem;
+        margin-bottom: 0.2rem;
+        font-size: 2rem;
+      }
 
-			> a:focus-visible,
-			#{$self}__link-btn:focus-visible,
-			&:hover {
-				color: $c-text-red;
-			}
-		}
-	}
+      > a:focus-visible,
+      #{$self}__link-btn:focus-visible,
+      &:hover {
+        color: $c-text-red;
+      }
+    }
+  }
 
-	&__lang-currency {
-		margin-top: 5rem;
-		padding-top: 0.5rem;
-	}
+  &__lang-currency {
+    margin-top: 5rem;
+    padding-top: 0.5rem;
+  }
 }

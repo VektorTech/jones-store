@@ -1,26 +1,26 @@
-@use './variables' as v;
-@use './mixins' as m;
+@use "./variables" as v;
+@use "./mixins" as m;
 
 %container {
-	width: calc(100% - 3rem);
-	max-width: 144rem;
-	margin: 0 auto;
+  width: calc(100% - 3rem);
+  max-width: 144rem;
+  margin: 0 auto;
 
-	@include m.respond-to('large') {
-		width: calc(100% - 5rem);
-	}
+  @include m.respond-to("large") {
+    width: calc(100% - 5rem);
+  }
 }
 
 %text-overflow {
-	overflow: hidden;
-	text-overflow: ellipsis;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 %section-heading {
-	text-transform: uppercase;
-	text-align: center;
-	font-weight: 600;
-	font-style: italic;
-	font-size: v.$text-xxl;
-	@extend %text-overflow;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 600;
+  font-style: italic;
+  font-size: v.$text-xxl;
+  @extend %text-overflow;
 }

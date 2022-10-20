@@ -82,8 +82,8 @@ const useProfile = (
 
 export default function useUser(id?: string) {
   const { data, isError } = useProfile(id);
-  const [ wishlist, setWishlist ] = useLocalStorage("wishlist");
-  const [ userState, updateUser ] = useReducer(authReducer, initUser);
+  const [wishlist, setWishlist] = useLocalStorage("wishlist");
+  const [userState, updateUser] = useReducer(authReducer, initUser);
 
   useEffect(() => {
     const _wishlist = JSON.parse(wishlist || "[]");
@@ -92,12 +92,16 @@ export default function useUser(id?: string) {
     if (data?.data) {
       payload = data.data;
     } else {
-      payload = { wishlist: _wishlist.map(({ productId }: { productId: string }) => ({ productId })) };
+      payload = {
+        wishlist: _wishlist.map(({ productId }: { productId: string }) => ({
+          productId,
+        })),
+      };
     }
 
     updateUser({
       type: actions.SET_USER as ActionsType,
-      payload
+      payload,
     });
   }, [data, wishlist]);
 
@@ -111,7 +115,7 @@ export default function useUser(id?: string) {
         });
       }
     } else {
-      setWishlist( JSON.stringify([...userState.wishlist, { productId: id }]) );
+      setWishlist(JSON.stringify([...userState.wishlist, { productId: id }]));
     }
   };
 
@@ -125,7 +129,13 @@ export default function useUser(id?: string) {
         });
       }
     } else {
-      setWishlist( JSON.stringify(userState.wishlist.filter(({ productId }: { productId: string }) => productId != id)) );
+      setWishlist(
+        JSON.stringify(
+          userState.wishlist.filter(
+            ({ productId }: { productId: string }) => productId != id
+          )
+        )
+      );
     }
   };
 

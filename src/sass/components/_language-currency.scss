@@ -1,22 +1,22 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 .language-currency {
-	&__btn {
-		white-space: nowrap;
-		text-transform: uppercase;
+  &__btn {
+    white-space: nowrap;
+    text-transform: uppercase;
 
-		&:focus-visible {
-			background-color: $c-text-gray;
-			color: black;
-		}
+    &:focus-visible {
+      background-color: $c-text-gray;
+      color: black;
+    }
 
-		padding: 0.5rem 1.5rem;
-		box-shadow: inset 0 0 0 0.1rem $c-text-gray;
-		border-radius: 2rem;
-	}
+    padding: 0.5rem 1.5rem;
+    box-shadow: inset 0 0 0 0.1rem $c-text-gray;
+    border-radius: 2rem;
+  }
 
-	&__sep {
-		vertical-align: baseline;
-		margin: 0.2rem;
-	}
+  &__sep {
+    vertical-align: baseline;
+    margin: 0.2rem;
+  }
 }

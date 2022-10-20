@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BiChevronDown } from "react-icons/bi"
+import { BiChevronDown } from "react-icons/bi";
 
 export default function Dropdown({
   label = "Select Option",

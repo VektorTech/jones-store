@@ -24,16 +24,31 @@ $header-height-lg: 8rem;
 $section-padding-v: 5rem;
 
 $breakpoints: (
-  'x-small':  ( min-width:  480px ),
-  'small':  ( min-width:  576px ),
-  'medium': ( min-width:  768px ),
-  'large':  ( min-width: 992px ),
-  'x-large':  ( min-width: 1200px ),
-  'xx-large':  ( min-width: 1440px ),
-
-  'xx-small-h':  ( max-height: 320px ),
-  'small-h':  ( max-height: 576px )
+  "x-small": (
+    min-width: 480px,
+  ),
+  "small": (
+    min-width: 576px,
+  ),
+  "medium": (
+    min-width: 768px,
+  ),
+  "large": (
+    min-width: 992px,
+  ),
+  "x-large": (
+    min-width: 1200px,
+  ),
+  "xx-large": (
+    min-width: 1440px,
+  ),
+  "xx-small-h": (
+    max-height: 320px,
+  ),
+  "small-h": (
+    max-height: 576px,
+  ),
 ) !default;
 
-$timing-func-ui: cubic-bezier(.15,.75,.5,1);
-$timing-func-img: cubic-bezier(0,0,.2,1);
+$timing-func-ui: cubic-bezier(0.15, 0.75, 0.5, 1);
+$timing-func-img: cubic-bezier(0, 0, 0.2, 1);

@@ -29,12 +29,18 @@ export default function HeaderSection({
 
   useEffect(() => {
     const ANNOUNCEMENT_BANNER_HEIGHT = 35;
-    const headerHeight = Number(
-      getComputedStyle(document.body)
-        .getPropertyValue("--header-height")
-        .replace('rem', "")
-    ) * 10;
-    if (scrollTop >= (announcementVisible ? (headerHeight + ANNOUNCEMENT_BANNER_HEIGHT) : headerHeight)) {
+    const headerHeight =
+      Number(
+        getComputedStyle(document.body)
+          .getPropertyValue("--header-height")
+          .replace("rem", "")
+      ) * 10;
+    if (
+      scrollTop >=
+      (announcementVisible
+        ? headerHeight + ANNOUNCEMENT_BANNER_HEIGHT
+        : headerHeight)
+    ) {
       setPinnedState(lastScroll.current > scrollTop);
       lastScroll.current = scrollTop;
     } else {

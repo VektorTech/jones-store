@@ -20,8 +20,8 @@ export default function CollectionSection() {
 
             <p className="collections__sub-text">
               We&rsquo;ve gathered the latest models for you to consider adding
-              to your winter lineup, check and see which ones can
-              complete your wardrobe this season.
+              to your winter lineup, check and see which ones can complete your
+              wardrobe this season.
             </p>
           </div>
           <div className="collections__block">

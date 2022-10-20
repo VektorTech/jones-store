@@ -1,95 +1,95 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 .search {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: #fff;
-	z-index: 100;
-	overflow-y: auto;
-	overflow-x: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  z-index: 100;
+  overflow-y: auto;
+  overflow-x: hidden;
 
-	&__container {
-		width: calc(100% - 5rem);
-		padding: 7rem 0;
-		margin: auto;
-		text-align: center;
+  &__container {
+    width: calc(100% - 5rem);
+    padding: 7rem 0;
+    margin: auto;
+    text-align: center;
 
-		@include respond-to('small') {
-			width: calc(100% - 20rem);
-		}
-	}
+    @include respond-to("small") {
+      width: calc(100% - 20rem);
+    }
+  }
 
-	&__close {
-		position: fixed;
-		font-size: 3rem;
-		top: 1rem;
-		right: 2rem;
-		width: 5rem;
-		height: 5rem;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		background-color: #fff;
-		border-radius: 50%;
-		color: $c-text-dark;
+  &__close {
+    position: fixed;
+    font-size: 3rem;
+    top: 1rem;
+    right: 2rem;
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 50%;
+    color: $c-text-dark;
 
-		&:hover {
-			background-color: #eee;
-		}
-	}
+    &:hover {
+      background-color: #eee;
+    }
+  }
 
-	&__title {
-		text-transform: uppercase;
-		color: $c-text-black;
-		font-size: $text-lg;
-	}
+  &__title {
+    text-transform: uppercase;
+    color: $c-text-black;
+    font-size: $text-lg;
+  }
 
-	&__input {
-		width: 80%;
-		display: block;
-		margin: auto;
-		margin-top: 3rem;
-		position: relative;
-		text-align: left;
-	}
+  &__input {
+    width: 80%;
+    display: block;
+    margin: auto;
+    margin-top: 3rem;
+    position: relative;
+    text-align: left;
+  }
 
-	&__trends {
-		margin-top: 4rem;
+  &__trends {
+    margin-top: 4rem;
 
-		&-tag {
-			background-color: #eee;
-			padding: 0.2rem 0.6rem 0.3rem 0.6rem;
-			margin: 0.3rem;
-			font-weight: 400;
-			font-variant: small-caps;
+    &-tag {
+      background-color: #eee;
+      padding: 0.2rem 0.6rem 0.3rem 0.6rem;
+      margin: 0.3rem;
+      font-weight: 400;
+      font-variant: small-caps;
 
-			&:hover {
-				background-color: #ddd;
-			}
-		}
+      &:hover {
+        background-color: #ddd;
+      }
+    }
 
-		&-title {
-			margin-right: 0.5rem;
-			font-style: italic;
-		}
-	}
+    &-title {
+      margin-right: 0.5rem;
+      font-style: italic;
+    }
+  }
 
-	&__results-info {
-		font-size: $text-xl;
-		font-weight: 400;
-		margin: 4rem 0 0 0;
-		font-style: italic;
-	}
+  &__results-info {
+    font-size: $text-xl;
+    font-weight: 400;
+    margin: 4rem 0 0 0;
+    font-style: italic;
+  }
 
-	&__results {
-		margin: auto;
-		margin-top: 2rem;
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-		min-height: 4rem;
-		gap: 2rem;
-	}
+  &__results {
+    margin: auto;
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    min-height: 4rem;
+    gap: 2rem;
+  }
 }

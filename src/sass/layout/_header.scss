@@ -1,176 +1,181 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 :root {
-	--header-height: #{$header-height};
+  --header-height: #{$header-height};
 
-	@include respond-to('medium') {
-	  --header-height: #{$header-height-lg};
-	}
+  @include respond-to("medium") {
+    --header-height: #{$header-height-lg};
+  }
 }
 
 .header {
-	background-color: transparent;
-	position: relative;
-	overflow: hidden;
-	z-index: 10;
+  background-color: transparent;
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
 
-	&--pinned {
-		position: sticky;
-		top: 0;
-		animation: header-appear .6s $timing-func-ui forwards;
-	}
+  &--pinned {
+    position: sticky;
+    top: 0;
+    animation: header-appear 0.6s $timing-func-ui forwards;
+  }
 
-	@keyframes header-appear {
-		from { transform: translateY(-100%); }
-		to { background-color: #000000bb; transform: translateY(0%); }
-	}
+  @keyframes header-appear {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      background-color: #000000bb;
+      transform: translateY(0%);
+    }
+  }
 
-	&__container {
-		@extend %container;
-		height: var(--header-height);
-		display: flex;
-		flex-flow: row nowrap;
-		justify-content: space-between;
-	}
+  &__container {
+    @extend %container;
+    height: var(--header-height);
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
 
-	&__menu-button,
-	&__logo,
-	&__buttons {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
+  &__menu-button,
+  &__logo,
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-	&__logo {
-		flex-basis: getWidth(8);
-		overflow: hidden;
+  &__logo {
+    flex-basis: getWidth(8);
+    overflow: hidden;
 
-		& a {
-			&:focus-visible {
-				opacity: 0.5;
-			}
-		}
+    & a {
+      &:focus-visible {
+        opacity: 0.5;
+      }
+    }
 
-		& img {
-			display: inline;
-		}
+    & img {
+      display: inline;
+    }
 
-		@include respond-to('large') {
-			flex-basis: getWidth(3);
-			justify-content: flex-start;
+    @include respond-to("large") {
+      flex-basis: getWidth(3);
+      justify-content: flex-start;
 
-			& img {
-				margin: auto 0;
-			}
-		}
-	}
+      & img {
+        margin: auto 0;
+      }
+    }
+  }
 
-	&__nav {
-		display: none;
-		text-align: center;
+  &__nav {
+    display: none;
+    text-align: center;
 
-		& nav {
-			height: 100%;
-			line-height: var(--header-height);
-		}
+    & nav {
+      height: 100%;
+      line-height: var(--header-height);
+    }
 
-		& ul {
-			display: flex;
-			justify-content: center;
-			gap: 3.5rem;
-		}
+    & ul {
+      display: flex;
+      justify-content: center;
+      gap: 3.5rem;
+    }
 
-		@include respond-to('large') {
-			display: block;
-			flex-basis: getWidth(6);
-		}
-	}
+    @include respond-to("large") {
+      display: block;
+      flex-basis: getWidth(6);
+    }
+  }
 
-	&__nav-link {
-		display: inline-block;
-		color: #fff;
-		font-size: $text-sm;
+  &__nav-link {
+    display: inline-block;
+    color: #fff;
+    font-size: $text-sm;
 
-		> a {
-			@include link-hover(#fff);
-		}
-	}
+    > a {
+      @include link-hover(#fff);
+    }
+  }
 
-	&__buttons {
-		flex-basis: getWidth(2);
-		text-align: center;
-		white-space: nowrap;
+  &__buttons {
+    flex-basis: getWidth(2);
+    text-align: center;
+    white-space: nowrap;
 
-		@include respond-to('large') {
-			flex-basis: getWidth(3);
-			justify-content: flex-end;
-		}
-	}
+    @include respond-to("large") {
+      flex-basis: getWidth(3);
+      justify-content: flex-end;
+    }
+  }
 
-	&__button {
-		display: none;
-		color: #fff;
-		height: 100%;
-		align-items: center;
-		justify-content: center;
-		font-size: 2.2rem;
-		transition: opacity .3s;
+  &__button {
+    display: none;
+    color: #fff;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    transition: opacity 0.3s;
 
-		&:focus-within,
-		&:hover {
-			opacity: 0.5;
-		}
+    &:focus-within,
+    &:hover {
+      opacity: 0.5;
+    }
 
-		@include respond-to('large') {
-			display: inline-flex;
-			font-size: 2.4rem;
+    @include respond-to("large") {
+      display: inline-flex;
+      font-size: 2.4rem;
 
-			&:nth-of-type(n + 2) {
-				margin-left: 2rem;
-			}
-		}
+      &:nth-of-type(n + 2) {
+        margin-left: 2rem;
+      }
+    }
 
-		& span {
-			background-color: $c-red;
-			font-weight: 400;
-			border-radius: 50%;
-			font-size: $text-xs;
-			height: 1.6rem;
-			width: 1.6rem;
-			text-align: center;
-			line-height: 1.6rem;
-			position: absolute;
-			margin-top: -1.6rem;
-			margin-left: 2.2rem;
+    & span {
+      background-color: $c-red;
+      font-weight: 400;
+      border-radius: 50%;
+      font-size: $text-xs;
+      height: 1.6rem;
+      width: 1.6rem;
+      text-align: center;
+      line-height: 1.6rem;
+      position: absolute;
+      margin-top: -1.6rem;
+      margin-left: 2.2rem;
 
-			@include respond-to('medium') {
-				height: 1.8rem;
-				width: 1.8rem;
-				line-height: 1.8rem;
-				margin-top: -1.8rem;
-			}
-		}
-	}
+      @include respond-to("medium") {
+        height: 1.8rem;
+        width: 1.8rem;
+        line-height: 1.8rem;
+        margin-top: -1.8rem;
+      }
+    }
+  }
 
-	&__button-cart {
-		display: inline-flex;
-	}
+  &__button-cart {
+    display: inline-flex;
+  }
 
-	&__menu-button {
-		text-align: center;
-		flex-basis: getWidth(2);
+  &__menu-button {
+    text-align: center;
+    flex-basis: getWidth(2);
 
-		@include respond-to('large') {
-			display: none;
-		}
-	}
+    @include respond-to("large") {
+      display: none;
+    }
+  }
 
-	&__menu-toggle {
-		font-size: 2.5rem;
-		color: #fff;
+  &__menu-toggle {
+    font-size: 2.5rem;
+    color: #fff;
 
-		&:focus-visible {
-			opacity: 0.5;
-		}
-	}
+    &:focus-visible {
+      opacity: 0.5;
+    }
+  }
 }

@@ -12,7 +12,10 @@ export default function TextField({
       <label className="text-field__label">
         <span className="text-field__label-text">{label}</span>
         {multiline ? (
-          <textarea {...inputProps} className="text-field__control text-field__control--multiline"></textarea>
+          <textarea
+            {...inputProps}
+            className="text-field__control text-field__control--multiline"
+          ></textarea>
         ) : (
           <input {...inputProps} className="text-field__control" />
         )}

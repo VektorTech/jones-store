@@ -30,7 +30,11 @@ export default function Announcement() {
   }, [announcementVisible]);
 
   return (
-    <div className={`announcement${!announcementVisible ? " announcement--hidden" : ""}`}>
+    <div
+      className={`announcement${
+        !announcementVisible ? " announcement--hidden" : ""
+      }`}
+    >
       <div className="announcement__container">
         <div
           onClickCapture={(e) => {

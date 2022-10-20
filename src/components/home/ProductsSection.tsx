@@ -22,7 +22,8 @@ export default function ProductsSection({
     addToWishlist(id);
   };
 
-  const isOnWishlist = (id: string) => user?.wishlist?.some((item) => item.productId == id);
+  const isOnWishlist = (id: string) =>
+    user?.wishlist?.some((item) => item.productId == id);
 
   const productsComponent = products?.map((product) => (
     <Product
@@ -37,9 +38,7 @@ export default function ProductsSection({
     <section className="products-section">
       <div className="products-section__container">
         <h2 className="products-section__heading">#shop {title}</h2>
-        <div className="products-section__products">
-          { productsComponent }
-        </div>
+        <div className="products-section__products">{productsComponent}</div>
         <p className="products-section__products-link">
           <Link href={url}>
             <a>View All {title}</a>

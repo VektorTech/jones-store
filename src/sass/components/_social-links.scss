@@ -1,54 +1,52 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 .social-links {
-	$self: &;
+  $self: &;
 
-	&--sm {
-		font-size: 2rem;
+  &--sm {
+    font-size: 2rem;
 
-		& #{ $self }__link--tiktok {
-			font-size: 1.8rem;
-		}
-	}
+    & #{ $self }__link--tiktok {
+      font-size: 1.8rem;
+    }
+  }
 
-	&--md {
-		font-size: 2.4rem;
+  &--md {
+    font-size: 2.4rem;
 
-		& #{ $self }__link--tiktok {
-			font-size: 2rem;
-		}
-	}
+    & #{ $self }__link--tiktok {
+      font-size: 2rem;
+    }
+  }
 
-	&--lg {
-		font-size: 2.7rem;
+  &--lg {
+    font-size: 2.7rem;
 
-		& #{ $self }__link--tiktok {
-			font-size: 2.3rem;
-		}
-	}
+    & #{ $self }__link--tiktok {
+      font-size: 2.3rem;
+    }
+  }
 
-	&__link {
-		margin-right: 1rem;
+  &__link {
+    margin-right: 1rem;
 
-		> svg {
-			transition: transform .3s $timing-func-ui,
-						color .3s $timing-func-ui;
-		}
+    > svg {
+      transition: transform 0.3s $timing-func-ui, color 0.3s $timing-func-ui;
+    }
 
-		&:focus-visible > svg,
-		&:hover > svg {
-			transform: scale(1.2);
-			color: $c-red;
-		}
-	}
+    &:focus-visible > svg,
+    &:hover > svg {
+      transform: scale(1.2);
+      color: $c-red;
+    }
+  }
 
-	&--vertical {
-		text-align: center;
+  &--vertical {
+    text-align: center;
 
-		#{$self}__link {
-			display: block;
-			margin: 0.8rem 0;
-		}
-	}
+    #{$self}__link {
+      display: block;
+      margin: 0.8rem 0;
+    }
+  }
 }
-

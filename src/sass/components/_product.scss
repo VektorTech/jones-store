@@ -1,194 +1,196 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 .product {
-	$self: &;
+  $self: &;
 
-	flex: 1 0 100%;
-	font-size: $text-sm;
+  flex: 1 0 100%;
+  font-size: $text-sm;
 
-	& > a { display: block; }
+  & > a {
+    display: block;
+  }
 
-	& > a:focus-visible {
-		box-shadow: 0 0 1rem 0.1rem #bbb;
-		padding: 0.5rem;
-	}
+  & > a:focus-visible {
+    box-shadow: 0 0 1rem 0.1rem #bbb;
+    padding: 0.5rem;
+  }
 
-	@include respond-to('small') {
-		flex-basis: calc(50% - 1.5rem);
-	}
+  @include respond-to("small") {
+    flex-basis: calc(50% - 1.5rem);
+  }
 
-	@include respond-to('medium') {
-		flex-basis: calc(25% - 1.5rem);
+  @include respond-to("medium") {
+    flex-basis: calc(25% - 1.5rem);
 
-		&__actions button {
-			opacity: 0;
-			visibility: hidden;
-			transform: translateX(50%);
-		}
+    &__actions button {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(50%);
+    }
 
-		&:hover &__actions button {
-			transform: translateY(0);
-			opacity: 1;
-			visibility: visible;
-		}
-	}
+    &:hover &__actions button {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+  }
 
-	&--small {
-		#{$self}__title {
-			white-space: nowrap;
-			text-overflow: ellipsis;
-			overflow: hidden;
-			max-width: 18rem;
-			margin-top: 0.5rem;
-		}
+  &--small {
+    #{$self}__title {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 18rem;
+      margin-top: 0.5rem;
+    }
 
-		#{$self}__price {
-			color: $c-text-dark;
-		}
+    #{$self}__price {
+      color: $c-text-dark;
+    }
 
-		#{$self}__tag,
-		#{$self}__type,
-		#{$self}__old-price,
-		#{$self}__rating {
-			display: none;
-		}
-	}
+    #{$self}__tag,
+    #{$self}__type,
+    #{$self}__old-price,
+    #{$self}__rating {
+      display: none;
+    }
+  }
 
-	&__wrapper {
-		overflow: hidden;
-	}
+  &__wrapper {
+    overflow: hidden;
+  }
 
-	&__image {
-		position: relative;
-		padding-bottom: 60.5%;
-		border: 0.1rem solid #dfdfdf;
+  &__image {
+    position: relative;
+    padding-bottom: 60.5%;
+    border: 0.1rem solid #dfdfdf;
 
-		&-img {
-			opacity: 0;
-			transition: opacity .3s ease-out;
-			padding: 0.5rem !important;
-			background: #fff;
+    &-img {
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
+      padding: 0.5rem !important;
+      background: #fff;
 
-			&--active {
-				opacity: 1;
-			}
-		}
-	}
+      &--active {
+        opacity: 1;
+      }
+    }
+  }
 
-	&__tag {
-		position: absolute;
-		top: 0.5rem;
-		left: 1rem;
-		background-color: $c-red-dark;
-		color: #fff;
-		text-transform: uppercase;
-		padding: 0.1rem 0.6rem;
-		font-weight: 400;
-		border-radius: 0.3rem;
-		font-size: $text-xs;
+  &__tag {
+    position: absolute;
+    top: 0.5rem;
+    left: 1rem;
+    background-color: $c-red-dark;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 0.1rem 0.6rem;
+    font-weight: 400;
+    border-radius: 0.3rem;
+    font-size: $text-xs;
 
-		&::before {
-			content: "";
-			width: 0;
-			height: 0;
-			display: block;
-			border-right: 0.6rem solid $c-red-dark;
-			border-top: 0.5rem solid transparent;
-			border-bottom: 0.5rem solid transparent;
-			position: absolute;
-			left: -0.5rem;
-			top: 50%;
-			transform: translateY(-50%);
-		}
+    &::before {
+      content: "";
+      width: 0;
+      height: 0;
+      display: block;
+      border-right: 0.6rem solid $c-red-dark;
+      border-top: 0.5rem solid transparent;
+      border-bottom: 0.5rem solid transparent;
+      position: absolute;
+      left: -0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
 
-		&::after {
-			content: "";
-			width: 0.2rem;
-			height: 0.2rem;
-			display: block;
-			background: #fff;
-			border-radius: 50%;
-			position: absolute;
-			left: 0rem;
-			top: 50%;
-			transform: translateY(-50%);
-		}
-	}
+    &::after {
+      content: "";
+      width: 0.2rem;
+      height: 0.2rem;
+      display: block;
+      background: #fff;
+      border-radius: 50%;
+      position: absolute;
+      left: 0rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
 
-	&__actions {
-		position: absolute;
-		top: 1rem;
-		left: 1rem;
-		right: 1rem;
-		bottom: 1rem;
-		font-size: 2.5rem;
-		text-align: right;
-		color: $c-text-dark;
+  &__actions {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    font-size: 2.5rem;
+    text-align: right;
+    color: $c-text-dark;
 
-		> button {
-			transition: background-color .3s, transform .3s, visibility .3s, opacity .3s;
+    > button {
+      transition: background-color 0.3s, transform 0.3s, visibility 0.3s,
+        opacity 0.3s;
 
-			&:hover {
-				background-color: #eee;
-			}
-		}
-	}
+      &:hover {
+        background-color: #eee;
+      }
+    }
+  }
 
-	&__add-wishlist {
-		padding: 0.5rem;
-		height: 3.5rem;
-		border-radius: 50%;
-		background-color: #fff;
+  &__add-wishlist {
+    padding: 0.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background-color: #fff;
 
-		&-icon {
-			vertical-align: baseline;
-		}
-	}
+    &-icon {
+      vertical-align: baseline;
+    }
+  }
 
-	&__info {
-		> * {
-			margin: 0.6rem 0;
-		}
-	}
+  &__info {
+    > * {
+      margin: 0.6rem 0;
+    }
+  }
 
-	&__type {
-		font-weight: 700;
-		text-transform: uppercase;
-		font-size: $text-xs;
-	}
+  &__type {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: $text-xs;
+  }
 
+  &__title {
+    font-size: $text-md;
+    font-weight: 400;
+    margin: 0;
+    color: $c-text-black;
+  }
 
-	&__title {
-		font-size: $text-md;
-		font-weight: 400;
-		margin: 0;
-		color: $c-text-black;
-	}
+  &__price {
+    color: $c-text-red;
 
-	&__price {
-		color: $c-text-red;
+    & #{$self}__amount {
+      font-weight: 600;
+    }
 
-		& #{$self}__amount {
-			font-weight: 600;
-		}
+    & #{$self}__discount-percentage {
+      margin-left: 0.5rem;
+    }
+  }
 
-		& #{$self}__discount-percentage {
-			margin-left: 0.5rem;
-		}
-	}
+  &__old-price {
+    display: block;
+    color: $c-text-dark;
+    text-decoration: line-through;
 
-	&__old-price {
-		display: block;
-		color: $c-text-dark;
-		text-decoration: line-through;
+    & #{$self}__old-amount {
+      font-weight: 300;
+    }
+  }
 
-		& #{$self}__old-amount {
-			font-weight: 300;
-		}
-	}
-
-	&__rating {
-		color: black;
-		font-size: 1.4rem;
-	}
+  &__rating {
+    color: black;
+    font-size: 1.4rem;
+  }
 }

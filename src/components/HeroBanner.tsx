@@ -7,14 +7,20 @@ import SocialIcons from "./common/SocialButtons";
 import BannerImage from "@Images/jordan-1-banner.png";
 import { useAnnouncementState } from "@Lib/contexts/UIContext";
 
-export default function HeroBanner({ short }: { short?: boolean;}) {
+export default function HeroBanner({ short }: { short?: boolean }) {
   const announcementVisible = useAnnouncementState();
 
   return (
-    <section className={"banner" + (short ? " banner--short" : "") + (announcementVisible ? " banner--with-announcement" : "")}>
+    <section
+      className={
+        "banner" +
+        (short ? " banner--short" : "") +
+        (announcementVisible ? " banner--with-announcement" : "")
+      }
+    >
       <div className="banner__container">
         <div className="banner__background"></div>
-        { short ? null :
+        {short ? null : (
           <>
             <div className="banner__indicators">
               <button className="banner__indicator banner__indicator--active">
@@ -60,7 +66,7 @@ export default function HeroBanner({ short }: { short?: boolean;}) {
               </div>
             </div>
           </>
-        }
+        )}
       </div>
     </section>
   );
