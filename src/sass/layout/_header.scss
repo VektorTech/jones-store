@@ -1,5 +1,13 @@
 @use '../abstracts' as *;
 
+:root {
+	--header-height: #{$header-height};
+
+	@include respond-to('medium') {
+	  --header-height: #{$header-height-lg};
+	}
+}
+
 .header {
 	background-color: transparent;
 	position: relative;
@@ -19,14 +27,10 @@
 
 	&__container {
 		@extend %container;
-		height: $header-height;
+		height: var(--header-height);
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: space-between;
-
-		@include respond-to('medium') {
-			height: $header-height-lg;
-		}
 	}
 
 	&__menu-button,
@@ -67,11 +71,7 @@
 
 		& nav {
 			height: 100%;
-			line-height: $header-height;
-
-			@include respond-to('medium') {
-				line-height: $header-height-lg; // TODO create a custom prop for JS
-			}
+			line-height: var(--header-height);
 		}
 
 		& ul {
@@ -132,6 +132,7 @@
 
 		& span {
 			background-color: $c-red;
+			font-weight: 400;
 			border-radius: 50%;
 			font-size: $text-xs;
 			height: 1.6rem;

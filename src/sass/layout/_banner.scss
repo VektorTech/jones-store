@@ -1,13 +1,19 @@
 @use '../abstracts' as *;
 
 .banner {
+	$self: &;
+
 	width: 100%;
-	height: calc(100vh - $announcement-height - 5rem);
-	margin-top: -$header-height;
+	height: calc(100vh - 5rem);
+	margin-top: calc(var(--header-height) * -1);
 	position: relative;
 
-	@include respond-to('medium') {
-		margin-top: -$header-height-lg;
+	&--with-announcement {
+		height: calc(100vh - $announcement-height - 5rem);
+	}
+
+	&--short {
+		height: var(--header-height);
 	}
 
 	&__container {
@@ -24,7 +30,7 @@
 		background-image: url("/assets/images/banner-bg-eindhoven.jpg");
 		background-size: cover;
 		background-repeat: no-repeat;
-		background-position: bottom right;
+		background-position: top right;
 	}
 
 	&__main {
