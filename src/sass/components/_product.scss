@@ -79,7 +79,7 @@
 		position: absolute;
 		top: 0.5rem;
 		left: 1rem;
-		background-color: $c-red;
+		background-color: $c-red-dark;
 		color: #fff;
 		text-transform: uppercase;
 		padding: 0.1rem 0.6rem;
@@ -92,7 +92,7 @@
 			width: 0;
 			height: 0;
 			display: block;
-			border-right: 0.6rem solid $c-red;
+			border-right: 0.6rem solid $c-red-dark;
 			border-top: 0.5rem solid transparent;
 			border-bottom: 0.5rem solid transparent;
 			position: absolute;

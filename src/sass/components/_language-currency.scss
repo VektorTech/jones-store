@@ -2,6 +2,7 @@
 
 .language-currency {
 	&__btn {
+		white-space: nowrap;
 		text-transform: uppercase;
 
 		&:focus-visible {
