@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { BiChevronDown } from "react-icons/bi"
 
-export default function Select({
+export default function Dropdown({
   label = "Select Option",
   options,
   className,
@@ -10,7 +11,7 @@ export default function Select({
   const [collapsed, setCollapsed] = useState(true);
 
   return (
-    <div className="select">
+    <div className={"dropdown" + (className ? ` ${className}` : "")}>
       <input
         {...inputProps}
         onClick={(e) => {
@@ -18,21 +19,22 @@ export default function Select({
           setCollapsed(!collapsed);
         }}
         type="text"
-        value={value}
+        defaultValue={value}
         placeholder={label}
       />
+      <BiChevronDown />
 
       <div
-        className={`select__options${
-          collapsed ? " select__options--collapsed" : ""
+        className={`dropdown__options${
+          collapsed ? " dropdown__options--collapsed" : ""
         }`}
       >
-        <ul className="select__list">
+        <ul className="dropdown__list">
           {options.map((option) => (
             <li
               onClick={() => setValue(option)}
               key={option}
-              className="select__item"
+              className="dropdown__item"
             >
               {option}
             </li>

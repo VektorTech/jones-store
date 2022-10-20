@@ -1,23 +1,20 @@
 export default function TextField({
   label,
-  className,
+  className = "",
   multiline = false,
-  name = "",
   ...inputProps
 }: {
   label: string;
   multiline?: boolean;
-  name?: string;
-  className?: string;
-} & JSX.IntrinsicElements["input"]) {
+} & (JSX.IntrinsicElements["input"] & JSX.IntrinsicElements["textarea"])) {
   return (
-    <div className={`text-input${className ? " " + className : ""}`}>
-      <label className="text-input__label">
-        <span className="text-input__label-text">{label}</span>
+    <div className={"text-field" + (className ? ` ${className}` : "")}>
+      <label className="text-field__label">
+        <span className="text-field__label-text">{label}</span>
         {multiline ? (
-          <textarea name={name} className="text-input__control"></textarea>
+          <textarea {...inputProps} className="text-field__control text-field__control--multiline"></textarea>
         ) : (
-          <input className="text-input__control" {...inputProps} />
+          <input {...inputProps} className="text-field__control" />
         )}
       </label>
     </div>

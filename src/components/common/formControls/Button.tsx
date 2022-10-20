@@ -1,9 +1,9 @@
 import { ReactElement } from "react";
 
-export default function Button({ children }: { children: ReactElement }) {
+export default function Button({ children, className = "", ...buttonProps }: { children: React.ReactNode } & JSX.IntrinsicElements["button"]) {
   return (
-    <div className="button">
-      <button className="button__element">{children}</button>
-    </div>
+    <button {...buttonProps} className={"btn" + (className ? ` ${className}` : "")}>
+      {children}
+    </button>
   );
 }
