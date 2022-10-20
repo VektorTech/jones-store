@@ -21,10 +21,12 @@ const uiState: {
   announcementVisible?: boolean;
   currentDialog?: DialogStates;
   setDialog: Dispatch<SetStateAction<DialogStates>>;
+  setAnnouncementVisible: Dispatch<SetStateAction<boolean>>;
 } = {
   announcementVisible: true,
   currentDialog: undefined,
   setDialog: () => {},
+  setAnnouncementVisible: () => {}
 };
 
 const UIContext = createContext(uiState);
@@ -45,9 +47,9 @@ export function useDialog(
   return _uiState;
 }
 
-export function useAnnouncementState() {
-  const { announcementVisible } = useContext(UIContext);
-  return announcementVisible;
+export function useAnnouncementState(): [announcementVisible: boolean, setAnnouncementVisible: Dispatch<SetStateAction<boolean>>] {
+  const { announcementVisible = false, setAnnouncementVisible } = useContext(UIContext);
+  return [announcementVisible, setAnnouncementVisible];
 }
 
 export const UIProvider = ({
@@ -58,6 +60,7 @@ export const UIProvider = ({
   announcementHidden: boolean;
 }) => {
   const [currentDialog, setDialog] = useState<DialogStates>(null);
+  const [announcementVisible, setAnnouncementVisible] = useState(!announcementHidden);
   const router = useRouter();
 
   useEffect(() => {
@@ -69,9 +72,10 @@ export const UIProvider = ({
   return (
     <UIContext.Provider
       value={{
-        announcementVisible: !announcementHidden,
+        announcementVisible,
         currentDialog,
         setDialog,
+        setAnnouncementVisible,
       }}
     >
       {children}

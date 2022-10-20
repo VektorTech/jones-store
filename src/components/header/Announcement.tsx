@@ -7,20 +7,19 @@ import { BsXLg } from "react-icons/bs";
 import { FiHelpCircle } from "react-icons/fi";
 
 export default function Announcement() {
-  const announcementVisible = useAnnouncementState();
-  const [hidden, setHidden] = useState(!announcementVisible);
+  const [announcementVisible, setAnnouncementVisible] = useAnnouncementState();
   const [content, setContent] = useState<AnnouncementType>();
 
   const { currentDialog, setDialog } = useDialog();
   const visible = currentDialog == "MODAL_POPUP";
 
   const handleClose = () => {
-    setHidden(true);
+    setAnnouncementVisible(false);
     setCookie("announcementState", "closed", 14);
   };
 
   useEffect(() => {
-    if (!hidden) {
+    if (announcementVisible) {
       fetch("/api/announcement")
         .then((res) => res.json())
         .then(({ data }: { data: AnnouncementType[] }) => {
@@ -28,10 +27,10 @@ export default function Announcement() {
         })
         .catch(console.log);
     }
-  }, [hidden]);
+  }, [announcementVisible]);
 
   return (
-    <div className={`announcement${hidden ? " announcement--hidden" : ""}`}>
+    <div className={`announcement${!announcementVisible ? " announcement--hidden" : ""}`}>
       <div className="announcement__container">
         <div
           onClickCapture={(e) => {
