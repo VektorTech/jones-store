@@ -42,7 +42,7 @@ export default function Footer() {
             <span className="footer__contact-info">
               <a
                 className="footer__contact-link"
-                href="mailto:support@jones.com?subject=Need%20Support"
+                href="mailto:support@jones.com?subject=I%20Need%20Support"
               >
                 support@
                 <wbr />
@@ -139,7 +139,7 @@ export default function Footer() {
                   inputMode="email"
                   placeholder="ENTER EMAIL"
                   required
-                  spellCheck={"false"}
+                  spellCheck="false"
                 />
                 <label
                   htmlFor="newsletter_input"
