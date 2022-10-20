@@ -1,10 +1,9 @@
 import type { NextPage, GetServerSideProps } from "next";
-// import { useEffect } from 'react';
 
 import { withSessionSsr } from "@Lib/withSession";
 import prisma from "@Lib/prisma";
 
-import HeroBanner from "@Components/home/HeroBanner";
+import HeroBanner from "@Components/HeroBanner";
 import CollectionSection from "@Components/home/CollectionSection";
 import ProductsSection from "@Components/home/ProductsSection";
 import GenderSection from "@Components/home/GenderSection";
