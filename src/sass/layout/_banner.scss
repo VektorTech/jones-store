@@ -98,7 +98,7 @@
   }
 
   &__title {
-    font-size: $text-xl;
+    font-size: $text-xxl;
     font-weight: 700;
 
     &-type {
@@ -122,20 +122,18 @@
 
       @include respond-to("x-small") {
         text-align: left;
-        left: -4rem;
-        margin-top: -2rem;
-        font-size: 12.5vw;
+        transform: translate(-7%, -18%);
+        font-size: 12.8vw;
       }
 
       @include respond-to("medium") {
-        font-size: 11.2vw;
+        transform: translate(-7%, 15%);
+        font-size: 11.5vw;
       }
 
       @include respond-to("large") {
-        left: -4rem;
-        margin-top: 1rem;
-        transform: translateY(-20%);
-        font-size: 9vw;
+        transform: translate(-8%, 10%);
+        font-size: 11vw;
       }
     }
 
@@ -192,14 +190,13 @@
     }
 
     @include respond-to("x-large") {
-      margin-top: -15vh;
-      width: calc(18rem + 15vh + 25vw);
-      margin-right: 10rem;
+      margin-top: -9vh;
+      width: calc(18rem + 15vh + 22vw);
+      margin-right: 5rem;
     }
 
     @include respond-to("xx-large") {
-      width: calc(20rem + 20vh + 28vw);
-      margin-right: 18rem;
+      margin-right: 12rem;
     }
 
     @include respond-to("small-h") {
