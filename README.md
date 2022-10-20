@@ -43,7 +43,7 @@ Jones is an online store for Nike Jordan Ones &mdash; a seamless e-commerce mark
 
 - No way to add custom constraints onto table columns inside prisma, so I had to resort to hand written SQL Commands.
 
-- The Sass team is deprecating the `@import()` statement in favor of `@use()`, which forced me to import (with `@use()`) all variables, functions, placeholders and mixins into all sass files that depends on them.
+- The Sass team is deprecating the `@import` statement in favor of `@use`, which forced me to import (with `@use()`) all variables, functions, placeholders and mixins into all sass files that depends on them.
 
 - Learning to work with `next/image` was a bit difficult, especially when trying to resize images.
 
