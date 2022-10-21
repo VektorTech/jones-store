@@ -1,6 +1,6 @@
 import { useDialog, Dialogs } from "@Lib/contexts/UIContext";
 import { useAuthState } from "@Lib/contexts/AuthContext";
-import useTabTrapIn from "@Lib/hooks/useTabTrapIn";
+import useTabTrapIn from "@Lib/hooks/useKeyTrap";
 import Link from "next/link";
 import React, { useEffect, useState, useRef } from "react";
 import { AiOutlineHeart } from "react-icons/ai";

@@ -1,4 +1,4 @@
-import useTabTrapIn from "@Lib/hooks/useTabTrapIn";
+import useTabTrapIn from "@Lib/hooks/useKeyTrap";
 import React, { ReactElement, useRef, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
