@@ -24,7 +24,7 @@
   }
 }
 
-@mixin link-hover($line-color, $thickness: 0rem) {
+@mixin link-hover($line-color, $thickness: 0.1rem) {
   position: relative;
 
   &::after {
