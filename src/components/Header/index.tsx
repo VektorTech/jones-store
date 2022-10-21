@@ -13,8 +13,8 @@ function Header() {
     ["SIDEBAR_DIALOG", "SEARCH_BOX"]
   );
 
-  const announcementVisible = useAnnouncementState();
-  const { user, isLoading, userSessionId, isError } = useAuthState();
+  const [announcementVisible] = useAnnouncementState();
+  const { user, isLoading, userSessionId, isError, isAuth } = useAuthState();
 
   return (
     <>
