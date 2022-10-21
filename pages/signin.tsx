@@ -17,7 +17,7 @@ export default function SignInPage() {
 
       <br />
 
-      <div style={{width: "50%", margin: "0 auto"}}>
+      <div style={{ width: "50%", margin: "0 auto" }}>
         <TextField name="email" type="email" required label="Email" />
         <TextField multiline label="Full Name" />
         <TextField type="password" label="Password" />
@@ -33,7 +33,15 @@ export default function SignInPage() {
           label="Select One Fruit"
           name="fruit"
           checkbox
-          values={["apple", "banana", "grape", "mango", "melon", "orange", "pineapple"]}
+          values={[
+            "apple",
+            "banana",
+            "grape",
+            "mango",
+            "melon",
+            "orange",
+            "pineapple",
+          ]}
         />
       </div>
     </>

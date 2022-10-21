@@ -7,9 +7,12 @@ export default function Dropdown({
   label = "Select Option",
   options,
   className,
-  name="",
+  name = "",
   ...inputProps
-}: { options: { [value: string]: string }; label?: string } & JSX.IntrinsicElements["input"]) {
+}: {
+  options: { [value: string]: string };
+  label?: string;
+} & JSX.IntrinsicElements["input"]) {
   const [value, setValue] = useState("");
   const [collapsed, setCollapsed] = useState(true);
   const MenuListRef = useRef<HTMLUListElement>(null);

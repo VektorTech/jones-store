@@ -7,7 +7,10 @@ export default function AutoComplete({
   options,
   name,
   ...inputProps
-}: { options: { [value: string]: string }; label?: string } & JSX.IntrinsicElements["input"]) {
+}: {
+  options: { [value: string]: string };
+  label?: string;
+} & JSX.IntrinsicElements["input"]) {
   const [collapsed, setCollapsed] = useState(true);
   const [value, setValue] = useState("");
   const [search, setSearch] = useState("");
