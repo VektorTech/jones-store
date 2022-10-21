@@ -11,6 +11,7 @@ import useScrollTop from "@Lib/hooks/useScrollTop";
 import { useEffect, useRef, useState } from "react";
 import { useDialog } from "@Lib/contexts/UIContext";
 import { useAuthState } from "@Lib/contexts/AuthContext";
+import Popup from "@Components/common/Popup";
 
 export default function HeaderSection({
   announcementVisible,
@@ -47,6 +48,8 @@ export default function HeaderSection({
       setPinnedState(false);
     }
   }, [scrollTop, announcementVisible]);
+
+  const [hoveredElement, setHoveredElement] = useState<HTMLElement | null>(null);
 
   return (
     <header className={`header${pinnedState ? " header--pinned" : ""}`}>
@@ -105,6 +108,7 @@ export default function HeaderSection({
             <li className="header__button header__button-search">
               <Link href="#">
                 <a
+                  className="header__button-link"
                   onClick={(e) => {
                     e.preventDefault();
                     setDialog("SEARCH_BOX");
@@ -116,15 +120,21 @@ export default function HeaderSection({
             </li>
             <li className="header__button header__button-account">
               <Link href="/profile">
-                <a>
+                <a
+                  onPointerEnter={(e) => setHoveredElement(e.currentTarget)}
+                  onPointerLeave={(e) => setHoveredElement(null)}
+                  className="header__button-link">
                   <BsPerson />
+                  <Popup hoverElement={hoveredElement}>
+                    Sign In <br/> Sign Up
+                  </Popup>
                 </a>
               </Link>
             </li>
             <li className="header__button header__button-wishlist">
               {wishlistCount ? <span>{wishlistCount}</span> : null}
               <Link href="/wishlist">
-                <a>
+                <a className="header__button-link">
                   <AiOutlineHeart />
                 </a>
               </Link>
@@ -132,7 +142,7 @@ export default function HeaderSection({
             <li className="header__button header__button-cart">
               {cartCount ? <span>{cartCount}</span> : null}
               <Link href="/cart">
-                <a>
+                <a className="header__button-link">
                   <BsCart3 />
                 </a>
               </Link>

@@ -119,10 +119,9 @@
     align-items: center;
     justify-content: center;
     font-size: 2.2rem;
-    transition: opacity 0.3s;
 
-    &:focus-within,
-    &:hover {
+    &-link:focus-visible,
+    &-link:hover {
       opacity: 0.5;
     }
 
