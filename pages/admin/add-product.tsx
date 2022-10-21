@@ -1,18 +1,12 @@
 import Form, { beforeSubmitType } from "@Components/Form";
 import { cloudinaryUpload } from "@Lib/utils";
-import {
-  TextField,
-  Checkbox,
-  Autocomplete,
-  Select,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  Input,
-  MenuItem,
-  Button,
-  FormGroup,
-} from "@mui/material";
+
+import TextField from "@Components/common/formControls/TextField";
+import AutoComplete from "@Components/common/formControls/AutoComplete";
+import Button from "@Components/common/formControls/Button";
+import Dropdown from "@Components/common/formControls/Dropdown";
+import RadioList from "@Components/common/formControls/RadioList";
+
 import { Gender, Category } from "@prisma/client";
 
 const CategoriesData = require("@Lib/CategoriesData.json");
@@ -34,9 +28,6 @@ export default function AddProduct() {
   return (
     <div className="admin__section">
       <Form beforeSubmit={handleSubmit} method="POST" action="/api/products">
-        {/* <fieldset>
-          <legend></legend>
-        </fieldset> */}
         <TextField name="id" label="ID" />
 
         <TextField name="stockQty" label="Stock Quantity" />
@@ -49,84 +40,37 @@ export default function AddProduct() {
 
         <TextField name="shippingCost" label="Shipping Cost" />
 
-        <TextField name="details" fullWidth multiline label="Details" />
+        <TextField name="details" multiline label="Details" />
 
         <input id="product-images" type="file" accept="image/*" multiple />
 
-        <Autocomplete
-          disablePortal
-          id=""
-          options={CategoriesData.colorways}
-          sx={{ width: 300 }}
-          renderInput={(params) => (
-            <TextField {...params} name="color" label="Main Color" />
+        <AutoComplete
+          name="color"
+          options={CategoriesData.colorways.reduce(
+            (obj: any, colorway: any) => {
+              return (obj[colorway] = colorway);
+            },
+            {}
           )}
         />
 
-        <FormControl>
-          <InputLabel id="">Year</InputLabel>
-          <Input
-            name="year"
-            type="number"
-            inputProps={{
-              min: 1985,
-              max: new Date().getFullYear(),
-              inputMode: "numeric",
-              pattern: "[0-9]*",
-            }}
-          />
-        </FormControl>
+        <TextField
+          pattern="[0-9]*"
+          min={1985}
+          max={new Date().getFullYear()}
+          name="year"
+          type="number"
+          inputMode="numeric"
+          label="Details"
+        />
 
         <TextField name="sku" label="SKU" />
 
-        <FormControl>
-          {" "}
-          {/**Affect sizes array */}
-          <InputLabel id="">Gender</InputLabel>
-          <Select
-            labelId=""
-            id=""
-            // value={Gender["MEN"]}
-            name="gender"
-            label="Gender"
-            onChange={() => {}}
-          >
-            {Object.keys(Gender).map((gender) => (
-              <MenuItem key={gender} value={gender}>
-                {gender}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <Dropdown name="gender" label="Gender" options={Gender} />
 
-        <FormGroup>
-          {[...Array(40)]
-            .map((_, i) => 1 + i / 2)
-            .map((size) => (
-              <FormControlLabel
-                control={<Checkbox value={size.toString()} name="sizes" />}
-                key={size}
-                label={size}
-              />
-            ))}
-        </FormGroup>
+        <RadioList name="size" label="Select Sizes" values={[...Array(40)].map((_, i) => String(1 + i / 2))} />
 
-        <FormControl>
-          <InputLabel id="">Type</InputLabel>
-          <Select
-            labelId=""
-            id=""
-            name="type"
-            label="Category Type"
-            onChange={() => {}}
-          >
-            {Object.keys(Category).map((category) => (
-              <MenuItem key={category} value={category}>
-                {category}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <Dropdown name="type" label="Category Type" options={Category} />
 
         <Button type="submit">Add To Inventory</Button>
 

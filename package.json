@@ -10,9 +10,6 @@
     "prettier-format": "prettier --config .prettierrc {{src,pages}/**/*.{ts,tsx},middleware.ts} --write"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.4",
-    "@emotion/styled": "^11.10.4",
-    "@mui/material": "^5.10.7",
     "@prisma/client": "^4.3.1",
     "@types/nprogress": "^0.2.0",
     "bcryptjs": "^2.4.3",
