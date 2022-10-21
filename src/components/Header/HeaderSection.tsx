@@ -12,6 +12,8 @@ import { useEffect, useRef, useState } from "react";
 import { useDialog } from "@Lib/contexts/UIContext";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import Popup from "@Components/common/Popup";
+import Form from "@Components/Form";
+import Button from "@Components/common/formControls/Button";
 
 export default function HeaderSection({
   announcementVisible,
@@ -24,7 +26,7 @@ export default function HeaderSection({
   const scrollTop = useScrollTop();
   const lastScroll = useRef(scrollTop);
 
-  const { user } = useAuthState();
+  const { user, isAuth } = useAuthState();
   const wishlistCount = user?.wishlist?.length;
   const cartCount = user?.cart?.length;
 
@@ -49,7 +51,7 @@ export default function HeaderSection({
     }
   }, [scrollTop, announcementVisible]);
 
-  const [hoveredElement, setHoveredElement] = useState<HTMLElement | null>(null);
+  const [hoveredElement, setHoveredElement] = useState<string>("");
 
   return (
     <header className={`header${pinnedState ? " header--pinned" : ""}`}>
@@ -119,14 +121,52 @@ export default function HeaderSection({
               </Link>
             </li>
             <li className="header__button header__button-account">
-              <Link href="/profile">
+              <Link href="#">
                 <a
-                  onPointerEnter={(e) => setHoveredElement(e.currentTarget)}
-                  onPointerLeave={(e) => setHoveredElement(null)}
-                  className="header__button-link">
+                  onPointerEnter={(e) =>
+                    setHoveredElement("header-account-btn")
+                  }
+                  onPointerLeave={(e) => setHoveredElement("")}
+                  className="header__button-link"
+                  id="header-account-btn"
+                >
                   <BsPerson />
-                  <Popup hoverElement={hoveredElement}>
-                    Sign In <br/> Sign Up
+                  <Popup
+                    currentId={hoveredElement}
+                    hoverElementId="header-account-btn"
+                  >
+                    {isAuth ? (
+                      <>
+                        <Link href="/profile">
+                          <a className="header__popup-button">
+                            <span>Login</span>
+                          </a>
+                        </Link>
+                        <Form
+                          afterSubmit={(data) => {
+                            if (data.success) {
+                              location.reload();
+                            }
+                          }}
+                          action="/api/auth/signout"
+                        >
+                          <Button type="submit">Logout</Button>
+                        </Form>
+                      </>
+                    ) : (
+                      <>
+                        <Link href="/signin">
+                          <a className="header__popup-button">
+                            <span>Login</span>
+                          </a>
+                        </Link>
+                        <Link href="/signup">
+                          <a className="header__popup-button">
+                            <span>Register</span>
+                          </a>
+                        </Link>
+                      </>
+                    )}
                   </Popup>
                 </a>
               </Link>

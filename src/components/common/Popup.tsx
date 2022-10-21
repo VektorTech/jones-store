@@ -2,22 +2,26 @@ import { ReactNode, useState, useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
 
 const Popup = ({
-  hoverElement,
+  hoverElementId,
   children,
+  currentId
 }: {
-  hoverElement?: HTMLElement | null;
+  hoverElementId: string;
+  currentId?: string;
   children: ReactNode;
 }) => {
-  const [] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMountedClient, setIsMountedClient] = useState(false);
+  const active = hoverElementId == currentId;
 
   useEffect(() => {
     setIsMountedClient(true);
   }, []);
 
   useEffect(() => {
-    if (hoverElement) {
+    const hoverElement = document.getElementById(hoverElementId);
+
+    if (hoverElement && active) {
       const containerBounds = containerRef.current?.getBoundingClientRect();
       const hoverElementBounds = hoverElement.getBoundingClientRect();
       const containerWidth = containerBounds?.width || 0;
@@ -36,13 +40,13 @@ const Popup = ({
           "px";
       }
     }
-  }, [hoverElement]);
+  }, [hoverElementId, active]);
 
   const PopupBody = (
     <div
       onClick={(e) => e.stopPropagation()}
       ref={containerRef}
-      className={"popup" + (hoverElement ? " popup--visible" : "")}
+      className={"popup" + (active ? " popup--visible" : "")}
     >
       {children}
     </div>
