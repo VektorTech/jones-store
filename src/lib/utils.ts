@@ -68,3 +68,9 @@ export const catchAsyncErrors =
   (func: AsyncAPIHandler) =>
   (req: NextApiRequest, res: NextApiResponse, next: Function) =>
     Promise.resolve(func(req, res, next)).catch((e) => next(e));
+
+export const isSelectKey = (event: { key: string; keyCode: number }) =>
+  event.key == "Enter" ||
+  event.keyCode == 13 ||
+  event.key == " " ||
+  event.keyCode == 32;
