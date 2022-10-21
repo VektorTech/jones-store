@@ -20,6 +20,7 @@ export default function TextField({
     if (_type == "password") {
       Icon = (
         <button
+          type="button"
           tabIndex={-1}
           onClick={() => setType(type.replace("password", "text"))}
           className="text-field__control-btn"
@@ -30,6 +31,7 @@ export default function TextField({
     } else {
       Icon = (
         <button
+          type="button"
           tabIndex={-1}
           onClick={() => setType("password")}
           className="text-field__control-btn"
