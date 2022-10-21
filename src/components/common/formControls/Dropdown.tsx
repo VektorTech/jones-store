@@ -7,12 +7,12 @@ export default function Dropdown({
   label = "Select Option",
   options,
   className,
+  name="",
   ...inputProps
-}: { options: string[]; label?: string } & JSX.IntrinsicElements["input"]) {
+}: { options: { [value: string]: string }; label?: string } & JSX.IntrinsicElements["input"]) {
   const [value, setValue] = useState("");
   const [collapsed, setCollapsed] = useState(true);
   const MenuListRef = useRef<HTMLUListElement>(null);
-  // const dropdownRef = useRef<HTMLDivElement>(null);
 
   useArrowKeyTrap(MenuListRef.current, !collapsed, true);
 
@@ -28,7 +28,6 @@ export default function Dropdown({
   return (
     <div
       tabIndex={0}
-      // ref={dropdownRef}
       onClick={() => setCollapsed(false)}
       onKeyDown={handleKeyUp}
       onBlur={(e) => {
@@ -45,9 +44,10 @@ export default function Dropdown({
           type="text"
           readOnly
           tabIndex={-1}
-          defaultValue={value}
+          defaultValue={options[value]}
           placeholder={label}
         />
+        <input name={name} defaultValue={value} type="hidden" />
         <span className="dropdown__toggle-icon">
           {collapsed ? <BiChevronDown /> : <BiChevronUp />}
         </span>
@@ -59,7 +59,7 @@ export default function Dropdown({
         }`}
       >
         <ul ref={MenuListRef} className="dropdown__list">
-          {options.map((option) => (
+          {Object.keys(options).map((option) => (
             <li
               tabIndex={-1}
               key={option}
@@ -72,7 +72,7 @@ export default function Dropdown({
               }}
               className="dropdown__option"
             >
-              {option}
+              {options[option]}
             </li>
           ))}
         </ul>

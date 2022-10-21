@@ -1,5 +1,5 @@
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function AutoComplete({
   label,
@@ -7,13 +7,18 @@ export default function AutoComplete({
   options,
   name,
   ...inputProps
-}: { options: string[]; label?: string } & JSX.IntrinsicElements["input"]) {
+}: { options: { [value: string]: string }; label?: string } & JSX.IntrinsicElements["input"]) {
   const [collapsed, setCollapsed] = useState(true);
   const [value, setValue] = useState("");
+  const [search, setSearch] = useState("");
 
-  const filtered = options.filter((option) =>
-    new RegExp(value, "i").test(option)
+  const filtered = Object.keys(options).filter((_value) =>
+    new RegExp(search, "i").test(options[_value])
   );
+
+  useEffect(() => {
+    setSearch(options[value]);
+  }, [options, value]);
 
   return (
     <div className={"autocomplete" + (className ? ` ${className}` : "")}>
@@ -21,8 +26,8 @@ export default function AutoComplete({
         <span className="autocomplete__label-text">{label}</span>
         <span className="autocomplete__input">
           <input
-            value={value}
-            onChange={(e) => setValue(e.currentTarget.value)}
+            value={search}
+            onChange={(e) => setSearch(e.currentTarget.value)}
             onFocus={(e) => setCollapsed(false)}
             onBlur={(e) => {
               if (!collapsed) {
@@ -57,7 +62,7 @@ export default function AutoComplete({
               key={option}
               className="autocomplete__option"
             >
-              {option}
+              {options[option]}
             </li>
           ))}
         </ul>
