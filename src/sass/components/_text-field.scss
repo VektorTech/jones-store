@@ -1,2 +1,44 @@
+@use "../abstracts" as *;
+
 .text-field {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  color: $c-text-black;
+
+  &__label {
+    @extend %form-label;
+
+    &-text {
+      @extend %form-label-text;
+    }
+
+    &-asterisk {
+      @extend %form-label-asterisk;
+    }
+  }
+
+  &__input {
+    display: block;
+    height: 3.2rem;
+    position: relative;
+
+    &--multiline {
+      height: auto;
+    }
+  }
+
+  &__control {
+    @extend %text-input-field;
+
+    &-btn {
+      @extend %text-input-icon;
+      background-color: #fff;
+    }
+
+    &--multiline {
+      padding: 1rem;
+      height: auto;
+      resize: none;
+    }
+  }
 }

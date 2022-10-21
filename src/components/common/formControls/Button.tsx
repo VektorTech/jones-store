@@ -8,7 +8,7 @@ export default function Button({
   return (
     <button
       {...buttonProps}
-      className={"btn" + (className ? ` ${className}` : "")}
+      className={"button" + (className ? ` ${className}` : "")}
     >
       {children}
     </button>

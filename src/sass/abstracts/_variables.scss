@@ -11,6 +11,9 @@ $c-text-dark: #7d7d7d;
 $c-text-black: #1b1b1b;
 $c-text-red: #e91313;
 
+$c-control-gray: #bbb;
+$c-control-black: #333;
+
 $text-xs: 1.24rem;
 $text-sm: 1.36rem;
 $text-md: 1.52rem;
@@ -51,4 +54,5 @@ $breakpoints: (
 ) !default;
 
 $timing-func-ui: cubic-bezier(0.15, 0.75, 0.5, 1);
+$timing-func-ui-pop: cubic-bezier(0.46, 1.08, 0.88, 1.41);
 $timing-func-img: cubic-bezier(0, 0, 0.2, 1);

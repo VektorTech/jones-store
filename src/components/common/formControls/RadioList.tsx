@@ -2,6 +2,7 @@ export default function RadioList({
   label,
   values,
   checkbox,
+  required,
   name = "",
   className = "",
   ...inputProps
@@ -13,26 +14,36 @@ export default function RadioList({
   return (
     <div className={"radio-list" + (className ? ` ${className}` : "")}>
       <fieldset>
-        {label ? <legend>{label}</legend> : null}
+        {label ? (
+          <legend className="radio-list__legend">
+            {label}{" "}
+            {required && <span className="radio-list__legend-asterisk">*</span>}
+          </legend>
+        ) : null}
 
-        {values.map((value) => (
-          <label className="radio-list__label" key={value}>
-            <input
-              className="radio-list__control"
-              {...inputProps}
-              type={checkbox ? "checkbox" : "radio"}
-              name={name}
-              value={value}
-            />
-            <span
-              className={
-                `radio-list__btn radio-list__btn--` +
-                (checkbox ? "checkbox" : "radio")
-              }
-            ></span>
-            <span className="radio-list__text">{value}</span>
-          </label>
-        ))}
+        <ul>
+          {values.map((value) => (
+            <li key={value}>
+              <label className="radio-list__label">
+                <input
+                  className="radio-list__control"
+                  {...inputProps}
+                  type={checkbox ? "checkbox" : "radio"}
+                  name={name}
+                  required={required}
+                  value={value}
+                />
+                <span
+                  className={
+                    `radio-list__button radio-list__button--` +
+                    (checkbox ? "checkbox" : "radio")
+                  }
+                ></span>
+                <span className="radio-list__text">{value}</span>
+              </label>
+            </li>
+          ))}
+        </ul>
       </fieldset>
     </div>
   );

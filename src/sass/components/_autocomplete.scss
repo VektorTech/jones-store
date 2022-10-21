@@ -1,35 +1,25 @@
 @use "../abstracts" as *;
 
-.dropdown {
-  $self: &;
-
+.autocomplete {
   width: 100%;
   max-width: 20rem;
   margin-bottom: 1.5rem;
   color: $c-text-black;
-  font-weight: 400;
   position: relative;
 
-  &__button {
+  &__input {
     display: block;
     height: 3.2rem;
     position: relative;
-    cursor: pointer;
   }
 
-  &__value {
+  &__control {
     @extend %text-input-field;
-    background-color: #f3f3f3;
-    cursor: pointer;
-
-    #{$self}:focus & {
-      border-color: $c-control-black;
-    }
   }
 
   &__toggle-icon {
     @extend %text-input-icon;
-    pointer-events: none;
+    cursor: pointer;
   }
 
   &__menu {
@@ -41,6 +31,5 @@
 
   &__option {
     @extend %dropdown-option;
-    cursor: pointer;
   }
 }

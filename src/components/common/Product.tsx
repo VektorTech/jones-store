@@ -51,7 +51,7 @@ export default function Product({
       }}
     >
       <Link href={`/product/${getPathString(title + " " + sku)}`}>
-        <a title={title}>
+        <a>
           <div className="product__wrapper">
             <div className="product__image">
               {mediaURLs.map((url, i) => (
@@ -85,7 +85,7 @@ export default function Product({
             </div>
             <div className="product__info">
               <p className="product__type">{gender}</p>
-              <h3 className="product__title">{title}</h3>
+              <h3 title={title} className="product__title">{title}</h3>
               <div className="product__rating">
                 <RatingStars count={ratings || 0} />
               </div>
