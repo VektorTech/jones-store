@@ -77,6 +77,12 @@ export default function HeaderSection({
           <nav>
             <ul>
               <li className="header__nav-link">
+                <Link href="/category/colorways">
+                  <a>COLORWAYS</a>
+                </Link>
+              </li>
+              <li className="header__nav-link"><span>|</span></li>
+              <li className="header__nav-link">
                 <Link href="/category/men">
                   <a>MEN</a>
                 </Link>
@@ -121,7 +127,7 @@ export default function HeaderSection({
               </Link>
             </li>
             <li className="header__button header__button-account">
-              <Link href="#">
+              <Link href={isAuth ? "/profile" : "/signin"}>
                 <a
                   onPointerEnter={(e) =>
                     setHoveredElement("header-account-btn")

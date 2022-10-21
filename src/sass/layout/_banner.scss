@@ -241,7 +241,7 @@
     &-element {
       display: inline-block;
       border: 0.1rem solid #fff;
-      width: min(22rem, max(15%, 15rem));
+      width: min(22rem, max(12%, 15rem));
       height: 4rem;
       position: relative;
       font-weight: 400;
@@ -265,7 +265,7 @@
         align-items: center;
         font-size: $text-md;
 
-        @include respond-to("large") {
+        @include respond-to("xx-large") {
           font-size: $text-lg;
         }
       }

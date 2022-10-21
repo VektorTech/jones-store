@@ -6,9 +6,12 @@ import SocialIcons from "./common/SocialButtons";
 
 import BannerImage from "@Images/jordan-1-banner.png";
 import { useAnnouncementState } from "@Lib/contexts/UIContext";
+import { useRouter } from "next/router";
 
-export default function HeroBanner({ short }: { short?: boolean }) {
+export default function HeroBanner() {
   const announcementVisible = useAnnouncementState();
+  const router = useRouter();
+  const short = router.pathname != "/";
 
   return (
     <section

@@ -3,7 +3,6 @@ import type { NextPage, GetServerSideProps } from "next";
 import { withSessionSsr } from "@Lib/withSession";
 import prisma from "@Lib/prisma";
 
-import HeroBanner from "@Components/HeroBanner";
 import CollectionSection from "@Components/home/CollectionSection";
 import ProductsSection from "@Components/home/ProductsSection";
 import GenderSection from "@Components/home/GenderSection";
@@ -13,7 +12,6 @@ import { Product } from "@prisma/client";
 const Home: NextPage<HomePropTypes> = ({ newArrivals, bestSellers }) => {
   return (
     <>
-      <HeroBanner />
       <CollectionSection />
       <ProductsSection
         products={newArrivals}
