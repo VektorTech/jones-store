@@ -5,6 +5,7 @@ import { UserType } from "src/types/shared";
 const authState: {
   userSessionId?: string;
   user?: UserType;
+  isAuth: boolean;
   isLoading?: boolean;
   isError?: boolean;
   addToWishlist: (id: string) => Promise<void>;
@@ -15,6 +16,7 @@ const authState: {
 } = {
   userSessionId: undefined,
   user: undefined,
+  isAuth: false,
   isLoading: undefined,
   isError: undefined,
 
@@ -39,6 +41,7 @@ export const AuthProvider = ({
   const {
     user,
     isError,
+    isLoading,
     addWishlistItem,
     removeWishlistItem,
     addCartItem,
@@ -56,7 +59,8 @@ export const AuthProvider = ({
         removeFromCart: removeCartItem,
         userSessionId: userId,
         user,
-        isLoading: !user,
+        isAuth: !!user?.id,
+        isLoading,
         isError,
       }}
     >

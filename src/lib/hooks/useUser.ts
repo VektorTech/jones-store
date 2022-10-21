@@ -81,7 +81,7 @@ const useProfile = (
 };
 
 export default function useUser(id?: string) {
-  const { data, isError } = useProfile(id);
+  const { data, isError, isLoading } = useProfile(id);
   const [wishlist, setWishlist] = useLocalStorage("wishlist");
   const [userState, updateUser] = useReducer(authReducer, initUser);
 
@@ -165,6 +165,7 @@ export default function useUser(id?: string) {
   return {
     user: userState,
     isError,
+    isLoading,
     addWishlistItem,
     removeWishlistItem,
     addCartItem,
