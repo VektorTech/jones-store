@@ -74,7 +74,7 @@ export default function AddProduct() {
 
         <Button type="submit">Add To Inventory</Button>
 
-        <input type="reset" value="Reset Form" />
+        <Button type="reset">Reset Form</Button>
       </Form>
     </div>
   );
