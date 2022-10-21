@@ -177,4 +177,12 @@
       opacity: 0.5;
     }
   }
+
+  &__popup-button {
+    @extend %form-button;
+    display: block;
+    color: #fff !important;
+    text-align: center;
+    margin-top: 0.5rem;
+  }
 }

@@ -1,16 +1,5 @@
 @use "../abstracts" as *;
 
 .button {
-  padding: 0.5rem 2rem;
-  background-color: $c-background-black;
-  color: #fff;
-  font-variant: small-caps;
-  text-transform: lowercase;
-  font-weight: 400;
-  font-size: $text-md;
-
-  &:hover,
-  &:focus-visible {
-    background-color: mix($c-background-black, #fff, 90%);
-  }
+  @extend %form-button;
 }

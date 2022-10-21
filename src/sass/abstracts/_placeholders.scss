@@ -108,3 +108,18 @@
   font-size: 1.8rem;
   text-align: center;
 }
+
+%form-button {
+  padding: 0.5rem 2rem;
+  background-color: v.$c-background-black;
+  color: #fff;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  font-weight: 400;
+  font-size: v.$text-md;
+
+  &:hover,
+  &:focus-visible {
+    background-color: mix(v.$c-background-black, #fff, 90%);
+  }
+}
