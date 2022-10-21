@@ -5,14 +5,16 @@ export default function TextField({
   label,
   required,
   className = "",
-  type,
+  type = "text",
   multiline = false,
+  defaultValue = "",
   ...inputProps
 }: {
   label: string;
   multiline?: boolean;
 } & (JSX.IntrinsicElements["input"] & JSX.IntrinsicElements["textarea"])) {
   const [_type, setType] = useState(type);
+  const [value, setValue] = useState("");
 
   let Icon;
 
@@ -60,14 +62,17 @@ export default function TextField({
               {...inputProps}
               rows={5}
               required
+              onChange={(e) => setValue(e.currentTarget.value)}
               className="text-field__control text-field__control--multiline"
-            ></textarea>
+            >{value}</textarea>
           ) : (
             <>
               <input
                 {...inputProps}
                 type={_type}
                 required
+                value={value}
+                onChange={(e) => setValue(e.currentTarget.value)}
                 className="text-field__control"
               />
               {Icon}
