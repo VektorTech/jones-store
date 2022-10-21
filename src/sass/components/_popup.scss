@@ -6,21 +6,18 @@
 }
 
 .popup {
-  opacity: 0;
-  visibility: hidden;
+  display: none;
   position: absolute;
   z-index: 1000;
   background-color: #fff;
   color: $c-text-black;
   padding: 1rem 0.5rem;
   margin-top: 0.5rem;
-  transition: visibility 0.3s, opacity 0.3s $timing-func-ui;
   border-radius: 0.5rem;
   box-shadow: 0 0 0.3rem #777;
 
   &--visible {
-    visibility: visible;
-    opacity: 1;
+    display: block;
   }
 
   &::before {
