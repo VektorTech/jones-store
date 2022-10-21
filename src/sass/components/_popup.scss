@@ -1,0 +1,32 @@
+@use "../abstracts" as *;
+
+.popup {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  z-index: 1000;
+  background-color: #fff;
+  color: $c-text-black;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  transition: visibility 0 0.3s, opacity 0.3s $timing-func-ui;
+  border-radius: 0.5rem;
+
+  &--visible {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &::before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    margin: auto;
+    margin-top: -1.5rem;
+    background-color: transparent;
+    border-right: 1rem solid #fff;
+    border-bottom: 1rem solid transparent;
+    transform: rotate(-45deg);
+  }
+}
