@@ -20,7 +20,7 @@ export default function AutoComplete({
   );
 
   useEffect(() => {
-    setSearch(options[value]);
+    setSearch(options[value] || "");
   }, [options, value]);
 
   return (

@@ -63,9 +63,10 @@ export default function TextField({
               {...inputProps}
               rows={5}
               required={required}
+              value={_value}
               onChange={(e) => setValue(e.currentTarget.value)}
               className="text-field__control text-field__control--multiline"
-            >{_value}</textarea>
+            ></textarea>
           ) : (
             <>
               <input

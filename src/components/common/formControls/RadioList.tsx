@@ -21,7 +21,7 @@ export default function RadioList({
           </legend>
         ) : null}
 
-        <ul>
+        <ul className="radio-list__list">
           {values.map((value) => (
             <li key={value}>
               <label className="radio-list__label">
