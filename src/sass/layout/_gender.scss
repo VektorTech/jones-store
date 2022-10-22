@@ -22,8 +22,10 @@
     position: relative;
 
     @include respond-to("small") {
+      width: 52%;
       max-height: 100rem;
-      height: calc(33vw * 2);
+      height: 48vw;
+      margin-left: auto;
       gap: 1.5rem;
     }
   }
@@ -86,7 +88,7 @@
 
     // next image element
     & span {
-      height: calc(100% - 6rem) !important;
+      height: calc(100% - 3.5rem) !important;
 
       & img {
         object-fit: cover;
@@ -105,14 +107,14 @@
       position: absolute;
       left: 0;
       right: 0;
-      bottom: 2.5rem;
+      bottom: 0;
       text-align: center;
       margin: 0;
       height: 3rem;
       text-transform: lowercase;
       font-variant: small-caps;
       font-weight: normal;
-      font-size: $text-lg;
+      font-size: $text-md;
 
       & span {
         color: #fff;
