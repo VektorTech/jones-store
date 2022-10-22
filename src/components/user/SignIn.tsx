@@ -20,11 +20,12 @@ export default function SignIn() {
     >
       <h2>Sign In</h2>
       <TextField
-        defaultValue={defaultUserCred.user}
+        value={defaultUserCred.user}
+        name="email"
         label="Email or User"
       />
       <TextField
-        defaultValue={defaultUserCred.pass}
+        value={defaultUserCred.pass}
         name="password"
         type="password"
         label="Password"
