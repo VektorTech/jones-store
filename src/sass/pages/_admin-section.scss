@@ -1,0 +1,18 @@
+@use "../abstracts" as *;
+
+.admin__section {
+	@extend %page-container;
+
+	&-field {
+		margin: 1rem 0;
+	}
+
+	&-button {
+		display: block;
+		margin: 1rem 0;
+	}
+
+	&-reset {
+		background-color: rgb(207, 16, 16);
+	}
+}

@@ -28,32 +28,15 @@ export default function AddProduct() {
   return (
     <div className="admin__section">
       <Form beforeSubmit={handleSubmit} method="POST" action="/api/products">
-        <TextField name="id" label="ID" />
-
-        <TextField name="stockQty" label="Stock Quantity" />
-
         <TextField name="title" label="Title" />
-
-        <TextField name="price" label="Price" />
-
-        <TextField name="discount" label="Discount" />
-
-        <TextField name="shippingCost" label="Shipping Cost" />
-
+        <TextField name="id" label="ID" />
+        <div className="admin__section-field">
+          <label htmlFor="product-images">Choose Images To Upload: </label>
+          <input id="product-images"  type="file" accept="image/*" multiple />
+        </div>
         <TextField name="details" multiline label="Details" />
-
-        <input id="product-images" type="file" accept="image/*" multiple />
-
-        <AutoComplete
-          name="color"
-          options={CategoriesData.colorways.reduce(
-            (obj: any, colorway: any) => {
-              return (obj[colorway] = colorway);
-            },
-            {}
-          )}
-        />
-
+        <Dropdown name="type" label="Category Type" options={Category} />
+        <Dropdown name="gender" label="Gender" options={Gender} />
         <TextField
           pattern="[0-9]*"
           min={1985}
@@ -61,21 +44,33 @@ export default function AddProduct() {
           name="year"
           type="number"
           inputMode="numeric"
-          label="Details"
+          label="Year"
         />
-
+        <TextField name="price" type="number" label="Price" />
+        <TextField name="discount" type="number" label="Discount Amount" />
+        <TextField name="shippingCost" type="number" label="Shipping Cost" />
+        <TextField name="stockQty" type="number" label="Stock Quantity" />
         <TextField name="sku" label="SKU" />
-
-        <Dropdown name="gender" label="Gender" options={Gender} />
-
-        <RadioList name="size" label="Select Sizes" values={[...Array(40)].map((_, i) => String(1 + i / 2))} />
-
-        <Dropdown name="type" label="Category Type" options={Category} />
-
-        <Button type="submit">Add To Inventory</Button>
-
-        <Button type="reset">Reset Form</Button>
+        <RadioList
+          name="size"
+          label="Select Sizes"
+          checkbox
+          values={[...Array(40)].map((_, i) => String(1 + i / 2))}
+        />
+        <AutoComplete
+          name="color"
+          options={CategoriesData.colorways.reduce(
+            (obj: any, colorway: any) => {
+              obj[colorway] = colorway;
+              return obj;
+            },
+            {}
+          )}
+        />
+        <Button className="admin__section-button" type="submit">Add To Inventory</Button>
+        <Button className="admin__section-button admin__section-reset" type="reset">Reset Form</Button>
       </Form>
+      <br />
     </div>
   );
 }
