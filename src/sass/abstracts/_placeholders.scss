@@ -11,6 +11,16 @@
   }
 }
 
+%page-container {
+  width: 90%;
+  max-width: 102.4rem;
+  margin: 3rem auto 10rem;
+
+  @include m.respond-to("large") {
+    width: calc(70%);
+  }
+}
+
 %text-overflow {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -117,9 +127,10 @@
   text-transform: lowercase;
   font-weight: 400;
   font-size: v.$text-md;
+  transition: background-color 0.3s v.$timing-func-ui;
 
   &:hover,
   &:focus-visible {
-    background-color: mix(v.$c-background-black, #fff, 90%);
+    background-color: mix(v.$c-background-black, #fff, 85%);
   }
 }
