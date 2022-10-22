@@ -3,9 +3,9 @@ import AuthForm from "@Components/user/AuthForm";
 
 export default function SignUpPage() {
   return (
-    <>
-      <SEO title="Sign Up" />
+    <div className="auth-page">
+      <SEO title="Sign In" />
       <AuthForm isNewUser={true} />
-    </>
+    </div>
   );
 }

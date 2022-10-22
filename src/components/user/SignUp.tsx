@@ -14,6 +14,7 @@ export default function SignUp() {
         setTimeout(() => (location.href = location.origin), 3000);
       }}
     >
+      <h2>Sign Up</h2>
       <TextField name="username" label="User" value={generateUsername()} />
       <TextField name="email" label="Email" type={"email"} />
       <TextField name="password" type="password" label="Password" />

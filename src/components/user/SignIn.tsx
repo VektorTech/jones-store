@@ -18,9 +18,9 @@ export default function SignIn() {
         setTimeout(() => (location.href = location.origin), 3000);
       }}
     >
+      <h2>Sign In</h2>
       <TextField
         defaultValue={defaultUserCred.user}
-        name="email"
         label="Email or User"
       />
       <TextField
