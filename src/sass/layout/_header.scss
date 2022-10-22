@@ -178,11 +178,13 @@
     }
   }
 
-  &__popup-button {
+  &__popup-button,
+  &__popup-button[type=submit] {
     @extend %form-button;
     display: block;
     color: #fff !important;
     text-align: center;
+    margin: auto;
     margin-top: 0.5rem;
   }
 }

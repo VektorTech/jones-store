@@ -145,7 +145,7 @@ export default function HeaderSection({
                       <>
                         <Link href="/profile">
                           <a className="header__popup-button">
-                            <span>Login</span>
+                            <span>Account</span>
                           </a>
                         </Link>
                         <Form
@@ -156,14 +156,14 @@ export default function HeaderSection({
                           }}
                           action="/api/auth/signout"
                         >
-                          <Button type="submit">Logout</Button>
+                          <input className="header__popup-button" type="submit" value="Log Out" />
                         </Form>
                       </>
                     ) : (
                       <>
                         <Link href="/signin">
                           <a className="header__popup-button">
-                            <span>Login</span>
+                            <span>Log In</span>
                           </a>
                         </Link>
                         <Link href="/signup">
