@@ -9,18 +9,17 @@
   color: $c-text-black;
   font-weight: 400;
   position: relative;
+  cursor: pointer;
 
   &__button {
     display: block;
     height: 3.2rem;
     position: relative;
-    cursor: pointer;
   }
 
   &__value {
     @extend %text-input-field;
     background-color: #f3f3f3;
-    cursor: pointer;
 
     #{$self}:focus & {
       border-color: $c-control-black;
@@ -41,6 +40,9 @@
 
   &__option {
     @extend %dropdown-option;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
     cursor: pointer;
   }
 }
