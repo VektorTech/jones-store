@@ -10,6 +10,95 @@ export default function Filter() {
         </button>
       </div>
 
+      <FilterParam type="Gender">
+        <RadioList
+          name="gender"
+          values={["MEN", "WOMEN", "KIDS", "BABIES", "UNISEX"]}
+          render={({ label, checked }) => (
+            <span
+              className={
+                "filter__param-option" +
+                (checked ? " filter__param-option--checked" : "")
+              }
+            >
+              {label}
+            </span>
+          )}
+        />
+      </FilterParam>
+
+      <FilterParam type="Main Color">
+        <RadioList
+          name="color"
+          values={Object.keys(colorsHex)}
+          render={({ label, checked }) => (
+            <span
+              className={
+                "filter__param-option" +
+                (checked ? " filter__param-option--checked" : "")
+              }
+            >
+              <span
+                style={{ background: colorsHex[label] }}
+                className="filter__param-option-color"
+              ></span>
+              {label}
+            </span>
+          )}
+        />
+      </FilterParam>
+
+      <FilterParam type="US Sizes">
+        <RadioList
+          name="size"
+          checkbox
+          grid
+          values={[...Array(37)].map((_, i) => String(2 + i / 2))}
+          render={({ label, checked }) => (
+            <span
+              className={
+                "filter__param-box" +
+                (checked ? " filter__param-box--checked" : "")
+              }
+            >
+              {label}
+            </span>
+          )}
+        />
+      </FilterParam>
+
+      <FilterParam type="Height">
+        <RadioList
+          name="height"
+          values={["LOW TOP", "MID TOP", "HIGH TOP"]}
+          render={({ label, checked }) => (
+            <span
+              className={
+                "filter__param-option" +
+                (checked ? " filter__param-option--checked" : "")
+              }
+            >
+              {label}
+            </span>
+          )}
+        />
+      </FilterParam>
+
+      <FilterParam type="Price Range">
+        <PriceRange />
+      </FilterParam>
+
+      <div className="filter__confirm">
+        <Button type="submit" className="filter__done">
+          done
+        </Button>
+        <Button type="reset" className="filter__clear-all">
+          clear all
+        </Button>
+      </div>
+    </div>
+  );
+}
 
 const PriceRange = () => {
   const HIGHEST_PRICE = 1000;

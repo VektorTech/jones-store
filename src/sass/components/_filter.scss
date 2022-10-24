@@ -1,3 +1,172 @@
+@use "../abstracts" as *;
+
+.filter {
+  width: 100%;
+  font-size: $text-md;
+  position: fixed;
+  overflow: auto;
+  top: 0;
+  bottom: 0;
+  z-index: 101;
+  background: $c-background-color;
+  transform: translateX(-100%);
+  transition: transform 0.3s $timing-func-ui;
+
+  @include respond-to("medium") {
+    width: 0;
+    height: 0;
+    position: relative;
+    top: unset;
+    bottom: unset;
+    z-index: 0;
+    overflow: hidden;
+
+    &--active {
+      width: 25%;
+      height: auto;
+      overflow: unset;
+    }
+  }
+
+  &--active {
+    transform: translateX(0);
+  }
+
+  &__head {
+    background-color: $c-background-black;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    font-size: $text-xs;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    @include respond-to("large") {
+      padding: 1rem 2.5rem;
+    }
+
+    @include respond-to("medium") {
+      display: none;
+    }
+  }
+
+  &__hide {
+    font-size: 1.6rem;
+  }
+
+  &__param {
+    $param: &;
+
+    border-bottom: 0.1rem solid $c-gray;
+    padding: 1rem 1.5rem;
+    color: $c-text-black;
+
+    @include respond-to("large") {
+      padding: 1rem 2.5rem;
+    }
+
+    &-section {
+      &--collapsed {
+        & #{$param}-type {
+          & svg {
+            transform: rotate(180deg);
+          }
+        }
+
+        & #{$param}-body {
+          height: 0;
+          padding: 0;
+        }
+      }
+    }
+
+    &-type {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      padding: 0.5rem 0;
+      cursor: pointer;
+    }
+
+    &-body {
+      padding-top: 1rem;
+      overflow: hidden;
+      height: auto;
+    }
+
+    &-option {
+      width: 100%;
+      text-overflow: ellipsis;
+
+      &--checked {
+        &::after {
+          content: "";
+          width: 0.6rem;
+          height: 1.3rem;
+          display: inline-block;
+          margin-bottom: 0.2rem;
+          margin-left: 1rem;
+          border-right: 0.1rem solid $c-text-black;
+          border-bottom: 0.1rem solid $c-text-black;
+          transform: rotate(45deg);
+        }
+      }
+
+      &-color {
+        display: inline-block;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        border: 0.1rem solid #000;
+        margin-right: 1rem;
+        vertical-align: middle;
+      }
+    }
+
+    &-box {
+      width: 100%;
+      display: inline-block;
+      text-align: center;
+      border: 0.1rem solid $c-control-black;
+      font-weight: 400;
+      border-radius: 0.2rem;
+      font-size: $text-sm;
+
+      &--checked {
+        background-color: $c-gray;
+      }
+    }
+  }
+
+  &__confirm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    position: sticky;
+    bottom: 0;
+    background-color: $c-background-color;
+
+    @include respond-to("large") {
+      padding: 1rem 2.5rem;
+    }
+  }
+
+  &__clear-all {
+    background-color: #fff;
+    color: $c-text-black;
+    border: 0.1rem solid $c-control-gray;
+
+    &:hover,
+    &:focus-visible {
+      border-color: $c-control-black;
+      background-color: #fff;
+    }
+  }
+}
 
 .price-range {
   &__control {
