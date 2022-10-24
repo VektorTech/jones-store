@@ -1,4 +1,11 @@
-import { useState, useRef, KeyboardEventHandler } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  FocusEventHandler,
+} from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import useArrowKeyTrap from "@Lib/hooks/useKeyTrap";
 import { isSelectKey } from "@Lib/utils";
@@ -16,14 +23,38 @@ export default function Dropdown({
   const [value, setValue] = useState("");
   const [collapsed, setCollapsed] = useState(true);
   const MenuListRef = useRef<HTMLUListElement>(null);
+  const DropdownRef = useRef<HTMLDivElement>(null);
 
   useArrowKeyTrap(MenuListRef.current, !collapsed, true);
 
+  useEffect(() => {
+    if (collapsed) {
+      DropdownRef.current?.focus();
+    }
+  }, [collapsed]);
+
   const handleKeyUp: KeyboardEventHandler<HTMLDivElement> = (e) => {
-    if (isSelectKey(e)) {
+    if (isSelectKey(e) && e.target == DropdownRef.current) {
       e.preventDefault();
-      setCollapsed(false);
+      setCollapsed(!collapsed);
     } else if (e.key == "Escape") {
+      setCollapsed(true);
+    }
+  };
+
+  const handleClick: MouseEventHandler<HTMLDivElement> = ({ target }) => {
+    if (MenuListRef.current?.contains(target as Node)) {
+      setCollapsed(true);
+    } else {
+      setCollapsed(!collapsed);
+    }
+  };
+
+  const handleBlur: FocusEventHandler<HTMLDivElement> = (e) => {
+    if (
+      !MenuListRef.current?.contains(e.relatedTarget) &&
+      e.relatedTarget !== DropdownRef.current
+    ) {
       setCollapsed(true);
     }
   };
@@ -31,16 +62,13 @@ export default function Dropdown({
   return (
     <div
       tabIndex={0}
-      onClick={() => setCollapsed(false)}
+      onClick={handleClick}
+      ref={DropdownRef}
       onKeyDown={handleKeyUp}
-      onBlur={(e) => {
-        if (!MenuListRef.current?.contains(e.relatedTarget)) {
-          setCollapsed(true);
-        }
-      }}
+      onBlur={handleBlur}
       className={"dropdown" + (className ? ` ${className}` : "")}
     >
-      <span className="dropdown__button">
+      <span className="dropdown__button" style={{ pointerEvents: "none" }}>
         <input
           {...inputProps}
           className="dropdown__value"
@@ -68,11 +96,8 @@ export default function Dropdown({
               key={option}
               role="option"
               aria-selected={value == option}
-              onClick={(e) => {
-                e.stopPropagation();
-                setValue(option);
-                setCollapsed(true);
-              }}
+              onClick={(e) => setValue(option)}
+              data-value={option}
               className="dropdown__option"
             >
               {options[option]}
