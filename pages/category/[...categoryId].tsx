@@ -3,7 +3,6 @@
 
 import { VscChromeClose } from "react-icons/vsc";
 import { BsSliders } from "react-icons/bs";
-import { ImArrowDown } from "react-icons/im";
 
 import Filter from "@Components/productList/Filter";
 import BreadCrumbs from "@Components/productList/BreadCrumbs";
@@ -13,6 +12,10 @@ import prisma from "@Lib/prisma";
 import { withSessionSsr } from "@Lib/withSession";
 import { Gender, Product, Category } from "@prisma/client";
 import SEO from "@Components/common/SEO";
+import Button from "@Components/common/formControls/Button";
+import Dropdown from "@Components/common/formControls/Dropdown";
+
+import { useState } from "react";
 
 export default function CategoryPage({
   categoryId,
@@ -21,9 +24,10 @@ export default function CategoryPage({
   categoryId: string;
   products: Product[];
 }) {
+  const [active, setActive] = useState(true);
   // const router = useRouter();
   // const { categoryId } = router.query;
-  console.log(products);
+  // console.log(products);
 
   return (
     <>
@@ -62,36 +66,37 @@ export default function CategoryPage({
 
       <div className="filter-sort">
         <div className="filter-sort__container">
-          <button className="filter-sort__toggle">
+          <Button onClick={() => setActive(!active)} className="filter-sort__toggle">
             <BsSliders className="filter-sort__toggle-icon" />
             <span>filter</span>
-          </button>
+          </Button>
 
           <div className="filter-sort__sort-by">
-            <span>Sort By</span>
-
-            <select className="filter-sort__sort-select" name="" id="">
-              <option value="">Relevance</option>
-              <option value="">Price</option>
-              <option value="">Ratings</option>
-            </select>
-
-            <button className="filter-sort__order">
-              <ImArrowDown className="filter-sort__order-icon" />
-            </button>
+            <Dropdown
+              label="Sort By"
+              className="filter-sort__sort-select"
+              options={{
+                price: "Price",
+                asc_price: "Ascending: Price",
+                relevance: "Relevance",
+                asc_relevance: "Ascending: Relevance",
+                ratings: "Ratings",
+                asc_ratings: "Ascending: Ratings",
+              }}
+            />
           </div>
         </div>
       </div>
 
       <div className="results">
-        <div className="results__filter">
-          <Filter />
-        </div>
+        <Filter active={active} setState={(state: boolean) => setActive(state)} />
 
-        <div className="results__grid"></div>
-        <Pagination />
+        <div className={"results__container" + (active ? " results__container--filter" : "")}>
+          <div className="results__grid"></div>
+          <Pagination />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
