@@ -3,10 +3,18 @@ export default function RadioList({
   values,
   checkbox,
   required,
+  render: RenderComponent,
   name = "",
   className = "",
   ...inputProps
 }: {
+  render?: ({
+    label,
+    checked,
+  }: {
+    label: string;
+    checked: boolean;
+  }) => ReactElement;
   label?: string;
   checkbox?: boolean;
   values: string[];
@@ -32,14 +40,23 @@ export default function RadioList({
                   name={name}
                   required={required}
                   value={value}
+                  style={{ display: RenderComponent ? "none" : "inline-block" }}
                 />
-                <span
-                  className={
-                    `radio-list__button radio-list__button--` +
-                    (checkbox ? "checkbox" : "radio")
-                  }
-                ></span>
-                <span className="radio-list__text">{value}</span>
+                {RenderComponent ? (
+                  <>
+                    <RenderComponent checked={!!groupState[value]} label={value} />
+                  </>
+                ) : (
+                  <>
+                    <span
+                      className={
+                        `radio-list__button radio-list__button--` +
+                        (checkbox ? "checkbox" : "radio")
+                      }
+                    ></span>
+                    <span className="radio-list__text">{value}</span>
+                  </>
+                )}
               </label>
             </li>
           ))}
