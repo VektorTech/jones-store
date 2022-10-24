@@ -25,3 +25,8 @@ button::-moz-focus-inner {
 strong {
   font-weight: 600;
 }
+
+::selection {
+  color: #fff;
+  background: #555;
+}
