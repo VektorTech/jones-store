@@ -10,19 +10,21 @@ import Pagination from "@Components/productList/Pagination";
 
 import prisma from "@Lib/prisma";
 import { withSessionSsr } from "@Lib/withSession";
-import { Gender, Product, Category } from "@prisma/client";
+import { Gender, Product as ProductType, Category } from "@prisma/client";
 import SEO from "@Components/common/SEO";
 import Button from "@Components/common/formControls/Button";
 import Dropdown from "@Components/common/formControls/Dropdown";
 
 import { useState } from "react";
 
+import Product from "@Components/common/Product";
+
 export default function CategoryPage({
   categoryId,
   products,
 }: {
   categoryId: string;
-  products: Product[];
+  products: ProductType[];
 }) {
   const [active, setActive] = useState(true);
   // const router = useRouter();
@@ -92,7 +94,11 @@ export default function CategoryPage({
         <Filter active={active} setState={(state: boolean) => setActive(state)} />
 
         <div className={"results__container" + (active ? " results__container--filter" : "")}>
-          <div className="results__grid"></div>
+          <div className="results__grid">
+            {
+              products.map(product => <Product key={product.id} {...product} />)
+            }
+          </div>
           <Pagination />
         </div>
       </div>

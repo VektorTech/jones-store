@@ -137,3 +137,21 @@
     background-color: mix(v.$c-background-black, #fff, 85%);
   }
 }
+
+//
+%product-grid {
+  @extend %container;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding-bottom: 3rem;
+  gap: 1rem;
+
+  @include m.respond-to("small") {
+    gap: 1.5rem;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @include m.respond-to("x-large") {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
