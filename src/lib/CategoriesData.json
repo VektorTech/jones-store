@@ -25,6 +25,8 @@
   ],
 
   "colorways": [
+    "Black",
+    "White",
     "Dark Mocha",
     "Brown",
     "University Blue Black",
@@ -38,17 +40,15 @@
     "Twist W Panda",
     "Midnight Navy",
     "Yellow Toe",
-    "Multi Color",
     "Shadow",
-    "Black",
     "Bred",
     "Varsity Red",
     "Black Red",
     "Fire Red",
-    "White",
     "Denim",
     "Pinksicle",
     "Wolf Grey",
-    "Grey"
+    "Grey",
+    "Multi Color"
   ]
 }
