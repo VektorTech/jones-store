@@ -145,7 +145,7 @@ export default function HeaderSection({
                       <>
                         <Link href="/profile">
                           <a className="header__popup-button">
-                            <span>Account</span>
+                            <span>Profile</span>
                           </a>
                         </Link>
                         <Form
