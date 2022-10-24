@@ -19,6 +19,7 @@ export default function RadioList({
   checkbox?: boolean;
   values: string[];
 } & JSX.IntrinsicElements["input"]) {
+  const [all, setAll] = useState(values.length < 10);
   return (
     <div className={"radio-list" + (className ? ` ${className}` : "")}>
       <fieldset>
@@ -30,7 +31,7 @@ export default function RadioList({
         ) : null}
 
         <ul className="radio-list__list">
-          {values.map((value) => (
+          {values.slice(0, all ? values.length : 10).map((value) => (
             <li key={value}>
               <label className="radio-list__label">
                 <input
@@ -61,6 +62,7 @@ export default function RadioList({
             </li>
           ))}
         </ul>
+        { !all ? <button className="radio-list__see-all" onClick={() => setAll(true)}>See All</button> : null }
       </fieldset>
     </div>
   );
