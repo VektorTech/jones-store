@@ -116,4 +116,16 @@ $control-size: 1.7rem;
   &__text {
     margin-left: 1rem;
   }
+
+  &__see-all{
+    width: 100%;
+    padding-top: 0.5rem;
+    text-decoration: underline;
+  }
+
+  &__list--grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+  }
 }
