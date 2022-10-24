@@ -1,0 +1,50 @@
+
+.price-range {
+  &__control {
+    height: 1.6rem;
+    margin: 1rem 0;
+    position: relative;
+  }
+
+  &__input {
+    width: 100%;
+    text-align: center;
+    background-color: transparent;
+    padding: 1rem 0;
+  }
+
+  &__range,
+  &__bar {
+    position: absolute;
+    background-color: $c-control-black;
+    display: block;
+    left: 0;
+    width: 100%;
+    top: calc(50% - 0.2rem / 2);
+    height: 0.2rem;
+  }
+
+  &__range {
+    background-color: $c-gray;
+  }
+
+  &__min,
+  &__max {
+    display: inline-block;
+    position: relative;
+    width: 1.6rem;
+    height: 1.6rem;
+    background-color: $c-control-black;
+    border-radius: 50%;
+    left: 0;
+    cursor: pointer;
+  }
+
+  &__max {
+    left: calc(100% - 1.6rem * 2);
+  }
+
+  &__thumb--above {
+    z-index: 1;
+  }
+}
