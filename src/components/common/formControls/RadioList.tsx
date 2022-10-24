@@ -1,3 +1,5 @@
+import { ReactElement, useState } from "react";
+
 export default function RadioList({
   label,
   values,
@@ -19,7 +21,26 @@ export default function RadioList({
   checkbox?: boolean;
   values: string[];
 } & JSX.IntrinsicElements["input"]) {
+  const initState = values.reduce((obj: any, value: string) => {
+    obj[value] = false;
+    return obj;
+  }, {});
+  const [groupState, setGroupState] = useState(initState);
   const [all, setAll] = useState(values.length < 10);
+
+  const radioHandler = (value: string) => {
+    const cloned = Object.assign({}, groupState);
+    Object.keys(cloned).forEach((key) => {
+      cloned[key] = false;
+    });
+    cloned[value] = true;
+    setGroupState(cloned);
+  };
+
+  const checkboxHandler = (value: string, checked: boolean) => {
+    setGroupState({ ...groupState, [value]: checked });
+  };
+
   return (
     <div className={"radio-list" + (className ? ` ${className}` : "")}>
       <fieldset>
@@ -42,6 +63,7 @@ export default function RadioList({
                   required={required}
                   value={value}
                   style={{ display: RenderComponent ? "none" : "inline-block" }}
+                  onChange={(e) => checkbox ? checkboxHandler(value, e.currentTarget.checked) : radioHandler(value)}
                 />
                 {RenderComponent ? (
                   <>
