@@ -121,6 +121,9 @@
 
 %form-button {
   padding: 0.5rem 2rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   background-color: v.$c-background-black;
   color: #fff;
   font-variant: small-caps;
