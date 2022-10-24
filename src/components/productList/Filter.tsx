@@ -121,14 +121,14 @@ const PriceRange = () => {
   const controlRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const mouseUpHandler = (e: MouseEvent) => {
+    const mouseUpHandler = (e: PointerEvent | TouchEvent) => {
       setActiveThumb("");
     };
 
     const asPercentage = (num: number) =>
       (num / Number(controlRef.current?.offsetWidth)) * 100;
 
-    const mouseMoveHandler = ({ clientX }: MouseEvent) => {
+    const mouseMoveHandler = (event: TouchEvent | PointerEvent) => {
       const minThumb = minRef.current;
       const maxThumb = maxRef.current;
       const rangeTrack = rangeRef.current;
@@ -136,6 +136,13 @@ const PriceRange = () => {
 
       if (!(minThumb && maxThumb && control && rangeTrack)) {
         return;
+      }
+
+      let clientX = 0;
+      if (event instanceof PointerEvent) {
+        clientX = event.clientX;
+      } else if (event instanceof TouchEvent) {
+        clientX = event.touches[0].clientX;
       }
 
       const pageX = clientX - control.offsetLeft;
@@ -200,13 +207,19 @@ const PriceRange = () => {
     }
 
     if (activeThumb) {
-      document.addEventListener("mouseup", mouseUpHandler);
-      document.addEventListener("mousemove", mouseMoveHandler);
+      document.addEventListener("pointerup", mouseUpHandler);
+      // document.addEventListener("touchend", mouseUpHandler);
+
+      document.addEventListener("pointermove", mouseMoveHandler);
+      // document.addEventListener("touchmove", mouseMoveHandler);
     }
 
     return () => {
-      document.removeEventListener("mouseup", mouseUpHandler);
-      document.removeEventListener("mousemove", mouseMoveHandler);
+      document.removeEventListener("pointerup", mouseUpHandler);
+      // document.removeEventListener("touchend", mouseUpHandler);
+
+      document.removeEventListener("pointermove", mouseMoveHandler);
+      // document.removeEventListener("touchmove", mouseMoveHandler);
       resizeObserver.disconnect();
     };
   }, [activeThumb]);
@@ -215,6 +228,7 @@ const PriceRange = () => {
     <div className="price-range">
       <input
         defaultValue={`$${valueMin} - $${valueMax}`}
+        key={`$${valueMin} - $${valueMax}`}
         readOnly
         name="price-range"
         className="price-range__input"
@@ -224,18 +238,24 @@ const PriceRange = () => {
         <span ref={rangeRef} className="price-range__bar"></span>
         <span
           ref={minRef}
-          onMouseDown={(e) => {
-            e.preventDefault(); // prevent selection
+          onPointerDown={(e) => {
+            e.preventDefault();
             setActiveThumb("min");
           }}
+          // onTouchStart={(e) => {
+          //   setActiveThumb("min");
+          // }}
           className="price-range__min"
         ></span>
         <span
           ref={maxRef}
-          onMouseDown={(e) => {
+          onPointerDown={(e) => {
             e.preventDefault();
             setActiveThumb("max");
           }}
+          // onTouchStart={(e) => {
+          //   setActiveThumb("max");
+          // }}
           className="price-range__max"
         ></span>
       </div>
