@@ -1,3 +1,25 @@
+@use "../abstracts" as *;
+
+.results {
+  display: flex;
+  position: relative;
+  padding-bottom: 5rem;
+
+  &__container {
+    width: 100%;
+    margin-left: auto;
+
+    @include respond-to("medium") {
+      &--filter {
+        width: 75%;
+      }
+    }
+  }
+
+  &__grid {
+    height: 80rem;
+  }
+
   // ----
 
   &__pagination {

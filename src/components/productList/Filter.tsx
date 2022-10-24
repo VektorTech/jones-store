@@ -1,11 +1,20 @@
+import Button from "@Components/common/formControls/Button";
+import RadioList from "@Components/common/formControls/RadioList";
 import { IoIosArrowUp, IoIosArrowBack } from "react-icons/io";
+import { useState, useRef, useEffect, ReactNode } from "react";
 
-export default function Filter() {
+export default function Filter({
+  active,
+  setState,
+}: {
+  active: boolean;
+  setState: (state: boolean) => void;
+}) {
   return (
-    <div className="filter">
+    <div className={"filter" + (active ? " filter--active" : "")}>
       <div className="filter__head">
         <span>Filter</span>
-        <button className="filter__hide">
+        <button onClick={() => setState(false)} className="filter__hide">
           <IoIosArrowBack />
         </button>
       </div>
@@ -234,9 +243,35 @@ const PriceRange = () => {
   );
 };
 
+const FilterParam = ({
+  type,
+  children,
+}: {
+  type: string;
+  children: ReactNode;
+}) => {
+  const [collapsed, setCollapsed] = useState(false);
+
+  return (
+    <div className="filter__param">
+      <div
+        className={
+          "filter__param-section" +
+          (collapsed ? " filter__param-section--collapsed" : "")
+        }
+      >
+        <span
+          onClick={() => setCollapsed(!collapsed)}
+          className="filter__param-type"
+        >
+          <span>{type}</span>
+          <IoIosArrowUp />
+        </span>
+        <div className="filter__param-body">{children}</div>
       </div>
     </div>
   );
+};
 
 const colorsHex: { [color: string]: string } = {
   Black: "#000",
