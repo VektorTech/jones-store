@@ -1,0 +1,31 @@
+@use "../abstracts" as *;
+
+.breadcrumb {
+  min-height: 3rem;
+  line-height: 3rem;
+
+  &__container {
+    width: 100%;
+  }
+
+  &__list {
+    display: inline-flex;
+    flex-wrap: wrap;
+    color: $c-text-dark;
+    font-weight: 400;
+    font-size: $text-sm;
+
+    &-item {
+      margin-right: 1rem;
+    }
+  }
+
+  &__link {
+    @include link-hover($c-text-gray);
+
+    &--root {
+      @include link-hover($c-text-black);
+      color: $c-text-black !important;
+    }
+  }
+}
