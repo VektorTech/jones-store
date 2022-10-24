@@ -1,0 +1,47 @@
+@use "../abstracts" as *;
+
+.filter-sort {
+  &__container {
+    @extend %container;
+    height: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem 0;
+    gap: 1rem;
+
+    @include respond-to("medium") {
+      gap: unset;
+    }
+  }
+
+  &__toggle {
+    flex: 1 1 50%;
+
+    &-icon {
+      margin-right: 1rem;
+    }
+
+    @include respond-to("medium") {
+      flex: unset;
+    }
+  }
+
+  &__sort-by {
+    flex: 1 1 50%;
+
+    @include respond-to("medium") {
+      flex: unset;
+    }
+  }
+
+  &__sort-select {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+
+    @include respond-to("medium") {
+      max-width: 20rem;
+    }
+  }
+}
