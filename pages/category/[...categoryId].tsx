@@ -26,30 +26,31 @@ export default function CategoryPage({
   console.log(products);
 
   return (
-    <div>
-      <SEO title={categoryId} />
-      <BreadCrumbs />
+    <>
+      <SEO title={categoryId.toUpperCase()} />
       <div className="constraints">
         <div className="constraints__container">
+          <BreadCrumbs />
+          <hr className="constraints__hr" />
           <h1 className="constraints__title">{categoryId}</h1>
           <p className="constraints__summary">
-            Showing <span>1</span> &mdash; <span>48</span> of <span>375</span>{" "}
-            results
+            Showing <strong>1</strong> &mdash; <strong>48</strong> of{" "}
+            <strong>375</strong> results
           </p>
           <div className="constraints__filters">
             <button className="constraints__filter">
-              <span>Brand</span> <span>Jordan</span>
+              <strong>Brand</strong> <span>Jordan</span>
               <span role="button" className="constraints__filter-close">
                 <VscChromeClose />
               </span>
             </button>
             <button className="constraints__filter">
-              <span>Gender</span> <span>Women</span>
+              <strong>Gender</strong> <span>Women</span>
               <span role="button" className="constraints__filter-close">
                 <VscChromeClose />
               </span>
             </button>
-            <button className="constraints__clear-all">
+            <button className="constraints__filter constraints__filter--clear">
               Clear All
               <span role="button" className="constraints__filter-close">
                 <VscChromeClose />

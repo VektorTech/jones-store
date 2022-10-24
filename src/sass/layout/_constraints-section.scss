@@ -1,0 +1,71 @@
+@use "../abstracts" as *;
+
+.constraints {
+  color: $c-text-black;
+  font-size: $text-md;
+
+  &__hr {
+    background-color: $c-gray;
+    height: 0.1rem;
+  }
+
+  &__container {
+    @extend %container;
+    padding-bottom: 5rem;
+  }
+
+  &__title {
+    font-size: $text-xxl;
+    text-transform: capitalize;
+    margin-top: 3rem;
+    margin-bottom: 0;
+    font-weight: 700;
+    white-space: nowrap;
+
+  }
+
+  &__summary {
+  }
+
+  &__filters {
+  }
+
+  &__filter {
+    height: 3.5rem;
+    border: 0.1rem solid $c-control-gray;
+    border-radius: 0.3rem;
+    padding: 0 1rem;
+    margin-top: 1rem;
+    font-weight: 400;
+    position: relative;
+    text-transform: capitalize;
+    white-space: nowrap;
+
+    & {
+      margin-right: 1rem;
+    }
+
+    &--clear {
+      color: $c-red-light;
+      border-color: $c-red-light;
+    }
+
+    &-close {
+      position: absolute;
+      border-radius: 50%;
+      border: 0.1rem solid;
+      border-color: inherit;
+      color: inherit;
+      font-size: $text-xs;
+      display: inline-block;
+      width: 2rem;
+      height: 2rem;
+      right: -0.8rem;
+      top: -0.8rem;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
