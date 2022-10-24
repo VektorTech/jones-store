@@ -178,20 +178,20 @@ export default function HeaderSection({
               </Link>
             </li>
             <li className="header__button header__button-wishlist">
-              {wishlistCount ? <span>{wishlistCount}</span> : null}
               <Link href="/wishlist">
                 <a className="header__button-link">
                   <AiOutlineHeart />
                 </a>
               </Link>
+              {wishlistCount ? <span>{wishlistCount}</span> : null}
             </li>
             <li className="header__button header__button-cart">
-              {cartCount ? <span>{cartCount}</span> : null}
               <Link href="/cart">
                 <a className="header__button-link">
                   <BsCart3 />
                 </a>
               </Link>
+              {cartCount ? <span>{cartCount}</span> : null}
             </li>
           </ul>
         </div>
