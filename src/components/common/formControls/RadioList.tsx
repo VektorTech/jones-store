@@ -6,6 +6,7 @@ export default function RadioList({
   checkbox,
   required,
   render: RenderComponent,
+  grid,
   name = "",
   className = "",
   ...inputProps
@@ -19,6 +20,7 @@ export default function RadioList({
   }) => ReactElement;
   label?: string;
   checkbox?: boolean;
+  grid?: boolean;
   values: string[];
 } & JSX.IntrinsicElements["input"]) {
   const initState = values.reduce((obj: any, value: string) => {
@@ -51,7 +53,7 @@ export default function RadioList({
           </legend>
         ) : null}
 
-        <ul className="radio-list__list">
+        <ul className={"radio-list__list" + (grid ? " radio-list__list--grid" : "")}>
           {values.slice(0, all ? values.length : 10).map((value) => (
             <li key={value}>
               <label className="radio-list__label">
