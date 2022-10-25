@@ -2,11 +2,7 @@ import Image from "next/image";
 import Img from "next/future/image";
 
 import { AiOutlineHeart } from "react-icons/ai";
-import {
-  MdArrowBackIos,
-  MdArrowForwardIos,
-  MdArrowBackIosNew,
-} from "react-icons/md";
+import { MdArrowForwardIos, MdArrowBackIosNew } from "react-icons/md";
 
 import BreadCrumbs from "@Components/productList/BreadCrumbs";
 import { withSessionSsr } from "@Lib/withSession";
@@ -19,8 +15,9 @@ import { useAuthState } from "@Lib/contexts/AuthContext";
 import Dropdown from "@Components/common/formControls/Dropdown";
 import Button from "@Components/common/formControls/Button";
 
-import { useState } from "react";
-const probe = require('probe-image-size');
+import dynamic from "next/dynamic";
+import { useState, Suspense } from "react";
+const probe = require("probe-image-size");
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -28,19 +25,52 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
   currencyDisplay: "code",
 });
 
+const SizeGuide = dynamic(() => import("@Components/SizeGuide"), {
+  suspense: true,
+});
+
+const Reviews = dynamic(() => import("@Components/Reviews"), {
+  suspense: true,
+});
+
 export default function ProductPage({
   product,
   relatedProducts,
-  size
+  size,
 }: {
   product: ProductType;
   relatedProducts: ProductType[];
-  size: { width: number, height: number };
+  size: { width: number; height: number };
 }) {
   const { id, title, gender, ratings, price, discount } = product;
 
   const { addToCart } = useAuthState();
   const [quantity, setQuantity] = useState(1);
+  const [tabName, setTabName] = useState<
+    "description" | "size_guide" | "reviews"
+  >("description");
+
+  const tabs: {
+    description: JSX.Element;
+    size_guide: JSX.Element;
+    reviews: JSX.Element;
+  } = {
+    description: (
+      <div className="product-view__details-panel product-view__description-panel">
+        {product.details}
+      </div>
+    ),
+    size_guide: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <SizeGuide />
+      </Suspense>
+    ),
+    reviews: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Reviews />
+      </Suspense>
+    ),
+  };
 
   return (
     <>
@@ -75,7 +105,7 @@ export default function ProductPage({
             <div className="product-view__picture">
               <div className="product-view__picture-container">
                 <Img
-                  style={{width: "100%", height: "100%", position: "static"}}
+                  style={{ width: "100%", height: "100%", position: "static" }}
                   src={product.mediaURLs[0]}
                   width={size.width}
                   height={size.height}
@@ -153,34 +183,43 @@ export default function ProductPage({
         <div className="product-view__details">
           <div className="product-view__details-tabs">
             <ul>
-              <li className="active">
-                <button>Details</button>
+              <li
+                className={
+                  "product-view__details-tab" +
+                  (tabName == "description"
+                    ? " product-view__details-tab--active"
+                    : "")
+                }
+              >
+                <button onClick={() => setTabName("description")}>
+                  Description
+                </button>
               </li>
-              <li>
-                <button>Size Guide</button>
+              <li
+                className={
+                  "product-view__details-tab" +
+                  (tabName == "size_guide"
+                    ? " product-view__details-tab--active"
+                    : "")
+                }
+              >
+                <button onClick={() => setTabName("size_guide")}>
+                  Size Guide
+                </button>
               </li>
-              <li>
-                <button>Reviews</button>
+              <li
+                className={
+                  "product-view__details-tab" +
+                  (tabName == "reviews"
+                    ? " product-view__details-tab--active"
+                    : "")
+                }
+              >
+                <button onClick={() => setTabName("reviews")}>Reviews</button>
               </li>
             </ul>
           </div>
-          <div className="product-view__details-body">
-            {/* Lazy Load Components */}
-            <div className="product-view__details-panel product-view__description-panel"></div>
-            <div className="product-view__details-panel product-view__size-panel"></div>
-            <div className="product-view__details-panel product-view__reviews-panel">
-              <button>Write A Review</button> {/* MODAL */}
-              <div className="review">
-                {/*
-								moment(time ago)
-								Rating
-								Name
-								Avatar
-								Body
-							*/}
-              </div>
-            </div>
-          </div>
+          <div className="product-view__details-body">{tabs[tabName]}</div>
         </div>
       </div>
 
@@ -251,7 +290,7 @@ export const getServerSideProps = withSessionSsr(async function ({
     })
     .catch(console.log);
 
-  let size = { width: 0, height: 0 }
+  let size = { width: 0, height: 0 };
   if (product) {
     size = await probe(product.mediaURLs[0]);
   }
@@ -261,7 +300,7 @@ export const getServerSideProps = withSessionSsr(async function ({
       product,
       relatedProducts,
       reviews: [],
-      size
+      size,
     },
   };
 });

@@ -1,54 +1,23 @@
 import { VscChromeClose } from "react-icons/vsc";
 import { FiSearch } from "react-icons/fi";
 import Product from "@Components/common/Product";
-
-import { useDialog } from "@Lib/contexts/UIContext";
-import { ChangeEventHandler, useEffect, useRef, useState } from "react";
 import { ProductComponentType } from "src/types/shared";
-import { useDebounce } from "@Lib/hooks/useDebounce";
+import { ChangeEventHandler } from "react";
 
-export default function SearchBox() {
-  const { currentDialog, setDialog } = useDialog();
-  const active = currentDialog == "SEARCH_BOX";
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const [products, setProducts] = useState<
-    ProductComponentType[] | Array<never>
-  >([]);
-  const address = useRef(typeof location == "object" ? location.href : null);
-
-  const searchChangedHandler: ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
-    setSearchTerm(event.currentTarget.value);
-  };
-
-  useDebounce(
-    () => {
-      if (active) {
-        fetch(`${location.origin}/api/products/search?q=${searchTerm}&limit=5`)
-          .then((res) => res.json())
-          .then((res) => setProducts(res.data || []))
-          .catch(console.log);
-      }
-    },
-    500,
-    [active, searchTerm]
-  );
-
-  useEffect(() => {
-    if (active) {
-      window.history.replaceState(null, "", `/search?q=${searchTerm}`);
-    } else {
-      window.history.replaceState(null, "", address.current);
-    }
-  }, [searchTerm, active]);
-
-  if (!active) return null;
-
+export default function SearchBox({
+  setDialog,
+  searchTerm,
+  searchChangedHandler,
+  products,
+}: {
+  setDialog: () => void;
+  searchTerm: string;
+  searchChangedHandler: ChangeEventHandler<HTMLInputElement>;
+  products: ProductComponentType[];
+}) {
   return (
     <div className="search">
-      <button className="search__close" onClick={() => setDialog(null)}>
+      <button className="search__close" onClick={() => setDialog()}>
         <VscChromeClose className="search__close-icon" />
       </button>
       <div className="search__container">
