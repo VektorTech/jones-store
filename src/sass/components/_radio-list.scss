@@ -125,7 +125,7 @@ $control-size: 1.7rem;
 
   &__list--grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr));
     gap: 0.5rem;
   }
 }
