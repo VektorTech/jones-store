@@ -42,11 +42,11 @@ const Reviews = dynamic(() => import("@Components/Reviews"), {
 export default function ProductPage({
   product,
   relatedProducts,
-  size,
+  sizes,
 }: {
   product: ProductType;
   relatedProducts: ProductType[];
-  size: { width: number; height: number };
+  sizes: { width: number; height: number }[];
 }) {
   const { id, title, gender, ratings, price, discount } = product;
 
@@ -113,8 +113,8 @@ export default function ProductPage({
                 <Img
                   style={{ width: "100%", height: "100%", position: "static" }}
                   src={product.mediaURLs[0]}
-                  width={size.width}
-                  height={size.height}
+                  width={sizes[0].width}
+                  height={sizes[0].height}
                   alt=""
                 />
                 <div className="product-view__gallery-controls">
@@ -296,9 +296,9 @@ export const getServerSideProps = withSessionSsr(async function ({
     })
     .catch(console.log);
 
-  let size = { width: 0, height: 0 };
+  let sizes: { width: number, height: number }[] = [];
   if (product) {
-    size = await probe(product.mediaURLs[0]);
+    sizes = await Promise.all(product.mediaURLs.map(async url => await probe(url)));
   }
 
   return {
@@ -306,7 +306,7 @@ export const getServerSideProps = withSessionSsr(async function ({
       product,
       relatedProducts,
       reviews: [],
-      size,
+      sizes,
     },
   };
 });
