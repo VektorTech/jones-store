@@ -17,6 +17,7 @@
     "iron-session": "^6.2.1",
     "next": "12.3.0",
     "nprogress": "^0.2.0",
+    "probe-image-size": "^7.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.4.0",

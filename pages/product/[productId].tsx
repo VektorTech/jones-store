@@ -11,6 +11,8 @@ import RatingStars from "@Components/common/RatingStars";
 import Product from "@Components/common/Product";
 import { Gender, Product as ProductType, Category } from "@prisma/client";
 import { useAuthState } from "@Lib/contexts/AuthContext";
+const probe = require('probe-image-size');
+
 
 export default function ProductPage({
   product,
@@ -189,11 +191,17 @@ export const getServerSideProps = withSessionSsr(async function ({
     })
     .catch(console.log);
 
+  let size = { width: 0, height: 0 }
+  if (product) {
+    size = await probe(product.mediaURLs[0]);
+  }
+
   return {
     props: {
       product,
       relatedProducts,
       reviews: [],
+      size
     },
   };
 });
