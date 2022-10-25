@@ -18,6 +18,12 @@ import Button from "@Components/common/formControls/Button";
 import dynamic from "next/dynamic";
 import { useState, Suspense } from "react";
 const probe = require("probe-image-size");
+import BarLoader from "react-spinners/BarLoader";
+import { CSSProperties } from "react";
+
+const override: CSSProperties = {
+  margin: "2rem auto 0 auto"
+};
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -61,12 +67,12 @@ export default function ProductPage({
       </div>
     ),
     size_guide: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<BarLoader speedMultiplier={2} cssOverride={override} />}>
         <SizeGuide />
       </Suspense>
     ),
     reviews: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<BarLoader speedMultiplier={2} cssOverride={override} />}>
         <Reviews />
       </Suspense>
     ),

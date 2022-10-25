@@ -21,6 +21,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.4.0",
+    "react-spinners": "^0.13.6",
     "sanitize-html": "^2.7.2",
     "yup": "^0.32.11"
   },
