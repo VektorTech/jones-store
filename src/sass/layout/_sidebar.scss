@@ -16,7 +16,7 @@
 
   &--active {
     pointer-events: unset;
-    background-color: #22222288;
+    background-color: $c-backdrop;
     visibility: visible;
 
     #{$self}__nav {

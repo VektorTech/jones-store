@@ -1,0 +1,60 @@
+@use "../abstracts" as *;
+
+.modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+
+  &__overlay {
+    width: 100%;
+    height: 100%;
+    background-color: $c-backdrop;
+    position: absolute;
+    z-index: -1;
+  }
+
+  &__main {
+    width: 95%;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    margin-top: 50vh;
+    transform: translateY(-50%);
+
+    @include respond-to("medium") {
+      width: 60%;
+    }
+  }
+
+  &__header {
+    padding: 1rem 2rem;
+  }
+
+  &__close {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    font-size: 2rem;
+    height: 2rem;
+    display: flex;
+    color: $c-text-gray;
+    transition: color 0.3s $timing-func-ui;
+
+    &:hover {
+      color: $c-text-black;
+    }
+  }
+
+  &__title {
+    margin: 0;
+    font-weight: 400;
+    font-size: $text-lg;
+  }
+
+  &__body {
+    padding: 2rem;
+  }
+}
