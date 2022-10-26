@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
+import womanTallImage from "@Images/pexels-theia-sight-4932179.jpg";
 import manImage from "@Images/man.jpg";
 import womanImage from "@Images/woman.jpg";
 import kidImage from "@Images/kid.webp";
@@ -11,6 +12,9 @@ export default function GenderSection() {
   return (
     <section className="gender">
       <div className="gender__container">
+        <div className="gender__tall-img">
+          <Image alt="" objectFit="cover" objectPosition="bottom" width={4000} height={5216} layout="fill" src={womanTallImage} />
+        </div>
         <div className="gender__grid">
           <div className="gender__block gender__block-men">
             <Link href="/category/men">
