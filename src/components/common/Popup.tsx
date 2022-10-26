@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 const Popup = ({
   hoverElementId,
   children,
-  currentId
+  currentId,
 }: {
   hoverElementId: string;
   currentId?: string;
@@ -48,7 +48,7 @@ const Popup = ({
       ref={containerRef}
       className={"popup" + (active ? " popup--visible" : "")}
     >
-      {children}
+      <div className="popup__container">{children}</div>
     </div>
   );
 

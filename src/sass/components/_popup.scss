@@ -7,29 +7,33 @@
 
 .popup {
   display: none;
-  position: absolute;
   z-index: 1000;
-  background-color: #fff;
-  color: $c-text-black;
-  padding: 1rem 0.5rem;
-  margin-top: 0.5rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 0 0.3rem #777;
+  position: absolute;
+  background: transparent;
+  padding-top: 1rem;
 
   &--visible {
     display: block;
   }
 
-  &::before {
-    content: "";
-    display: block;
-    width: 0;
-    height: 0;
-    margin: auto;
-    margin-top: -1.5rem;
-    background-color: transparent;
-    border-right: 1rem solid #fff;
-    border-bottom: 1rem solid transparent;
-    transform: rotate(-45deg);
+  &__container {
+    background-color: #fff;
+    color: $c-text-black;
+    padding: 1rem 0.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 0.3rem #777;
+
+    &::before {
+      content: "";
+      display: block;
+      width: 0;
+      height: 0;
+      margin: auto;
+      margin-top: -1.5rem;
+      background-color: transparent;
+      border-right: 1rem solid #fff;
+      border-bottom: 1rem solid transparent;
+      transform: rotate(-45deg);
+    }
   }
 }
