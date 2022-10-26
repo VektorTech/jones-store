@@ -9,7 +9,7 @@
     width: 100%;
     margin-left: auto;
 
-    @include respond-to("medium") {
+    @include respond-to("large") {
       &--filter {
         width: 75%;
       }

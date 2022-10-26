@@ -15,9 +15,10 @@ import SEO from "@Components/common/SEO";
 import Button from "@Components/common/formControls/Button";
 import Dropdown from "@Components/common/formControls/Dropdown";
 
-import { useState } from "react";
+import { useEffect } from "react";
 
 import Product from "@Components/common/Product";
+import { useDialog } from "@Lib/contexts/UIContext";
 
 export default function CategoryPage({
   categoryId,
@@ -26,10 +27,17 @@ export default function CategoryPage({
   categoryId: string;
   products: ProductType[];
 }) {
-  const [active, setActive] = useState(true);
   // const router = useRouter();
   // const { categoryId } = router.query;
   // console.log(products);
+
+  const { setDialog, currentDialog } = useDialog();
+
+  useEffect(() => {
+    if (innerWidth > 992) setDialog("PRODUCTS_FILTER");
+  }, [setDialog]);
+
+  const filterActive = currentDialog == "PRODUCTS_FILTER";
 
   return (
     <>
@@ -68,7 +76,10 @@ export default function CategoryPage({
 
       <div className="filter-sort">
         <div className="filter-sort__container">
-          <Button onClick={() => setActive(!active)} className="filter-sort__toggle">
+          <Button
+            onClick={() => setDialog(!filterActive ? "PRODUCTS_FILTER" : null)}
+            className="filter-sort__toggle"
+          >
             <BsSliders className="filter-sort__toggle-icon" />
             <span>filter</span>
           </Button>
@@ -91,13 +102,23 @@ export default function CategoryPage({
       </div>
 
       <div className="results">
-        <Filter active={active} setState={(state: boolean) => setActive(state)} />
+        <Filter
+          active={filterActive}
+          setState={(state: boolean) =>
+            setDialog(state ? "PRODUCTS_FILTER" : null)
+          }
+        />
 
-        <div className={"results__container" + (active ? " results__container--filter" : "")}>
+        <div
+          className={
+            "results__container" +
+            (filterActive ? " results__container--filter" : "")
+          }
+        >
           <div className="results__grid">
-            {
-              products.map(product => <Product key={product.id} {...product} />)
-            }
+            {products.map((product) => (
+              <Product key={product.id} {...product} />
+            ))}
           </div>
           <Pagination />
         </div>

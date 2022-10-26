@@ -13,6 +13,7 @@ export const Dialogs = {
   SIDEBAR_DIALOG: "SIDEBAR_DIALOG",
   MODAL_POPUP: "MODAL_POPUP",
   SEARCH_BOX: "SEARCH_BOX",
+  PRODUCTS_FILTER: "PRODUCTS_FILTER",
 };
 
 export type DialogStates = keyof typeof Dialogs | null;
@@ -32,7 +33,7 @@ const uiState: {
 const UIContext = createContext(uiState);
 
 export function useDialog(
-  observer?: (isVisible: boolean) => void,
+  observer?: (isVisible: boolean, currentState?: DialogStates) => void,
   dialogDeps?: DialogStates[]
 ) {
   const _uiState = useContext(UIContext);
@@ -41,7 +42,7 @@ export function useDialog(
     const isVisible = dialogDeps?.includes(
       _uiState.currentDialog as DialogStates
     );
-    observer?.(!!isVisible);
+    observer?.(!!isVisible, _uiState.currentDialog);
   }, [_uiState, observer, dialogDeps]);
 
   return _uiState;
