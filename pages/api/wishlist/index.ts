@@ -84,13 +84,13 @@ async function getWishlistRoute(
   const { user, guest } = req.session;
 
   if (user) {
-    const wishlistCount = await prisma.wishlist.count({
+    const wishlist = await prisma.wishlist.findMany({
       where: { userId: user?.id as string },
     });
 
     res.json({
-      message: "Favorites: " + wishlistCount,
-      data: wishlistCount,
+      message: "Favorites: " + wishlist,
+      data: wishlist,
     });
   } else {
     res.json({

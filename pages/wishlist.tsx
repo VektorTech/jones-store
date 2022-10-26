@@ -2,13 +2,30 @@ import { withSessionSsr } from "@Lib/withSession";
 import { NextPage } from "next";
 import prisma from "@Lib/prisma";
 
-import { Wishlist, Product } from "@prisma/client";
+import { Wishlist, Product as ProductType } from "@prisma/client";
 import SEO from "@Components/common/SEO";
+import { useAuthState } from "@Lib/contexts/AuthContext";
+import Product from "@Components/common/Product";
 
 const WishlistPage: NextPage<WishlistPageProps> = ({ wishlistItems }) => {
+  const { removeFromWishlist } = useAuthState();
+
   return (
     <div>
       <SEO title="Wishlist" />
+
+      {wishlistItems?.map((product) => (
+        <div key={product.id}>
+          <Product {...product} />
+          <button
+            onClick={() =>
+              removeFromWishlist(product.id).then(() => location?.reload())
+            }
+          >
+            Remove
+          </button>
+        </div>
+      ))}
     </div>
   );
 };
@@ -60,7 +77,7 @@ export const getServerSideProps = withSessionSsr(async function ({
           select,
           where: { id: item.productId },
         });
-        return { ...item, product };
+        return { ...item, ...product };
       })
     );
   }
@@ -73,7 +90,7 @@ export const getServerSideProps = withSessionSsr(async function ({
 });
 
 interface WishlistPageProps {
-  wishlistItems: (Wishlist & { product: Product })[];
+  wishlistItems: (Wishlist & ProductType)[];
 }
 
 export default WishlistPage;

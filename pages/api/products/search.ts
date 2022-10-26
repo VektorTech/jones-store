@@ -19,6 +19,7 @@ async function productSearchRoute(
       price: true,
       ratings: true,
       gender: true,
+      sku: true
     },
     where: {
       title: {

@@ -15,7 +15,7 @@ export default function SignIn() {
       action="/api/auth/signin"
       afterSubmit={(res, status) => {
         console.log(status, res);
-        setTimeout(() => (location.href = location.origin), 3000);
+        // setTimeout(() => (location.href = location.origin), 3000);
       }}
     >
       <h2>Sign In</h2>

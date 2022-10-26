@@ -33,35 +33,37 @@ async function signupRoute(
   });
 
   if (req.session.guest) {
-    req.session.guest.wishlist.forEach(async (item) => {
-      await prisma.wishlist.create({
+    try {
+      req.session.guest.wishlist.forEach(async (item) => {
+        await prisma.wishlist.create({
+          data: {
+            userId: id as string,
+            productId: item.productId as string,
+          },
+        });
+      });
+
+      const cart = await prisma.cart.create({
         data: {
-          userId: id as string,
-          productId: item.productId as string,
+          userId: id,
+          total: 0,
         },
       });
-    });
 
-    const cart = await prisma.cart.create({
-      data: {
-        userId: id,
-        total: 0,
-      },
-    });
-
-    req.session.guest.cart.forEach(async (item) => {
-      await prisma.cartItem.create({
-        data: {
-          cartId: cart?.id,
-          productId: item.productId as string,
-          quantity: item.quantity,
-          size: item.size,
-          total: item.total,
-        },
+      req.session.guest.cart.forEach(async (item) => {
+        await prisma.cartItem.create({
+          data: {
+            cartId: cart?.id,
+            productId: item.productId as string,
+            quantity: Number(item.quantity),
+            size: Number(item.size),
+            total: Number(item.total),
+          },
+        });
       });
-    });
 
-    req.session.guest = { wishlist: [], cart: [] };
+      req.session.guest = { wishlist: [], cart: [] };
+    } catch (e) {}
   }
 
   req.session.user = {

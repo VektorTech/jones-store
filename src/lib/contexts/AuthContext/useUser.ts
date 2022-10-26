@@ -104,6 +104,11 @@ export default function useUser(id?: string) {
 
     if (data?.data) {
       payload = data.data;
+
+      updateUser({
+        type: actions.SET_USER as ActionsType,
+        payload,
+      });
     } else {
       Promise.all([
         fetch("/api/wishlist").then((res) => res.json()),

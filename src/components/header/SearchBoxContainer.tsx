@@ -48,7 +48,6 @@ export default function SearchBoxContainer() {
   }, [searchTerm, active]);
 
   if (!active) return null;
-
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <SearchBox
