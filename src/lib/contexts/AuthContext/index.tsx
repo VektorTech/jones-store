@@ -1,5 +1,5 @@
 import { createContext, ReactElement, useContext } from "react";
-import useUser from "@Lib/hooks/useUser";
+import useUser from "./useUser";
 import { UserType } from "src/types/shared";
 
 const authState: {

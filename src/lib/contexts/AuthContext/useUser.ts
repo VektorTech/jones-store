@@ -6,7 +6,7 @@ import {
 } from "@Lib/helpers";
 import { useState, useEffect, useReducer } from "react";
 import { UserType } from "src/types/shared";
-import useLocalStorage from "./useLocalStorage";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 const initUser: UserType = {
   id: "",
