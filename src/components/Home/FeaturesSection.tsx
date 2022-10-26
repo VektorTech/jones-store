@@ -39,9 +39,9 @@ export default function FeaturesSection() {
           <div className="features__icon">
             <TbTruckDelivery className="features__icon-element" />
           </div>
-          <h3 className="features__title">free shipping</h3>
+          <h3 className="features__title">fast shipping</h3>
           <p className="features__text">
-            No matter where you are from, you&apos;ll have <strong>FREE</strong>{" "}
+            No matter where you are from, you&apos;ll have <strong>FAST</strong>{" "}
             shipping purchasing in Jones.
           </p>
         </div>
