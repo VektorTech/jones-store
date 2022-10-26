@@ -10,6 +10,7 @@ import { FiSearch } from "react-icons/fi";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { getPathString } from "@Lib/utils";
 import Form from "@Components/Form";
+import { CartItem } from "@prisma/client";
 
 const CategoriesData = require("@Lib/CategoriesData.json");
 
@@ -21,7 +22,11 @@ export default function Sidebar({ userId }: { userId?: string }) {
 
   const { user } = useAuthState();
   const wishlistCount = user?.wishlist?.length;
-  const cartCount = user?.cart?.length;
+  const cartCount = user?.cart.length;
+  const cartTotal = (user?.cart || []).reduce(
+    (total: number, item: CartItem) => total + item?.total,
+    0
+  ) || 0;
 
   const sidebarRef = useRef<HTMLDivElement>(null);
   const sidebarVisible = currentDialog == Dialogs.SIDEBAR_DIALOG;
@@ -154,7 +159,7 @@ export default function Sidebar({ userId }: { userId?: string }) {
                 <Link href="/cart">
                   <a className="sidebar__anchor">
                     <BsCart3 />
-                    <span>Cart{cartCount ? ` (${cartCount})` : ""}</span>
+                    <span>Cart{cartCount ? ` (${cartCount}) ($${cartTotal})` : ""}</span>
                   </a>
                 </Link>
               </li>

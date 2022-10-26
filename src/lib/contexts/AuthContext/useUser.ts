@@ -6,7 +6,6 @@ import {
 } from "@Lib/helpers";
 import { useState, useEffect, useReducer } from "react";
 import { UserType } from "src/types/shared";
-import useLocalStorage from "../../hooks/useLocalStorage";
 
 const initUser: UserType = {
   id: "",
@@ -39,9 +38,25 @@ const authReducer = (
     case actions.SET_USER:
       return action.payload;
     case actions.ADD_WISHLIST_ITEM:
-      return { ...user, wishlist: [...user.wishlist, action.payload] };
+      return {
+        ...user,
+        wishlist: [
+          ...user.wishlist.filter(
+            (item) => item.productId != action.payload.productId
+          ),
+          action.payload,
+        ],
+      };
     case actions.ADD_CART_ITEM:
-      return { ...user, cart: [...user.cart, action.payload] };
+      return {
+        ...user,
+        cart: [
+          ...user.cart.filter(
+            (item) => item.productId != action.payload.productId
+          ),
+          action.payload,
+        ],
+      };
     case actions.REMOVE_WISHLIST_ITEM:
       return {
         ...user,
@@ -82,60 +97,49 @@ const useProfile = (
 
 export default function useUser(id?: string) {
   const { data, isError, isLoading } = useProfile(id);
-  const [wishlist, setWishlist] = useLocalStorage("wishlist");
   const [userState, updateUser] = useReducer(authReducer, initUser);
 
   useEffect(() => {
-    const _wishlist = JSON.parse(wishlist || "[]");
     let payload = null;
 
     if (data?.data) {
       payload = data.data;
     } else {
-      payload = {
-        wishlist: _wishlist.map(({ productId }: { productId: string }) => ({
-          productId,
-        })),
-      };
-    }
+      Promise.all([
+        fetch("/api/wishlist").then((res) => res.json()),
+        fetch("/api/cart").then((res) => res.json()),
+      ]).then((res) => {
+        const [wishlistData, cartData] = res;
+        payload = {
+          wishlist: wishlistData.data,
+          cart: cartData.data,
+        };
 
-    updateUser({
-      type: actions.SET_USER as ActionsType,
-      payload,
-    });
-  }, [data, wishlist]);
+        updateUser({
+          type: actions.SET_USER as ActionsType,
+          payload,
+        });
+      });
+    }
+  }, [data]);
 
   const addWishlistItem = async (id: string) => {
-    if (userState.id) {
-      const r = await postWishlistItem(id);
-      if (!r.error) {
-        updateUser({
-          type: actions.ADD_WISHLIST_ITEM as ActionsType,
-          payload: r.data,
-        });
-      }
-    } else {
-      setWishlist(JSON.stringify([...userState.wishlist, { productId: id }]));
+    const r = await postWishlistItem(id);
+    if (!r.error) {
+      updateUser({
+        type: actions.ADD_WISHLIST_ITEM as ActionsType,
+        payload: r.data,
+      });
     }
   };
 
   const removeWishlistItem = async (id: string) => {
-    if (userState.id) {
-      const r = await deleteWishlistItem(id);
-      if (!r.error) {
-        updateUser({
-          type: actions.REMOVE_WISHLIST_ITEM as ActionsType,
-          payload: id,
-        });
-      }
-    } else {
-      setWishlist(
-        JSON.stringify(
-          userState.wishlist.filter(
-            ({ productId }: { productId: string }) => productId != id
-          )
-        )
-      );
+    const r = await deleteWishlistItem(id);
+    if (!r.error) {
+      updateUser({
+        type: actions.REMOVE_WISHLIST_ITEM as ActionsType,
+        payload: id,
+      });
     }
   };
 

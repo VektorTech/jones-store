@@ -13,7 +13,7 @@ import { useDialog } from "@Lib/contexts/UIContext";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import Popup from "@Components/common/Popup";
 import Form from "@Components/Form";
-import Button from "@Components/common/formControls/Button";
+import { CartItem } from "@prisma/client";
 
 export default function HeaderSection({
   announcementVisible,
@@ -29,6 +29,10 @@ export default function HeaderSection({
   const { user, isAuth } = useAuthState();
   const wishlistCount = user?.wishlist?.length;
   const cartCount = user?.cart?.length;
+  const cartTotal = (user?.cart || []).reduce(
+    (total: number, item: CartItem) => total + item?.total,
+    0
+  ) || 0;
 
   useEffect(() => {
     const ANNOUNCEMENT_BANNER_HEIGHT = 35;
@@ -81,7 +85,9 @@ export default function HeaderSection({
                   <a>COLORWAYS</a>
                 </Link>
               </li>
-              <li className="header__nav-link"><span>|</span></li>
+              <li className="header__nav-link">
+                <span>|</span>
+              </li>
               <li className="header__nav-link">
                 <Link href="/category/men">
                   <a>MEN</a>
@@ -156,7 +162,11 @@ export default function HeaderSection({
                           }}
                           action="/api/auth/signout"
                         >
-                          <input className="header__popup-button" type="submit" value="Log Out" />
+                          <input
+                            className="header__popup-button"
+                            type="submit"
+                            value="Log Out"
+                          />
                         </Form>
                       </>
                     ) : (
@@ -187,8 +197,21 @@ export default function HeaderSection({
             </li>
             <li className="header__button header__button-cart">
               <Link href="/cart">
-                <a className="header__button-link">
+                <a
+                  onPointerEnter={(e) =>
+                    setHoveredElement("header-cart-btn")
+                  }
+                  onPointerLeave={(e) => setHoveredElement("")}
+                  className="header__button-link"
+                  id="header-cart-btn"
+                >
                   <BsCart3 />
+                  <Popup
+                    currentId={hoveredElement}
+                    hoverElementId="header-cart-btn"
+                  >
+                    <strong>${cartTotal}</strong>
+                  </Popup>
                 </a>
               </Link>
               {cartCount ? <span>{cartCount}</span> : null}

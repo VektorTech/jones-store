@@ -36,30 +36,61 @@ export const getServerSideProps = withSessionSsr(async function ({
   req,
   query,
 }) {
-  const { user } = req.session;
+  const { user, guest } = req.session;
 
-  const cart = await prisma.cart
-    .findUnique({
-      where: { userId: user?.id },
-    })
-    .catch(console.log);
+  const select = {
+    title: true,
+    price: true,
+    discount: true,
+    mediaURLs: true,
+    gender: true,
+    ratings: true,
+    details: true,
+    color: true,
+    year: true,
+    stockQty: true,
+    salesCount: true,
+    shippingCost: true,
+    sizes: true,
+    type: true,
+    // review: true,
+    sku: true,
+    id: true,
+  };
 
   let cartItems = null;
   let cartTotal = 0;
-  if (cart && typeof cart == "object") {
-    cartTotal = cart.total;
-    cartItems = await prisma.cartItem
-      .findMany({
-        where: { cartId: cart.id },
-        include: { product: true },
+  if (user) {
+    const cart = await prisma.cart
+      .findUnique({
+        where: { userId: user?.id },
       })
-      .then((list) =>
-        list.map((cartItem) => ({
-          ...cartItem,
-          product: { ...cartItem.product, dateAdded: null },
-        }))
-      )
       .catch(console.log);
+
+    if (cart && typeof cart == "object") {
+      cartTotal = cart.total;
+      cartItems = await prisma.cartItem
+        .findMany({
+          where: { cartId: cart.id },
+          include: { product: true },
+        })
+        .then((list) =>
+          list.map((cartItem) => ({
+            ...cartItem,
+            product: { ...cartItem.product, dateAdded: null },
+          }))
+        )
+        .catch(console.log);
+    }
+  } else if (guest) {
+    cartTotal = (guest.cart || []).reduce(
+      (total: number, item: any) => total + item.total,
+      0
+    ) || 0;
+    cartItems = await Promise.all(guest.cart.map(async item => {
+      const product = await prisma.product.findUnique({ select, where: { id: item.productId } })
+      return { ...item, product };
+    }));
   }
 
   return {

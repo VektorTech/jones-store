@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@Lib/prisma";
 import { DefaultResponse } from "src/types/shared";
 import { RouteHandler } from "@Lib/RouteHandler";
-import { isAuthenticated } from "@Lib/apiMiddleware";
+import { checkGuest } from "@Lib/apiMiddleware";
 import { ServerError } from "@Lib/utils";
 
 async function getCartRoute(
@@ -11,21 +11,28 @@ async function getCartRoute(
   res: NextApiResponse<DefaultResponse>,
   next: Function
 ) {
-  const { user } = req.session;
+  const { user, guest } = req.session;
 
-  const cart = await prisma.cart.findUnique({
-    where: { userId: user?.id },
-  });
+  if (user) {
+    const cart = await prisma.cart.findUnique({
+      where: { userId: user?.id },
+    });
 
-  const cartItems = await prisma.cartItem.findMany({
-    where: { cartId: cart?.id },
-    include: { product: true },
-  });
+    const cartItems = await prisma.cartItem.findMany({
+      where: { cartId: cart?.id },
+      include: { product: true },
+    });
 
-  res.json({
-    message: "Successfully Retrieved Cart Items",
-    data: cartItems,
-  });
+    res.json({
+      message: "Successfully Retrieved Cart Items",
+      data: cartItems,
+    });
+  } else if (guest) {
+    res.json({
+      message: "Cart Items: " + guest.cart.length,
+      data: guest.cart,
+    });
+  }
 }
 
 async function postCartRoute(
@@ -34,40 +41,64 @@ async function postCartRoute(
   next: Function
 ) {
   const { productId, qty, size } = req.body;
-  const { user } = req.session;
+  const { user, guest } = req.session;
 
-  const product = await prisma.product.findUnique({
-    where: { id: productId },
-  });
-
-  let cart = await prisma.cart.findUnique({
-    where: { userId: user?.id },
-  });
-
-  if (!cart) {
-    cart = await prisma.cart.create({
-      data: {
-        userId: user?.id || "",
-        total: 0,
-      },
-    });
-  }
-
-  if (cart && product) {
-    await prisma.cartItem.create({
-      data: {
-        cartId: cart.id,
-        productId: product.id,
-        size: Number(size),
-        quantity: Number(qty),
-        total: product.price * Number(qty),
-      },
+  if (productId && qty && size) {
+    const product = await prisma.product.findUnique({
+      where: { id: productId },
     });
 
-    return res.json({ message: "Product Successfully Added To Cart" });
+    if (user) {
+      let cart = await prisma.cart.findUnique({
+        where: { userId: user?.id },
+      });
+
+      if (!cart) {
+        cart = await prisma.cart.create({
+          data: {
+            userId: user?.id || "",
+            total: 0,
+          },
+        });
+      }
+
+      if (cart && product && product.stockQty) {
+        const item = await prisma.cartItem.create({
+          data: {
+            cartId: cart.id,
+            productId: product.id,
+            size: Number(size),
+            quantity: Math.min(Number(qty), product.stockQty),
+            total: (product.price - (product.discount || 0)) * Number(qty),
+          },
+        });
+
+        return res.json({
+          message: "Product Successfully Added To Cart",
+          data: item,
+        });
+      }
+    } else if (guest && product && product.stockQty) {
+      const item = {
+        productId,
+        size,
+        quantity: Math.min(Number(qty), product.stockQty),
+        total: (product.price - (product.discount || 0)) * Number(qty),
+      };
+      guest.cart = [
+        ...(guest.cart.filter((item) => item.productId != productId) || []),
+        item,
+      ];
+      await req.session.save();
+
+      return res.json({
+        message: "Product Successfully Added To Cart",
+        data: item,
+      });
+    }
   }
 
-  next(new ServerError("Cannot Find User/Cart", 404));
+  next(new ServerError("Malformed Request", 400));
 }
 
 async function deleteCartRoute(
@@ -76,30 +107,37 @@ async function deleteCartRoute(
   next: Function
 ) {
   const { productId } = req.body;
-  const { user } = req.session;
+  const { user, guest } = req.session;
 
-  const cart = await prisma.cart.findUnique({
-    where: { userId: user?.id },
-  });
-
-  if (cart) {
-    await prisma.cartItem.delete({
-      where: {
-        cartId_productId: {
-          cartId: cart.id,
-          productId,
-        },
-      },
+  if (user) {
+    const cart = await prisma.cart.findUnique({
+      where: { userId: user?.id },
     });
 
-    return res.json({ message: "Product Successfully Removed From Cart" });
+    if (cart) {
+      await prisma.cartItem.delete({
+        where: {
+          cartId_productId: {
+            cartId: cart.id,
+            productId,
+          },
+        },
+      });
+    } else {
+      return next(new ServerError("Cannot Find User/Cart", 404));
+    }
+  } else if (guest) {
+    guest.cart = guest.cart.filter(
+      (cartItem) => productId != cartItem.productId
+    );
+    await req.session.save();
   }
 
-  next(new ServerError("Cannot Find User/Cart", 404));
+  res.json({ message: "Product Successfully Removed From Cart" });
 }
 
 export default new RouteHandler()
-  .get(isAuthenticated, getCartRoute)
-  .post(isAuthenticated, postCartRoute)
-  .delete(isAuthenticated, deleteCartRoute)
+  .get(checkGuest, getCartRoute)
+  .post(checkGuest, postCartRoute)
+  .delete(checkGuest, deleteCartRoute)
   .init();

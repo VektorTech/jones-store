@@ -18,17 +18,52 @@ export const getServerSideProps = withSessionSsr(async function ({
   req,
   query,
 }) {
-  const { user } = req.session;
+  const { user, guest } = req.session;
 
-  const wishlistItems = await prisma.wishlist
-    .findMany({
-      where: { userId: user?.id },
-      include: { product: true },
-    })
-    .then((list) =>
-      list.map(({ product }) => ({ ...product, dateAdded: null }))
-    )
-    .catch(console.log);
+  const select = {
+    title: true,
+    price: true,
+    discount: true,
+    mediaURLs: true,
+    gender: true,
+    ratings: true,
+    details: true,
+    color: true,
+    year: true,
+    stockQty: true,
+    salesCount: true,
+    shippingCost: true,
+    sizes: true,
+    type: true,
+    // review: true,
+    sku: true,
+    id: true,
+  };
+
+  let wishlistItems = null;
+  if (user) {
+    wishlistItems = await prisma.wishlist
+      .findMany({
+        where: { userId: user?.id },
+        include: { product: true },
+      })
+      .then((list) =>
+        list.map(({ product }) => ({ ...product, dateAdded: null }))
+      )
+      .catch(console.log);
+  } else if (guest) {
+    wishlistItems = guest.wishlist;
+
+    wishlistItems = await Promise.all(
+      guest.wishlist.map(async (item) => {
+        const product = await prisma.product.findUnique({
+          select,
+          where: { id: item.productId },
+        });
+        return { ...item, product };
+      })
+    );
+  }
 
   return {
     props: {

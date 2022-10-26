@@ -48,3 +48,20 @@ export const isAuthorizedUser = async (
 
   throw new ServerError("Unauthorized Request", 401);
 };
+
+export const checkGuest = async (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  next: Function
+) => {
+  const { user, guest } = req.session;
+
+  if (!user && !guest) {
+    req.session.guest = {
+      cart: [],
+      wishlist: [],
+    };
+    await req.session.save();
+  }
+  return next();
+};

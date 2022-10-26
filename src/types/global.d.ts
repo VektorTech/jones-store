@@ -5,6 +5,10 @@ declare module "iron-session" {
       username?: string;
       role: string;
     };
+    guest?: {
+      wishlist: { productId: string }[],
+      cart: { productId: string, size: number, quantity: number; total: number; }[]
+    };
   }
 }
 
