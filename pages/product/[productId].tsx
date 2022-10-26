@@ -288,9 +288,9 @@ export const getServerSideProps = withSessionSsr(async function ({
       select,
       where: {
         id: { not: product?.id },
-        gender: product?.gender || Gender.MEN,
-        type: product?.type || Category.MID,
-        color: product?.color || "white",
+        gender: product?.gender,
+        type: product?.type,
+        color: product?.color,
       },
       take: 4,
     })
