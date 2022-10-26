@@ -29,13 +29,20 @@ export default function CategoryPage({
 }) {
   // const router = useRouter();
   // const { categoryId } = router.query;
-  // console.log(products);
 
   const { setDialog, currentDialog } = useDialog();
 
   useEffect(() => {
     if (innerWidth > 992) setDialog("PRODUCTS_FILTER");
   }, [setDialog]);
+
+  useEffect(() => {
+    const hideFilter = () => {
+      if (currentDialog == "PRODUCTS_FILTER") setDialog(null);
+    };
+    addEventListener("resize", hideFilter);
+    return () => removeEventListener("resize", hideFilter);
+  }, [setDialog, currentDialog]);
 
   const filterActive = currentDialog == "PRODUCTS_FILTER";
 
