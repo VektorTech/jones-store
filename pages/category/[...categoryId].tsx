@@ -19,6 +19,7 @@ import { useEffect } from "react";
 
 import Product from "@Components/common/Product";
 import { useDialog } from "@Lib/contexts/UIContext";
+import { useRouter } from "next/router";
 
 export default function CategoryPage({
   categoryId,
@@ -27,8 +28,8 @@ export default function CategoryPage({
   categoryId: string;
   products: ProductType[];
 }) {
-  // const router = useRouter();
-  // const { categoryId } = router.query;
+  const router = useRouter();
+  const { colorway, sizes, height, price, categoryId: category } = router.query;
 
   const { setDialog, currentDialog } = useDialog();
 
@@ -56,7 +57,7 @@ export default function CategoryPage({
           <h1 className="constraints__title">{categoryId}</h1>
           <p className="constraints__summary">
             Showing <strong>1</strong> &mdash; <strong>48</strong> of{" "}
-            <strong>375</strong> results
+            <strong>{products.length}</strong> results
           </p>
           <div className="constraints__filters">
             <button className="constraints__filter">
@@ -66,7 +67,7 @@ export default function CategoryPage({
               </span>
             </button>
             <button className="constraints__filter">
-              <strong>Gender</strong> <span>Women</span>
+              <strong>Gender</strong> <span>{category}</span>
               <span role="button" className="constraints__filter-close">
                 <VscChromeClose />
               </span>
@@ -111,6 +112,12 @@ export default function CategoryPage({
       <div className="results">
         <Filter
           active={filterActive}
+          current={categoryId}
+          urlPath={router.asPath.split("?")[0]}
+          currentSizes={sizes}
+          currentColor={typeof colorway == "string" ? colorway : ""}
+          currentHeight={typeof height == "string" ? height : ""}
+          currentPrice={typeof price == "string" ? price : ""}
           setState={(state: boolean) =>
             setDialog(state ? "PRODUCTS_FILTER" : null)
           }
@@ -140,7 +147,26 @@ export const getServerSideProps = withSessionSsr(async function ({
   query,
 }) {
   const [category, type] = params?.categoryId as string[];
-  const { offset = 0, limit = 20 } = query;
+  const { offset = 0, limit = 20, colorway, sizes, height, price } = query;
+
+  let filters: { [filter: string]: any } = {};
+  if (typeof colorway == "string") {
+    filters["color"] = { equals: colorway };
+  }
+  if (sizes && sizes.length) {
+    if (sizes instanceof Array) {
+      filters["sizes"] = { hasEvery: sizes.map((size) => Number(size)) };
+    } else {
+      filters["sizes"] = { has: Number(sizes) };
+    }
+  }
+  if (typeof height == "string") {
+    filters["type"] = { equals: height };
+  }
+  if (typeof price == "string") {
+    const [priceMin, priceMax] = price?.replaceAll(/[\s$]/g, "").split("-");
+    filters["price"] = { gte: Number(priceMin), lte: Number(priceMax) };
+  }
 
   const select = {
     title: true,
@@ -159,28 +185,33 @@ export const getServerSideProps = withSessionSsr(async function ({
     if (typeof type == "string") {
       products = await prisma.product.findMany({
         select,
-        where: { gender, title: { contains: type, mode: "insensitive" } },
+        where: {
+          ...filters,
+          gender,
+          title: { contains: type, mode: "insensitive" },
+        },
         skip: Number(offset),
         take: Number(limit),
       });
     } else {
       products = await prisma.product.findMany({
         select,
-        where: { gender },
+        where: { ...filters, gender },
         skip: Number(offset),
         take: Number(limit),
       });
     }
-  } else if (category == "colorways" && typeof type == "string") {
+  } else if (category == "colorways" && typeof colorway == "string") {
     products = await prisma.product.findMany({
       select,
-      where: { color: { equals: type, mode: "insensitive" } },
+      where: { ...filters, color: { contains: colorway, mode: "insensitive" } },
       skip: Number(offset),
       take: Number(limit),
     });
   } else if (category == "new") {
     products = await prisma.product.findMany({
       select,
+      where: { ...filters },
       orderBy: { year: "desc", dateAdded: "desc" },
       skip: Number(offset),
       take: Number(limit),
@@ -188,6 +219,7 @@ export const getServerSideProps = withSessionSsr(async function ({
   } else if (category == "best") {
     products = await prisma.product.findMany({
       select,
+      where: { ...filters },
       orderBy: { salesCount: "desc" },
       skip: Number(offset),
       take: Number(limit),
@@ -196,7 +228,7 @@ export const getServerSideProps = withSessionSsr(async function ({
     const cType = type.toUpperCase() as Category;
     products = await prisma.product.findMany({
       select,
-      where: { type: cType },
+      where: { ...filters, type: cType },
       skip: Number(offset),
       take: Number(limit),
     });

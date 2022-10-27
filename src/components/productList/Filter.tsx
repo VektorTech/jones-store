@@ -2,14 +2,29 @@ import Button from "@Components/common/formControls/Button";
 import RadioList from "@Components/common/formControls/RadioList";
 import { IoIosArrowUp, IoIosArrowBack } from "react-icons/io";
 import { useState, useRef, useEffect, ReactNode } from "react";
+import Link from "next/link";
 
 export default function Filter({
   active,
+  current,
+  urlPath,
+  currentSizes,
+  currentHeight,
+  currentPrice,
+  currentColor,
   setState,
 }: {
   active: boolean;
+  current: string;
+  urlPath: string;
+  currentSizes?: string[] | string;
+  currentHeight?: string;
+  currentPrice?: string;
+  currentColor?: string;
   setState: (state: boolean) => void;
 }) {
+  const [minPrice, maxPrice] = currentPrice?.split("-") || [0, 10000];
+
   return (
     <div className={"filter" + (active ? " filter--active" : "")}>
       <div className="filter__head">
@@ -20,99 +35,115 @@ export default function Filter({
       </div>
 
       <FilterParam type="Gender">
-        <RadioList
-          name="gender"
-          values={["MEN", "WOMEN", "KIDS", "BABIES", "UNISEX"]}
-          render={({ label, checked }) => (
-            <span
-              className={
-                "filter__param-option" +
-                (checked ? " filter__param-option--checked" : "")
-              }
-            >
-              {label}
-            </span>
-          )}
-        />
+        {["men", "women", "kids", "baby", "unisex"].map((gender) => (
+          <p
+            className={
+              "filter__param-link" +
+              (current == gender ? " filter__param-link--active" : "")
+            }
+            key={gender}
+          >
+            <Link href={`/category/${gender}`}>
+              <a>{gender.toUpperCase()}</a>
+            </Link>
+          </p>
+        ))}
       </FilterParam>
 
-      <FilterParam type="Main Color">
-        <RadioList
-          name="color"
-          values={Object.keys(colorsHex)}
-          render={({ label, checked }) => (
-            <span
-              className={
-                "filter__param-option" +
-                (checked ? " filter__param-option--checked" : "")
-              }
-            >
+      <form action={urlPath}>
+        <FilterParam type="Main Color">
+          <RadioList
+            name="colorway"
+            values={Object.keys(colorsHex)}
+            render={({ label, checked }) => (
               <span
-                style={{ background: colorsHex[label] }}
-                className="filter__param-option-color"
-              ></span>
-              {label}
-            </span>
-          )}
-        />
-      </FilterParam>
+                className={
+                  "filter__param-option" +
+                  (checked ? " filter__param-option--checked" : "") +
+                  (currentColor == label ? " filter__param-option--active" : "")
+                }
+              >
+                <span
+                  style={{ background: colorsHex[label] }}
+                  className="filter__param-option-color"
+                ></span>
+                {label}
+              </span>
+            )}
+          />
+        </FilterParam>
 
-      <FilterParam type="US Sizes">
-        <RadioList
-          name="size"
-          checkbox
-          grid
-          values={[...Array(37)].map((_, i) => String(2 + i / 2))}
-          render={({ label, checked }) => (
-            <span
-              className={
-                "filter__param-box" +
-                (checked ? " filter__param-box--checked" : "")
-              }
-            >
-              {label}
-            </span>
-          )}
-        />
-      </FilterParam>
+        <FilterParam type="US Sizes">
+          <RadioList
+            name="sizes"
+            checkbox
+            grid
+            values={[...Array(37)].map((_, i) => String(2 + i / 2))}
+            render={({ label, checked }) => (
+              <span
+                className={
+                  "filter__param-box" +
+                  (checked ? " filter__param-box--checked" : "") +
+                  (currentSizes == label ||
+                  (currentSizes instanceof Array &&
+                    currentSizes?.includes(label))
+                    ? " filter__param-box--active"
+                    : "")
+                }
+              >
+                {label}
+              </span>
+            )}
+          />
+        </FilterParam>
 
-      <FilterParam type="Height">
-        <RadioList
-          name="height"
-          values={["LOW TOP", "MID TOP", "HIGH TOP"]}
-          render={({ label, checked }) => (
-            <span
-              className={
-                "filter__param-option" +
-                (checked ? " filter__param-option--checked" : "")
-              }
-            >
-              {label}
-            </span>
-          )}
-        />
-      </FilterParam>
+        <FilterParam type="Height">
+          <RadioList
+            name="height"
+            values={["LOW", "MID", "HIGH"]}
+            render={({ label, checked }) => (
+              <span
+                className={
+                  "filter__param-option" +
+                  (checked ? " filter__param-option--checked" : "") +
+                  (currentHeight == label
+                    ? " filter__param-option--active"
+                    : "")
+                }
+              >
+                {label} TOP
+              </span>
+            )}
+          />
+        </FilterParam>
 
-      <FilterParam type="Price Range">
-        <PriceRange />
-      </FilterParam>
+        <FilterParam type="Price Range">
+          <PriceRange preset={[minPrice, maxPrice]} />
+        </FilterParam>
 
-      <div className="filter__confirm">
-        <Button type="submit" className="filter__done">
-          done
-        </Button>
-        <Button type="reset" className="filter__clear-all">
-          clear all
-        </Button>
-      </div>
+        <div className="filter__confirm">
+          <Button type="submit" className="filter__done">
+            done
+          </Button>
+          <Button type="reset" className="filter__clear-all">
+            clear all
+          </Button>
+        </div>
+      </form>
     </div>
   );
 }
 
-const PriceRange = () => {
-  const HIGHEST_PRICE = 1000;
-  const [valueMin, setValMin] = useState("0");
-  const [valueMax, setValMax] = useState(HIGHEST_PRICE.toString());
+const PriceRange = ({
+  preset,
+}: {
+  preset?: [min: string | number, max: string | number];
+}) => {
+  const HIGHEST_PRICE = 10000;
+  const [valueMin, setValMin] = useState<string | number>(preset?.[0] || 0);
+  const [valueMax, setValMax] = useState<string | number>(
+    preset?.[1] || HIGHEST_PRICE.toString()
+  );
 
   const [activeThumb, setActiveThumb] = useState("");
   const minRef = useRef<HTMLSpanElement>(null);
@@ -230,8 +261,13 @@ const PriceRange = () => {
         defaultValue={`$${valueMin} - $${valueMax}`}
         key={`$${valueMin} - $${valueMax}`}
         readOnly
-        name="price-range"
         className="price-range__input"
+      />
+      <input
+        type="hidden"
+        name="price"
+        defaultValue={`${valueMin}-${valueMax}`}
+        key={`${valueMin}-${valueMax}`}
       />
       <div ref={controlRef} className="price-range__control">
         <span className="price-range__range"></span>

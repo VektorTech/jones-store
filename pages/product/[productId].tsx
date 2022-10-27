@@ -22,7 +22,7 @@ import BarLoader from "react-spinners/BarLoader";
 import { CSSProperties } from "react";
 
 const override: CSSProperties = {
-  margin: "2rem auto 0 auto"
+  margin: "2rem auto 0 auto",
 };
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
@@ -67,12 +67,16 @@ export default function ProductPage({
       </div>
     ),
     size_guide: (
-      <Suspense fallback={<BarLoader speedMultiplier={2} cssOverride={override} />}>
+      <Suspense
+        fallback={<BarLoader speedMultiplier={2} cssOverride={override} />}
+      >
         <SizeGuide />
       </Suspense>
     ),
     reviews: (
-      <Suspense fallback={<BarLoader speedMultiplier={2} cssOverride={override} />}>
+      <Suspense
+        fallback={<BarLoader speedMultiplier={2} cssOverride={override} />}
+      >
         <Reviews />
       </Suspense>
     ),
@@ -146,12 +150,10 @@ export default function ProductPage({
           <form method="POST" action="/api/cart">
             <div className="product-view__size-selector">
               <Dropdown
-                options={[...Array(37)]
-                  .map((_, i) => String(2 + i / 2))
-                  .reduce((obj: any, val: string) => {
-                    obj[val] = val;
-                    return obj;
-                  }, {})}
+                options={product.sizes.reduce((obj: any, val: number) => {
+                  obj[val.toString()] = val.toString();
+                  return obj;
+                }, {})}
               />
             </div>
             <div className="product-view__quantity">
@@ -296,9 +298,11 @@ export const getServerSideProps = withSessionSsr(async function ({
     })
     .catch(console.log);
 
-  let sizes: { width: number, height: number }[] = [];
+  let sizes: { width: number; height: number }[] = [];
   if (product) {
-    sizes = await Promise.all(product.mediaURLs.map(async url => await probe(url)));
+    sizes = await Promise.all(
+      product.mediaURLs.map(async (url) => await probe(url))
+    );
   }
 
   return {

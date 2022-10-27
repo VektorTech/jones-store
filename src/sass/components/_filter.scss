@@ -94,10 +94,21 @@
       height: auto;
     }
 
+    &-link {
+      & + & {
+        margin-top: 1rem;
+      }
+
+      &--active {
+        color: $c-text-red;
+      }
+    }
+
     &-option {
       width: 100%;
       text-overflow: ellipsis;
 
+      &--active,
       &--checked {
         &::after {
           content: "";
@@ -109,6 +120,12 @@
           border-right: 0.1rem solid $c-text-black;
           border-bottom: 0.1rem solid $c-text-black;
           transform: rotate(45deg);
+        }
+      }
+
+      &--active {
+        &::after {
+          border-color: $c-text-red;
         }
       }
 
@@ -134,6 +151,10 @@
 
       &--checked {
         background-color: $c-gray;
+      }
+
+      &--active {
+        border-color: $c-text-red;
       }
     }
   }

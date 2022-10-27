@@ -120,7 +120,7 @@ export default function HeaderSection({
         <div className="header__buttons">
           <ul>
             <li className="header__button header__button-search">
-              <Link href="#">
+              <Link href="./#">
                 <a
                   className="header__button-link"
                   onClick={(e) => {
