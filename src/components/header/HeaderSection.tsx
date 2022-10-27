@@ -210,7 +210,7 @@ export default function HeaderSection({
                     currentId={hoveredElement}
                     hoverElementId="header-cart-btn"
                   >
-                    <strong>${cartTotal}</strong>
+                    Total:<br />${cartTotal}
                   </Popup>
                 </a>
               </Link>
