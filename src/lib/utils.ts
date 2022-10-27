@@ -74,3 +74,12 @@ export const isSelectKey = (event: { key: string; keyCode: number }) =>
   event.keyCode == 13 ||
   event.key == " " ||
   event.keyCode == 32;
+
+// https://dev.to/ycmjason/how-to-create-range-in-javascript-539i
+export function range(start: number, end: number): number[] {
+  if (typeof start != "number" || typeof end != "number") {
+    return [0];
+  }
+  if (start >= end) return [start];
+  return [start, ...range(start + 1, end)];
+}

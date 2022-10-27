@@ -15,8 +15,10 @@ export default function Dropdown({
   options,
   className,
   name = "",
+  onOptionSelect,
   ...inputProps
 }: {
+  onOptionSelect?: (value: string) => void;
   options: { [value: string]: string };
   label?: string;
 } & JSX.IntrinsicElements["input"]) {
@@ -32,6 +34,10 @@ export default function Dropdown({
       DropdownRef.current?.focus();
     }
   }, [collapsed]);
+
+  useEffect(() => {
+    onOptionSelect?.(value);
+  }, [value]);
 
   const handleKeyUp: KeyboardEventHandler<HTMLDivElement> = (e) => {
     if (isSelectKey(e) && e.target == DropdownRef.current) {

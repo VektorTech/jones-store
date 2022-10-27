@@ -49,8 +49,10 @@
         border-bottom: 0.2rem solid $c-text-black;
       }
 
-      &--disabled {
+      &--disabled,
+      &--disabled[href] {
         color: $c-text-gray;
+        cursor: auto;
       }
     }
   }

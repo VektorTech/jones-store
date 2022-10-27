@@ -1,6 +1,3 @@
-// import Link from "next/link";
-// import { useRouter } from "next/router";
-
 import { VscChromeClose } from "react-icons/vsc";
 import { BsSliders } from "react-icons/bs";
 
@@ -21,15 +18,27 @@ import Product from "@Components/common/Product";
 import { useDialog } from "@Lib/contexts/UIContext";
 import { useRouter } from "next/router";
 
+const RESULTS_PER_PAGE = 20;
+
 export default function CategoryPage({
   categoryId,
   products,
+  count,
 }: {
   categoryId: string;
   products: ProductType[];
+  count: number;
 }) {
   const router = useRouter();
-  const { colorway, sizes, height, price, categoryId: category } = router.query;
+  const {
+    offset = 0,
+    limit = RESULTS_PER_PAGE,
+    colorway,
+    sizes,
+    height,
+    price,
+    categoryId: category,
+  } = router.query;
 
   const { setDialog, currentDialog } = useDialog();
 
@@ -53,16 +62,19 @@ export default function CategoryPage({
       <SEO title={categoryId.toUpperCase()} />
       <div className="constraints">
         <div className="constraints__container">
-          <BreadCrumbs />
+          <BreadCrumbs
+            items={[categoryId, typeof height == "string" ? height : ""]}
+          />
           <hr className="constraints__hr" />
           <h1 className="constraints__title">{categoryId}</h1>
           <p className="constraints__summary">
-            Showing <strong>1</strong> &mdash; <strong>48</strong> of{" "}
-            <strong>{products.length}</strong> results
+            Showing <strong>{Number(offset) + 1}</strong> &mdash;{" "}
+            <strong>{Number(offset) + products.length}</strong> of{" "}
+            <strong>{count}</strong> results
           </p>
           <div className="constraints__filters">
             <button className="constraints__filter">
-              <strong>Brand</strong> <span>Jordan</span>
+              <strong>Colorway</strong> <span>{colorway}</span>
               <span role="button" className="constraints__filter-close">
                 <VscChromeClose />
               </span>
@@ -98,12 +110,17 @@ export default function CategoryPage({
               label="Sort By"
               className="filter-sort__sort-select"
               options={{
-                price: "Price",
-                asc_price: "Ascending: Price",
                 relevance: "Relevance",
-                asc_relevance: "Ascending: Relevance",
-                ratings: "Ratings",
-                asc_ratings: "Ascending: Ratings",
+                asc_price: "Asc: Price",
+                price: "Desc: Price",
+                asc_ratings: "Asc: Ratings",
+                ratings: "Desc: Ratings",
+              }}
+              onOptionSelect={(order) => {
+                if (order) {
+                  router.query.order = order;
+                  router.push(router);
+                }
               }}
             />
           </div>
@@ -135,7 +152,7 @@ export default function CategoryPage({
               <Product key={product.id} {...product} />
             ))}
           </div>
-          <Pagination />
+          <Pagination resultsCount={count} limit={RESULTS_PER_PAGE} offset={Number(offset)} />
         </div>
       </div>
     </>
@@ -147,11 +164,11 @@ export const getServerSideProps = withSessionSsr(async function ({
   req,
   query,
 }) {
-  const [category, type] = params?.categoryId as string[];
-  const { offset = 0, limit = 20, colorway, sizes, height, price } = query;
+  const [category = "men", type] = params?.categoryId as string[];
+  const { offset = 0, limit = RESULTS_PER_PAGE, colorway, sizes, height, price, order } = query;
 
   let filters: { [filter: string]: any } = {};
-  if (typeof colorway == "string") {
+  if (colorway && typeof colorway == "string") {
     filters["color"] = { equals: colorway };
   }
   if (sizes && sizes.length) {
@@ -161,12 +178,23 @@ export const getServerSideProps = withSessionSsr(async function ({
       filters["sizes"] = { has: Number(sizes) };
     }
   }
-  if (typeof height == "string") {
+  if (height && typeof height == "string") {
     filters["type"] = { equals: height };
   }
-  if (typeof price == "string") {
+  if (price && typeof price == "string") {
     const [priceMin, priceMax] = price?.replaceAll(/[\s$]/g, "").split("-");
     filters["price"] = { gte: Number(priceMin), lte: Number(priceMax) };
+  }
+
+  const orderBy: { orderBy: any } = { orderBy: {} };
+  if (order && typeof order == "string") {
+    const orderings: { [order: string]: any } = {
+      asc_price: { price: "asc" },
+      price: { price: "desc" },
+      asc_ratings: { ratings: "asc" },
+      ratings: { ratings: "desc" }
+    };
+    orderBy["orderBy"] = { ...orderings[order] };
   }
 
   const select = {
@@ -181,6 +209,7 @@ export const getServerSideProps = withSessionSsr(async function ({
   };
 
   let products = [];
+  let count = 0;
   let gender = category.toUpperCase() as Gender;
   if (gender in Gender) {
     if (typeof type == "string") {
@@ -193,6 +222,14 @@ export const getServerSideProps = withSessionSsr(async function ({
         },
         skip: Number(offset),
         take: Number(limit),
+        ...orderBy
+      });
+      count = await prisma.product.count({
+        where: {
+          ...filters,
+          gender,
+          title: { contains: type, mode: "insensitive" },
+        },
       });
     } else {
       products = await prisma.product.findMany({
@@ -200,7 +237,9 @@ export const getServerSideProps = withSessionSsr(async function ({
         where: { ...filters, gender },
         skip: Number(offset),
         take: Number(limit),
+        ...orderBy
       });
+      count = await prisma.product.count({ where: { ...filters, gender } });
     }
   } else if (category == "colorways" && typeof colorway == "string") {
     products = await prisma.product.findMany({
@@ -208,6 +247,10 @@ export const getServerSideProps = withSessionSsr(async function ({
       where: { ...filters, color: { contains: colorway, mode: "insensitive" } },
       skip: Number(offset),
       take: Number(limit),
+      ...orderBy
+    });
+    count = await prisma.product.count({
+      where: { ...filters, color: { contains: colorway, mode: "insensitive" } },
     });
   } else if (category == "new") {
     products = await prisma.product.findMany({
@@ -217,6 +260,7 @@ export const getServerSideProps = withSessionSsr(async function ({
       skip: Number(offset),
       take: Number(limit),
     });
+    count = await prisma.product.count({ where: { ...filters } });
   } else if (category == "best") {
     products = await prisma.product.findMany({
       select,
@@ -225,6 +269,7 @@ export const getServerSideProps = withSessionSsr(async function ({
       skip: Number(offset),
       take: Number(limit),
     });
+    count = await prisma.product.count({ where: { ...filters } });
   } else if (category == "type" && typeof type == "string") {
     const cType = type.toUpperCase() as Category;
     products = await prisma.product.findMany({
@@ -232,7 +277,9 @@ export const getServerSideProps = withSessionSsr(async function ({
       where: { ...filters, type: cType },
       skip: Number(offset),
       take: Number(limit),
+      ...orderBy
     });
+    count = await prisma.product.count({ where: { ...filters, type: cType } });
   } else {
     return {
       notFound: true,
@@ -242,6 +289,7 @@ export const getServerSideProps = withSessionSsr(async function ({
   return {
     props: {
       products,
+      count,
       categoryId: category || "",
     },
   };
