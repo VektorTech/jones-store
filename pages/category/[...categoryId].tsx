@@ -39,7 +39,8 @@ export default function CategoryPage({
 
   useEffect(() => {
     const hideFilter = () => {
-      if (currentDialog == "PRODUCTS_FILTER") setDialog(null);
+      if (currentDialog == "PRODUCTS_FILTER" && innerWidth <= 992)
+        setDialog(null);
     };
     addEventListener("resize", hideFilter);
     return () => removeEventListener("resize", hideFilter);
