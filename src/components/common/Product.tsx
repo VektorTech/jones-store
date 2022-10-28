@@ -7,6 +7,7 @@ import RatingStars from "./RatingStars";
 import { MouseEventHandler, useRef, useState } from "react";
 import { getPathString } from "@Lib/utils";
 import { ProductComponentType } from "src/types/shared";
+import { useAuthState } from "@Lib/contexts/AuthContext";
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -24,12 +25,14 @@ export default function Product({
   ratings,
   sku,
   id,
-  isOnWishlist = false,
-  onWishlistAction,
 }: ProductComponentType) {
-  const wishlistHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
-    event.preventDefault();
-    onWishlistAction?.(id, isOnWishlist);
+  const { addToWishlist, removeFromWishlist, user } = useAuthState();
+  const isOnWishlist = user?.wishlist?.some((item) => item.productId == id);
+  const handleWishlistAction = () => {
+    if (isOnWishlist) {
+      return removeFromWishlist(id);
+    }
+    addToWishlist(id);
   };
 
   const [imageIndex, setImageIndex] = useState(0);
@@ -72,7 +75,7 @@ export default function Product({
               <div className="product__actions">
                 <button
                   tabIndex={-1}
-                  onClick={wishlistHandler}
+                  onClick={() => handleWishlistAction()}
                   className="product__add-wishlist"
                 >
                   {isOnWishlist ? (
