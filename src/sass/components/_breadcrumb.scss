@@ -18,6 +18,11 @@
     &-item {
       margin-right: 1rem;
     }
+
+    &-separator {
+      user-select: none;
+      margin-right: 0.3rem;
+    }
   }
 
   &__link {
