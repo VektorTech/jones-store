@@ -22,8 +22,14 @@ import BarLoader from "react-spinners/BarLoader";
 import { CSSProperties } from "react";
 import { useRouter } from "next/router";
 
-import { FacebookShareButton, FacebookIcon, PinterestShareButton, PinterestIcon } from "next-share";
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  PinterestShareButton,
+  PinterestIcon,
+} from "next-share";
 import Modal from "@Components/Modal";
+import { getPathString } from "@Lib/utils";
 
 const override: CSSProperties = {
   margin: "2rem auto 0 auto",
@@ -291,13 +297,25 @@ export default function ProductPage({
   );
 }
 
-export const getServerSideProps = withSessionSsr(async function ({
+export const getStaticPaths = async function () {
+  const products = await prisma.product.findMany({
+    select: { title: true, sku: true },
+  });
+
+  return {
+    paths: products.map(({ title, sku }) => ({
+      params: { productId: getPathString(title + " " + sku) },
+    })),
+    fallback: false
+  };
+};
+
+export const getStaticProps = async function ({
   params,
-  req,
-  query,
+}: {
+  params: { productId: string };
 }) {
-  const productId = params?.productId as string;
-  const sku = productId.substring(productId.length - 10).replace("-", " ");
+  const sku = params.productId.substring(params.productId.length - 10).replace("-", " ");
 
   const select = {
     title: true,
@@ -314,42 +332,25 @@ export const getServerSideProps = withSessionSsr(async function ({
     shippingCost: true,
     sizes: true,
     type: true,
-    // review: true,
     sku: true,
     id: true,
   };
 
-  const product = await prisma.product
-    .findMany({
-      select,
-      where: {
-        sku: {
-          equals: sku,
-          mode: "insensitive",
-        },
-      },
-    })
-    .then((products) => products[0])
-    .catch(console.log);
+  const product = await prisma.product.findFirst({
+    select,
+    where: { sku: { equals: sku, mode: "insensitive" } },
+  });
 
-  const relatedProducts = await prisma.product
-    .findMany({
-      select,
-      where: {
-        id: { not: product?.id },
-        gender: product?.gender,
-        type: product?.type,
-        color: product?.color,
-      },
-      take: 4,
-    })
-    .catch(console.log);
-
-  if (!product) {
-    return {
-      notFound: true,
-    };
-  }
+  const relatedProducts = await prisma.product.findMany({
+    select,
+    where: {
+      id: { not: product?.id },
+      gender: product?.gender,
+      type: product?.type,
+      color: product?.color,
+    },
+    take: 4,
+  });
 
   let sizes: { width: number; height: number }[] = [];
   if (product) {
@@ -362,8 +363,7 @@ export const getServerSideProps = withSessionSsr(async function ({
     props: {
       product,
       relatedProducts,
-      reviews: [],
       sizes,
     },
   };
-});
+};
