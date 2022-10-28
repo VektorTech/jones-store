@@ -245,15 +245,17 @@ export default function ProductPage({
         </div>
       </div>
 
-      <div className="related-products">
-        <h2 className="related-products__heading">Related Products</h2>
+      {relatedProducts.length ? (
+        <div className="related-products">
+          <h2 className="related-products__heading">Related Products</h2>
 
-        <div className="related-products__list">
-          {relatedProducts.map((product) => (
-            <Product key={product.id} {...product} />
-          ))}
+          <div className="related-products__list">
+            {relatedProducts.map((product) => (
+              <Product key={product.id} {...product} />
+            ))}
+          </div>
         </div>
-      </div>
+      ) : null}
     </>
   );
 }
@@ -311,6 +313,12 @@ export const getServerSideProps = withSessionSsr(async function ({
       take: 4,
     })
     .catch(console.log);
+
+  if (!product) {
+    return {
+      notFound: true,
+    };
+  }
 
   let sizes: { width: number; height: number }[] = [];
   if (product) {
