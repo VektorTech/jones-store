@@ -71,10 +71,14 @@ export const UIProvider = ({
   const router = useRouter();
 
   useEffect(() => {
-    const clearDialogState = () => setDialog(null);
+    const clearDialogState = () => {
+      if (currentDialog != Dialogs.PRODUCTS_FILTER) {
+        setDialog(null);
+      }
+    };
     router.events.on("routeChangeStart", clearDialogState);
     return () => router.events.off("routeChangeStart", clearDialogState);
-  }, [router]);
+  }, [router, currentDialog]);
 
   return (
     <UIContext.Provider
