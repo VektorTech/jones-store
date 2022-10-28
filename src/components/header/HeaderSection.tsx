@@ -29,10 +29,11 @@ export default function HeaderSection({
   const { user, isAuth } = useAuthState();
   const wishlistCount = user?.wishlist?.length;
   const cartCount = user?.cart?.length;
-  const cartTotal = (user?.cart || []).reduce(
-    (total: number, item: CartItem) => total + item?.total,
-    0
-  ) || 0;
+  const cartTotal =
+    (user?.cart || []).reduce(
+      (total: number, item: CartItem) => total + item?.total,
+      0
+    ) || 0;
 
   useEffect(() => {
     const ANNOUNCEMENT_BANNER_HEIGHT = 35;
@@ -82,41 +83,7 @@ export default function HeaderSection({
             <ul>
               <li className="header__nav-link">
                 <Link href="#">
-                  <a
-                    onPointerEnter={(e) =>
-                      setHoveredElement("header-colorway-btn")
-                    }
-                    // onPointerLeave={(e) => setHoveredElement("")}
-                    id="header-colorway-btn"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    COLORWAYS
-                    <Popup
-                      currentId={hoveredElement}
-                      hoverElementId="header-colorway-btn"
-                    >
-                      <div>
-                        <ul>{ColorwaysList}</ul>
-                      </div>
-                    </Popup>
-                  </a>
-                    onPointerEnter={(e) =>
-                      setHoveredElement("header-colorway-btn")
-                    }
-                    // onPointerLeave={(e) => setHoveredElement("")}
-                    id="header-colorway-btn"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    COLORWAYS
-                    <Popup
-                      currentId={hoveredElement}
-                      hoverElementId="header-colorway-btn"
-                    >
-                      <div>
-                        <ul>{ColorwaysList}</ul>
-                      </div>
-                    </Popup>
-                  </a>
+                  <a onClick={(e) => e.preventDefault()}>COLORWAYS</a>
                 </Link>
               </li>
               <li className="header__nav-link">
@@ -198,7 +165,9 @@ export default function HeaderSection({
                         >
                           <input
                             className="header__popup-button"
-                  onPointerEnter={(e) => setHoveredElement("header-cart-btn")}
+                            type="submit"
+                            value="Log Out"
+                          />
                         </Form>
                       </>
                     ) : (
@@ -208,14 +177,7 @@ export default function HeaderSection({
                             <span>Log In</span>
                           </a>
                         </Link>
-                    {cartCount ? (
-                      <>
-                        <strong>Total</strong>
-                        <br />${cartTotal}
-                      </>
-                    ) : (
-                      "Empty"
-                    )}
+                        <Link href="/signup">
                           <a className="header__popup-button">
                             <span>Register</span>
                           </a>

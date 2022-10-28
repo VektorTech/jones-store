@@ -29,10 +29,11 @@ export default function HeaderSection({
   const { user, isAuth } = useAuthState();
   const wishlistCount = user?.wishlist?.length;
   const cartCount = user?.cart?.length;
-  const cartTotal = (user?.cart || []).reduce(
-    (total: number, item: CartItem) => total + item?.total,
-    0
-  ) || 0;
+  const cartTotal =
+    (user?.cart || []).reduce(
+      (total: number, item: CartItem) => total + item?.total,
+      0
+    ) || 0;
 
   useEffect(() => {
     const ANNOUNCEMENT_BANNER_HEIGHT = 35;
@@ -81,8 +82,8 @@ export default function HeaderSection({
           <nav>
             <ul>
               <li className="header__nav-link">
-                <Link href="/category/colorways">
-                  <a>COLORWAYS</a>
+                <Link href="#">
+                  <a onClick={(e) => e.preventDefault()}>COLORWAYS</a>
                 </Link>
               </li>
               <li className="header__nav-link">
@@ -198,9 +199,7 @@ export default function HeaderSection({
             <li className="header__button header__button-cart">
               <Link href="/cart">
                 <a
-                  onPointerEnter={(e) =>
-                    setHoveredElement("header-cart-btn")
-                  }
+                  onPointerEnter={(e) => setHoveredElement("header-cart-btn")}
                   onPointerLeave={(e) => setHoveredElement("")}
                   className="header__button-link"
                   id="header-cart-btn"
@@ -210,7 +209,14 @@ export default function HeaderSection({
                     currentId={hoveredElement}
                     hoverElementId="header-cart-btn"
                   >
-                    Total:<br />${cartTotal}
+                    {cartCount ? (
+                      <>
+                        <strong>Total</strong>
+                        <br />${cartTotal}
+                      </>
+                    ) : (
+                      "Empty"
+                    )}
                   </Popup>
                 </a>
               </Link>
