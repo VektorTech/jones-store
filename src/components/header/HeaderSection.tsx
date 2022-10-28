@@ -81,8 +81,42 @@ export default function HeaderSection({
           <nav>
             <ul>
               <li className="header__nav-link">
-                <Link href="/category/colorways">
-                  <a>COLORWAYS</a>
+                <Link href="#">
+                  <a
+                    onPointerEnter={(e) =>
+                      setHoveredElement("header-colorway-btn")
+                    }
+                    // onPointerLeave={(e) => setHoveredElement("")}
+                    id="header-colorway-btn"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    COLORWAYS
+                    <Popup
+                      currentId={hoveredElement}
+                      hoverElementId="header-colorway-btn"
+                    >
+                      <div>
+                        <ul>{ColorwaysList}</ul>
+                      </div>
+                    </Popup>
+                  </a>
+                    onPointerEnter={(e) =>
+                      setHoveredElement("header-colorway-btn")
+                    }
+                    // onPointerLeave={(e) => setHoveredElement("")}
+                    id="header-colorway-btn"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    COLORWAYS
+                    <Popup
+                      currentId={hoveredElement}
+                      hoverElementId="header-colorway-btn"
+                    >
+                      <div>
+                        <ul>{ColorwaysList}</ul>
+                      </div>
+                    </Popup>
+                  </a>
                 </Link>
               </li>
               <li className="header__nav-link">
@@ -181,9 +215,7 @@ export default function HeaderSection({
                             <span>Register</span>
                           </a>
                         </Link>
-                      </>
-                    )}
-                  </Popup>
+                  onPointerEnter={(e) => setHoveredElement("header-cart-btn")}
                 </a>
               </Link>
             </li>
@@ -193,14 +225,19 @@ export default function HeaderSection({
                   <AiOutlineHeart />
                 </a>
               </Link>
-              {wishlistCount ? <span>{wishlistCount}</span> : null}
+                    {cartCount ? (
+                      <>
+                        <strong>Total</strong>
+                        <br />${cartTotal}
+                      </>
+                    ) : (
+                      "Empty"
+                    )}
             </li>
             <li className="header__button header__button-cart">
               <Link href="/cart">
                 <a
-                  onPointerEnter={(e) =>
-                    setHoveredElement("header-cart-btn")
-                  }
+                  onPointerEnter={(e) => setHoveredElement("header-cart-btn")}
                   onPointerLeave={(e) => setHoveredElement("")}
                   className="header__button-link"
                   id="header-cart-btn"
@@ -210,7 +247,14 @@ export default function HeaderSection({
                     currentId={hoveredElement}
                     hoverElementId="header-cart-btn"
                   >
-                    Total:<br />${cartTotal}
+                    {cartCount ? (
+                      <>
+                        <strong>Total</strong>
+                        <br />${cartTotal}
+                      </>
+                    ) : (
+                      "Empty"
+                    )}
                   </Popup>
                 </a>
               </Link>
