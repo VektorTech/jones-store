@@ -20,6 +20,7 @@ import { useState, Suspense } from "react";
 const probe = require("probe-image-size");
 import BarLoader from "react-spinners/BarLoader";
 import { CSSProperties } from "react";
+import { useRouter } from "next/router";
 
 const override: CSSProperties = {
   margin: "2rem auto 0 auto",
@@ -82,11 +83,24 @@ export default function ProductPage({
     ),
   };
 
+  const router = useRouter();
+
   return (
     <>
       <SEO title={product.title} />
       <div className="product-page__wrapper">
-        <BreadCrumbs />
+        <BreadCrumbs
+          items={[
+            {
+              url: "/category/" + product.gender.toLocaleLowerCase(),
+              text: product.gender,
+            },
+            {
+              url: router.asPath,
+              text: product.title,
+            },
+          ]}
+        />
       </div>
 
       <div className="product-view">

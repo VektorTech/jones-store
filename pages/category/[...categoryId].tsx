@@ -1,4 +1,3 @@
-import { VscChromeClose } from "react-icons/vsc";
 import { BsSliders } from "react-icons/bs";
 
 import Filter from "@Components/productList/Filter";
@@ -63,7 +62,7 @@ export default function CategoryPage({
       <div className="constraints">
         <div className="constraints__container">
           <BreadCrumbs
-            items={[categoryId, typeof height == "string" ? height : ""]}
+            items={[{ url: router.asPath, text: categoryId.toUpperCase() }]}
           />
           <hr className="constraints__hr" />
           <h1 className="constraints__title">{categoryId}</h1>
@@ -133,7 +132,11 @@ export default function CategoryPage({
               <Product key={product.id} {...product} />
             ))}
           </div>
-          <Pagination resultsCount={count} limit={RESULTS_PER_PAGE} offset={Number(offset)} />
+          <Pagination
+            resultsCount={count}
+            limit={RESULTS_PER_PAGE}
+            offset={Number(offset)}
+          />
         </div>
       </div>
     </>
@@ -146,7 +149,15 @@ export const getServerSideProps = withSessionSsr(async function ({
   query,
 }) {
   const [category = "men", type] = params?.categoryId as string[];
-  const { offset = 0, limit = RESULTS_PER_PAGE, colorway, sizes, height, price, order } = query;
+  const {
+    offset = 0,
+    limit = RESULTS_PER_PAGE,
+    colorway,
+    sizes,
+    height,
+    price,
+    order,
+  } = query;
 
   let filters: { [filter: string]: any } = {};
   if (colorway && typeof colorway == "string") {
@@ -173,7 +184,7 @@ export const getServerSideProps = withSessionSsr(async function ({
       asc_price: { price: "asc" },
       price: { price: "desc" },
       asc_ratings: { ratings: "asc" },
-      ratings: { ratings: "desc" }
+      ratings: { ratings: "desc" },
     };
     orderBy["orderBy"] = { ...orderings[order] };
   }
@@ -203,7 +214,7 @@ export const getServerSideProps = withSessionSsr(async function ({
         },
         skip: Number(offset),
         take: Number(limit),
-        ...orderBy
+        ...orderBy,
       });
       count = await prisma.product.count({
         where: {
@@ -218,7 +229,7 @@ export const getServerSideProps = withSessionSsr(async function ({
         where: { ...filters, gender },
         skip: Number(offset),
         take: Number(limit),
-        ...orderBy
+        ...orderBy,
       });
       count = await prisma.product.count({ where: { ...filters, gender } });
     }
@@ -228,7 +239,7 @@ export const getServerSideProps = withSessionSsr(async function ({
       where: { ...filters, color: { contains: colorway, mode: "insensitive" } },
       skip: Number(offset),
       take: Number(limit),
-      ...orderBy
+      ...orderBy,
     });
     count = await prisma.product.count({
       where: { ...filters, color: { contains: colorway, mode: "insensitive" } },
@@ -258,7 +269,7 @@ export const getServerSideProps = withSessionSsr(async function ({
       where: { ...filters, type: cType },
       skip: Number(offset),
       take: Number(limit),
-      ...orderBy
+      ...orderBy,
     });
     count = await prisma.product.count({ where: { ...filters, type: cType } });
   } else {
