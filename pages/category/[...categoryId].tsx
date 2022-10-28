@@ -72,26 +72,7 @@ export default function CategoryPage({
             <strong>{Number(offset) + products.length}</strong> of{" "}
             <strong>{count}</strong> results
           </p>
-          <div className="constraints__filters">
-            <button className="constraints__filter">
-              <strong>Colorway</strong> <span>{colorway}</span>
-              <span role="button" className="constraints__filter-close">
-                <VscChromeClose />
-              </span>
-            </button>
-            <button className="constraints__filter">
-              <strong>Gender</strong> <span>{category}</span>
-              <span role="button" className="constraints__filter-close">
-                <VscChromeClose />
-              </span>
-            </button>
-            <button className="constraints__filter constraints__filter--clear">
-              Clear All
-              <span role="button" className="constraints__filter-close">
-                <VscChromeClose />
-              </span>
-            </button>
-          </div>
+          <div className="constraints__filters"></div>
         </div>
       </div>
 
