@@ -14,7 +14,7 @@
   grid-template-columns: repeat(12, 1fr);
 
   &__gallery {
-    grid-column: 1 / 8;
+    grid-column: 1 / 13;
     position: relative;
 
     &-container {
@@ -36,6 +36,10 @@
       right: 1rem;
       text-align: center;
     }
+
+    @include respond-to("medium") {
+      grid-column: 1 / 8;
+    }
   }
 
   .gallery__prev,
@@ -52,8 +56,12 @@
   }
 
   &__cart {
-    grid-column: 8 / 13;
+    grid-column: 1 / 13;
     font-size: $text-md;
+
+    @include respond-to("medium") {
+      grid-column: 8 / 13;
+    }
   }
 
   &__name {
@@ -163,8 +171,6 @@
     }
 
     &-panel {
-      // position: absolute;
-      // padding: 3rem 0;
       width: 100%;
     }
   }
