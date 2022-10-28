@@ -198,9 +198,7 @@ export default function HeaderSection({
                         >
                           <input
                             className="header__popup-button"
-                            type="submit"
-                            value="Log Out"
-                          />
+                  onPointerEnter={(e) => setHoveredElement("header-cart-btn")}
                         </Form>
                       </>
                     ) : (
@@ -210,12 +208,21 @@ export default function HeaderSection({
                             <span>Log In</span>
                           </a>
                         </Link>
-                        <Link href="/signup">
+                    {cartCount ? (
+                      <>
+                        <strong>Total</strong>
+                        <br />${cartTotal}
+                      </>
+                    ) : (
+                      "Empty"
+                    )}
                           <a className="header__popup-button">
                             <span>Register</span>
                           </a>
                         </Link>
-                  onPointerEnter={(e) => setHoveredElement("header-cart-btn")}
+                      </>
+                    )}
+                  </Popup>
                 </a>
               </Link>
             </li>
@@ -225,14 +232,7 @@ export default function HeaderSection({
                   <AiOutlineHeart />
                 </a>
               </Link>
-                    {cartCount ? (
-                      <>
-                        <strong>Total</strong>
-                        <br />${cartTotal}
-                      </>
-                    ) : (
-                      "Empty"
-                    )}
+              {wishlistCount ? <span>{wishlistCount}</span> : null}
             </li>
             <li className="header__button header__button-cart">
               <Link href="/cart">
