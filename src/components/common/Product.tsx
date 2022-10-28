@@ -75,7 +75,10 @@ export default function Product({
               <div className="product__actions">
                 <button
                   tabIndex={-1}
-                  onClick={() => handleWishlistAction()}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleWishlistAction();
+                  }}
                   className="product__add-wishlist"
                 >
                   {isOnWishlist ? (
