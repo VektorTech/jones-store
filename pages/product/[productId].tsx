@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Img from "next/future/image";
 
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
 import { MdArrowForwardIos, MdArrowBackIosNew } from "react-icons/md";
 
 import BreadCrumbs from "@Components/productList/BreadCrumbs";
@@ -21,6 +21,9 @@ const probe = require("probe-image-size");
 import BarLoader from "react-spinners/BarLoader";
 import { CSSProperties } from "react";
 import { useRouter } from "next/router";
+
+import { FacebookShareButton, FacebookIcon, PinterestShareButton, PinterestIcon } from "next-share";
+import Modal from "@Components/Modal";
 
 const override: CSSProperties = {
   margin: "2rem auto 0 auto",
@@ -78,12 +81,14 @@ export default function ProductPage({
       <Suspense
         fallback={<BarLoader speedMultiplier={2} cssOverride={override} />}
       >
-        <Reviews />
+        <Reviews productId={product.id} />
       </Suspense>
     ),
   };
 
   const router = useRouter();
+
+  const [shareModalOpen, setShareModalOpen] = useState(false);
 
   return (
     <>
@@ -199,7 +204,33 @@ export default function ProductPage({
             </Button>
           </form>
           <Button>Buy Now</Button>
-          {/* Share Icons */}
+
+          <button onClick={() => setShareModalOpen(true)}>
+            <AiOutlineShareAlt /> Share
+          </button>
+          <Modal
+            title="Share"
+            visible={shareModalOpen}
+            onClose={() => setShareModalOpen(false)}
+          >
+            <div>
+              <FacebookShareButton
+                url={typeof location != "undefined" ? location.href : ""}
+                quote={product.details}
+                hashtag={"#jordanones"}
+              >
+                <FacebookIcon size={32} round />
+              </FacebookShareButton>
+
+              <PinterestShareButton
+                url={typeof location != "undefined" ? location.href : ""}
+                media={product.mediaURLs[0]}
+                description={product.details}
+              >
+                <PinterestIcon size={32} round />
+              </PinterestShareButton>
+            </div>
+          </Modal>
         </div>
 
         <div className="product-view__details">
