@@ -30,12 +30,12 @@ export default function SearchBox({
               className="input__box"
               type="text"
               name="search"
-              placeholder="Search Jones Store for..."
+              placeholder="Searching for..."
               onChange={searchChangedHandler}
               value={searchTerm}
             />
             <label htmlFor="search-input" className="input__placeholder">
-              Search Jones Store for...
+              Searching for...
             </label>
             <button className="input__submit" type="submit">
               <FiSearch className="input__submit-icon" />
