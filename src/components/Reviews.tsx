@@ -5,6 +5,7 @@ import TextField from "./common/formControls/TextField";
 import Form from "./Form";
 import Modal from "./Modal";
 import moment from "moment";
+import RatingStars from "./common/RatingStars";
 
 export default function Reviews({ productId }: { productId: string }) {
   const [reviewModal, setReviewModal] = useState(false);
@@ -16,6 +17,8 @@ export default function Reviews({ productId }: { productId: string }) {
       .then((res) => setReviews(res.data));
   }, [productId]);
 
+  const averageRatings = reviews.reduce((total, {rating}) => total + rating, 0) / (reviews.length || 1);
+
   return (
     <div className="product-view__details-panel product-view__reviews-panel">
       <button onClick={() => setReviewModal(true)}>Write A Review</button>{" "}
@@ -25,6 +28,7 @@ export default function Reviews({ productId }: { productId: string }) {
         onClose={() => setReviewModal(false)}
       >
         <div>
+          <RatingStars interactive />
           <Form
             method="POST"
             action={`/api/products/${productId}/review`}
@@ -32,17 +36,18 @@ export default function Reviews({ productId }: { productId: string }) {
               console.log(data, status);
             }}
           >
-            <input type="number" name="rating" min="0" max="5" />
             <TextField name="body" multiline label="Your review" />
             <Button>Submit Review</Button>
           </Form>
         </div>
       </Modal>
       <div className="review">
+        Average Rating: <RatingStars count={averageRatings} />
+
         {reviews.map((review) => (
           <div key={review.userId + review.productId}>
             <div>{review.user.username}</div>
-            <div>{review.rating}</div>
+            <div><RatingStars count={review.rating} /></div>
             <div>{review.comment}</div>
             <div title={moment(review.addedAt).format("MMM Do YY")}>{moment(review.addedAt).fromNow()}</div>
           </div>
