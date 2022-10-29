@@ -1,0 +1,17 @@
+@use "../abstracts" as *;
+
+.carousel {
+  width: 100%;
+  overflow: hidden;
+
+  &__container {
+    transform: translate3d(-100%, 0, 0);
+    transition: transform 0.3s;
+    will-change: transform;
+  }
+
+  &__slide {
+    float: left;
+    width: calc(100% / 3);
+  }
+}

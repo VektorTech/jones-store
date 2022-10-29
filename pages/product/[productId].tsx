@@ -2,7 +2,6 @@ import Image from "next/image";
 import Img from "next/future/image";
 
 import { AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
-import { MdArrowForwardIos, MdArrowBackIosNew } from "react-icons/md";
 
 import BreadCrumbs from "@Components/productList/BreadCrumbs";
 import { withSessionSsr } from "@Lib/withSession";
@@ -30,6 +29,7 @@ import {
 } from "next-share";
 import Modal from "@Components/Modal";
 import { getPathString } from "@Lib/utils";
+import Carousel from "@Components/Carousel";
 
 const override: CSSProperties = {
   margin: "2rem auto 0 auto",
@@ -117,8 +117,6 @@ export default function ProductPage({
       <div className="product-view">
         <div className="product-view__gallery">
           <div className="product-view__gallery-container">
-            {" "}
-            {/* TODO: Should be own gallery component */}
             <div className="product-view__images">
               <ul>
                 {product.mediaURLs.map((url) => (
@@ -139,21 +137,22 @@ export default function ProductPage({
             </div>
             <div className="product-view__picture">
               <div className="product-view__picture-container">
-                <Img
-                  style={{ width: "100%", height: "100%", position: "static" }}
-                  src={product.mediaURLs[0]}
-                  width={sizes[0].width}
-                  height={sizes[0].height}
-                  alt=""
-                />
-                <div className="product-view__gallery-controls">
-                  <button className="gallery__prev">
-                    <MdArrowBackIosNew />
-                  </button>
-                  <button className="gallery__next">
-                    <MdArrowForwardIos />
-                  </button>
-                </div>
+                <Carousel>
+                  {product.mediaURLs.map((url, i) => (
+                    <Img
+                      key={"image:" + url}
+                      style={{
+                        // width: "100%",
+                        height: "100%",
+                        position: "static",
+                      }}
+                      src={url}
+                      width={sizes[i].width}
+                      height={sizes[i].height}
+                      alt=""
+                    />
+                  ))}
+                </Carousel>
               </div>
               <button className="product-view__wish">
                 <AiOutlineHeart />
@@ -306,7 +305,7 @@ export const getStaticPaths = async function () {
     paths: products.map(({ title, sku }) => ({
       params: { productId: getPathString(title + " " + sku) },
     })),
-    fallback: false
+    fallback: false,
   };
 };
 
@@ -315,7 +314,9 @@ export const getStaticProps = async function ({
 }: {
   params: { productId: string };
 }) {
-  const sku = params.productId.substring(params.productId.length - 10).replace("-", " ");
+  const sku = params.productId
+    .substring(params.productId.length - 10)
+    .replace("-", " ");
 
   const select = {
     title: true,
