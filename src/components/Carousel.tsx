@@ -1,13 +1,19 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { MdArrowForwardIos, MdArrowBackIosNew } from "react-icons/md";
 
-export default function Carousel({ children }: { children: React.ReactNode }) {
+export default function Carousel({
+  children,
+  aIndex,
+}: {
+  children: React.ReactNode;
+  aIndex: number;
+}) {
   const carousel = useRef<HTMLDivElement>(null);
   const slidesContainer = useRef<HTMLDivElement>(null);
   const transitioning = useRef<boolean>(false);
   const direction = useRef<"forward" | "backward" | "">("");
 
-  const [slideNumber, setSlideNumber] = useState(0);
+  const [slideNumber, setSlideNumber] = useState(aIndex);
   const [carouselWidth, setCarouselWidth] = useState(
     carousel.current?.offsetWidth || 0
   );
@@ -26,14 +32,22 @@ export default function Carousel({ children }: { children: React.ReactNode }) {
 
   const updatedChildren = getChildrenAsSlides();
   const len = React.Children.count(updatedChildren);
-  const before = updatedChildren?.[(-1 + len) % len];
-  const between = updatedChildren?.[0];
-  const after = updatedChildren?.[1 % len];
+  const before = updatedChildren?.[(slideNumber - 1 + len) % len];
+  const between = updatedChildren?.[slideNumber];
+  const after = updatedChildren?.[(slideNumber + 1) % len];
 
   const [renderComp, setRenderComp] = useState([before, between, after]);
   if (slidesContainer.current) {
     slidesContainer.current.style.transition = "transform 0.3s";
   }
+
+  useEffect(() => {
+    const before = updatedChildren?.[(aIndex - 1 + len) % len];
+    const between = updatedChildren?.[aIndex];
+    const after = updatedChildren?.[(aIndex + 1) % len];
+    setSlideNumber(aIndex);
+    setRenderComp([before, between, after]);
+  }, [aIndex]);
 
   useEffect(() => {
     if (carousel.current) {
@@ -61,7 +75,7 @@ export default function Carousel({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const reset = () => {
-	  transitioning.current = false;
+      transitioning.current = false;
       if (slidesContainer.current) {
         const before = updatedChildren?.[(slideNumber - 1 + len) % len];
         const between = updatedChildren?.[slideNumber];

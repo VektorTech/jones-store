@@ -95,6 +95,7 @@ export default function ProductPage({
   const router = useRouter();
 
   const [shareModalOpen, setShareModalOpen] = useState(false);
+  const [activeImage, setActiveImage] = useState(0);
 
   return (
     <>
@@ -119,9 +120,9 @@ export default function ProductPage({
           <div className="product-view__gallery-container">
             <div className="product-view__images">
               <ul>
-                {product.mediaURLs.map((url) => (
+                {product.mediaURLs.map((url, i) => (
                   <li key={url}>
-                    <button>
+                    <button onClick={() => setActiveImage(i)}>
                       <Image
                         objectFit="contain"
                         src={url}
@@ -137,7 +138,7 @@ export default function ProductPage({
             </div>
             <div className="product-view__picture">
               <div className="product-view__picture-container">
-                <Carousel>
+                <Carousel aIndex={activeImage}>
                   {product.mediaURLs.map((url, i) => (
                     <Img
                       key={"image:" + url}
