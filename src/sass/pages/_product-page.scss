@@ -118,10 +118,10 @@
       width: 100%;
       padding: 0.2rem;
     }
+  }
 
-    & li:first-of-type button {
-      border: 0.1rem solid #000;
-    }
+  &__thumb-active {
+    border: 0.1rem solid #000;
   }
 
   &__picture {

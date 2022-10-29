@@ -122,7 +122,7 @@ export default function ProductPage({
               <ul>
                 {product.mediaURLs.map((url, i) => (
                   <li key={url}>
-                    <button onClick={() => setActiveImage(i)}>
+                    <button className={i == activeImage ? "product-view__thumb-active" : ""} onClick={() => setActiveImage(i)}>
                       <Image
                         objectFit="contain"
                         src={url}
@@ -138,12 +138,13 @@ export default function ProductPage({
             </div>
             <div className="product-view__picture">
               <div className="product-view__picture-container">
-                <Carousel aIndex={activeImage}>
+                <Carousel onUpdate={(i: number) => setActiveImage(i)} aIndex={activeImage}>
                   {product.mediaURLs.map((url, i) => (
                     <Img
                       key={"image:" + url}
                       style={{
                         // width: "100%",
+                        objectFit: "contain",
                         height: "100%",
                         position: "static",
                       }}

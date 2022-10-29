@@ -4,9 +4,11 @@ import { MdArrowForwardIos, MdArrowBackIosNew } from "react-icons/md";
 export default function Carousel({
   children,
   aIndex,
+  onUpdate
 }: {
   children: React.ReactNode;
   aIndex: number;
+  onUpdate?: Function;
 }) {
   const carousel = useRef<HTMLDivElement>(null);
   const slidesContainer = useRef<HTMLDivElement>(null);
@@ -38,16 +40,22 @@ export default function Carousel({
 
   const [renderComp, setRenderComp] = useState([before, between, after]);
   if (slidesContainer.current) {
-    slidesContainer.current.style.transition = "transform 0.3s";
+    slidesContainer.current.style.transition = "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)";
   }
 
   useEffect(() => {
+    if (aIndex == slideNumber) { return; }
+
     const before = updatedChildren?.[(aIndex - 1 + len) % len];
     const between = updatedChildren?.[aIndex];
     const after = updatedChildren?.[(aIndex + 1) % len];
     setSlideNumber(aIndex);
     setRenderComp([before, between, after]);
   }, [aIndex]);
+
+  useEffect(() => {
+    onUpdate?.(slideNumber);
+  }, [slideNumber]);
 
   useEffect(() => {
     if (carousel.current) {
