@@ -64,6 +64,10 @@
     }
   }
 
+  &__share-button {
+    @extend %round-button;
+  }
+
   &__name {
     font-size: $text-xl;
   }

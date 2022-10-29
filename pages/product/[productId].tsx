@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Img from "next/future/image";
 
-import { AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
+import { AiOutlineHeart } from "react-icons/ai";
+import { HiOutlineShare } from "react-icons/hi";
 
 import BreadCrumbs from "@Components/productList/BreadCrumbs";
 import { withSessionSsr } from "@Lib/withSession";
@@ -218,8 +219,8 @@ export default function ProductPage({
           </form>
           <Button>Buy Now</Button>
 
-          <button onClick={() => setShareModalOpen(true)}>
-            <AiOutlineShareAlt /> Share
+          <button className="product-view__share-button" onClick={() => setShareModalOpen(true)}>
+            <HiOutlineShare />
           </button>
           <Modal
             title="Share"

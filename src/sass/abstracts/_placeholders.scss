@@ -155,3 +155,21 @@
     grid-template-columns: repeat(5, 1fr);
   }
 }
+
+//
+%round-button {
+  display: flex;
+  width: 3.5rem;
+  height: 3.5rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: v.$c-text-dark;
+  font-size: v.$text-lg;
+  transition: background-color 0.3s v.$timing-func-ui;
+
+  &:hover,
+  &:focus-visible {
+    background-color: mix(v.$c-gray, #fff, 80%);
+  }
+}
