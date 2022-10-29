@@ -6,6 +6,7 @@
 
   &__container {
     width: 100%;
+    overflow: hidden;
   }
 
   &__list {
@@ -17,6 +18,8 @@
 
     &-item {
       margin-right: 1rem;
+      text-transform: uppercase;
+      white-space: nowrap;
     }
 
     &-separator {
