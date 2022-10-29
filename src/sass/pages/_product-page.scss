@@ -134,6 +134,8 @@
   }
 
   &__details {
+    overflow: hidden;
+
     &-tabs {
       & ul {
         display: flex;
