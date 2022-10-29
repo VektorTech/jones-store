@@ -26,6 +26,12 @@ import {
   FacebookIcon,
   PinterestShareButton,
   PinterestIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+  EmailShareButton,
+  EmailIcon,
 } from "next-share";
 import Modal from "@Components/Modal";
 import { getPathString } from "@Lib/utils";
@@ -236,6 +242,29 @@ export default function ProductPage({
               >
                 <PinterestIcon size={32} round />
               </PinterestShareButton>
+
+              <TwitterShareButton
+                url={typeof location != "undefined" ? location.href : ""}
+                title={product.details}
+              >
+                <TwitterIcon size={32} round />
+              </TwitterShareButton>
+
+              <WhatsappShareButton
+                url={typeof location != "undefined" ? location.href : ""}
+                title={product.title}
+                separator=":: "
+              >
+                <WhatsappIcon size={32} round />
+              </WhatsappShareButton>
+
+              <EmailShareButton
+                url={typeof location != "undefined" ? location.href : ""}
+                subject={product.title}
+                body={product.details}
+              >
+                <EmailIcon size={32} round />
+              </EmailShareButton>
             </div>
           </Modal>
         </div>
