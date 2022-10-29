@@ -143,7 +143,7 @@ export default function ProductPage({
                     <Img
                       key={"image:" + url}
                       style={{
-                        // width: "100%",
+                        objectPosition: "top",
                         objectFit: "contain",
                         height: "100%",
                         position: "static",
