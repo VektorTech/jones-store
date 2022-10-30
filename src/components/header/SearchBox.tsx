@@ -12,7 +12,7 @@ export default function SearchBox({
 }: {
   setDialog: () => void;
   searchTerm: string;
-  searchChangedHandler: ChangeEventHandler<HTMLInputElement>;
+  searchChangedHandler: Function;
   products: ProductComponentType[];
 }) {
   return (
@@ -31,7 +31,7 @@ export default function SearchBox({
               type="text"
               name="search"
               placeholder="Searching for..."
-              onChange={searchChangedHandler}
+              onChange={(e) => searchChangedHandler(e.currentTarget.value)}
               value={searchTerm}
             />
             <label htmlFor="search-input" className="input__placeholder">
@@ -44,9 +44,9 @@ export default function SearchBox({
         </div>
         <div className="search__trends">
           <span className="search__trends-title">Popular Searches:</span>
-          <button className="search__trends-tag">og high</button>
-          <button className="search__trends-tag">shadow</button>
-          <button className="search__trends-tag">black toe</button>
+          <button onClick={() => searchChangedHandler("mocha")} className="search__trends-tag">mocha</button>
+          <button onClick={() => searchChangedHandler("bred")} className="search__trends-tag">bred</button>
+          <button onClick={() => searchChangedHandler("retro")} className="search__trends-tag">retro</button>
         </div>
         <h3 className="search__results-info">5 Jordans Found</h3>
         <div className="search__results">

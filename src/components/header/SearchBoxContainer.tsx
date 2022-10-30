@@ -20,10 +20,8 @@ export default function SearchBoxContainer() {
   >([]);
   const address = useRef(typeof location == "object" ? location.href : null);
 
-  const searchChangedHandler: ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
-    setSearchTerm(event.currentTarget.value);
+  const searchChangedHandler = (value: string) => {
+    setSearchTerm(value);
   };
 
   useDebounce(
