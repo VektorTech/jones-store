@@ -5,6 +5,9 @@ import prisma from "@Lib/prisma";
 import { ChangeEvent, useState } from "react";
 import { cloudinaryUpload } from "@Lib/utils";
 import { phoneRegExp, userSchema } from "@Lib/validations";
+import TextField from "@Components/common/formControls/TextField";
+import Button from "@Components/common/formControls/Button";
+import Form from "@Components/Form";
 
 export default function Profile({ user }: { user: User }) {
   const [img, setImg] = useState("/assets/images/user-avatar.jpg");
@@ -16,89 +19,44 @@ export default function Profile({ user }: { user: User }) {
   return (
     <div className="profile">
       <div className="profile__avatar">
-        {/* <Image /> */}
+        <Image
+          objectFit="cover"
+          src={user.avatarURL || img}
+          width={200}
+          height={200}
+          alt="profile"
+        />
         <button>Edit</button>
       </div>
 
-      <Image
-        objectFit="cover"
-        src={img}
-        width={200}
-        height={200}
-        alt="profile"
-      />
-
       <form action="">
         <input type="file" accept="image/*" onChange={handleImageUpload} />
-        <input type="submit" value="Upload" />
+        <Button type="submit">Upload New Avatar</Button>
       </form>
 
       <br />
 
-      <form action={`/api/auth/edit/${""}`} method="POST">
-        <label htmlFor="">
-          Username
-          <input name="username" type="text" />
-        </label>
-        <label htmlFor="">
-          Email
-          <input name="email" type="email" />
-        </label>
-        <label htmlFor="">
-          First Name
-          <input name="firstName" type="text" />
-        </label>
-        <label htmlFor="">
-          Last Name
-          <input name="lastName" type="text" />
-        </label>
-        <label htmlFor="">
-          Phone
-          <input name="phoneNumber" type="text" />
-        </label>
-        <label htmlFor="">
-          Password
-          <input name="password" type="password" />
-        </label>
-        <label htmlFor="">
-          Avatar
-          <input name="avatarURL" type="text" />
-        </label>
-        <input type="submit" value="Save" />
-      </form>
+      <Form action={`/api/auth/edit/${user.id}`} method="POST">
+        <TextField label="Username" value={user.username} name="username" />
+        <TextField label="Email" value={user.email} name="email" type="email" />
+        <TextField label="First Name" value={user.firstName || ""} name="firstName" />
+        <TextField label="Last Name" value={user.lastName || ""} name="lastName" />
+        <TextField label="Phone" value={user.phoneNumber || ""} name="phoneNumber" />
+        <TextField label="Password" name="password" type="password" />
+        <Button type="submit">Save</Button>
+      </Form>
 
       <br />
 
-      <form action="">
-        <label htmlFor="">
-          Address Line 1
-          <input type="text" />
-        </label>
-        <label htmlFor="">
-          Address Line 2
-          <input type="text" />
-        </label>
-        <label htmlFor="">
-          Unit #
-          <input type="text" />
-        </label>
-        <label htmlFor="">
-          City
-          <input type="text" />
-        </label>
-        <label htmlFor="">
-          Region
-          <input type="text" />
-        </label>
-        <label htmlFor="">
-          Postal Code
-          <input type="text" />
-        </label>
-        <label htmlFor="">
-          Country
-          <input type="text" />
-        </label>
-      </form>
+      <Form action="" method="POST">
+        <TextField label="Address Line 1" />
+        <TextField label="Address Line 2" />
+        <TextField label="Unit #" />
+        <TextField label="City" />
+        <TextField label="Region" />
+        <TextField label="Postal Code" />
+        <TextField label="Country" />
+      </Form>
     </div>
   );
 }
@@ -112,6 +70,17 @@ export const getServerSideProps = withSessionSsr(async function ({
 
   const userRecord = await prisma.user
     .findUnique({
+      select: {
+        username: true,
+        avatarURL: true,
+        firstName: true,
+        lastName: true,
+        phoneNumber: true,
+        id: true,
+        email: true,
+        role: true,
+        userAddress: true,
+      },
       where: { id: user?.id },
     })
     .catch(console.log);
