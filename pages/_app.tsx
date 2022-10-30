@@ -9,7 +9,7 @@ import Layout from "@Components/Layout";
 import SEO from "@Components/common/SEO";
 import Head from "next/head";
 import AdminLayout from "@Components/AdminLayout";
-import { getIronSession, IronSessionData } from "iron-session";
+import { getIronSession } from "iron-session";
 import { NextResponse } from "next/server";
 import { sessionOptions } from "@Lib/config";
 import { IncomingMessage } from "http";
@@ -28,7 +28,6 @@ function MyApp({
   Component,
   pageProps,
   cookies,
-  userSession,
   isAdmin,
   user,
 }: AppPropsWithCookies) {
@@ -103,7 +102,6 @@ MyApp.getInitialProps = async (context: AppContext) => {
   return {
     ...appProps,
     cookies,
-    userSession: session?.user,
     isAdmin: req?.url?.startsWith("/admin"),
     user: { ...user, cart }
   };
@@ -112,8 +110,7 @@ MyApp.getInitialProps = async (context: AppContext) => {
 interface AppPropsWithCookies extends AppProps {
   cookies: { announcementState: string };
   isAdmin: boolean;
-  userSession: IronSessionData["user"];
-  user: UserType;
+  user?: UserType;
 }
 
 export default MyApp;

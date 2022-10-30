@@ -28,7 +28,7 @@ export const AuthProvider = ({
   currentUser,
 }: {
   children: ReactElement;
-  currentUser: UserType;
+  currentUser?: UserType;
 }) => {
   const {
     user,

@@ -37,7 +37,7 @@ const authReducer = (
 ) => {
   switch (action.type) {
     case actions.SET_USER:
-      return action.payload;
+      return { ...user, ...action.payload };
     case actions.ADD_WISHLIST_ITEM:
       return {
         ...user,
@@ -96,13 +96,13 @@ const useProfile = (
   return { data, isError, isLoading };
 };
 
-export default function useUser(currentUser: UserType) {
+export default function useUser(currentUser?: UserType) {
   const [userState, updateUser] = useReducer(authReducer, initUser);
 
   useEffect(() => {
     let payload = null;
 
-    if (currentUser) {
+    if (currentUser?.id) {
       updateUser({
         type: actions.SET_USER as ActionsType,
         payload: { ...currentUser, isAuth: true },
