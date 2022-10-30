@@ -14,6 +14,8 @@ import { useAuthState } from "@Lib/contexts/AuthContext";
 import Popup from "@Components/common/Popup";
 import Form from "@Components/Form";
 import { CartItem } from "@prisma/client";
+import { getPathString } from "@Lib/utils";
+const CategoriesData = require("@Lib/CategoriesData.json");
 
 export default function HeaderSection({
   announcementVisible,
@@ -22,9 +24,11 @@ export default function HeaderSection({
 }) {
   const { setDialog } = useDialog();
 
+  const [dropdownNav, setDropdownNav] = useState<JSX.Element[] | null>(null);
   const [pinnedState, setPinnedState] = useState(false);
   const scrollTop = useScrollTop();
   const lastScroll = useRef(scrollTop);
+  const headerRef = useRef<HTMLElement>(null);
 
   const { user } = useAuthState();
   const isAuth = user?.isAuth;
@@ -37,195 +41,270 @@ export default function HeaderSection({
     ) || 0;
 
   useEffect(() => {
-    const ANNOUNCEMENT_BANNER_HEIGHT = 35;
-    const headerHeight =
-      Number(
-        getComputedStyle(document.body)
-          .getPropertyValue("--header-height")
-          .replace("rem", "")
-      ) * 10;
-    if (
-      scrollTop >=
-      (announcementVisible
-        ? headerHeight + ANNOUNCEMENT_BANNER_HEIGHT
-        : headerHeight)
-    ) {
-      setPinnedState(lastScroll.current > scrollTop);
-      lastScroll.current = scrollTop;
-    } else {
-      setPinnedState(false);
+    const mainBanner = document.getElementById("main-banner");
+
+    if (mainBanner) {
+      setPinnedState(
+        scrollTop > mainBanner?.offsetTop + mainBanner?.clientHeight
+      );
     }
-  }, [scrollTop, announcementVisible]);
+  }, [scrollTop]);
 
   const [hoveredElement, setHoveredElement] = useState<string>("");
 
   return (
-    <header className={`header${pinnedState ? " header--pinned" : ""}`}>
-      <div className="header__container">
-        <div className="header__menu-button">
-          <button
-            className="header__menu-toggle"
-            onClick={() => setDialog("SIDEBAR_DIALOG")}
-          >
-            <FiMenu />
-          </button>
-        </div>
+    <>
+      <header
+        ref={headerRef}
+        className={`header${pinnedState ? " header--pinned" : ""}`}
+      >
+        <div className="header__container">
+          <div className="header__menu-button">
+            <button
+              className="header__menu-toggle"
+              onClick={() => setDialog("SIDEBAR_DIALOG")}
+            >
+              <FiMenu />
+            </button>
+          </div>
 
-        <div className="header__logo">
-          <Link href="/">
-            <a>
-              <Image width={80} height={46} alt="" src={logoImg} />
-            </a>
-          </Link>
-        </div>
+          <div className="header__logo">
+            <Link href="/">
+              <a>
+                <Image width={80} height={46} alt="" src={logoImg} />
+              </a>
+            </Link>
+          </div>
 
-        <div className="header__nav">
-          <nav>
+          <div className="header__nav">
+            <nav>
+              <ul>
+                <li className="header__nav-link">
+                  <Link href="#">
+                    <a
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setDropdownNav(
+                          dropdownNav == ColorwaysList ? null : ColorwaysList
+                        );
+                      }}
+                    >
+                      COLORWAYS
+                    </a>
+                  </Link>
+                </li>
+                <li className="header__nav-link">
+                  <span>|</span>
+                </li>
+                <li className="header__nav-link">
+                  <Link href="#">
+                    <a
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setDropdownNav(
+                          dropdownNav == MenCategoriesList
+                            ? null
+                            : MenCategoriesList
+                        );
+                      }}
+                    >
+                      MEN
+                    </a>
+                  </Link>
+                </li>
+                <li className="header__nav-link">
+                  <Link href="#">
+                    <a
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setDropdownNav(
+                          dropdownNav == WomenCategoriesList
+                            ? null
+                            : WomenCategoriesList
+                        );
+                      }}
+                    >
+                      WOMEN
+                    </a>
+                  </Link>
+                </li>
+                <li className="header__nav-link">
+                  <Link href="/category/kids">
+                    <a>KIDS</a>
+                  </Link>
+                </li>
+                <li className="header__nav-link">
+                  <Link href="/category/baby">
+                    <a>BABY</a>
+                  </Link>
+                </li>
+                <li className="header__nav-link">
+                  <Link href="/category/unisex">
+                    <a>UNISEX</a>
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+          <div className="header__buttons">
             <ul>
-              <li className="header__nav-link">
-                <Link href="#">
-                  <a onClick={(e) => e.preventDefault()}>COLORWAYS</a>
+              <li className="header__button header__button-search">
+                <Link href="./#">
+                  <a
+                    className="header__button-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setDialog("SEARCH_BOX");
+                    }}
+                  >
+                    <FiSearch />
+                  </a>
                 </Link>
               </li>
-              <li className="header__nav-link">
-                <span>|</span>
-              </li>
-              <li className="header__nav-link">
-                <Link href="/category/men">
-                  <a>MEN</a>
+              <li className="header__button header__button-account">
+                <Link href={isAuth ? "/profile" : "/signin"}>
+                  <a
+                    onPointerEnter={(e) =>
+                      setHoveredElement("header-account-btn")
+                    }
+                    onPointerLeave={(e) => setHoveredElement("")}
+                    className="header__button-link"
+                    id="header-account-btn"
+                  >
+                    <BsPerson />
+                    <Popup
+                      currentId={hoveredElement}
+                      hoverElementId="header-account-btn"
+                    >
+                      {isAuth ? (
+                        <>
+                          <Link href="/profile">
+                            <a className="header__popup-button">
+                              <span>Profile</span>
+                            </a>
+                          </Link>
+                          <Form
+                            afterSubmit={(data) => {
+                              if (data.success) {
+                                location.reload();
+                              }
+                            }}
+                            action="/api/auth/signout"
+                          >
+                            <input
+                              className="header__popup-button"
+                              type="submit"
+                              value="Log Out"
+                            />
+                          </Form>
+                        </>
+                      ) : (
+                        <>
+                          <Link href="/signin">
+                            <a className="header__popup-button">
+                              <span>Log In</span>
+                            </a>
+                          </Link>
+                          <Link href="/signup">
+                            <a className="header__popup-button">
+                              <span>Register</span>
+                            </a>
+                          </Link>
+                        </>
+                      )}
+                    </Popup>
+                  </a>
                 </Link>
               </li>
-              <li className="header__nav-link">
-                <Link href="/category/women">
-                  <a>WOMEN</a>
+              <li className="header__button header__button-wishlist">
+                <Link href="/wishlist">
+                  <a className="header__button-link">
+                    <AiOutlineHeart />
+                  </a>
                 </Link>
+                {wishlistCount ? <span>{wishlistCount}</span> : null}
               </li>
-              <li className="header__nav-link">
-                <Link href="/category/kids">
-                  <a>KIDS</a>
+              <li className="header__button header__button-cart">
+                <Link href="/cart">
+                  <a
+                    onPointerEnter={(e) => setHoveredElement("header-cart-btn")}
+                    onPointerLeave={(e) => setHoveredElement("")}
+                    className="header__button-link"
+                    id="header-cart-btn"
+                  >
+                    <BsCart3 />
+                    <Popup
+                      currentId={hoveredElement}
+                      hoverElementId="header-cart-btn"
+                    >
+                      {cartCount ? (
+                        <>
+                          <strong>Total</strong>
+                          <br />${cartTotal}
+                        </>
+                      ) : (
+                        "Empty"
+                      )}
+                    </Popup>
+                  </a>
                 </Link>
-              </li>
-              <li className="header__nav-link">
-                <Link href="/category/baby">
-                  <a>BABY</a>
-                </Link>
-              </li>
-              <li className="header__nav-link">
-                <Link href="/category/unisex">
-                  <a>UNISEX</a>
-                </Link>
+                {cartCount ? <span>{cartCount}</span> : null}
               </li>
             </ul>
-          </nav>
+          </div>
         </div>
+      </header>
 
-        <div className="header__buttons">
-          <ul>
-            <li className="header__button header__button-search">
-              <Link href="./#">
-                <a
-                  className="header__button-link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setDialog("SEARCH_BOX");
-                  }}
-                >
-                  <FiSearch />
-                </a>
-              </Link>
-            </li>
-            <li className="header__button header__button-account">
-              <Link href={isAuth ? "/profile" : "/signin"}>
-                <a
-                  onPointerEnter={(e) =>
-                    setHoveredElement("header-account-btn")
-                  }
-                  onPointerLeave={(e) => setHoveredElement("")}
-                  className="header__button-link"
-                  id="header-account-btn"
-                >
-                  <BsPerson />
-                  <Popup
-                    currentId={hoveredElement}
-                    hoverElementId="header-account-btn"
-                  >
-                    {isAuth ? (
-                      <>
-                        <Link href="/profile">
-                          <a className="header__popup-button">
-                            <span>Profile</span>
-                          </a>
-                        </Link>
-                        <Form
-                          afterSubmit={(data) => {
-                            if (data.success) {
-                              location.reload();
-                            }
-                          }}
-                          action="/api/auth/signout"
-                        >
-                          <input
-                            className="header__popup-button"
-                            type="submit"
-                            value="Log Out"
-                          />
-                        </Form>
-                      </>
-                    ) : (
-                      <>
-                        <Link href="/signin">
-                          <a className="header__popup-button">
-                            <span>Log In</span>
-                          </a>
-                        </Link>
-                        <Link href="/signup">
-                          <a className="header__popup-button">
-                            <span>Register</span>
-                          </a>
-                        </Link>
-                      </>
-                    )}
-                  </Popup>
-                </a>
-              </Link>
-            </li>
-            <li className="header__button header__button-wishlist">
-              <Link href="/wishlist">
-                <a className="header__button-link">
-                  <AiOutlineHeart />
-                </a>
-              </Link>
-              {wishlistCount ? <span>{wishlistCount}</span> : null}
-            </li>
-            <li className="header__button header__button-cart">
-              <Link href="/cart">
-                <a
-                  onPointerEnter={(e) => setHoveredElement("header-cart-btn")}
-                  onPointerLeave={(e) => setHoveredElement("")}
-                  className="header__button-link"
-                  id="header-cart-btn"
-                >
-                  <BsCart3 />
-                  <Popup
-                    currentId={hoveredElement}
-                    hoverElementId="header-cart-btn"
-                  >
-                    {cartCount ? (
-                      <>
-                        <strong>Total</strong>
-                        <br />${cartTotal}
-                      </>
-                    ) : (
-                      "Empty"
-                    )}
-                  </Popup>
-                </a>
-              </Link>
-              {cartCount ? <span>{cartCount}</span> : null}
-            </li>
-          </ul>
-        </div>
+      <div
+        className={
+          "header__dropdown" +
+          (dropdownNav ? " header__dropdown--visible" : "") +
+          (pinnedState ? " header__dropdown--pinned" : "")
+        }
+      >
+        <ul>{dropdownNav}</ul>
       </div>
-    </header>
+    </>
   );
 }
+
+const ColorwaysList = CategoriesData.colorways.map((name: string) => (
+  <li key={name} className="sidebar__links-item">
+    <Link href={"/category/colorways?colorway=" + name}>
+      <a className="sidebar__anchor">{name}</a>
+    </Link>
+  </li>
+));
+
+const MenCategoriesList = [
+  <li key={"men-sidebar"} className="sidebar__links-item">
+    <Link href={"/category/men"}>
+      <a className="sidebar__anchor">MEN</a>
+    </Link>
+  </li>,
+].concat(
+  CategoriesData.men.map((name: string) => (
+    <li key={name} className="sidebar__links-item">
+      <Link href={"/category/men/" + getPathString(name)}>
+        <a className="sidebar__anchor">{name}</a>
+      </Link>
+    </li>
+  ))
+);
+
+const WomenCategoriesList = [
+  <li key={"men-sidebar"} className="sidebar__links-item">
+    <Link href={"/category/women"}>
+      <a className="sidebar__anchor">WOMEN</a>
+    </Link>
+  </li>,
+].concat(
+  CategoriesData.women.map((name: string) => (
+    <li key={name} className="sidebar__links-item">
+      <Link href={"/category/women/" + getPathString(name)}>
+        <a className="sidebar__anchor">{name}</a>
+      </Link>
+    </li>
+  ))
+);

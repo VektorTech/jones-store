@@ -15,6 +15,7 @@ export default function HeroBanner() {
 
   return (
     <section
+      id="main-banner"
       className={
         "banner" +
         (short ? " banner--short" : "") +
