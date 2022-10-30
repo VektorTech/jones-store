@@ -2,7 +2,7 @@ import { useAnnouncementState } from "@Lib/contexts/UIContext";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import Announcement from "./Announcement";
 import HeaderSection from "./HeaderSection";
-import SearchBox from "./SearchBoxContainer";
+import SearchBox from "./SearchBox";
 import Sidebar from "./Sidebar";
 
 function Header() {
