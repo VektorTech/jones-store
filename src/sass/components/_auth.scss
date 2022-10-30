@@ -1,0 +1,40 @@
+@use "../abstracts" as *;
+
+.auth {
+  $self: &;
+
+  overflow: hidden;
+
+  &__container {
+    width: 200%;
+    transition: transform 0.3s $timing-func-ui;
+
+    &--signin {
+      transform: translateX(-50%);
+    }
+  }
+
+  &__form {
+    float: left;
+    width: 50%;
+    padding: 0 2rem;
+    visibility: hidden;
+    transition: visibility 0.3s;
+
+    &--active {
+      visibility: visible;
+    }
+  }
+
+  &__button {
+    padding-top: 2rem;
+    margin: auto;
+    display: block;
+  }
+
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
