@@ -18,6 +18,7 @@ const initUser: UserType = {
   deactivated: false,
   wishlist: [],
   cart: [],
+  isAuth: false
 };
 
 const actions = {
@@ -103,11 +104,9 @@ export default function useUser(id?: string) {
     let payload = null;
 
     if (data?.data) {
-      payload = data.data;
-
       updateUser({
         type: actions.SET_USER as ActionsType,
-        payload,
+        payload: { ...data.data, isAuth: true },
       });
     } else {
       Promise.all([

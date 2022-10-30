@@ -26,7 +26,8 @@ export default function HeaderSection({
   const scrollTop = useScrollTop();
   const lastScroll = useRef(scrollTop);
 
-  const { user, isAuth } = useAuthState();
+  const { user } = useAuthState();
+  const isAuth = user?.isAuth;
   const wishlistCount = user?.wishlist?.length;
   const cartCount = user?.cart?.length;
   const cartTotal =

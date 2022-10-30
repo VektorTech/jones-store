@@ -11,6 +11,7 @@ export interface DefaultResponse {
 export type UserType = Partial<User> & {
   wishlist: Wishlist[] | never[];
   cart: CartItem[] | never[];
+  isAuth: boolean;
 };
 
 export interface ProductComponentType extends Product {
