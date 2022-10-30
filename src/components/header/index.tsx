@@ -7,7 +7,7 @@ import Sidebar from "./Sidebar";
 
 function Header() {
   const [announcementVisible] = useAnnouncementState();
-  const { user, isLoading, userSessionId, isError } = useAuthState();
+  const { user } = useAuthState();
 
   return (
     <>
