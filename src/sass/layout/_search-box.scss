@@ -1,5 +1,11 @@
 @use "../abstracts" as *;
 
+@keyframes fade-in {
+  to {
+    opacity: 1;
+  }
+}
+
 .search {
   position: fixed;
   top: 0;
@@ -10,6 +16,8 @@
   z-index: 100;
   overflow-y: auto;
   overflow-x: hidden;
+  opacity: 0;
+  animation: fade-in 0.3s forwards;
 
   &__container {
     width: calc(100% - 5rem);
@@ -88,8 +96,9 @@
     margin: auto;
     margin-top: 2rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    grid-template-columns: repeat(auto-fit, 14rem);
     min-height: 4rem;
-    gap: 2rem;
+    gap: 1.5rem;
+    justify-content: center;
   }
 }
