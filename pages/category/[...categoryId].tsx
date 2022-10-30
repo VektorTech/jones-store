@@ -66,11 +66,15 @@ export default function CategoryPage({
           />
           <hr className="constraints__hr" />
           <h1 className="constraints__title">{categoryId}</h1>
-          <p className="constraints__summary">
-            Showing <strong>{Number(offset) + 1}</strong> &mdash;{" "}
-            <strong>{Number(offset) + products.length}</strong> of{" "}
-            <strong>{count}</strong> results
-          </p>
+          {products.length ? (
+            <p className="constraints__summary">
+              Showing <strong>{Number(offset) + 1}</strong> &mdash;{" "}
+              <strong>{Number(offset) + products.length}</strong> of{" "}
+              <strong>{count}</strong> results
+            </p>
+          ) : (
+            <p><strong>Nothing Found!</strong></p>
+          )}
           <div className="constraints__filters"></div>
         </div>
       </div>

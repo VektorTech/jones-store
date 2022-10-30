@@ -26,7 +26,8 @@ export default function Pagination({
   offset: number;
 }) {
   const pageCount = Math.floor(resultsCount / limit) + 1;
-  const currentPage = Math.floor(pageCount * (offset / resultsCount)) + 1;
+  const currentPage =
+    Math.floor(pageCount * (offset / (resultsCount || 1))) + 1;
   const router = useRouter();
 
   return (
