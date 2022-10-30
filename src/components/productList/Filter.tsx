@@ -117,7 +117,7 @@ export default function Filter({
           />
         </FilterParam>
 
-        <FilterParam type="Price Range">
+        <FilterParam type="Filter By Price">
           <PriceRange preset={[minPrice, maxPrice]} />
         </FilterParam>
 
@@ -239,18 +239,18 @@ const PriceRange = ({
 
     if (activeThumb) {
       document.addEventListener("pointerup", mouseUpHandler);
-      // document.addEventListener("touchend", mouseUpHandler);
-
       document.addEventListener("pointermove", mouseMoveHandler);
-      // document.addEventListener("touchmove", mouseMoveHandler);
+
+      document.addEventListener("touchend", mouseUpHandler);
+      document.addEventListener("touchmove", mouseMoveHandler);
     }
 
     return () => {
       document.removeEventListener("pointerup", mouseUpHandler);
-      // document.removeEventListener("touchend", mouseUpHandler);
-
       document.removeEventListener("pointermove", mouseMoveHandler);
-      // document.removeEventListener("touchmove", mouseMoveHandler);
+
+      document.removeEventListener("touchend", mouseUpHandler);
+      document.removeEventListener("touchmove", mouseMoveHandler);
       resizeObserver.disconnect();
     };
   }, [activeThumb]);
@@ -258,8 +258,8 @@ const PriceRange = ({
   return (
     <div className="price-range">
       <input
-        defaultValue={`$${valueMin} - $${valueMax}`}
-        key={`$${valueMin} - $${valueMax}`}
+        defaultValue={`Price: $${valueMin} — $${valueMax}`}
+        key={`Price: $${valueMin} — $${valueMax}`}
         readOnly
         className="price-range__input"
       />
@@ -278,9 +278,9 @@ const PriceRange = ({
             e.preventDefault();
             setActiveThumb("min");
           }}
-          // onTouchStart={(e) => {
-          //   setActiveThumb("min");
-          // }}
+          onTouchStart={(e) => {
+            setActiveThumb("min");
+          }}
           className="price-range__min"
         ></span>
         <span
@@ -289,9 +289,9 @@ const PriceRange = ({
             e.preventDefault();
             setActiveThumb("max");
           }}
-          // onTouchStart={(e) => {
-          //   setActiveThumb("max");
-          // }}
+          onTouchStart={(e) => {
+            setActiveThumb("max");
+          }}
           className="price-range__max"
         ></span>
       </div>

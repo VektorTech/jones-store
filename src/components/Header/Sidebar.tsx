@@ -23,10 +23,11 @@ export default function Sidebar({ userId }: { userId?: string }) {
   const { user } = useAuthState();
   const wishlistCount = user?.wishlist?.length;
   const cartCount = user?.cart.length;
-  const cartTotal = (user?.cart || []).reduce(
-    (total: number, item: CartItem) => total + item?.total,
-    0
-  ) || 0;
+  const cartTotal =
+    (user?.cart || []).reduce(
+      (total: number, item: CartItem) => total + item?.total,
+      0
+    ) || 0;
 
   const sidebarRef = useRef<HTMLDivElement>(null);
   const sidebarVisible = currentDialog == Dialogs.SIDEBAR_DIALOG;
@@ -159,7 +160,9 @@ export default function Sidebar({ userId }: { userId?: string }) {
                 <Link href="/cart">
                   <a className="sidebar__anchor">
                     <BsCart3 />
-                    <span>Cart{cartCount ? ` (${cartCount}) ($${cartTotal})` : ""}</span>
+                    <span>
+                      Cart{cartCount ? ` (${cartCount}) ($${cartTotal})` : ""}
+                    </span>
                   </a>
                 </Link>
               </li>
@@ -199,18 +202,34 @@ const ColorwaysList = CategoriesData.colorways.map((name: string) => (
   </li>
 ));
 
-const MenCategoriesList = CategoriesData.men.map((name: string) => (
-  <li key={name} className="sidebar__links-item">
-    <Link href={"/category/men/" + getPathString(name)}>
-      <a className="sidebar__anchor">{name}</a>
+const MenCategoriesList = [
+  <li key={"men-sidebar"} className="sidebar__links-item">
+    <Link href={"/category/men"}>
+      <a className="sidebar__anchor">men</a>
     </Link>
-  </li>
-));
+  </li>,
+].concat(
+  CategoriesData.men.map((name: string) => (
+    <li key={name} className="sidebar__links-item">
+      <Link href={"/category/men/" + getPathString(name)}>
+        <a className="sidebar__anchor">{name}</a>
+      </Link>
+    </li>
+  ))
+);
 
-const WomenCategoriesList = CategoriesData.women.map((name: string) => (
-  <li key={name} className="sidebar__links-item">
-    <Link href={"/category/women/" + getPathString(name)}>
-      <a className="sidebar__anchor">{name}</a>
+const WomenCategoriesList = [
+  <li key={"men-sidebar"} className="sidebar__links-item">
+    <Link href={"/category/women"}>
+      <a className="sidebar__anchor">women</a>
     </Link>
-  </li>
-));
+  </li>,
+].concat(
+  CategoriesData.women.map((name: string) => (
+    <li key={name} className="sidebar__links-item">
+      <Link href={"/category/women/" + getPathString(name)}>
+        <a className="sidebar__anchor">{name}</a>
+      </Link>
+    </li>
+  ))
+);
