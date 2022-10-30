@@ -125,9 +125,6 @@ export default function Filter({
           <Button type="submit" className="filter__done">
             done
           </Button>
-          <Button type="reset" className="filter__clear-all">
-            clear all
-          </Button>
         </div>
       </form>
     </div>
