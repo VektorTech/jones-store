@@ -1,14 +1,19 @@
 import Link from "next/link";
 import Image from "next/future/image";
 import NextImage from "next/image";
+import { useState } from "react";
 import { BiMap, BiPhone, BiTime } from "react-icons/bi";
 import { HiOutlineMail } from "react-icons/hi";
 import { FaPaperPlane } from "react-icons/fa";
 
 import logoImg from "@Images/jones-logo.png";
 import SocialIcons from "./common/SocialButtons";
+import Modal from "./Modal";
+import Dropdown from "./common/formControls/Dropdown";
 
 export default function Footer() {
+  const [modal, setModal] = useState(false);
+
   return (
     <footer className="footer">
       <div className="footer__container">
@@ -188,13 +193,23 @@ export default function Footer() {
             </small>
           </div>
           <div className="gutter__lang-currency language-currency">
-            <button className="language-currency__btn">
+            <button onClick={() => setModal(true)} className="language-currency__btn">
               {"English"} <span className="language-currency__sep">|</span>{" "}
               {"$ USD"}
             </button>
           </div>
         </div>
       </div>
+
+      <Modal title="Select Language / Currency" onClose={() => setModal(false)} visible={modal}>
+        <Dropdown label="Select Currency" options={{
+          usd: "🇺🇸 USD",
+          cad: "🇨🇦 CAD",
+          gbp: "🇬🇧 GBP £",
+          eur: "🇪🇺 EUR €",
+          jmd: "🇯🇲 JMD",
+        }} />
+      </Modal>
     </footer>
   );
 }
