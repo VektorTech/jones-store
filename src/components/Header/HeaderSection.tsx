@@ -15,6 +15,7 @@ import Popup from "@Components/common/Popup";
 import Form from "@Components/Form";
 import { CartItem } from "@prisma/client";
 import { getPathString } from "@Lib/utils";
+import { useRouter } from "next/router";
 const CategoriesData = require("@Lib/CategoriesData.json");
 
 export default function HeaderSection({
@@ -49,6 +50,14 @@ export default function HeaderSection({
       );
     }
   }, [scrollTop]);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const hideDropdown = () => setDropdownNav(null);
+    router.events.on("routeChangeStart", hideDropdown);
+    return () => router.events.off("routeChangeStart", hideDropdown);
+  }, [router]);
 
   const [hoveredElement, setHoveredElement] = useState<string>("");
 
