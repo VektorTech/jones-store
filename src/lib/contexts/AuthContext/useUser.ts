@@ -96,17 +96,16 @@ const useProfile = (
   return { data, isError, isLoading };
 };
 
-export default function useUser(id?: string) {
-  const { data, isError, isLoading } = useProfile(id);
+export default function useUser(currentUser: UserType) {
   const [userState, updateUser] = useReducer(authReducer, initUser);
 
   useEffect(() => {
     let payload = null;
 
-    if (data?.data) {
+    if (currentUser) {
       updateUser({
         type: actions.SET_USER as ActionsType,
-        payload: { ...data.data, isAuth: true },
+        payload: { ...currentUser, isAuth: true },
       });
     } else {
       Promise.all([
@@ -125,7 +124,7 @@ export default function useUser(id?: string) {
         });
       });
     }
-  }, [data]);
+  }, [currentUser]);
 
   const addWishlistItem = async (id: string) => {
     const r = await postWishlistItem(id);
@@ -172,8 +171,6 @@ export default function useUser(id?: string) {
 
   return {
     user: userState,
-    isError,
-    isLoading,
     addWishlistItem,
     removeWishlistItem,
     addCartItem,

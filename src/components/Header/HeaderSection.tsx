@@ -248,10 +248,7 @@ export default function HeaderSection({
                       hoverElementId="header-cart-btn"
                     >
                       {cartCount ? (
-                        <>
-                          <strong>Total</strong>
-                          <br />${cartTotal}
-                        </>
+                        <span style={{ fontWeight: "400" }}>${cartTotal}</span>
                       ) : (
                         "Empty"
                       )}

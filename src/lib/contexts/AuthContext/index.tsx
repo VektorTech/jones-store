@@ -3,20 +3,14 @@ import useUser from "./useUser";
 import { UserType } from "src/types/shared";
 
 const authState: {
-  userSessionId?: string;
   user?: UserType;
-  isLoading?: boolean;
-  isError?: boolean;
   addToWishlist: (id: string) => Promise<void>;
   removeFromWishlist: (id: string) => Promise<void>;
   addToCart: (id: string, quantity: number, size: number) => Promise<void>;
   removeFromCart: (id: string) => Promise<void>;
   useSelector: (callback: (user: UserType) => void) => void;
 } = {
-  userSessionId: undefined,
   user: undefined,
-  isLoading: undefined,
-  isError: undefined,
 
   addToWishlist: (id) => Promise.resolve(),
   removeFromWishlist: (id) => Promise.resolve(),
@@ -31,21 +25,19 @@ export const useAuthState = () => useContext(AuthContext);
 
 export const AuthProvider = ({
   children,
-  userId,
+  currentUser,
 }: {
   children: ReactElement;
-  userId?: string;
+  currentUser: UserType;
 }) => {
   const {
     user,
-    isError,
-    isLoading,
     addWishlistItem,
     removeWishlistItem,
     addCartItem,
     removeCartItem,
     useSelector,
-  } = useUser(userId);
+  } = useUser(currentUser);
 
   return (
     <AuthContext.Provider
@@ -55,10 +47,7 @@ export const AuthProvider = ({
         removeFromWishlist: removeWishlistItem,
         addToCart: addCartItem,
         removeFromCart: removeCartItem,
-        userSessionId: userId,
         user,
-        isLoading,
-        isError,
       }}
     >
       {children}

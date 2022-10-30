@@ -16,6 +16,8 @@ import { IncomingMessage } from "http";
 import { ReactElement } from "react";
 import { AuthProvider } from "@Lib/contexts/AuthContext";
 import { UIProvider } from "@Lib/contexts/UIContext";
+import prisma from "@Lib/prisma";
+import { UserType } from "src/types/shared";
 
 NProgress.configure({ showSpinner: false });
 Router.events.on("routeChangeStart", () => NProgress.start());
@@ -28,6 +30,7 @@ function MyApp({
   cookies,
   userSession,
   isAdmin,
+  user,
 }: AppPropsWithCookies) {
   let FinalRenderComponent: ReactElement | null = null;
 
@@ -57,9 +60,7 @@ function MyApp({
 
   return (
     <UIProvider announcementHidden={cookies?.announcementState == "closed"}>
-      <AuthProvider userId={userSession?.id}>
-        {FinalRenderComponent}
-      </AuthProvider>
+      <AuthProvider currentUser={user}>{FinalRenderComponent}</AuthProvider>
     </UIProvider>
   );
 }
@@ -70,9 +71,28 @@ MyApp.getInitialProps = async (context: AppContext) => {
   const res = NextResponse.next();
 
   let session = null;
+  let user = null;
+  let cart = null;
 
   if (req) {
     session = await getIronSession(req, res, sessionOptions).catch();
+
+    if (session.user) {
+      user = await prisma.user.findUnique({
+        select: {
+          id: true,
+          username: true,
+          wishlist: true,
+          cart: true,
+        },
+        where: { id: session.user.id },
+      });
+      if (user && user.cart) {
+        cart = await prisma.cartItem.findMany({
+          where: { cartId: user.cart.id },
+        });
+      }
+    }
   }
 
   const cookies = req?.headers.cookie?.split("; ").reduce((batch, cookie) => {
@@ -85,6 +105,7 @@ MyApp.getInitialProps = async (context: AppContext) => {
     cookies,
     userSession: session?.user,
     isAdmin: req?.url?.startsWith("/admin"),
+    user: { ...user, cart }
   };
 };
 
@@ -92,6 +113,7 @@ interface AppPropsWithCookies extends AppProps {
   cookies: { announcementState: string };
   isAdmin: boolean;
   userSession: IronSessionData["user"];
+  user: UserType;
 }
 
 export default MyApp;
