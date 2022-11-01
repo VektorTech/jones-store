@@ -1,5 +1,5 @@
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function TextField({
   label,
@@ -8,14 +8,19 @@ export default function TextField({
   type = "text",
   multiline = false,
   defaultValue,
-  value="",
+  value = "",
+  onChange,
   ...inputProps
 }: {
-  label: string;
+  label?: string;
   multiline?: boolean;
 } & (JSX.IntrinsicElements["input"] & JSX.IntrinsicElements["textarea"])) {
   const [_type, setType] = useState(type);
   const [_value, setValue] = useState(value);
+
+  useEffect(() => {
+    setValue(value);
+  }, [value]);
 
   let Icon;
 
@@ -64,7 +69,10 @@ export default function TextField({
               rows={5}
               required={required}
               value={_value}
-              onChange={(e) => setValue(e.currentTarget.value)}
+              onChange={(e) => {
+                onChange?.(e);
+                setValue(e.currentTarget.value);
+              }}
               className="text-field__control text-field__control--multiline"
             ></textarea>
           ) : (
@@ -74,7 +82,10 @@ export default function TextField({
                 type={_type}
                 required={required}
                 value={_value}
-                onChange={(e) => setValue(e.currentTarget.value)}
+                onChange={(e) => {
+                  onChange?.(e);
+                  setValue(e.currentTarget.value);
+                }}
                 className="text-field__control"
               />
               {Icon}
