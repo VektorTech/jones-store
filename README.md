@@ -102,6 +102,7 @@ Jones is an online store for Nike Jordan Ones &mdash; a seamless e-commerce mark
 3. Run `npm install` to install all dependencies for the project.
 
 4. Then run `npx prisma db push`. This will use the schema (from `./prisma/schema.prisma`) to add the relevant tables to your `jonesdb` database.
+	- If Vercel `npm install && npx prisma db push`
 
 5. If you make any changes to `schema.prisma`, run `npx prisma migrate dev --name <name_of_migration>` to further maintain a history of each update to the database. You may also run `npx prisma generate` to manually sync `@prisma/client` with the database after updating the table schemas. Use `npx prisma studio` to launch the prisma client to observe and manipulate the database.
 
