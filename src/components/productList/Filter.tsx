@@ -102,7 +102,6 @@ export default function Filter({
               className={
                 "filter__param-option" +
                 (checked ? " filter__param-option--checked" : "")
-                // (currentColor == label ? " filter__param-option--active" : "")
               }
             >
               <span
@@ -132,12 +131,7 @@ export default function Filter({
             <span
               className={
                 "filter__param-box" +
-                (checked ? " filter__param-box--checked" : "") +
-                (currentSizes == label ||
-                (currentSizes instanceof Array &&
-                  currentSizes?.includes(label.toString()))
-                  ? " filter__param-box--active"
-                  : "")
+                (checked ? " filter__param-box--checked" : "")
               }
             >
               {label}
@@ -161,8 +155,7 @@ export default function Filter({
             <span
               className={
                 "filter__param-option" +
-                (checked ? " filter__param-option--checked" : "") +
-                (currentHeight == label ? " filter__param-option--active" : "")
+                (checked ? " filter__param-option--checked" : "")
               }
             >
               {label} TOP
