@@ -1,8 +1,10 @@
 import Button from "@Components/common/formControls/Button";
 import RadioList from "@Components/common/formControls/RadioList";
 import { IoIosArrowUp, IoIosArrowBack } from "react-icons/io";
-import { useState, useRef, useEffect, ReactNode } from "react";
+import { useState, useRef, useEffect, useMemo, ReactNode } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { Category } from "@prisma/client";
 
 export default function Filter({
   active,
@@ -25,6 +27,39 @@ export default function Filter({
 }) {
   const [minPrice, maxPrice] = currentPrice?.split("-") || [0, 10000];
 
+  const router = useRouter();
+  const { categoryId, colorways, sizes, height, price } = router.query;
+
+  const [filterState, setFilterState] = useState({
+    colorways,
+    sizes,
+    height,
+    price,
+  });
+
+  const onSubmit = () => {
+    const newQuery = { ...router.query, ...filterState };
+    router.replace({ pathname: location.pathname, query: newQuery });
+  };
+
+  const onClear = () => {
+    setFilterState({
+      colorways: [""],
+      sizes: [""],
+      height: "",
+      price: "0-10000",
+    });
+  };
+
+  const listToEnum = <T extends string | number>(list: T[]) => {
+    return list.reduce<{ [K in T]: K }>((enumAccumulated, enumKey) => {
+      enumAccumulated[enumKey] = enumKey;
+      return enumAccumulated;
+    }, Object.create({}));
+  };
+
+  const sizesObj = useMemo(() => listToEnum([...Array(37)].map((_, i) => String(2 + i / 2))), []);
+
   return (
     <div className={"filter" + (active ? " filter--active" : "")}>
       <div className="filter__head">
@@ -39,7 +74,7 @@ export default function Filter({
           <p
             className={
               "filter__param-link" +
-              (current == gender ? " filter__param-link--active" : "")
+              (gender == categoryId?.[0] ? " filter__param-link--active" : "")
             }
             key={gender}
           >
@@ -50,91 +85,122 @@ export default function Filter({
         ))}
       </FilterParam>
 
-      <form action={urlPath}>
-        <FilterParam type="Main Color">
-          <RadioList
-            name="colorway"
-            values={Object.keys(colorsHex)}
-            render={({ label, checked }) => (
+      <FilterParam type="Main Color">
+        <RadioList
+          name="colorways"
+          checkbox
+          values={colorsHex}
+          checkedItems={filterState.colorways instanceof Array ? filterState.colorways : []}
+          onChecked={(items) =>
+            setFilterState({
+              ...filterState,
+              colorways: items,
+            })
+          }
+          render={({ label, checked, value }) => (
+            <span
+              className={
+                "filter__param-option" +
+                (checked ? " filter__param-option--checked" : "")
+                // (currentColor == label ? " filter__param-option--active" : "")
+              }
+            >
               <span
-                className={
-                  "filter__param-option" +
-                  (checked ? " filter__param-option--checked" : "") +
-                  (currentColor == label ? " filter__param-option--active" : "")
-                }
-              >
-                <span
-                  style={{ background: colorsHex[label] }}
-                  className="filter__param-option-color"
-                ></span>
-                {label}
-              </span>
-            )}
-          />
-        </FilterParam>
+                style={{ background: label }}
+                className="filter__param-option-color"
+              ></span>
+              {value}
+            </span>
+          )}
+        />
+      </FilterParam>
 
-        <FilterParam type="US Sizes">
-          <RadioList
-            name="sizes"
-            checkbox
-            grid
-            values={[...Array(37)].map((_, i) => String(2 + i / 2))}
-            render={({ label, checked }) => (
-              <span
-                className={
-                  "filter__param-box" +
-                  (checked ? " filter__param-box--checked" : "") +
-                  (currentSizes == label ||
-                  (currentSizes instanceof Array &&
-                    currentSizes?.includes(label))
-                    ? " filter__param-box--active"
-                    : "")
-                }
-              >
-                {label}
-              </span>
-            )}
-          />
-        </FilterParam>
+      <FilterParam type="US Sizes">
+        <RadioList
+          name="sizes"
+          checkbox
+          grid
+          values={sizesObj}
+          checkedItems={filterState.sizes instanceof Array ? filterState.sizes : []}
+          onChecked={(items) =>
+            setFilterState({
+              ...filterState,
+              sizes: items,
+            })
+          }
+          render={({ label, checked }) => (
+            <span
+              className={
+                "filter__param-box" +
+                (checked ? " filter__param-box--checked" : "") +
+                (currentSizes == label ||
+                (currentSizes instanceof Array &&
+                  currentSizes?.includes(label.toString()))
+                  ? " filter__param-box--active"
+                  : "")
+              }
+            >
+              {label}
+            </span>
+          )}
+        />
+      </FilterParam>
 
-        <FilterParam type="Height">
-          <RadioList
-            name="height"
-            values={["LOW", "MID", "HIGH"]}
-            render={({ label, checked }) => (
-              <span
-                className={
-                  "filter__param-option" +
-                  (checked ? " filter__param-option--checked" : "") +
-                  (currentHeight == label
-                    ? " filter__param-option--active"
-                    : "")
-                }
-              >
-                {label} TOP
-              </span>
-            )}
-          />
-        </FilterParam>
+      <FilterParam type="Height">
+        <RadioList
+          name="height"
+          values={Category}
+          checkedItems={typeof filterState.height == "string" ? [filterState.height] : []}
+          onChecked={(items) =>
+            setFilterState({
+              ...filterState,
+              height: items,
+            })
+          }
+          render={({ label, checked }) => (
+            <span
+              className={
+                "filter__param-option" +
+                (checked ? " filter__param-option--checked" : "") +
+                (currentHeight == label ? " filter__param-option--active" : "")
+              }
+            >
+              {label} TOP
+            </span>
+          )}
+        />
+      </FilterParam>
 
-        <FilterParam type="Filter By Price">
-          <PriceRange preset={[minPrice, maxPrice]} />
-        </FilterParam>
+      <FilterParam type="Filter By Price">
+        <PriceRange
+          onUpdate={(minPrice, maxPrice) =>
+            setFilterState({
+              ...filterState,
+              price: `${minPrice}-${maxPrice}`,
+            })
+          }
+          preset={[minPrice, maxPrice]}
+        />
+      </FilterParam>
 
-        <div className="filter__confirm">
-          <Button type="submit" className="filter__done">
-            done
-          </Button>
-        </div>
-      </form>
+      <div className="filter__confirm">
+        <Button onClick={onSubmit} type="submit" className="filter__done">
+          See Results
+        </Button>
+        <Button onClick={onClear} type="submit" className="filter__clear-all">
+          clear filters
+        </Button>
+      </div>
     </div>
   );
 }
 
 const PriceRange = ({
   preset,
+  onUpdate,
 }: {
   preset?: [min: string | number, max: string | number];
+  onUpdate?: (minPrice: number, maxPrice: number) => void;
 }) => {
   const HIGHEST_PRICE = 10000;
   const [valueMin, setValMin] = useState<string | number>(preset?.[0] || 0);
@@ -147,6 +213,12 @@ const PriceRange = ({
   const maxRef = useRef<HTMLSpanElement>(null);
   const rangeRef = useRef<HTMLSpanElement>(null);
   const controlRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (activeThumb == "") {
+      onUpdate?.(Number(valueMin), Number(valueMax));
+    }
+  }, [activeThumb, valueMin, valueMax]);
 
   useEffect(() => {
     const mouseUpHandler = (e: PointerEvent | TouchEvent) => {
@@ -177,6 +249,7 @@ const PriceRange = ({
       const limit = control.offsetWidth - maxThumb.offsetWidth * 2;
 
       if (activeThumb == "min") {
+        let minPrice = valueMin;
         const thumbLeft = asPercentage(
           Math.max(
             0,
@@ -188,14 +261,14 @@ const PriceRange = ({
           "price-range__thumb--above",
           thumbLeft >= asPercentage(limit)
         );
-        setValMin(
-          Number(
-            (minThumb.offsetLeft /
-              (control.offsetWidth - minThumb.offsetWidth)) *
-              HIGHEST_PRICE
-          ).toFixed(0)
-        );
+
+        minPrice = Number(
+          (minThumb.offsetLeft / (control.offsetWidth - minThumb.offsetWidth)) *
+            HIGHEST_PRICE
+        ).toFixed(0);
+        setValMin(minPrice);
       } else if (activeThumb == "max") {
+        let maxPrice = valueMax;
         const thumbLeft = asPercentage(
           Math.min(
             Math.max(
@@ -206,13 +279,11 @@ const PriceRange = ({
           )
         );
         maxThumb.style.left = thumbLeft + "%";
-        setValMax(
-          Number(
-            (maxThumb.offsetLeft /
-              (control.offsetWidth - maxThumb.offsetWidth)) *
-              HIGHEST_PRICE
-          ).toFixed(0)
-        );
+        maxPrice = Number(
+          (maxThumb.offsetLeft / (control.offsetWidth - maxThumb.offsetWidth)) *
+            HIGHEST_PRICE
+        ).toFixed(0);
+        setValMax(maxPrice);
       }
 
       rangeTrack.style.left = asPercentage(minThumb.offsetLeft) + "%";
