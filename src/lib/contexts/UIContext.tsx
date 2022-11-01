@@ -9,19 +9,17 @@ import {
 } from "react";
 import { useRouter } from "next/router";
 
-export const Dialogs = {
-  SIDEBAR_DIALOG: "SIDEBAR_DIALOG",
-  MODAL_POPUP: "MODAL_POPUP",
-  SEARCH_BOX: "SEARCH_BOX",
-  PRODUCTS_FILTER: "PRODUCTS_FILTER",
+export enum DialogType {
+  SIDEBAR_DIALOG,
+  MODAL_POPUP,
+  SEARCH_BOX,
+  PRODUCTS_FILTER
 };
-
-export type DialogStates = keyof typeof Dialogs | null;
 
 const uiState: {
   announcementVisible?: boolean;
-  currentDialog?: DialogStates;
-  setDialog: Dispatch<SetStateAction<DialogStates>>;
+  currentDialog?: DialogType | null;
+  setDialog: Dispatch<SetStateAction<DialogType | null>>;
   setAnnouncementVisible: Dispatch<SetStateAction<boolean>>;
 } = {
   announcementVisible: true,
@@ -33,14 +31,14 @@ const uiState: {
 const UIContext = createContext(uiState);
 
 export function useDialog(
-  observer?: (isVisible: boolean, currentState?: DialogStates) => void,
-  dialogDeps?: DialogStates[]
+  observer?: (isVisible: boolean, currentState?: DialogType | null) => void,
+  dialogDeps?: DialogType[]
 ) {
   const _uiState = useContext(UIContext);
 
   useEffect(() => {
     const isVisible = dialogDeps?.includes(
-      _uiState.currentDialog as DialogStates
+      _uiState.currentDialog as DialogType
     );
     observer?.(!!isVisible, _uiState.currentDialog);
   }, [_uiState, observer, dialogDeps]);
@@ -64,7 +62,7 @@ export const UIProvider = ({
   children: ReactElement;
   announcementHidden: boolean;
 }) => {
-  const [currentDialog, setDialog] = useState<DialogStates>(null);
+  const [currentDialog, setDialog] = useState<DialogType | null>(null);
   const [announcementVisible, setAnnouncementVisible] = useState(
     !announcementHidden
   );
@@ -72,7 +70,7 @@ export const UIProvider = ({
 
   useEffect(() => {
     const clearDialogState = () => {
-      if (currentDialog != Dialogs.PRODUCTS_FILTER) {
+      if (currentDialog != DialogType.PRODUCTS_FILTER) {
         setDialog(null);
       }
     };

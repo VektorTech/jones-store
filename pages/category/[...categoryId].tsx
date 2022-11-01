@@ -14,7 +14,7 @@ import Dropdown from "@Components/common/formControls/Dropdown";
 import { useEffect } from "react";
 
 import Product from "@Components/common/Product";
-import { useDialog } from "@Lib/contexts/UIContext";
+import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 import { useRouter } from "next/router";
 
 const RESULTS_PER_PAGE = 20;
@@ -42,19 +42,19 @@ export default function CategoryPage({
   const { setDialog, currentDialog } = useDialog();
 
   useEffect(() => {
-    if (innerWidth > 992) setDialog("PRODUCTS_FILTER");
+    if (innerWidth > 992) setDialog(DialogType.PRODUCTS_FILTER);
   }, [setDialog]);
 
   useEffect(() => {
     const hideFilter = () => {
-      if (currentDialog == "PRODUCTS_FILTER" && innerWidth <= 992)
+      if (currentDialog == DialogType.PRODUCTS_FILTER && innerWidth <= 992)
         setDialog(null);
     };
     addEventListener("resize", hideFilter);
     return () => removeEventListener("resize", hideFilter);
   }, [setDialog, currentDialog]);
 
-  const filterActive = currentDialog == "PRODUCTS_FILTER";
+  const filterActive = currentDialog == DialogType.PRODUCTS_FILTER;
 
   return (
     <>
@@ -82,7 +82,7 @@ export default function CategoryPage({
       <div className="filter-sort">
         <div className="filter-sort__container">
           <Button
-            onClick={() => setDialog(!filterActive ? "PRODUCTS_FILTER" : null)}
+            onClick={() => setDialog(!filterActive ? DialogType.PRODUCTS_FILTER : null)}
             className="filter-sort__toggle"
           >
             <BsSliders className="filter-sort__toggle-icon" />
@@ -121,7 +121,7 @@ export default function CategoryPage({
           currentHeight={typeof height == "string" ? height : ""}
           currentPrice={typeof price == "string" ? price : ""}
           setState={(state: boolean) =>
-            setDialog(state ? "PRODUCTS_FILTER" : null)
+            setDialog(state ? DialogType.PRODUCTS_FILTER : null)
           }
         />
 

@@ -1,4 +1,4 @@
-import { useDialog, Dialogs } from "@Lib/contexts/UIContext";
+import { useDialog, DialogType } from "@Lib/contexts/UIContext";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import useTabTrapIn from "@Lib/hooks/useKeyTrap";
 import Link from "next/link";
@@ -30,7 +30,7 @@ export default function Sidebar({ userId }: { userId?: string }) {
     ) || 0;
 
   const sidebarRef = useRef<HTMLDivElement>(null);
-  const sidebarVisible = currentDialog == Dialogs.SIDEBAR_DIALOG;
+  const sidebarVisible = currentDialog == DialogType.SIDEBAR_DIALOG;
   useTabTrapIn(sidebarRef.current, sidebarVisible);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function Sidebar({ userId }: { userId?: string }) {
       >
         <div ref={sidebarRef} className="sidebar__container">
           <button
-            onClick={() => setDialog("SEARCH_BOX")}
+            onClick={() => setDialog(DialogType.SEARCH_BOX)}
             className="sidebar__search-box"
           >
             <span className="sidebar__search-box-label">

@@ -4,7 +4,7 @@ import {
   postCartItem,
   deleteCartItem,
 } from "@Lib/helpers";
-import { useState, useEffect, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { UserType } from "src/types/shared";
 
 const initUser: UserType = {
@@ -21,24 +21,22 @@ const initUser: UserType = {
   isAuth: false
 };
 
-const actions = {
-  SET_USER: "SET_USER",
-  ADD_WISHLIST_ITEM: "ADD_WISHLIST_ITEM",
-  REMOVE_WISHLIST_ITEM: "REMOVE_WISHLIST_ITEM",
-  ADD_CART_ITEM: "ADD_CART_ITEM",
-  REMOVE_CART_ITEM: "REMOVE_CART_ITEM",
-};
-
-type ActionsType = keyof typeof actions;
+enum UserActions {
+  SET_USER,
+  ADD_WISHLIST_ITEM,
+  REMOVE_WISHLIST_ITEM,
+  ADD_CART_ITEM,
+  REMOVE_CART_ITEM
+}
 
 const authReducer = (
   user: UserType,
-  action: { type: ActionsType; payload: any }
+  action: { type: UserActions; payload: any }
 ) => {
   switch (action.type) {
-    case actions.SET_USER:
+    case UserActions.SET_USER:
       return { ...user, ...action.payload };
-    case actions.ADD_WISHLIST_ITEM:
+    case UserActions.ADD_WISHLIST_ITEM:
       return {
         ...user,
         wishlist: [
@@ -48,7 +46,7 @@ const authReducer = (
           action.payload,
         ],
       };
-    case actions.ADD_CART_ITEM:
+    case UserActions.ADD_CART_ITEM:
       return {
         ...user,
         cart: [
@@ -58,14 +56,14 @@ const authReducer = (
           action.payload,
         ],
       };
-    case actions.REMOVE_WISHLIST_ITEM:
+    case UserActions.REMOVE_WISHLIST_ITEM:
       return {
         ...user,
         wishlist: user.wishlist.filter(
           ({ productId = "" }) => productId != action.payload
         ),
       };
-    case actions.REMOVE_CART_ITEM:
+    case UserActions.REMOVE_CART_ITEM:
       return {
         ...user,
         cart: user.cart.filter(
@@ -77,25 +75,6 @@ const authReducer = (
   }
 };
 
-const useProfile = (
-  id?: string
-): { data: any; isError: boolean; isLoading: boolean } => {
-  const [data, setData] = useState(null);
-  const [isError, setError] = useState(false);
-  const [isLoading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-    fetch(id ? `/api/auth/user/${id}` : "")
-      .then((res) => res.json())
-      .then(setData)
-      .catch((e) => setError(true))
-      .finally(() => setLoading(false));
-  }, [id]);
-
-  return { data, isError, isLoading };
-};
-
 export default function useUser(currentUser?: UserType) {
   const [userState, updateUser] = useReducer(authReducer, initUser);
 
@@ -104,7 +83,7 @@ export default function useUser(currentUser?: UserType) {
 
     if (currentUser?.id) {
       updateUser({
-        type: actions.SET_USER as ActionsType,
+        type: UserActions.SET_USER,
         payload: { ...currentUser, isAuth: true },
       });
     } else {
@@ -119,7 +98,7 @@ export default function useUser(currentUser?: UserType) {
         };
 
         updateUser({
-          type: actions.SET_USER as ActionsType,
+          type: UserActions.SET_USER,
           payload,
         });
       });
@@ -130,7 +109,7 @@ export default function useUser(currentUser?: UserType) {
     const r = await postWishlistItem(id);
     if (!r.error) {
       updateUser({
-        type: actions.ADD_WISHLIST_ITEM as ActionsType,
+        type: UserActions.ADD_WISHLIST_ITEM,
         payload: r.data,
       });
     }
@@ -140,7 +119,7 @@ export default function useUser(currentUser?: UserType) {
     const r = await deleteWishlistItem(id);
     if (!r.error) {
       updateUser({
-        type: actions.REMOVE_WISHLIST_ITEM as ActionsType,
+        type: UserActions.REMOVE_WISHLIST_ITEM,
         payload: id,
       });
     }
@@ -150,7 +129,7 @@ export default function useUser(currentUser?: UserType) {
     const r = await postCartItem(id, quantity, size);
     if (!r.error) {
       updateUser({
-        type: actions.ADD_CART_ITEM as ActionsType,
+        type: UserActions.ADD_CART_ITEM,
         payload: r.data,
       });
     }
@@ -160,7 +139,7 @@ export default function useUser(currentUser?: UserType) {
     const r = await deleteCartItem(id);
     if (!r.error) {
       updateUser({
-        type: actions.REMOVE_CART_ITEM as ActionsType,
+        type: UserActions.REMOVE_CART_ITEM,
         payload: id,
       });
     }

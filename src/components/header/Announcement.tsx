@@ -1,5 +1,5 @@
 import Modal from "@Components/Modal";
-import { useAnnouncementState, useDialog } from "@Lib/contexts/UIContext";
+import { DialogType, useAnnouncementState, useDialog } from "@Lib/contexts/UIContext";
 import { setCookie } from "@Lib/utils";
 import type { Announcement as AnnouncementType } from "@prisma/client";
 import { useEffect, useState } from "react";
@@ -14,7 +14,7 @@ export default function Announcement() {
 
   const { currentDialog, setDialog } = useDialog();
   const [currentDetails, setCurrentDetails] = useState("");
-  const visible = currentDialog == "MODAL_POPUP";
+  const visible = currentDialog == DialogType.MODAL_POPUP;
 
   const handleClose = () => {
     setAnnouncementVisible(false);
@@ -37,7 +37,7 @@ export default function Announcement() {
 
   useEffect(() => {
     if (currentDetails) {
-      setDialog("MODAL_POPUP");
+      setDialog(DialogType.MODAL_POPUP);
     } else {
       setDialog(null);
     }

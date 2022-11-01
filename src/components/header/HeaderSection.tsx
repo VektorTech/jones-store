@@ -9,7 +9,7 @@ import logoImg from "@Images/jones-logo.png";
 
 import useScrollTop from "@Lib/hooks/useScrollTop";
 import { useEffect, useRef, useState } from "react";
-import { useDialog } from "@Lib/contexts/UIContext";
+import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import Popup from "@Components/common/Popup";
 import Form from "@Components/Form";
@@ -28,7 +28,6 @@ export default function HeaderSection({
   const [dropdownNav, setDropdownNav] = useState<JSX.Element[] | null>(null);
   const [pinnedState, setPinnedState] = useState(false);
   const scrollTop = useScrollTop();
-  const lastScroll = useRef(scrollTop);
   const headerRef = useRef<HTMLElement>(null);
 
   const { user } = useAuthState();
@@ -71,7 +70,7 @@ export default function HeaderSection({
           <div className="header__menu-button">
             <button
               className="header__menu-toggle"
-              onClick={() => setDialog("SIDEBAR_DIALOG")}
+              onClick={() => setDialog( DialogType.SIDEBAR_DIALOG)}
             >
               <FiMenu />
             </button>
@@ -164,7 +163,7 @@ export default function HeaderSection({
                     className="header__button-link"
                     onClick={(e) => {
                       e.preventDefault();
-                      setDialog("SEARCH_BOX");
+                      setDialog(DialogType.SEARCH_BOX);
                     }}
                   >
                     <FiSearch />

@@ -1,4 +1,4 @@
-import { useDialog } from "@Lib/contexts/UIContext";
+import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 import { useEffect, useRef, useState } from "react";
 import { ProductComponentType } from "src/types/shared";
 import { useDebounce } from "@Lib/hooks/useDebounce";
@@ -8,7 +8,7 @@ import Product from "@Components/common/Product";
 
 export default function SearchBoxContainer() {
   const { currentDialog, setDialog } = useDialog();
-  const active = currentDialog == "SEARCH_BOX";
+  const active = currentDialog == DialogType.SEARCH_BOX;
 
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState<
