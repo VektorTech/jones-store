@@ -73,7 +73,9 @@ export default function CategoryPage({
               <strong>{count}</strong> results
             </p>
           ) : (
-            <p><strong>Nothing Found!</strong></p>
+            <p>
+              <strong>Nothing Found!</strong>
+            </p>
           )}
           <div className="constraints__filters"></div>
         </div>
@@ -82,7 +84,9 @@ export default function CategoryPage({
       <div className="filter-sort">
         <div className="filter-sort__container">
           <Button
-            onClick={() => setDialog(!filterActive ? DialogType.PRODUCTS_FILTER : null)}
+            onClick={() =>
+              setDialog(!filterActive ? DialogType.PRODUCTS_FILTER : null)
+            }
             className="filter-sort__toggle"
           >
             <BsSliders className="filter-sort__toggle-icon" />
@@ -102,8 +106,8 @@ export default function CategoryPage({
               }}
               onOptionSelect={(order) => {
                 if (order) {
-                  router.query.order = order;
-                  router.push(router);
+                  const newQuery = { ...router.query, order };
+                  router.replace({ pathname: location.pathname, query: newQuery });
                 }
               }}
             />
@@ -156,7 +160,7 @@ export const getServerSideProps = withSessionSsr(async function ({
   const {
     offset = 0,
     limit = RESULTS_PER_PAGE,
-    colorway,
+    colorways,
     sizes,
     height,
     price,
@@ -164,8 +168,12 @@ export const getServerSideProps = withSessionSsr(async function ({
   } = query;
 
   let filters: { [filter: string]: any } = {};
-  if (colorway && typeof colorway == "string") {
-    filters["color"] = { equals: colorway };
+  if (colorways) {
+    if (typeof colorways == "string") {
+      filters["color"] = { equals: colorways }
+    } else {
+      filters["color"] = { in: colorways };
+    }
   }
   if (sizes && sizes.length) {
     if (sizes instanceof Array) {
@@ -237,16 +245,22 @@ export const getServerSideProps = withSessionSsr(async function ({
       });
       count = await prisma.product.count({ where: { ...filters, gender } });
     }
-  } else if (category == "colorways" && typeof colorway == "string") {
+  } else if (category == "colorways" && typeof colorways == "string") {
     products = await prisma.product.findMany({
       select,
-      where: { ...filters, color: { contains: colorway, mode: "insensitive" } },
+      where: {
+        ...filters,
+        color: { contains: colorways, mode: "insensitive" },
+      },
       skip: Number(offset),
       take: Number(limit),
       ...orderBy,
     });
     count = await prisma.product.count({
-      where: { ...filters, color: { contains: colorway, mode: "insensitive" } },
+      where: {
+        ...filters,
+        color: { contains: colorways, mode: "insensitive" },
+      },
     });
   } else if (category == "new") {
     products = await prisma.product.findMany({
