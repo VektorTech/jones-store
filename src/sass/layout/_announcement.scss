@@ -1,6 +1,8 @@
 @use "../abstracts" as *;
 
 .announcement {
+  $self: &;
+
   width: 100%;
   height: $announcement-height;
   background-color: #fff;
@@ -15,23 +17,76 @@
 
   &__container {
     @extend %container;
+    position: relative;
     overflow: hidden;
     height: 100%;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      background: linear-gradient(to right, #fff 10%, #ffffff80 60%, #ffffff00);
+      display: block;
+      width: 15%;
+      top: 0;
+      bottom: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    &::before {
+      left: 0;
+    }
+
+    &::after {
+      transform: scale(-1);
+      right: $announcement-height;
+    }
   }
 
   &__content {
     height: 100%;
-    font-size: $text-sm;
+    font-size: $text-xs;
     font-weight: 600;
     line-height: $announcement-height;
-    white-space: nowrap;
+    display: flex;
     text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
     cursor: pointer;
+
+    &:hover #{$self}__marquee,
+    &:focus-within #{$self}__marquee {
+      animation-play-state: paused;
+    }
   }
 
-  & a {
-    color: $c-link;
-    text-decoration: underline;
+  &__marquee {
+    animation: marquee 30s linear infinite;
+
+    @keyframes marquee {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-100%);
+      }
+    }
+  }
+
+  &__inner {
+    display: inline-block;
+    padding: 0 5rem;
+  }
+
+  &__loader {
+    position: relative;
+    margin: auto;
+    top: 0.5rem;
+    border-color: $c-background-dark $c-background-dark transparent;
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    display: block !important;
   }
 
   &__info-icon {
@@ -53,9 +108,15 @@
     align-items: center;
     color: $c-gray;
     background-color: #fff;
+    z-index: 2;
 
     &:focus-visible {
       color: $c-text-black;
     }
+  }
+
+  & a {
+    color: $c-link;
+    text-decoration: underline;
   }
 }
