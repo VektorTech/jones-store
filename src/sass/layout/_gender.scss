@@ -25,9 +25,9 @@
     height: calc(100vw - 3rem);
 
     @include respond-to("small") {
-      width: 48%;
+      width: 45%;
       max-height: 100rem;
-      height: 48vw;
+      height: 40vw;
       overflow: hidden;
     }
   }
@@ -41,9 +41,9 @@
     position: relative;
 
     @include respond-to("small") {
-      width: 52%;
+      width: 55%;
       max-height: 100rem;
-      height: 48vw;
+      height: 40vw;
       gap: 1.5rem;
     }
   }
