@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useState, useEffect, useMemo } from "react";
 
 export default function RadioList({
   label,
@@ -7,28 +7,45 @@ export default function RadioList({
   required,
   render: RenderComponent,
   grid,
+  checkedItems,
+  onChecked,
   name = "",
   className = "",
   ...inputProps
 }: {
   render?: ({
     label,
+    value,
     checked,
   }: {
-    label: string;
+    label: string | number;
+    value: string;
     checked: boolean;
   }) => ReactElement;
   label?: string;
   checkbox?: boolean;
   grid?: boolean;
-  values: string[];
+  onChecked?: (items: string[] | string, value?: string) => void;
+  checkedItems?: (string | number)[];
+  values: { [value: string | number]: string | number };
 } & JSX.IntrinsicElements["input"]) {
-  const initState = values.reduce((obj: any, value: string) => {
-    obj[value] = false;
-    return obj;
-  }, {});
+
+  const initState = useMemo<{ [value: string]: boolean }>(
+    () =>
+      Object.keys(values).reduce((obj: any, value: string) => {
+        obj[value] = !!checkedItems?.includes(value);
+        return obj;
+      }, {}),
+    [values, checkedItems]
+  );
+  const valuesArr = Object.keys(values);
+
   const [groupState, setGroupState] = useState(initState);
   const [all, setAll] = useState(values.length < 10);
+
+  useEffect(() => {
+    setGroupState(initState);
+  }, [checkedItems, initState]);
 
   const radioHandler = (value: string) => {
     const cloned = Object.assign({}, groupState);
@@ -37,10 +54,16 @@ export default function RadioList({
     });
     cloned[value] = true;
     setGroupState(cloned);
+    onChecked?.(value);
   };
 
   const checkboxHandler = (value: string, checked: boolean) => {
-    setGroupState({ ...groupState, [value]: checked });
+    const newGroupState = { ...groupState, [value]: checked };
+    setGroupState(newGroupState);
+    onChecked?.(
+      Object.keys(newGroupState).filter((key) => newGroupState[key]),
+      value
+    );
   };
 
   return (
@@ -53,23 +76,36 @@ export default function RadioList({
           </legend>
         ) : null}
 
-        <ul className={"radio-list__list" + (grid ? " radio-list__list--grid" : "")}>
-          {values.slice(0, all ? values.length : 10).map((value) => (
+        <ul
+          className={
+            "radio-list__list" + (grid ? " radio-list__list--grid" : "")
+          }
+        >
+          {valuesArr.slice(0, all ? valuesArr.length : 10).map((value) => (
             <li key={value}>
               <label className="radio-list__label">
                 <input
-                  className="radio-list__control"
                   {...inputProps}
+                  className="radio-list__control"
                   type={checkbox ? "checkbox" : "radio"}
                   name={name}
                   required={required}
+                  checked={!!groupState[value]}
                   value={value}
                   style={{ display: RenderComponent ? "none" : "inline-block" }}
-                  onChange={(e) => checkbox ? checkboxHandler(value, e.currentTarget.checked) : radioHandler(value)}
+                  onChange={(e) =>
+                    checkbox
+                      ? checkboxHandler(value, e.currentTarget.checked)
+                      : radioHandler(value)
+                  }
                 />
                 {RenderComponent ? (
                   <>
-                    <RenderComponent checked={!!groupState[value]} label={value} />
+                    <RenderComponent
+                      checked={!!groupState[value]}
+                      label={values[value]}
+                      value={value}
+                    />
                   </>
                 ) : (
                   <>
@@ -86,7 +122,11 @@ export default function RadioList({
             </li>
           ))}
         </ul>
-        { !all ? <button className="radio-list__see-all" onClick={() => setAll(true)}>See All</button> : null }
+        {!all ? (
+          <button className="radio-list__see-all" onClick={() => setAll(true)}>
+            See All
+          </button>
+        ) : null}
       </fieldset>
     </div>
   );
