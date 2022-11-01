@@ -68,7 +68,7 @@
       &--collapsed {
         & #{$param}-type {
           & svg {
-            transform: rotate(180deg);
+            transform: rotate(-180deg);
           }
         }
 
@@ -86,6 +86,10 @@
       font-weight: 600;
       padding: 0.5rem 0;
       cursor: pointer;
+
+      & svg {
+        transition: transform 0.3s;
+      }
     }
 
     &-body {
