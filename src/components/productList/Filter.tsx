@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Category } from "@prisma/client";
 
-const removeEmpty = (obj: { [key: string]: any; }) => {
+const removeEmpty = (obj: { [key: string]: any }) => {
   const newObj = { ...obj };
   Object.keys(newObj).forEach((key) => {
     if (!newObj[key]) {
@@ -241,8 +241,22 @@ const PriceRange = ({
 
   useEffect(() => {
     if (preset) {
-      setValMin(preset[0]);
-      setValMax(preset[1]);
+      const pMin = preset[0];
+      const pMax = preset[1];
+
+      const pMinPercentage = (Number(pMin) / HIGHEST_PRICE) * 100;
+      const pMaxPercentage = (Number(pMax) / HIGHEST_PRICE) * 100;
+
+      if (minRef.current && maxRef.current && rangeRef.current) {
+        minRef.current.style.left = pMinPercentage + "%";
+        maxRef.current.style.left = `calc(${pMaxPercentage}% - ${maxRef.current.offsetWidth * 1.5}px)`;
+
+        rangeRef.current.style.left = pMinPercentage + "%";
+        rangeRef.current.style.width = pMaxPercentage - pMinPercentage + "%";
+      }
+
+      setValMin(pMin);
+      setValMax(pMax);
     }
   }, [preset]);
 
