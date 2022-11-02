@@ -11,7 +11,7 @@
 
     @include respond-to("large") {
       &--filter {
-        width: 75%;
+        width: getWidth(9);
       }
     }
   }
