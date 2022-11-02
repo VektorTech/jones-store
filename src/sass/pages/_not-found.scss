@@ -3,10 +3,12 @@
 .not-found {
   text-align: center;
   padding: 10rem 0;
+  background-color: #fff;
 
   &__title {
     font-size: 16vw;
     font-weight: 700;
+    position: relative;
   }
 
   &__sub-title {
@@ -17,7 +19,11 @@
   &__text {
     font-size: $text-md;
     color: $c-text-dark;
-	margin-bottom: 5rem;
+    margin-bottom: 5rem;
+  }
+
+  &__image {
+    mix-blend-mode: lighten;
   }
 
   &__link {
