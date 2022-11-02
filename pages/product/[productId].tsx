@@ -118,6 +118,7 @@ export default function ProductPage({
   const [activeImage, setActiveImage] = useState(0);
 
   const allSizes = listToEnum(sizesOptions);
+  const cartPrice = (price - (discount || 0)) * quantity;
 
   return (
     <>
@@ -204,7 +205,7 @@ export default function ProductPage({
           </div>
 
           <p className="product-view__price">
-            {currencyFormatter.format(price - (discount || 0))}
+            {currencyFormatter.format(cartPrice)}
           </p>
 
           <p className="product-view__sold">{salesCount || 0} Sold &mdash; {stockQty} available in stock</p>
@@ -236,7 +237,7 @@ export default function ProductPage({
                 {" "}
                 -{" "}
               </button>
-              <input name="qty" key={quantity} defaultValue={quantity} />
+              <input readOnly name="qty" key={quantity} defaultValue={quantity} />
               <button
                 onClick={() => setQuantity(Math.min(quantity + 1, stockQty))}
                 type="button"
