@@ -11,7 +11,7 @@ import SEO from "@Components/common/SEO";
 import Button from "@Components/common/formControls/Button";
 import Dropdown from "@Components/common/formControls/Dropdown";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Product from "@Components/common/Product";
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
@@ -39,22 +39,19 @@ export default function CategoryPage({
     categoryId: category,
   } = router.query;
 
-  const { setDialog, currentDialog } = useDialog();
+  const [filterActive, setFilterActive] = useState(false);
 
   useEffect(() => {
-    if (innerWidth > 992) setDialog(DialogType.PRODUCTS_FILTER);
-  }, [setDialog]);
+    if (innerWidth > 992) setFilterActive(true);
+  }, []);
 
   useEffect(() => {
     const hideFilter = () => {
-      if (currentDialog == DialogType.PRODUCTS_FILTER && innerWidth <= 992)
-        setDialog(null);
+      if (innerWidth <= 992) setFilterActive(false);
     };
     addEventListener("resize", hideFilter);
     return () => removeEventListener("resize", hideFilter);
-  }, [setDialog, currentDialog]);
-
-  const filterActive = currentDialog == DialogType.PRODUCTS_FILTER;
+  }, []);
 
   return (
     <>
@@ -84,9 +81,7 @@ export default function CategoryPage({
       <div className="filter-sort">
         <div className="filter-sort__container">
           <Button
-            onClick={() =>
-              setDialog(!filterActive ? DialogType.PRODUCTS_FILTER : null)
-            }
+            onClick={() => setFilterActive(!filterActive)}
             className="filter-sort__toggle"
           >
             <BsSliders className="filter-sort__toggle-icon" />
@@ -107,7 +102,10 @@ export default function CategoryPage({
               onOptionSelect={(order) => {
                 if (order) {
                   const newQuery = { ...router.query, order };
-                  router.replace({ pathname: location.pathname, query: newQuery });
+                  router.replace({
+                    pathname: location.pathname,
+                    query: newQuery,
+                  });
                 }
               }}
             />
@@ -124,9 +122,7 @@ export default function CategoryPage({
           currentColor={typeof colorway == "string" ? colorway : ""}
           currentHeight={typeof height == "string" ? height : ""}
           currentPrice={typeof price == "string" ? price : ""}
-          setState={(state: boolean) =>
-            setDialog(state ? DialogType.PRODUCTS_FILTER : null)
-          }
+          setState={() => setFilterActive(false)}
         />
 
         <div
@@ -170,7 +166,7 @@ export const getServerSideProps = withSessionSsr(async function ({
   let filters: { [filter: string]: any } = {};
   if (colorways) {
     if (typeof colorways == "string") {
-      filters["color"] = { equals: colorways }
+      filters["color"] = { equals: colorways };
     } else {
       filters["color"] = { in: colorways };
     }

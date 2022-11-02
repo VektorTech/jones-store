@@ -13,7 +13,6 @@ export enum DialogType {
   SIDEBAR_DIALOG,
   MODAL_POPUP,
   SEARCH_BOX,
-  PRODUCTS_FILTER
 };
 
 const uiState: {
@@ -69,11 +68,7 @@ export const UIProvider = ({
   const router = useRouter();
 
   useEffect(() => {
-    const clearDialogState = () => {
-      if (currentDialog != DialogType.PRODUCTS_FILTER) {
-        setDialog(null);
-      }
-    };
+    const clearDialogState = () => setDialog(null);
     router.events.on("routeChangeStart", clearDialogState);
     return () => router.events.off("routeChangeStart", clearDialogState);
   }, [router, currentDialog]);
