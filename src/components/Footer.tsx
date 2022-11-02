@@ -164,6 +164,7 @@ export default function Footer() {
                 </Link>
               </p>
             </form>
+            <hr className="footer__hr" />
             <div className="footer__payments">
               <NextImage
                 src="/assets/images/payment.png"
