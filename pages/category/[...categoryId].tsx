@@ -94,10 +94,10 @@ export default function CategoryPage({
               className="filter-sort__sort-select"
               options={{
                 relevance: "Relevance",
-                asc_price: "Asc: Price",
-                price: "Desc: Price",
-                asc_ratings: "Asc: Ratings",
-                ratings: "Desc: Ratings",
+                asc_price: "Price: Low - High",
+                price: "Price: High - Low",
+                asc_ratings: "Ratings: Low - High",
+                ratings: "Ratings: High - Low",
               }}
               onOptionSelect={(order) => {
                 if (order) {
