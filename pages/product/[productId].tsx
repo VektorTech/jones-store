@@ -173,9 +173,7 @@ export default function ProductPage({
         <div className="product-view__cart">
           <h1 className="product-view__name">{title}</h1>
           <p className="product-view__gender">{gender}</p>
-          <div className="product-view__ratings">
-            <RatingStars count={ratings || 0} />
-          </div>
+
           <p className="product-view__price">
             {currencyFormatter.format(price - (discount || 0))}
           </p>
