@@ -1,0 +1,52 @@
+@use "../abstracts" as *;
+
+.review {
+  &__container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    font-size: $text-md;
+  }
+
+  &__user-avatar {
+    width: 5rem;
+    height: 5rem;
+    position: relative;
+    margin-right: 1.5rem;
+  }
+
+  &__body {
+    flex-grow: 1;
+    border: 0.1rem solid $c-gray;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+	position: relative;
+
+    &::before {
+      width: 1rem;
+      height: 1rem;
+      content: "";
+      display: block;
+      position: absolute;
+      border-left: 0.1rem solid $c-gray;
+      border-bottom: 0.1rem solid $c-gray;
+      transform: rotate(45deg);
+	  left: -0.6rem;
+	  background-color: $c-background-color;
+    }
+  }
+
+  &__head {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__username {
+    font-weight: 400;
+	text-transform: uppercase;
+  }
+
+  &__comment {
+    padding-top: 2rem;
+  }
+}
