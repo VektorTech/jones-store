@@ -1,5 +1,6 @@
+import useIsomorphicLayoutEffect from "@Lib/hooks/useIsomorphicLayoutEffect";
 import Router from "next/router";
-import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { MdArrowForwardIos, MdArrowBackIosNew } from "react-icons/md";
 
 export default function Carousel({
@@ -112,7 +113,7 @@ export default function Carousel({
     return () => sc?.removeEventListener("transitionend", reset);
   }, [slideNumber, updatedChildren, len]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (slidesContainer.current) {
       direction.current = "";
       slidesContainer.current.style.transition = "transform 0s";
