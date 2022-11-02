@@ -24,6 +24,25 @@ const SearchPage: NextPage<{
     <div>
       <SEO title={`"${query}"`} />
 
+      <div className="constraints">
+        <div className="constraints__container">
+          <hr className="constraints__hr" />
+          <h1 className="constraints__title">&ldquo;{query}&rdquo;</h1>
+          {products.length ? (
+            <p className="constraints__summary">
+              Showing <strong>{Number(offset) + 1}</strong> &mdash;{" "}
+              <strong>{Number(offset) + products.length}</strong> of{" "}
+              <strong>{count}</strong> results
+            </p>
+          ) : (
+            <p>
+              <strong>Nothing Found!</strong>
+            </p>
+          )}
+          <div className="constraints__filters"></div>
+        </div>
+      </div>
+
       <div className="filter-sort">
         <div className="filter-sort__container">
           <div className="filter-sort__sort-by">
