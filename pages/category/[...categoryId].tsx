@@ -177,7 +177,7 @@ export const getServerSideProps = withSessionSsr(async function ({
   }
   if (sizes && sizes.length) {
     if (sizes instanceof Array) {
-      filters["sizes"] = { hasEvery: sizes.map((size) => Number(size)) };
+      filters["sizes"] = { hasSome: sizes.map((size) => Number(size)) };
     } else {
       filters["sizes"] = { has: Number(sizes) };
     }
@@ -187,7 +187,11 @@ export const getServerSideProps = withSessionSsr(async function ({
   }
   if (price && typeof price == "string") {
     const [priceMin, priceMax] = price?.replaceAll(/[\s$]/g, "").split("-");
-    filters["price"] = { gte: Number(priceMin), lte: Number(priceMax) };
+    if (Number(priceMax) > 999) {
+      filters["price"] = { gte: Number(priceMin) };
+    } else {
+      filters["price"] = { gte: Number(priceMin), lte: Number(priceMax) };
+    }
   }
 
   const orderBy: { orderBy: any } = { orderBy: {} };
