@@ -5,6 +5,7 @@ import { useState, useRef, useEffect, useMemo, ReactNode } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Category } from "@prisma/client";
+import { listToEnum } from "@Lib/utils";
 
 const removeEmpty = (obj: { [key: string]: any }) => {
   const newObj = { ...obj };
@@ -68,12 +69,6 @@ export default function Filter({
     });
   };
 
-  const listToEnum = <T extends string | number>(list: T[]) => {
-    return list.reduce<{ [K in T]: K }>((enumAccumulated, enumKey) => {
-      enumAccumulated[enumKey] = enumKey;
-      return enumAccumulated;
-    }, Object.create({}));
-  };
 
   const sizesObj = useMemo(
     () => listToEnum([...Array(37)].map((_, i) => String(2 + i / 2))),
