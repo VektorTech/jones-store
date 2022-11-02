@@ -4,6 +4,7 @@ import Image from "next/future/image";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsCart3, BsPerson } from "react-icons/bs";
 import { FiSearch, FiMenu } from "react-icons/fi";
+import { BiCaretDown } from "react-icons/bi";
 
 import logoImg from "@Images/jones-logo.png";
 
@@ -97,7 +98,7 @@ export default function HeaderSection({
                         );
                       }}
                     >
-                      COLORWAYS
+                      COLORWAYS <BiCaretDown className="header__nav-caret" />
                     </a>
                   </Link>
                 </li>
@@ -116,7 +117,7 @@ export default function HeaderSection({
                         );
                       }}
                     >
-                      MEN
+                      MEN <BiCaretDown className="header__nav-caret" />
                     </a>
                   </Link>
                 </li>
@@ -132,7 +133,7 @@ export default function HeaderSection({
                         );
                       }}
                     >
-                      WOMEN
+                      WOMEN <BiCaretDown className="header__nav-caret" />
                     </a>
                   </Link>
                 </li>

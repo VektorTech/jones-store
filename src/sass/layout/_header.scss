@@ -90,6 +90,13 @@
       display: block;
       flex-basis: getWidth(6);
     }
+
+    &-caret {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      margin-left: 0.2rem;
+    }
   }
 
   &__nav-link {
