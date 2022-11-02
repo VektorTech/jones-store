@@ -20,7 +20,7 @@
     &-container {
       position: sticky;
       display: flex;
-      top: 3rem;
+      top: var(--header-height);
     }
 
     &-controls {

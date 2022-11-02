@@ -1,3 +1,4 @@
+import Router from "next/router";
 import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { MdArrowForwardIos, MdArrowBackIosNew } from "react-icons/md";
 
@@ -42,6 +43,19 @@ export default function Carousel({
   if (slidesContainer.current) {
     slidesContainer.current.style.transition = "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)";
   }
+
+  useEffect(() => {
+    const updateChildren = () => {
+      const updatedChildren = getChildrenAsSlides();
+      const len = React.Children.count(updatedChildren);
+      const before = updatedChildren?.[(slideNumber - 1 + len) % len];
+      const between = updatedChildren?.[slideNumber];
+      const after = updatedChildren?.[(slideNumber + 1) % len];
+      setRenderComp([before, between, after]);
+    };
+    Router.events.on("routeChangeComplete", updateChildren);
+    return () => Router.events.off("routeChangeComplete", updateChildren);
+  }, [children]);
 
   useEffect(() => {
     if (aIndex == slideNumber) { return; }
