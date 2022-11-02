@@ -142,7 +142,7 @@ export default function Footer() {
                   type="email"
                   name="email"
                   inputMode="email"
-                  placeholder="ENTER EMAIL"
+                  placeholder="YOUR EMAIL"
                   required
                   spellCheck="false"
                 />
@@ -150,7 +150,7 @@ export default function Footer() {
                   htmlFor="newsletter_input"
                   className="input__placeholder"
                 >
-                  enter email
+                  YOUR EMAIL
                 </label>
                 <button className="input__submit" type="submit">
                   <FaPaperPlane className="input__submit-icon" />
