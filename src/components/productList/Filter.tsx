@@ -6,6 +6,16 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Category } from "@prisma/client";
 
+const removeEmpty = (obj: { [key: string]: any; }) => {
+  const newObj = { ...obj };
+  Object.keys(newObj).forEach((key) => {
+    if (!newObj[key]) {
+      delete newObj[key];
+    }
+  });
+  return newObj;
+};
+
 export default function Filter({
   active,
   current,
@@ -25,8 +35,6 @@ export default function Filter({
   currentColor?: string;
   setState: (state: boolean) => void;
 }) {
-  const [minPrice, maxPrice] = currentPrice?.split("-") || [0, 10000];
-
   const router = useRouter();
   const { categoryId, colorways, sizes, height, price } = router.query;
 
@@ -37,8 +45,17 @@ export default function Filter({
     price,
   });
 
+  const [minPrice, maxPrice] =
+    typeof filterState.price == "string"
+      ? filterState.price.split("-")
+      : [0, 1000];
+
   const onSubmit = () => {
-    const newQuery = { ...router.query, ...filterState };
+    const newQuery = removeEmpty({
+      ...router.query,
+      ...filterState,
+      categoryId: null,
+    });
     router.replace({ pathname: location.pathname, query: newQuery });
   };
 
@@ -47,7 +64,7 @@ export default function Filter({
       colorways: [""],
       sizes: [""],
       height: "",
-      price: "0-10000",
+      price: "0-1000",
     });
   };
 
@@ -58,7 +75,10 @@ export default function Filter({
     }, Object.create({}));
   };
 
-  const sizesObj = useMemo(() => listToEnum([...Array(37)].map((_, i) => String(2 + i / 2))), []);
+  const sizesObj = useMemo(
+    () => listToEnum([...Array(37)].map((_, i) => String(2 + i / 2))),
+    []
+  );
 
   return (
     <div className={"filter" + (active ? " filter--active" : "")}>
@@ -90,7 +110,9 @@ export default function Filter({
           name="colorways"
           checkbox
           values={colorsHex}
-          checkedItems={filterState.colorways instanceof Array ? filterState.colorways : []}
+          checkedItems={
+            filterState.colorways instanceof Array ? filterState.colorways : []
+          }
           onChecked={(items) =>
             setFilterState({
               ...filterState,
@@ -120,7 +142,9 @@ export default function Filter({
           checkbox
           grid
           values={sizesObj}
-          checkedItems={filterState.sizes instanceof Array ? filterState.sizes : []}
+          checkedItems={
+            filterState.sizes instanceof Array ? filterState.sizes : []
+          }
           onChecked={(items) =>
             setFilterState({
               ...filterState,
@@ -144,7 +168,9 @@ export default function Filter({
         <RadioList
           name="height"
           values={Category}
-          checkedItems={typeof filterState.height == "string" ? [filterState.height] : []}
+          checkedItems={
+            typeof filterState.height == "string" ? [filterState.height] : []
+          }
           onChecked={(items) =>
             setFilterState({
               ...filterState,
@@ -195,7 +221,7 @@ const PriceRange = ({
   preset?: [min: string | number, max: string | number];
   onUpdate?: (minPrice: number, maxPrice: number) => void;
 }) => {
-  const HIGHEST_PRICE = 10000;
+  const HIGHEST_PRICE = 1000;
   const [valueMin, setValMin] = useState<string | number>(preset?.[0] || 0);
   const [valueMax, setValMax] = useState<string | number>(
     preset?.[1] || HIGHEST_PRICE.toString()
@@ -212,6 +238,13 @@ const PriceRange = ({
       onUpdate?.(Number(valueMin), Number(valueMax));
     }
   }, [activeThumb, valueMin, valueMax]);
+
+  useEffect(() => {
+    if (preset) {
+      setValMin(preset[0]);
+      setValMax(preset[1]);
+    }
+  }, [preset]);
 
   useEffect(() => {
     const mouseUpHandler = (e: PointerEvent | TouchEvent) => {
@@ -242,7 +275,6 @@ const PriceRange = ({
       const limit = control.offsetWidth - maxThumb.offsetWidth * 2;
 
       if (activeThumb == "min") {
-        let minPrice = valueMin;
         const thumbLeft = asPercentage(
           Math.max(
             0,
@@ -255,13 +287,12 @@ const PriceRange = ({
           thumbLeft >= asPercentage(limit)
         );
 
-        minPrice = Number(
+        let minPrice = Number(
           (minThumb.offsetLeft / (control.offsetWidth - minThumb.offsetWidth)) *
             HIGHEST_PRICE
         ).toFixed(0);
         setValMin(minPrice);
       } else if (activeThumb == "max") {
-        let maxPrice = valueMax;
         const thumbLeft = asPercentage(
           Math.min(
             Math.max(
@@ -272,7 +303,7 @@ const PriceRange = ({
           )
         );
         maxThumb.style.left = thumbLeft + "%";
-        maxPrice = Number(
+        let maxPrice = Number(
           (maxThumb.offsetLeft / (control.offsetWidth - maxThumb.offsetWidth)) *
             HIGHEST_PRICE
         ).toFixed(0);
@@ -319,7 +350,9 @@ const PriceRange = ({
   return (
     <div className="price-range">
       <input
-        defaultValue={`Price: $${valueMin} — $${valueMax}`}
+        defaultValue={`Price: $${valueMin} — ${
+          valueMax == HIGHEST_PRICE ? "Over $" + valueMax : "$" + valueMax
+        }`}
         key={`Price: $${valueMin} — $${valueMax}`}
         readOnly
         className="price-range__input"
