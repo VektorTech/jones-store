@@ -35,8 +35,9 @@ import {
   EmailIcon,
 } from "next-share";
 import Modal from "@Components/Modal";
-import { getPathString } from "@Lib/utils";
+import { getPathString, listToEnum } from "@Lib/utils";
 import Carousel from "@Components/Carousel";
+import RadioList from "@Components/common/formControls/RadioList";
 
 const override: CSSProperties = {
   margin: "2rem auto 0 auto",
@@ -65,7 +66,19 @@ export default function ProductPage({
   relatedProducts: ProductType[];
   sizes: { width: number; height: number }[];
 }) {
-  const { id, title, gender, ratings, price, discount } = product;
+  const {
+    id,
+    title,
+    gender,
+    price,
+    discount,
+    sku,
+    year,
+    color,
+    salesCount,
+    stockQty,
+    sizes: sizesOptions,
+  } = product;
 
   const { addToCart } = useAuthState();
   const [quantity, setQuantity] = useState(1);
@@ -104,6 +117,8 @@ export default function ProductPage({
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
 
+  const allSizes = listToEnum(sizesOptions);
+
   return (
     <>
       <SEO title={product.title} />
@@ -129,7 +144,12 @@ export default function ProductPage({
               <ul>
                 {product.mediaURLs.map((url, i) => (
                   <li key={url}>
-                    <button className={i == activeImage ? "product-view__thumb-active" : ""} onClick={() => setActiveImage(i)}>
+                    <button
+                      className={
+                        i == activeImage ? "product-view__thumb-active" : ""
+                      }
+                      onClick={() => setActiveImage(i)}
+                    >
                       <Image
                         objectFit="contain"
                         src={url}
@@ -145,7 +165,10 @@ export default function ProductPage({
             </div>
             <div className="product-view__picture">
               <div className="product-view__picture-container">
-                <Carousel onUpdate={(i: number) => setActiveImage(i)} aIndex={activeImage}>
+                <Carousel
+                  onUpdate={(i: number) => setActiveImage(i)}
+                  aIndex={activeImage}
+                >
                   {product.mediaURLs.map((url, i) => (
                     <Img
                       key={"image:" + url}
@@ -174,17 +197,35 @@ export default function ProductPage({
           <h1 className="product-view__name">{title}</h1>
           <p className="product-view__gender">{gender}</p>
 
+          <div className="product-view__details">
+            <p className="product-view__sku">SKU: {sku}</p>
+            <p className="product-view__sku">Release Year: {year}</p>
+            <p className="product-view__sku">Colorway: {color}</p>
+          </div>
+
           <p className="product-view__price">
             {currencyFormatter.format(price - (discount || 0))}
           </p>
 
+          <p className="product-view__sold">{salesCount || 0} Sold &mdash; {stockQty} available in stock</p>
+
           <form method="POST" action="/api/cart">
             <div className="product-view__size-selector">
-              <Dropdown
-                options={product.sizes.reduce((obj: any, val: number) => {
-                  obj[val.toString()] = val.toString();
-                  return obj;
-                }, {})}
+              <RadioList
+                name="sizes"
+                label="Size: Please Select"
+                grid
+                values={allSizes}
+                render={({ label, checked }) => (
+                  <span
+                    className={
+                      "filter__param-box" +
+                      (checked ? " filter__param-box--checked" : "")
+                    }
+                  >
+                    {label}
+                  </span>
+                )}
               />
             </div>
             <div className="product-view__quantity">
@@ -195,9 +236,9 @@ export default function ProductPage({
                 {" "}
                 -{" "}
               </button>
-              <input name="qty" id="" key={quantity} defaultValue={quantity} />
+              <input name="qty" key={quantity} defaultValue={quantity} />
               <button
-                onClick={() => setQuantity(Math.min(quantity + 1, 10))}
+                onClick={() => setQuantity(Math.min(quantity + 1, stockQty))}
                 type="button"
               >
                 {" "}
@@ -217,7 +258,10 @@ export default function ProductPage({
           </form>
           <Button>Buy Now</Button>
 
-          <button className="product-view__share-button" onClick={() => setShareModalOpen(true)}>
+          <button
+            className="product-view__share-button"
+            onClick={() => setShareModalOpen(true)}
+          >
             <HiOutlineShare />
           </button>
           <Modal
