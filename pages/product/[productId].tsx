@@ -172,6 +172,7 @@ export default function ProductPage({
                 <Carousel
                   onUpdate={(i: number) => setActiveImage(i)}
                   aIndex={activeImage}
+                  key={product.id + "carousel"}
                 >
                   {product.mediaURLs.map((url, i) => (
                     <Img

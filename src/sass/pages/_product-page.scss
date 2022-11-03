@@ -32,8 +32,9 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      left: 1rem;
-      right: 1rem;
+      left: 0;
+      right: 0;
+      padding: 0 1rem;
       text-align: center;
       cursor: pointer;
     }

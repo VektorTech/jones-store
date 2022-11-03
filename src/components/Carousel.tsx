@@ -1,6 +1,4 @@
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
-import useIsomorphicLayoutEffect from "@Lib/hooks/useIsomorphicLayoutEffect";
-import Router from "next/router";
 import React, { useState, useRef, useEffect } from "react";
 import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
 import Modal from "./Modal";
@@ -17,63 +15,27 @@ export default function Carousel({
   const carousel = useRef<HTMLDivElement>(null);
   const slidesContainer = useRef<HTMLDivElement>(null);
   const transitioning = useRef<boolean>(false);
-  const direction = useRef<"forward" | "backward" | "">("");
-
-  const [slideNumber, setSlideNumber] = useState(aIndex);
-  const [carouselWidth, setCarouselWidth] = useState(
-    carousel.current?.offsetWidth || 0
-  );
-
-  const getChildrenAsSlides = () => {
-    if (Array.isArray(children)) {
-      let childrenUpdated = React.Children.map(children, (child) => {
-        return React.cloneElement(child, {
-          className: (child.props.className || "") + " carousel__slide",
-        });
-      });
-
-      return childrenUpdated;
-    }
-  };
-
-  const updatedChildren = getChildrenAsSlides();
-  const len = React.Children.count(updatedChildren);
-  const before = updatedChildren?.[(slideNumber - 1 + len) % len];
-  const between = updatedChildren?.[slideNumber];
-  const after = updatedChildren?.[(slideNumber + 1) % len];
-
-  const [renderComp, setRenderComp] = useState([before, between, after]);
-  if (slidesContainer.current) {
-    slidesContainer.current.style.transition =
-      "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)";
-  }
-
   const { currentDialog, setDialog } = useDialog();
   const activeModal = currentDialog == DialogType.MODAL_PRODUCT_VIEW;
-
-  useEffect(() => {
-    const updateChildren = () => {
-      const updatedChildren = getChildrenAsSlides();
-      const len = React.Children.count(updatedChildren);
-      const before = updatedChildren?.[(slideNumber - 1 + len) % len];
-      const between = updatedChildren?.[slideNumber];
-      const after = updatedChildren?.[(slideNumber + 1) % len];
-      setRenderComp([before, between, after]);
-    };
-    Router.events.on("routeChangeComplete", updateChildren);
-    return () => Router.events.off("routeChangeComplete", updateChildren);
-  }, [children]);
-
-  useEffect(() => {
-    if (aIndex == slideNumber) {
-      return;
+  const [slideNumber, setSlideNumber] = useState(aIndex);
+  const [carouselWidth, setCarouselWidth] = useState(
+    carousel.current?.clientWidth || 0
+  );
+  const getChildrenAsSlides = (): Array<React.ReactNode> | undefined => {
+    if (Array.isArray(children)) {
+      return React.Children.map(children, (child) => {
+        return React.cloneElement(child, {
+          className: (child.props.className || "") + " carousel__slide",
+          width: carouselWidth
+        });
+      });
     }
+  };
+  const updatedChildren = getChildrenAsSlides();
+  const len = React.Children.count(updatedChildren);
 
-    const before = updatedChildren?.[(aIndex - 1 + len) % len];
-    const between = updatedChildren?.[aIndex];
-    const after = updatedChildren?.[(aIndex + 1) % len];
+  useEffect(() => {
     setSlideNumber(aIndex);
-    setRenderComp([before, between, after]);
   }, [aIndex]);
 
   useEffect(() => {
@@ -82,11 +44,10 @@ export default function Carousel({
 
   useEffect(() => {
     if (carousel.current) {
-      setCarouselWidth(carousel.current.offsetWidth);
+      setCarouselWidth(carousel.current.clientWidth);
     }
     const handleResize = () => {
-      direction.current = "";
-      setCarouselWidth(carousel.current?.offsetWidth || 0);
+      setCarouselWidth(carousel.current?.clientWidth || 0);
     };
     addEventListener("resize", handleResize);
     return () => removeEventListener("resize", handleResize);
@@ -94,26 +55,13 @@ export default function Carousel({
 
   useEffect(() => {
     if (slidesContainer.current) {
-      if (direction.current == "backward") {
-        slidesContainer.current.style.transform = `translate3d(${0}px, 0, 0)`;
-      } else if (direction.current == "forward") {
-        slidesContainer.current.style.transform = `translate3d(${
-          -carouselWidth * 2
-        }px, 0, 0)`;
-      }
+      const shiftAmount = carouselWidth * slideNumber;
+      slidesContainer.current.style.transform = `translate3d(-${shiftAmount}px, 0, 0)`;
     }
   }, [slideNumber, slidesContainer, carouselWidth]);
 
   useEffect(() => {
-    const reset = () => {
-      transitioning.current = false;
-      if (slidesContainer.current) {
-        const before = updatedChildren?.[(slideNumber - 1 + len) % len];
-        const between = updatedChildren?.[slideNumber];
-        const after = updatedChildren?.[(slideNumber + 1) % len];
-        setRenderComp([before, between, after]);
-      }
-    };
+    const reset = () => (transitioning.current = false);
 
     const sc = slidesContainer.current;
     sc?.addEventListener("transitionend", reset);
@@ -121,27 +69,19 @@ export default function Carousel({
     return () => sc?.removeEventListener("transitionend", reset);
   }, [slideNumber, updatedChildren, len]);
 
-  useIsomorphicLayoutEffect(() => {
-    if (slidesContainer.current) {
-      direction.current = "";
-      slidesContainer.current.style.transition = "transform 0s";
-      slidesContainer.current.style.transform = `translate3d(${-carouselWidth}px, 0, 0)`;
-    }
-  }, [renderComp, carouselWidth]);
-
   return (
     <>
       <div className="carousel" ref={carousel}>
         <div
           ref={slidesContainer}
-          style={{ width: `${carouselWidth * 3}px` }}
+          style={{ width: `${carouselWidth * len}px` }}
           className="carousel__container"
         >
-          {renderComp}
+          {updatedChildren}
         </div>
       </div>
       <Modal onClose={() => setDialog(null)} visible={activeModal}>
-        <div>{renderComp[1]}</div>
+        <div>{updatedChildren?.[slideNumber]}</div>
       </Modal>
       <div
         onClick={() => setDialog(DialogType.MODAL_PRODUCT_VIEW)}
@@ -150,26 +90,30 @@ export default function Carousel({
         <button
           onClick={(e) => {
             e.stopPropagation();
-            if (!transitioning.current) {
-              direction.current = "backward";
+            if (!transitioning.current && slideNumber > 0) {
               transitioning.current = true;
-              setSlideNumber((slideNumber - 1 + len) % len);
+              setSlideNumber(Math.max(0, slideNumber - 1));
             }
           }}
-          className="gallery__prev"
+          className={
+            "gallery__prev" +
+            (slideNumber == 0 ? " carousel__control--hidden" : "")
+          }
         >
           <BsArrowLeft />
         </button>
         <button
           onClick={(e) => {
             e.stopPropagation();
-            if (!transitioning.current) {
-              direction.current = "forward";
+            if (!transitioning.current && slideNumber < len - 1) {
               transitioning.current = true;
-              setSlideNumber((slideNumber + 1) % len);
+              setSlideNumber(Math.min(len - 1, slideNumber + 1));
             }
           }}
-          className="gallery__next"
+          className={
+            "gallery__next" +
+            (slideNumber == len - 1 ? " carousel__control--hidden" : "")
+          }
         >
           <BsArrowRight />
         </button>
