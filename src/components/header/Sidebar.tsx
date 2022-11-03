@@ -196,7 +196,7 @@ export default function Sidebar({ userId }: { userId?: string }) {
 
 const ColorwaysList = CategoriesData.colorways.map((name: string) => (
   <li key={name} className="sidebar__links-item">
-    <Link href={"/category/colorways?colorway=" + name}>
+    <Link href={"/category/colorways?colorways=" + name}>
       <a className="sidebar__anchor">{name}</a>
     </Link>
   </li>
