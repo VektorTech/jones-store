@@ -21,18 +21,26 @@ export default function Carousel({
   const [carouselWidth, setCarouselWidth] = useState(
     carousel.current?.clientWidth || 0
   );
+
   const getChildrenAsSlides = (): Array<React.ReactNode> | undefined => {
     if (Array.isArray(children)) {
-      return React.Children.map(children, (child) => {
+      return React.Children.map(children, (child, index) => {
         return React.cloneElement(child, {
-          className: (child.props.className || "") + " carousel__slide",
-          width: carouselWidth
+          className:
+            (child.props.className || "") +
+            " carousel__slide" +
+            (slideNumber == index ? " carousel__slide--active" : ""),
+          width: carouselWidth,
         });
       });
     }
   };
   const updatedChildren = getChildrenAsSlides();
   const len = React.Children.count(updatedChildren);
+
+  useEffect(() => {
+    setSlideNumber(0);
+  }, [children]);
 
   useEffect(() => {
     setSlideNumber(aIndex);
@@ -69,6 +77,37 @@ export default function Carousel({
     return () => sc?.removeEventListener("transitionend", reset);
   }, [slideNumber, updatedChildren, len]);
 
+  const handleMouseOver: React.MouseEventHandler<HTMLDivElement> = ({
+    clientX,
+    clientY,
+  }) => {
+    const activeSlide = slidesContainer.current?.querySelector(
+      ".carousel__slide--active"
+    );
+    if (activeSlide instanceof HTMLElement) {
+      const carouselBounds = carousel.current?.getBoundingClientRect();
+      const carouselLeft = carouselBounds?.x || 0;
+      const carouselTop = carouselBounds?.y || 0;
+      const activeSlideWidth = activeSlide.offsetWidth;
+      const activeSlideHeight = activeSlide.offsetHeight;
+      const activeSlideXMid = activeSlideWidth / 2;
+      const activeSlideYMid = activeSlideHeight / 2;
+
+      const shiftX = -(clientX - (carouselLeft + activeSlideXMid));
+      const shiftY = -(clientY - (carouselTop + activeSlideYMid));
+      activeSlide.style.transform = `scale(${2}) translate3d(${shiftX}px, ${shiftY}px, 0)`;
+    }
+  };
+
+  const handleMouseLeave = () => {
+    const activeSlide = slidesContainer.current?.querySelector(
+      ".carousel__slide--active"
+    );
+    if (activeSlide instanceof HTMLElement) {
+      activeSlide.style.transform = `scale(1) translate3d(0, 0, 0)`;
+    }
+  };
+
   return (
     <>
       <div className="carousel" ref={carousel}>
@@ -85,35 +124,33 @@ export default function Carousel({
       </Modal>
       <div
         onClick={() => setDialog(DialogType.MODAL_PRODUCT_VIEW)}
+        onMouseMove={handleMouseOver}
+        onMouseOut={handleMouseLeave}
         className="product-view__gallery-controls"
       >
         <button
           onClick={(e) => {
             e.stopPropagation();
-            if (!transitioning.current && slideNumber > 0) {
+            if (!transitioning.current) {
               transitioning.current = true;
-              setSlideNumber(Math.max(0, slideNumber - 1));
+              setSlideNumber((slideNumber - 1 + len) % len);
             }
           }}
-          className={
-            "gallery__prev" +
-            (slideNumber == 0 ? " carousel__control--hidden" : "")
-          }
+          onMouseMove={(e) => e.stopPropagation()}
+          className="gallery__prev"
         >
           <BsArrowLeft />
         </button>
         <button
           onClick={(e) => {
             e.stopPropagation();
-            if (!transitioning.current && slideNumber < len - 1) {
+            if (!transitioning.current) {
               transitioning.current = true;
-              setSlideNumber(Math.min(len - 1, slideNumber + 1));
+              setSlideNumber((slideNumber + 1) % len);
             }
           }}
-          className={
-            "gallery__next" +
-            (slideNumber == len - 1 ? " carousel__control--hidden" : "")
-          }
+          onMouseMove={(e) => e.stopPropagation()}
+          className="gallery__next"
         >
           <BsArrowRight />
         </button>
