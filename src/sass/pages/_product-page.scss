@@ -24,11 +24,11 @@
     }
 
     &-controls {
-      height: 5rem;
+      height: 3.6rem;
       display: flex;
       justify-content: space-between;
       justify-items: center;
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
@@ -44,9 +44,16 @@
 
   .gallery__prev,
   .gallery__next {
-    line-height: 5rem;
-    color: #fff;
-    background-color: #33333333;
+    height: 3.6rem;
+    width: 3.5rem;
+    display: flex;
+    color: #eee;
+    border-radius: 0.2rem;
+    background-color: #0000006e;
+
+    & svg {
+      margin: auto;
+    }
   }
 
   &__wish {

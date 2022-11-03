@@ -1,7 +1,8 @@
 import useIsomorphicLayoutEffect from "@Lib/hooks/useIsomorphicLayoutEffect";
 import Router from "next/router";
 import React, { useState, useRef, useEffect } from "react";
-import { MdArrowForwardIos, MdArrowBackIosNew } from "react-icons/md";
+import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
+import Modal from "./Modal";
 
 export default function Carousel({
   children,
@@ -143,7 +144,7 @@ export default function Carousel({
           }}
           className="gallery__prev"
         >
-          <MdArrowBackIosNew />
+          <BsArrowLeft />
         </button>
         <button
           onClick={() => {
@@ -155,7 +156,7 @@ export default function Carousel({
           }}
           className="gallery__next"
         >
-          <MdArrowForwardIos />
+          <BsArrowRight />
         </button>
       </div>
     </>
