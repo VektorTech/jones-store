@@ -3,14 +3,15 @@ import { AsyncAPIHandler } from "src/types/shared";
 import { catchAsyncErrors, ServerError } from "./utils";
 import { withSessionRoute } from "./withSession";
 
+type requestMethod = "GET" | "POST" | "PUT" | "DELETE";
 export class RouteHandler {
-  private methodActions: { [key: string]: Function | null } = {
+  private methodActions: Record<requestMethod, Function | null> = {
     GET: null,
     POST: null,
     PUT: null,
     DELETE: null,
   };
-  private restMethodActions: { [key: string]: AsyncAPIHandler[] | null } = {
+  private restMethodActions: Record<requestMethod, AsyncAPIHandler[] | null> = {
     GET: null,
     POST: null,
     PUT: null,
@@ -44,10 +45,12 @@ export class RouteHandler {
         request &&
         response &&
         this.restMethodActions &&
-        this.restMethodActions[method]?.[actionIndex]
+        this.restMethodActions[method as requestMethod]?.[actionIndex]
       ) {
         await catchAsyncErrors(
-          this.restMethodActions[method]?.[actionIndex] as AsyncAPIHandler
+          this.restMethodActions[method as requestMethod]?.[
+            actionIndex
+          ] as AsyncAPIHandler
         )(request, response, (err: ServerError) =>
           this.next.call(this, request, response, err, actionIndex + 1)
         );
@@ -56,7 +59,8 @@ export class RouteHandler {
   }
 
   private start(req: NextApiRequest, res: NextApiResponse) {
-    const action: Function | null = this.methodActions[req.method || ""];
+    const action: Function | null =
+      this.methodActions[(req.method as requestMethod) || ""];
 
     if (action) {
       return action(req, res);
@@ -68,7 +72,7 @@ export class RouteHandler {
   private setHandlers(
     handler: AsyncAPIHandler,
     handlers: AsyncAPIHandler[],
-    method: string
+    method: requestMethod
   ) {
     this.methodActions[method] = withSessionRoute((req, res) =>
       catchAsyncErrors(handler)(req, res, (err: ServerError) =>
