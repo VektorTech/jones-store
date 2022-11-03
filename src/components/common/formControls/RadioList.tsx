@@ -41,7 +41,7 @@ export default function RadioList({
   const valuesArr = Object.keys(values);
 
   const [groupState, setGroupState] = useState(initState);
-  const [all, setAll] = useState(values.length < 10);
+  const [all, setAll] = useState(valuesArr.length < 10);
 
   useEffect(() => {
     setGroupState(initState);
