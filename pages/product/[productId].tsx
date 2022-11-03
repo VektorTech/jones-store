@@ -119,6 +119,9 @@ export default function ProductPage({
 
   const allSizes = listToEnum(sizesOptions);
   const cartPrice = (price - (discount || 0)) * quantity;
+  const percentageOff = discount
+    ? `${Math.floor((discount / price) * 100)}% off`
+    : "";
 
   return (
     <>
@@ -199,16 +202,18 @@ export default function ProductPage({
           <p className="product-view__gender">{gender}</p>
 
           <div className="product-view__details">
-            <p className="product-view__sku">SKU: {sku}</p>
+            <p className="product-view__sku">SKU: {sku.toUpperCase()}</p>
             <p className="product-view__sku">Release Year: {year}</p>
             <p className="product-view__sku">Colorway: {color}</p>
           </div>
 
           <p className="product-view__price">
-            {currencyFormatter.format(cartPrice)}
+            {currencyFormatter.format(cartPrice)} <span>{percentageOff}</span>
           </p>
 
-          <p className="product-view__sold">{salesCount || 0} Sold &mdash; {stockQty} available in stock</p>
+          <p className="product-view__sold">
+            {salesCount || 0} Sold &mdash; {stockQty} available in stock
+          </p>
 
           <form method="POST" action="/api/cart">
             <div className="product-view__size-selector">
@@ -237,7 +242,12 @@ export default function ProductPage({
                 {" "}
                 -{" "}
               </button>
-              <input readOnly name="qty" key={quantity} defaultValue={quantity} />
+              <input
+                readOnly
+                name="qty"
+                key={quantity}
+                defaultValue={quantity}
+              />
               <button
                 onClick={() => setQuantity(Math.min(quantity + 1, stockQty))}
                 type="button"
