@@ -25,7 +25,17 @@
     transform: translateY(-50%);
 
     @include respond-to("medium") {
-      width: 60%;
+      &--sm {
+        width: 40%;
+      }
+
+      &--md {
+        width: 60%;
+      }
+
+      &--lg {
+        width: 90%;
+      }
     }
   }
 

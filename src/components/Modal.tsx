@@ -8,11 +8,13 @@ export default function Modal({
   children,
   title = "",
   onClose,
+  size = "md",
   visible = true,
 }: {
   children: ReactElement;
   title?: string;
   onClose?: () => void;
+  size?: "sm" | "md" | "lg",
   visible?: boolean;
 }) {
   const [isMountedClient, setIsMountedClient] = useState(false);
@@ -27,7 +29,7 @@ export default function Modal({
   const ModalBody = visible ? (
     <div className="modal">
       <div className="modal__overlay" onClick={onClose}></div>
-      <div ref={modalRef} className="modal__main">
+      <div ref={modalRef} className={"modal__main" + " modal__main--" + size}>
         <div className="modal__header">
           <h2 className="modal__title">{title}</h2>
           <button onClick={onClose} className="modal__close">

@@ -80,7 +80,7 @@ export default function Carousel({
           {updatedChildren}
         </div>
       </div>
-      <Modal onClose={() => setDialog(null)} visible={activeModal}>
+      <Modal size="lg" onClose={() => setDialog(null)} visible={activeModal}>
         <div>{updatedChildren?.[slideNumber]}</div>
       </Modal>
       <div
