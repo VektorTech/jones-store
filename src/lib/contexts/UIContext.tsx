@@ -11,8 +11,10 @@ import { useRouter } from "next/router";
 
 export enum DialogType {
   SIDEBAR_DIALOG,
-  MODAL_POPUP,
   SEARCH_BOX,
+  MODAL_ANNOUNCEMENT,
+  MODAL_LANG_CURRENCY,
+  MODAL_PRODUCT_VIEW
 };
 
 const uiState: {

@@ -14,7 +14,7 @@ export default function Announcement() {
 
   const { currentDialog, setDialog } = useDialog();
   const [currentDetails, setCurrentDetails] = useState("");
-  const visible = currentDialog == DialogType.MODAL_POPUP;
+  const visible = currentDialog == DialogType.MODAL_ANNOUNCEMENT;
 
   const handleClose = () => {
     setAnnouncementVisible(false);
@@ -37,7 +37,7 @@ export default function Announcement() {
 
   useEffect(() => {
     if (currentDetails) {
-      setDialog(DialogType.MODAL_POPUP);
+      setDialog(DialogType.MODAL_ANNOUNCEMENT);
     } else {
       setDialog(null);
     }

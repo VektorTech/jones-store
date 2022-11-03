@@ -1,3 +1,4 @@
+import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 import useIsomorphicLayoutEffect from "@Lib/hooks/useIsomorphicLayoutEffect";
 import Router from "next/router";
 import React, { useState, useRef, useEffect } from "react";
@@ -7,7 +8,7 @@ import Modal from "./Modal";
 export default function Carousel({
   children,
   aIndex,
-  onUpdate
+  onUpdate,
 }: {
   children: React.ReactNode;
   aIndex: number;
@@ -24,7 +25,7 @@ export default function Carousel({
   );
 
   const getChildrenAsSlides = () => {
-    if (children instanceof Array) {
+    if (Array.isArray(children)) {
       let childrenUpdated = React.Children.map(children, (child) => {
         return React.cloneElement(child, {
           className: (child.props.className || "") + " carousel__slide",
@@ -43,8 +44,12 @@ export default function Carousel({
 
   const [renderComp, setRenderComp] = useState([before, between, after]);
   if (slidesContainer.current) {
-    slidesContainer.current.style.transition = "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)";
+    slidesContainer.current.style.transition =
+      "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)";
   }
+
+  const { currentDialog, setDialog } = useDialog();
+  const activeModal = currentDialog == DialogType.MODAL_PRODUCT_VIEW;
 
   useEffect(() => {
     const updateChildren = () => {
@@ -60,7 +65,9 @@ export default function Carousel({
   }, [children]);
 
   useEffect(() => {
-    if (aIndex == slideNumber) { return; }
+    if (aIndex == slideNumber) {
+      return;
+    }
 
     const before = updatedChildren?.[(aIndex - 1 + len) % len];
     const between = updatedChildren?.[aIndex];
@@ -133,9 +140,16 @@ export default function Carousel({
           {renderComp}
         </div>
       </div>
-      <div className="product-view__gallery-controls">
+      <Modal onClose={() => setDialog(null)} visible={activeModal}>
+        <div>{renderComp[1]}</div>
+      </Modal>
+      <div
+        onClick={() => setDialog(DialogType.MODAL_PRODUCT_VIEW)}
+        className="product-view__gallery-controls"
+      >
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             if (!transitioning.current) {
               direction.current = "backward";
               transitioning.current = true;
@@ -147,7 +161,8 @@ export default function Carousel({
           <BsArrowLeft />
         </button>
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             if (!transitioning.current) {
               direction.current = "forward";
               transitioning.current = true;
