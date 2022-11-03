@@ -205,7 +205,7 @@ const ColorwaysList = CategoriesData.colorways.map((name: string) => (
 const MenCategoriesList = [
   <li key={"men-sidebar"} className="sidebar__links-item">
     <Link href={"/category/men"}>
-      <a className="sidebar__anchor">men</a>
+      <a className="sidebar__anchor">all men</a>
     </Link>
   </li>,
 ].concat(
@@ -221,7 +221,7 @@ const MenCategoriesList = [
 const WomenCategoriesList = [
   <li key={"men-sidebar"} className="sidebar__links-item">
     <Link href={"/category/women"}>
-      <a className="sidebar__anchor">women</a>
+      <a className="sidebar__anchor">all women</a>
     </Link>
   </li>,
 ].concat(
