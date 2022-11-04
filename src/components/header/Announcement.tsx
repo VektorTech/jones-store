@@ -83,7 +83,7 @@ export default function Announcement() {
           <BsXLg className="announcement__close-icon" />
         </button>
 
-        <Modal onClose={() => setCurrentDetails("")} visible={visible}>
+        <Modal size="sm" onClose={() => setCurrentDetails("")} visible={visible}>
           <div dangerouslySetInnerHTML={{ __html: currentDetails }}></div>
         </Modal>
       </div>

@@ -210,6 +210,7 @@ export default function Footer() {
       <Modal
         title="Select Language / Currency"
         onClose={() => setDialog(null)}
+        size="sm"
         visible={visible}
       >
         <Dropdown
