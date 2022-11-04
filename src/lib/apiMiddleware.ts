@@ -58,6 +58,7 @@ export const checkGuest = async (
 
   if (!user && !guest) {
     req.session.guest = {
+      id: "guest",
       cart: [],
       wishlist: [],
     };

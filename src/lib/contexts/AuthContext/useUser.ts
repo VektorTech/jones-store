@@ -4,6 +4,7 @@ import {
   postCartItem,
   deleteCartItem,
 } from "@Lib/helpers";
+import { CartItem } from "@prisma/client";
 import { useEffect, useReducer } from "react";
 import { UserType } from "src/types/shared";
 
@@ -18,7 +19,8 @@ const initUser: UserType = {
   deactivated: false,
   wishlist: [],
   cart: [],
-  isAuth: false
+  cartTotal: 0,
+  isAuth: false,
 };
 
 enum UserActions {
@@ -26,7 +28,7 @@ enum UserActions {
   ADD_WISHLIST_ITEM,
   REMOVE_WISHLIST_ITEM,
   ADD_CART_ITEM,
-  REMOVE_CART_ITEM
+  REMOVE_CART_ITEM,
 }
 
 const authReducer = (
@@ -46,16 +48,20 @@ const authReducer = (
           action.payload,
         ],
       };
-    case UserActions.ADD_CART_ITEM:
+    case UserActions.ADD_CART_ITEM: {
+      const newCart: CartItem[] = user.cart.filter(
+        (item) => item.productId != action.payload.productId
+      ).concat(action.payload);
+
       return {
         ...user,
-        cart: [
-          ...user.cart.filter(
-            (item) => item.productId != action.payload.productId
-          ),
-          action.payload,
-        ],
+        cart: [...newCart],
+        cartTotal: newCart.reduce(
+          (_total: number, { total }: CartItem) => _total + total,
+          0
+        ),
       };
+    }
     case UserActions.REMOVE_WISHLIST_ITEM:
       return {
         ...user,
@@ -63,44 +69,42 @@ const authReducer = (
           ({ productId = "" }) => productId != action.payload
         ),
       };
-    case UserActions.REMOVE_CART_ITEM:
+    case UserActions.REMOVE_CART_ITEM: {
+      const newCart: CartItem[] = user.cart.filter(
+        ({ productId = "" }) => productId != action.payload
+      );
+
       return {
         ...user,
-        cart: user.cart.filter(
-          ({ productId = "" }) => productId != action.payload
+        cart: newCart,
+        cartTotal: newCart.reduce(
+          (_total: number, { total }: CartItem) => _total + total,
+          0
         ),
       };
+    }
     default:
       return user;
   }
 };
 
-export default function useUser(currentUser?: UserType) {
+export default function useUser(currentUser: UserType) {
   const [userState, updateUser] = useReducer(authReducer, initUser);
 
   useEffect(() => {
-    let payload = null;
-
-    if (currentUser?.id) {
+    if (currentUser && currentUser.id != "guest") {
       updateUser({
         type: UserActions.SET_USER,
         payload: { ...currentUser, isAuth: true },
       });
-    } else {
-      Promise.all([
-        fetch("/api/wishlist").then((res) => res.json()),
-        fetch("/api/cart").then((res) => res.json()),
-      ]).then((res) => {
-        const [wishlistData, cartData] = res;
-        payload = {
-          wishlist: wishlistData.data,
-          cart: cartData.data,
-        };
-
-        updateUser({
-          type: UserActions.SET_USER,
-          payload,
-        });
+    } else if (currentUser) {
+      const cartTotal = (currentUser.cart as CartItem[]).reduce(
+        (_total: number, { total }: CartItem) => _total + total,
+        0
+      );
+      updateUser({
+        type: UserActions.SET_USER,
+        payload: { ...currentUser, cartTotal },
       });
     }
   }, [currentUser]);

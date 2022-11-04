@@ -21,13 +21,10 @@ export default function Sidebar({ userId }: { userId?: string }) {
   const { currentDialog, setDialog } = useDialog();
 
   const { user } = useAuthState();
+  const isAuth = user?.isAuth;
   const wishlistCount = user?.wishlist?.length;
   const cartCount = user?.cart.length;
-  const cartTotal =
-    (user?.cart || []).reduce(
-      (total: number, item: CartItem) => total + item?.total,
-      0
-    ) || 0;
+  const cartTotal = user?.cartTotal;
 
   const sidebarRef = useRef<HTMLDivElement>(null);
   const sidebarVisible = currentDialog == DialogType.SIDEBAR_DIALOG;
@@ -123,7 +120,7 @@ export default function Sidebar({ userId }: { userId?: string }) {
           <div className="sidebar__icon-links">
             <ul>
               <li className="sidebar__icon-links-item">
-                {userId ? (
+                {isAuth ? (
                   <Form
                     afterSubmit={(data) => {
                       if (data.success) {

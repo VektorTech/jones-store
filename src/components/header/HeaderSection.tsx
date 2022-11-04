@@ -35,11 +35,7 @@ export default function HeaderSection({
   const isAuth = user?.isAuth;
   const wishlistCount = user?.wishlist?.length;
   const cartCount = user?.cart?.length;
-  const cartTotal =
-    (user?.cart || []).reduce(
-      (total: number, item: CartItem) => total + item?.total,
-      0
-    ) || 0;
+  const cartTotal = user?.cartTotal;
 
   useEffect(() => {
     const mainBanner = document.getElementById("main-banner");

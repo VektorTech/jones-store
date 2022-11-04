@@ -6,6 +6,7 @@ declare module "iron-session" {
       role: string;
     };
     guest?: {
+      id: "guest",
       wishlist: { productId: string }[],
       cart: { productId: string, size: number, quantity: number; total: number; }[]
     };

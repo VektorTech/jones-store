@@ -91,6 +91,17 @@ MyApp.getInitialProps = async (context: AppContext) => {
           where: { cartId: user.cart.id },
         });
       }
+      user = { ...user, cart };
+    } else if (session.guest) {
+      user = session.guest;
+    } else {
+      session.guest = {
+        id: "guest",
+        cart: [],
+        wishlist: [],
+      };
+      await session.save();
+      user = session.guest;
     }
   }
 
@@ -103,14 +114,14 @@ MyApp.getInitialProps = async (context: AppContext) => {
     ...appProps,
     cookies,
     isAdmin: req?.url?.startsWith("/admin"),
-    user: { ...user, cart }
+    user
   };
 };
 
 interface AppPropsWithCookies extends AppProps {
   cookies: { announcementState: string };
   isAdmin: boolean;
-  user?: UserType;
+  user: UserType;
 }
 
 export default MyApp;
