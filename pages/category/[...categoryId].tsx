@@ -53,13 +53,25 @@ export default function CategoryPage({
     return () => removeEventListener("resize", hideFilter);
   }, []);
 
+  const currentPaths = router.asPath
+    .split("?")[0]
+    .split("/")
+    .filter(Boolean)
+    .reduce((arr: { url: string; text: string; }[], str: string) => {
+      return arr.concat({
+        url: (arr[arr.length - 1]?.url || "") + "/" + str,
+        text: str.toUpperCase(),
+      });
+    }, [])
+    .splice(1);
+
   return (
     <>
       <SEO title={categoryId.toUpperCase()} />
       <div className="constraints">
         <div className="constraints__container">
           <BreadCrumbs
-            items={[{ url: router.asPath, text: categoryId.toUpperCase() }]}
+            items={currentPaths}
           />
           <hr className="constraints__hr" />
           <h1 className="constraints__title">{categoryId}</h1>
