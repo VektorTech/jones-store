@@ -21,7 +21,7 @@ export default function Announcement() {
     setCookie("announcementState", "closed", 14);
   };
 
-  const announcementBody = content.map(({ headline, details }) => (
+  const announcementBody = content?.map(({ headline, details }) => (
     <div
       key={headline}
       className="announcement__inner"
