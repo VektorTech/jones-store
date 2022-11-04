@@ -116,6 +116,7 @@ export default function ProductPage({
 
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
+  const [checkedSize, setCheckedSize] = useState<string>("");
 
   const allSizes = listToEnum(sizesOptions);
   const cartPrice = (price - (discount || 0)) * quantity;
@@ -223,6 +224,8 @@ export default function ProductPage({
                 label="Size: Please Select"
                 grid
                 values={allSizes}
+                checkedItems={[checkedSize]}
+                onChecked={(value) => setCheckedSize(value as string)}
                 render={({ label, checked }) => (
                   <span
                     className={
@@ -261,7 +264,7 @@ export default function ProductPage({
             <Button
               onClick={(e) => {
                 e.preventDefault();
-                addToCart(id, 3, 10);
+                addToCart(id, quantity, Number(checkedSize));
               }}
               className="product-view__add-cart"
             >
