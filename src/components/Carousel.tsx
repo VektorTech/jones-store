@@ -95,7 +95,7 @@ export default function Carousel({
 
       const shiftX = -(clientX - (carouselLeft + activeSlideXMid));
       const shiftY = -(clientY - (carouselTop + activeSlideYMid));
-      activeSlide.style.transform = `scale(${2}) translate3d(${shiftX}px, ${shiftY}px, 0)`;
+      activeSlide.style.transform = `scale(3) translate3d(${shiftX}px, ${shiftY}px, 0)`;
     }
   };
 
