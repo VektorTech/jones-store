@@ -32,7 +32,7 @@ export default function CategoryPage({
   const {
     offset = 0,
     limit = RESULTS_PER_PAGE,
-    colorway,
+    colorways,
     sizes,
     height,
     price,
@@ -57,7 +57,7 @@ export default function CategoryPage({
     .split("?")[0]
     .split("/")
     .filter(Boolean)
-    .reduce((arr: { url: string; text: string; }[], str: string) => {
+    .reduce((arr: { url: string; text: string }[], str: string) => {
       return arr.concat({
         url: (arr[arr.length - 1]?.url || "") + "/" + str,
         text: str.toUpperCase(),
@@ -70,9 +70,7 @@ export default function CategoryPage({
       <SEO title={categoryId.toUpperCase()} />
       <div className="constraints">
         <div className="constraints__container">
-          <BreadCrumbs
-            items={currentPaths}
-          />
+          <BreadCrumbs items={currentPaths} />
           <hr className="constraints__hr" />
           <h1 className="constraints__title">{categoryId}</h1>
           {products.length ? (
@@ -86,7 +84,22 @@ export default function CategoryPage({
               <strong>Nothing Found!</strong>
             </p>
           )}
-          <div className="constraints__filters"></div>
+          <div className="constraints__filters">
+            {(Array.isArray(colorways) ? colorways : [colorways]).map(
+              (color) => (
+                <button key={color} className="constraints__filter">
+                  <strong>Colorway</strong> <span>{color}</span>
+                </button>
+              )
+            )}
+            {(Array.isArray(sizes) ? sizes : [sizes]).map((size) =>
+              size ? (
+                <button key={size} className="constraints__filter">
+                  <strong>Sizes</strong> <span>{size}</span>
+                </button>
+              ) : null
+            )}
+          </div>
         </div>
       </div>
 
@@ -131,7 +144,7 @@ export default function CategoryPage({
           current={categoryId}
           urlPath={router.asPath.split("?")[0]}
           currentSizes={sizes}
-          currentColor={typeof colorway == "string" ? colorway : ""}
+          currentColor={typeof colorways == "string" ? colorways : ""}
           currentHeight={typeof height == "string" ? height : ""}
           currentPrice={typeof price == "string" ? price : ""}
           setState={() => setFilterActive(false)}
