@@ -67,7 +67,7 @@ const signinRoute = async (
           });
         }
 
-        req.session.guest = { wishlist: [], cart: [] };
+        req.session.guest = { id: "guest", wishlist: [], cart: [] };
       } catch (e) {}
     }
 
