@@ -83,7 +83,7 @@ async function postCartRoute(
         productId,
         size,
         quantity: Math.min(Number(qty), product.stockQty),
-        total: (product.price - (product.discount || 0)) * Number(qty),
+        total: (product.price - (product.discount || 0)) * Math.min(Number(qty), product.stockQty),
       };
       guest.cart = [
         ...(guest.cart.filter((item) => item.productId != productId) || []),
