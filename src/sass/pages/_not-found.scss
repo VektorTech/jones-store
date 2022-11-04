@@ -6,8 +6,10 @@
   background-color: #fff;
 
   &__title {
-    font-size: 16vw;
-    font-weight: 700;
+    font-size: 18vw;
+    font-weight: 900;
+    width: 50%;
+    margin: auto;
     position: relative;
   }
 
@@ -20,10 +22,16 @@
     font-size: $text-md;
     color: $c-text-dark;
     margin-bottom: 5rem;
+    font-weight: 400;
   }
 
   &__image {
     mix-blend-mode: lighten;
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: scale(1.4);
+    }
   }
 
   &__link {
