@@ -234,7 +234,7 @@ export const getServerSideProps = withSessionSsr(async function ({
         where: {
           ...filters,
           gender,
-          title: { contains: type, mode: "insensitive" },
+          title: { contains: type.replaceAll("-", " "), mode: "insensitive" },
         },
         skip: Number(offset),
         take: Number(limit),
