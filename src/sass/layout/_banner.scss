@@ -50,6 +50,14 @@
     color: #fff;
     text-align: center;
     text-transform: uppercase;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s $timing-func-ui, visibility 0.6s;
+
+    &--active {
+      opacity: 1;
+      visibility: visible;
+    }
 
     @include respond-to("medium") {
       height: 60%;
@@ -104,7 +112,7 @@
     &-type {
       position: absolute;
       font-size: 16vw;
-      font-weight: bold;
+      font-weight: 900;
       font-style: italic;
       color: #ffffff16;
       height: auto;
@@ -112,6 +120,7 @@
       left: 0;
       right: 0;
       margin-top: -3rem;
+      white-space: nowrap;
 
       @supports (-webkit-text-stroke: 0.1rem #cecece2a) {
         & {
