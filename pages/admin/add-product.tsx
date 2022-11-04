@@ -51,12 +51,12 @@ export default function AddProduct() {
         <TextField name="shippingCost" type="number" label="Shipping Cost" />
         <TextField name="stockQty" type="number" label="Stock Quantity" />
         <TextField name="sku" label="SKU" />
-        <RadioList
+        {/* <RadioList
           name="size"
           label="Select Sizes"
           checkbox
           values={[...Array(40)].map((_, i) => String(1 + i / 2))}
-        />
+        /> */}
         <AutoComplete
           name="color"
           options={CategoriesData.colorways.reduce(
