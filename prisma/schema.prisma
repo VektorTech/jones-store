@@ -151,7 +151,7 @@ model Review {
   productId String
   product Product @relation(fields: [productId], references: [id])
   comment String?
-  rating Int
+  rating Float
   addedAt DateTime @default(now())
   updatedAt DateTime? @updatedAt
   orderLineId Int? @unique
@@ -166,6 +166,8 @@ model Announcement {
   headline String @default("") @db.VarChar(255)
   details String
   addedAt DateTime @default(now())
+
+  @@map(name: "announcements")
 }
 
 model NewsletterRecipient {
@@ -173,7 +175,7 @@ model NewsletterRecipient {
   subscribed Boolean @default(true)
   addedAt DateTime @default(now())
 
-  @@map(name: "newsletter_recipient")
+  @@map(name: "newsletter_recipients")
 }
 
 enum Role {
