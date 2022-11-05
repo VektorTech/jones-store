@@ -18,6 +18,7 @@ import { AuthProvider } from "@Lib/contexts/AuthContext";
 import { UIProvider } from "@Lib/contexts/UIContext";
 import prisma from "@Lib/prisma";
 import { UserType } from "src/types/shared";
+import ErrorBoundary from "@Components/ErrorBoundary";
 
 NProgress.configure({ showSpinner: false });
 Router.events.on("routeChangeStart", () => NProgress.start());
@@ -51,7 +52,9 @@ function MyApp({
         </Head>
         <SEO />
         <Layout>
-          <Component {...pageProps} />
+          <ErrorBoundary>
+            <Component {...pageProps} />
+          </ErrorBoundary>
         </Layout>
       </>
     );
@@ -114,7 +117,7 @@ MyApp.getInitialProps = async (context: AppContext) => {
     ...appProps,
     cookies,
     isAdmin: req?.url?.startsWith("/admin"),
-    user
+    user,
   };
 };
 
