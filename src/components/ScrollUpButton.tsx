@@ -1,4 +1,4 @@
-import StepImage from "@Images/step.png";
+import ShoePrint from "@Images/jordan-shoe-print.png";
 import useScrollTop from "@Lib/hooks/useScrollTop";
 import Image from "next/image";
 
@@ -29,10 +29,10 @@ export function ScrollUpButton() {
           layout="responsive"
           className="scroll-up__image scroll-up__image--flipped"
           alt=""
-		  quality={1}
-          width={96}
-          height={256}
-          src={StepImage}
+          unoptimized={true}
+          width={211}
+          height={559}
+          src={ShoePrint}
         />
       </div>
       <div className="scroll-up__container">
@@ -40,10 +40,10 @@ export function ScrollUpButton() {
           layout="responsive"
           className="scroll-up__image"
           alt=""
-		  quality={1}
-          width={96}
-          height={256}
-          src={StepImage}
+          unoptimized={true}
+          width={211}
+          height={559}
+          src={ShoePrint}
         />
       </div>
     </button>
