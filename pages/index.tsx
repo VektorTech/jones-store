@@ -24,7 +24,6 @@ const Home: NextPage<HomePropTypes> = ({ newArrivals, bestSellers }) => {
         title="best sellers"
         url="/category/best"
       />
-      <FeaturesSection />
     </>
   );
 };

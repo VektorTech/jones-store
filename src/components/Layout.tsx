@@ -5,6 +5,7 @@ import HeroBanner from "./HeroBanner";
 
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 import { ScrollUpButton } from "./ScrollUpButton";
+import FeaturesSection from "./home/FeaturesSection";
 
 export default function Layout({ children }: { children: ReactElement }) {
   useDialog(
@@ -25,6 +26,7 @@ export default function Layout({ children }: { children: ReactElement }) {
       <Header />
       <HeroBanner />
       <main>{children}</main>
+      <FeaturesSection />
       <Footer />
       <ScrollUpButton />
     </>
