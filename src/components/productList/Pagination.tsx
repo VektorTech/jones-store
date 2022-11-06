@@ -85,10 +85,10 @@ export default function Pagination({
         )
       )}
 
-      {pageCount > 1 && (
+      {pageCount > 2 && (
         <>
           <span className="results__pagination-button">&#8230;</span>
-          <Link href="">
+          <Link href={getOffsetPath(router, (pageCount - 1) * limit)}>
             <a className="results__pagination-button">{pageCount}</a>
           </Link>
         </>
