@@ -40,6 +40,12 @@ export default function CategoryPage({
   } = router.query;
 
   const [filterActive, setFilterActive] = useState(false);
+  const { currentDialog } = useDialog();
+
+  useEffect(() => {
+    if (innerWidth <= 992)
+      document.body.style.overflow = filterActive ? "hidden" : "auto";
+  }, [filterActive, currentDialog]);
 
   useEffect(() => {
     if (innerWidth > 992) setFilterActive(true);
