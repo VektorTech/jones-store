@@ -1,9 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { AsyncAPIHandler } from "src/types/shared";
+import type { AsyncAPIHandler, HTTPMethods } from "src/types/shared";
 import { catchAsyncErrors, ServerError } from "./utils";
 import { withSessionRoute } from "./withSession";
-
-type HTTPMethods = "GET" | "POST" | "PUT" | "DELETE";
 
 interface RouteHandlerReturnType {
   (req: NextApiRequest, res: NextApiResponse): void;
@@ -34,6 +32,7 @@ export default function RouteHandler() {
     if (error) {
       if (error.meta?.target?.length) {
         error.status = 409;
+        error.message = error.meta?.target + " already exists in database";
       }
 
       response.status(error.status || 500).json({
