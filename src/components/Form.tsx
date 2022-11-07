@@ -1,5 +1,6 @@
-import { ReactElement, FormEventHandler, useRef } from "react";
-import { DefaultResponse } from "src/types/shared";
+import { ReactNode, FormEventHandler, useRef, useState } from "react";
+import { RiErrorWarningFill } from "react-icons/ri";
+import { DefaultResponse, HTTPMethods } from "src/types/shared";
 
 type beforeSubmitReturnType =
   | [updatedParams?: { [key: string]: string }, shouldContinue?: boolean]
@@ -11,8 +12,7 @@ export type beforeSubmitType = (
 ) => beforeSubmitReturnType | Promise<beforeSubmitReturnType>;
 
 export type afterSubmitType = (
-  responseData: DefaultResponse,
-  statusCode: number
+  responseData: DefaultResponse
 ) => void | Promise<void>;
 
 export default function Form({
@@ -22,13 +22,14 @@ export default function Form({
   beforeSubmit,
   afterSubmit,
 }: {
-  children: ReactElement | ReactElement[];
-  method?: "GET" | "POST" | "PUT" | "DELETE";
+  children: ReactNode;
+  method?: HTTPMethods;
   action: string;
   beforeSubmit?: beforeSubmitType;
   afterSubmit?: afterSubmitType;
 }) {
   const ref = useRef<HTMLFormElement>(null);
+  const [error, setError] = useState("");
 
   const onSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     try {
@@ -74,16 +75,31 @@ export default function Form({
           body: method != "GET" ? searchParams : null,
         }
       );
-
-      afterSubmit?.(await response.json(), response.status);
-    } catch (e) {
-      console.log("Network Error", e);
+      const responseBody = await response.json();
+      if (!response.ok) {
+        throw new Error(responseBody.message);
+      }
+      afterSubmit?.(responseBody);
+    } catch (e: unknown) {
+      if (e instanceof TypeError) {
+        setError("Network Error");
+      } else if (e instanceof Error) {
+        setError(e.message);
+      } else {
+        setError("Something Went Wrong");
+      }
     }
   };
 
   return (
-    <form onSubmit={onSubmit} ref={ref} action={action}>
-      {children}
+    <form className="form" onSubmit={onSubmit} ref={ref} action={action}>
+      {error && (
+        <div className="form__error">
+          <RiErrorWarningFill className="form__error-icon" />
+          <span className="form__error-message">{error}</span>
+        </div>
+      )}
+      <div className="form__content">{children}</div>
     </form>
   );
 }
