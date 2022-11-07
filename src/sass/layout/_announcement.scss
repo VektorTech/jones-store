@@ -6,7 +6,7 @@
   width: 100%;
   height: $announcement-height;
   background-color: #fff;
-  color: $c-text-black;
+  color: $c-link;
   transition: height 0.3s $timing-func-ui, visibility 0.3s;
 
   &--hidden {
@@ -51,6 +51,7 @@
     line-height: $announcement-height;
     display: flex;
     text-align: center;
+    text-transform: uppercase;
     overflow: hidden;
     white-space: nowrap;
     cursor: pointer;
@@ -113,10 +114,5 @@
     &:focus-visible {
       color: $c-text-black;
     }
-  }
-
-  & a {
-    color: $c-link;
-    text-decoration: underline;
   }
 }
