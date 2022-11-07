@@ -14,7 +14,7 @@ model User {
   id String @id @default(cuid())
   username String @unique @db.VarChar(40)
   email String @unique @db.VarChar(255)
-  verified Boolean
+  verified Boolean @default(false)
   role Role @default(USER)
   cart Cart?
   userAddress UserAddress[]
