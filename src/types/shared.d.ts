@@ -1,6 +1,8 @@
 import { User, Wishlist, Product, CartItem } from "@prisma/client";
 
 /* Shared */
+export type HTTPMethods = "GET" | "POST" | "PUT" | "DELETE";
+
 export interface DefaultResponse {
   error?: boolean;
   success?: boolean;
