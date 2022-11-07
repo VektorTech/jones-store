@@ -1,11 +1,17 @@
 import Modal from "@Components/Modal";
-import { DialogType, useAnnouncementState, useDialog } from "@Lib/contexts/UIContext";
+import {
+  DialogType,
+  useAnnouncementState,
+  useDialog,
+} from "@Lib/contexts/UIContext";
 import { setCookie } from "@Lib/utils";
 import type { Announcement as AnnouncementType } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { BsXLg } from "react-icons/bs";
 import { FiHelpCircle } from "react-icons/fi";
 import { ClipLoader } from "react-spinners";
+import sanitizeHtml from "sanitize-html";
+import { allowedTags } from "@Lib/constants";
 
 export default function Announcement() {
   const [announcementVisible, setAnnouncementVisible] = useAnnouncementState();
@@ -30,7 +36,11 @@ export default function Announcement() {
         setCurrentDetails(details);
       }}
     >
-      <span dangerouslySetInnerHTML={{ __html: headline || "" }}></span>
+      <span
+        dangerouslySetInnerHTML={{
+          __html: sanitizeHtml(headline, { allowedTags: [...allowedTags] }),
+        }}
+      ></span>
       <FiHelpCircle className="announcement__info-icon" />
     </div>
   ));
@@ -83,8 +93,18 @@ export default function Announcement() {
           <BsXLg className="announcement__close-icon" />
         </button>
 
-        <Modal size="sm" onClose={() => setCurrentDetails("")} visible={visible}>
-          <div dangerouslySetInnerHTML={{ __html: currentDetails }}></div>
+        <Modal
+          size="sm"
+          onClose={() => setCurrentDetails("")}
+          visible={visible}
+        >
+          <div
+            dangerouslySetInnerHTML={{
+              __html: sanitizeHtml(currentDetails, {
+                allowedTags: [...allowedTags, "a"],
+              }),
+            }}
+          ></div>
         </Modal>
       </div>
     </div>

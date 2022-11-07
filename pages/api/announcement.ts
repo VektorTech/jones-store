@@ -5,6 +5,7 @@ import sanitizeHtml from "sanitize-html";
 import RouteHandler from "@Lib/RouteHandler";
 import { authorizeRole, isAuthenticated } from "@Lib/apiMiddleware";
 import { Role } from "@prisma/client";
+import { allowedTags } from "@Lib/constants";
 
 export default RouteHandler()
   .post(
@@ -17,12 +18,10 @@ export default RouteHandler()
     ) {
       const { headline, details } = req.body;
 
-      const allowedTags = ["b", "i", "em", "strong", "span", "sub", "sup", "a"];
-
       await prisma.announcement.create({
         data: {
-          headline: sanitizeHtml(headline, { allowedTags }),
-          details: sanitizeHtml(details, { allowedTags }),
+          headline: sanitizeHtml(headline, { allowedTags: [...allowedTags] }),
+          details: sanitizeHtml(details, { allowedTags: [...allowedTags, "a"] }),
         },
       });
 
@@ -40,7 +39,7 @@ export default RouteHandler()
 
     const announcement = await prisma.announcement.findMany({
       orderBy: { addedAt: "desc" },
-      take: Number(take)
+      take: Number(take),
     });
 
     res.json({
