@@ -36,8 +36,11 @@ export default RouteHandler()
     res: NextApiResponse<DefaultResponse>,
     next: Function
   ) {
+    const { take = 3 } = req.body;
+
     const announcement = await prisma.announcement.findMany({
       orderBy: { addedAt: "desc" },
+      take: Number(take)
     });
 
     res.json({
