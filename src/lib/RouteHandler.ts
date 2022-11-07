@@ -3,32 +3,35 @@ import { AsyncAPIHandler } from "src/types/shared";
 import { catchAsyncErrors, ServerError } from "./utils";
 import { withSessionRoute } from "./withSession";
 
-type requestMethod = "GET" | "POST" | "PUT" | "DELETE";
-export class RouteHandler {
-  private methodActions: Record<requestMethod, Function | null> = {
-    GET: null,
-    POST: null,
-    PUT: null,
-    DELETE: null,
-  };
-  private restMethodActions: Record<requestMethod, AsyncAPIHandler[] | null> = {
-    GET: null,
-    POST: null,
-    PUT: null,
-    DELETE: null,
+type HTTPMethods = "GET" | "POST" | "PUT" | "DELETE";
+
+interface RouteHandlerReturnType {
+  (req: NextApiRequest, res: NextApiResponse): void;
+  get: (...handlers: AsyncAPIHandler[]) => RouteHandlerReturnType;
+  post: (...handlers: AsyncAPIHandler[]) => RouteHandlerReturnType;
+  put: (...handlers: AsyncAPIHandler[]) => RouteHandlerReturnType;
+  delete: (...handlers: AsyncAPIHandler[]) => RouteHandlerReturnType;
+}
+
+export default function RouteHandler() {
+  const methodActions: Record<HTTPMethods, AsyncAPIHandler[]> = {
+    GET: [],
+    POST: [],
+    PUT: [],
+    DELETE: [],
   };
 
-  private async next(
+  const next = async (
     request: NextApiRequest,
     response: NextApiResponse,
     error?: ServerError,
     actionIndex = 0
-  ) {
+  ) => {
     if (response.headersSent) {
       return;
     }
 
-    if (error && response) {
+    if (error) {
       if (error.meta?.target?.length) {
         error.status = 409;
       }
@@ -39,68 +42,49 @@ export class RouteHandler {
         message: error.message || "Internal Server Error",
       });
     } else {
-      const method = request.method || "";
+      const { method } = request;
 
-      if (
-        request &&
-        response &&
-        this.restMethodActions &&
-        this.restMethodActions[method as requestMethod]?.[actionIndex]
-      ) {
+      if (methodActions[method as HTTPMethods][actionIndex]) {
         await catchAsyncErrors(
-          this.restMethodActions[method as requestMethod]?.[
-            actionIndex
-          ] as AsyncAPIHandler
+          methodActions[method as HTTPMethods][actionIndex]
         )(request, response, (err: ServerError) =>
-          this.next.call(this, request, response, err, actionIndex + 1)
+          next(request, response, err, actionIndex + 1)
         );
       }
     }
-  }
+  };
 
-  private start(req: NextApiRequest, res: NextApiResponse) {
-    const action: Function | null =
-      this.methodActions[(req.method as requestMethod) || ""];
+  const setHandlers = (handlers: AsyncAPIHandler[], method: HTTPMethods) => {
+    methodActions[method] = handlers;
+  };
 
-    if (action) {
-      return action(req, res);
+  const createRouter: RouteHandlerReturnType = (req, res) => {
+    if (!methodActions[req.method as HTTPMethods]?.length) {
+      return res.status(404).json({ success: false, message: "Route Not Found" });
+    } else {
+      return withSessionRoute(next)(req, res);
     }
+  };
 
-    res.status(404).json({ success: false, message: "Route Not Found" });
-  }
+  createRouter.get = (...handlers) => {
+    setHandlers(handlers, "GET");
+    return createRouter;
+  };
 
-  private setHandlers(
-    handler: AsyncAPIHandler,
-    handlers: AsyncAPIHandler[],
-    method: requestMethod
-  ) {
-    this.methodActions[method] = withSessionRoute((req, res) =>
-      catchAsyncErrors(handler)(req, res, (err: ServerError) =>
-        this.next.call(this, req, res, err, 0)
-      )
-    );
-    this.restMethodActions[method] = handlers;
-  }
+  createRouter.post = (...handlers) => {
+    setHandlers(handlers, "POST");
+    return createRouter;
+  };
 
-  get(handler: AsyncAPIHandler, ...handlers: AsyncAPIHandler[]) {
-    this.setHandlers(handler, handlers, "GET");
-    return this;
-  }
+  createRouter.put = (...handlers) => {
+    setHandlers(handlers, "PUT");
+    return createRouter;
+  };
 
-  post(handler: AsyncAPIHandler, ...handlers: AsyncAPIHandler[]) {
-    this.setHandlers(handler, handlers, "POST");
-    return this;
-  }
+  createRouter.delete = (...handlers) => {
+    setHandlers(handlers, "DELETE");
+    return createRouter;
+  };
 
-  put(handler: AsyncAPIHandler, ...handlers: AsyncAPIHandler[]) {
-    this.setHandlers(handler, handlers, "PUT");
-    return this;
-  }
-
-  delete(handler: AsyncAPIHandler, ...handlers: AsyncAPIHandler[]) {
-    this.setHandlers(handler, handlers, "DELETE");
-    return this;
-  }
-
-  init = () => this.start.bind(this);
+  return createRouter;
 }

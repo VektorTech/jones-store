@@ -4,7 +4,7 @@ import prisma from "@Lib/prisma";
 import { DefaultResponse } from "src/types/shared";
 import { newsletterRecipientSchema } from "@Lib/validations";
 import { validateInput } from "@Lib/helpers";
-import { RouteHandler } from "@Lib/RouteHandler";
+import RouteHandler from "@Lib/RouteHandler";
 import { ServerError } from "@Lib/utils";
 
 async function NewsletterRoute(
@@ -27,4 +27,4 @@ async function NewsletterRoute(
   });
 }
 
-export default new RouteHandler().get(NewsletterRoute).init();
+export default RouteHandler().get(NewsletterRoute);

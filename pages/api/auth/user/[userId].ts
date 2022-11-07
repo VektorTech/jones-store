@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "@Lib/prisma";
 import { DefaultResponse } from "src/types/shared";
-import { RouteHandler } from "@Lib/RouteHandler";
+import RouteHandler from "@Lib/RouteHandler";
 import { isAuthorizedUser } from "@Lib/apiMiddleware";
 import { ServerError } from "@Lib/utils";
 
@@ -44,4 +44,4 @@ async function userRoute(
   });
 }
 
-export default new RouteHandler().get(isAuthorizedUser, userRoute).init();
+export default RouteHandler().get(isAuthorizedUser, userRoute);

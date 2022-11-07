@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "@Lib/prisma";
 import { DefaultResponse } from "src/types/shared";
-import { RouteHandler } from "@Lib/RouteHandler";
+import RouteHandler from "@Lib/RouteHandler";
 import { isAuthorizedUser } from "@Lib/apiMiddleware";
 
 async function deactivateUserRoute(
@@ -20,6 +20,5 @@ async function deactivateUserRoute(
   res.json({ message: "User Deactivation Successful" });
 }
 
-export default new RouteHandler()
-  .delete(isAuthorizedUser, deactivateUserRoute)
-  .init();
+export default RouteHandler()
+  .delete(isAuthorizedUser, deactivateUserRoute);

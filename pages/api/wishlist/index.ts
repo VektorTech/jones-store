@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "@Lib/prisma";
 import { DefaultResponse } from "src/types/shared";
-import { RouteHandler } from "@Lib/RouteHandler";
+import RouteHandler from "@Lib/RouteHandler";
 import { checkGuest } from "@Lib/apiMiddleware";
 import { ServerError } from "@Lib/utils";
 
@@ -100,8 +100,7 @@ async function getWishlistRoute(
   }
 }
 
-export default new RouteHandler()
+export default RouteHandler()
   .post(checkGuest, postWishlistRoute)
   .delete(checkGuest, deleteWishlistRoute)
-  .get(checkGuest, getWishlistRoute)
-  .init();
+  .get(checkGuest, getWishlistRoute);

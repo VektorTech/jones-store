@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "@Lib/prisma";
 import { DefaultResponse } from "src/types/shared";
-import { RouteHandler } from "@Lib/RouteHandler";
+import RouteHandler from "@Lib/RouteHandler";
 
 async function productSearchRoute(
   req: NextApiRequest,
@@ -37,4 +37,4 @@ async function productSearchRoute(
   res.json({ message: "Products Found", data: products });
 }
 
-export default new RouteHandler().get(productSearchRoute).init();
+export default RouteHandler().get(productSearchRoute);

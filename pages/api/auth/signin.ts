@@ -6,7 +6,7 @@ import { userLoginSchema } from "@Lib/validations";
 import { User } from "@prisma/client";
 import { validateInput } from "@Lib/helpers";
 import { DefaultResponse } from "src/types/shared";
-import { RouteHandler } from "@Lib/RouteHandler";
+import RouteHandler from "@Lib/RouteHandler";
 import { ServerError } from "@Lib/utils";
 
 const signinRoute = async (
@@ -85,4 +85,4 @@ const signinRoute = async (
   next(new ServerError("Authentication Failed", 401));
 };
 
-export default new RouteHandler().post(signinRoute).init();
+export default RouteHandler().post(signinRoute);

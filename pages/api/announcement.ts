@@ -2,11 +2,11 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@Lib/prisma";
 import { DefaultResponse } from "src/types/shared";
 import sanitizeHtml from "sanitize-html";
-import { RouteHandler } from "@Lib/RouteHandler";
+import RouteHandler from "@Lib/RouteHandler";
 import { authorizeRole, isAuthenticated } from "@Lib/apiMiddleware";
 import { Role } from "@prisma/client";
 
-export default new RouteHandler()
+export default RouteHandler()
   .post(
     isAuthenticated,
     authorizeRole(Role.ADMIN),
@@ -44,5 +44,4 @@ export default new RouteHandler()
       message: "Successfully Retrieved Announcement(s)",
       data: announcement,
     });
-  })
-  .init();
+  });

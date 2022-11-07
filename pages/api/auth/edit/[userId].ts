@@ -5,7 +5,7 @@ import { userSchema } from "@Lib/validations";
 import { User } from "@prisma/client";
 import { validateInput } from "@Lib/helpers";
 import { DefaultResponse } from "src/types/shared";
-import { RouteHandler } from "@Lib/RouteHandler";
+import RouteHandler from "@Lib/RouteHandler";
 import { isAuthorizedUser } from "@Lib/apiMiddleware";
 import { ServerError } from "@Lib/utils";
 
@@ -39,4 +39,4 @@ async function editUserRoute(
   res.json({ message: "User Update Successful" });
 }
 
-export default new RouteHandler().put(isAuthorizedUser, editUserRoute).init();
+export default RouteHandler().put(isAuthorizedUser, editUserRoute);

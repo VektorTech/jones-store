@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "@Lib/prisma";
 import { DefaultResponse } from "src/types/shared";
-import { RouteHandler } from "@Lib/RouteHandler";
+import RouteHandler from "@Lib/RouteHandler";
 import { isAuthenticated } from "@Lib/apiMiddleware";
 import { ServerError } from "@Lib/utils";
 
@@ -50,7 +50,6 @@ async function getReviewsRoute(
   next(new ServerError("Malformed Request", 400));
 }
 
-export default new RouteHandler()
+export default RouteHandler()
   .post(isAuthenticated, postReviewRoute)
-  .get(getReviewsRoute)
-  .init();
+  .get(getReviewsRoute);

@@ -5,7 +5,7 @@ import { productSchema } from "@Lib/validations";
 import { Product } from "@prisma/client";
 import { DefaultResponse } from "src/types/shared";
 import { Role } from "@prisma/client";
-import { RouteHandler } from "@Lib/RouteHandler";
+import RouteHandler from "@Lib/RouteHandler";
 import { authorizeRole, isAuthenticated } from "@Lib/apiMiddleware";
 
 async function getProductRoute(
@@ -47,7 +47,6 @@ async function postProductRoute(
   res.status(201).json({ message: `Successfully Added ${data.title}` });
 }
 
-export default new RouteHandler()
+export default RouteHandler()
   .get(getProductRoute)
-  .post(isAuthenticated, authorizeRole(Role.ADMIN), postProductRoute)
-  .init();
+  .post(isAuthenticated, authorizeRole(Role.ADMIN), postProductRoute);

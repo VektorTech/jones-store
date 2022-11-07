@@ -6,7 +6,7 @@ import { userSchema } from "@Lib/validations";
 import { User } from "@prisma/client";
 import { validateInput } from "@Lib/helpers";
 import { DefaultResponse } from "src/types/shared";
-import { RouteHandler } from "@Lib/RouteHandler";
+import RouteHandler from "@Lib/RouteHandler";
 import { ServerError } from "@Lib/utils";
 
 async function signupRoute(
@@ -78,4 +78,4 @@ async function signupRoute(
     .json({ message: `Successfully Created User Account, ${username}` });
 }
 
-export default new RouteHandler().post(signupRoute).init();
+export default RouteHandler().post(signupRoute);

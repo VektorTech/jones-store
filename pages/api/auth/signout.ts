@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { DefaultResponse } from "src/types/shared";
-import { RouteHandler } from "@Lib/RouteHandler";
+import RouteHandler from "@Lib/RouteHandler";
 import { isAuthenticated } from "@Lib/apiMiddleware";
 
 async function signoutRoute(
@@ -19,4 +19,4 @@ async function signoutRoute(
   });
 }
 
-export default new RouteHandler().get(isAuthenticated, signoutRoute).init();
+export default RouteHandler().get(isAuthenticated, signoutRoute);
