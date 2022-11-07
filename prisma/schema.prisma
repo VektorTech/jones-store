@@ -14,6 +14,7 @@ model User {
   id String @id @default(cuid())
   username String @unique @db.VarChar(40)
   email String @unique @db.VarChar(255)
+  verified Boolean
   role Role @default(USER)
   cart Cart?
   userAddress UserAddress[]
@@ -39,7 +40,7 @@ model Order {
   user User @relation(fields: [userId], references: [id])
   orderLine OrderLine[]
   status OrderStatus
-  paymentMethod PaymentType
+  userPayment UserPayment?
   shippingAddressId String
   shippingAddress Address @relation(fields: [shippingAddressId], references: [id])
   date DateTime @default(now())
@@ -60,6 +61,20 @@ model OrderLine {
   total Float
 
   @@map(name: "order_item")
+}
+
+model UserPayment {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  orderId Int @unique
+  order Order @relation(fields: [orderId], references: [id])
+  paymentMethod PaymentType
+  amount Float
+  currency String @db.VarChar(6)
+  billingAddressId String
+  billingAddress Address @relation(fields: [billingAddressId], references: [id])
+
+  @@map(name: "user_payments")
 }
 
 model Wishlist {
@@ -94,6 +109,7 @@ model Address {
   country String @db.VarChar(60)
   userAddress UserAddress[]
   order Order[]
+  userPayment UserPayment[]
 
   @@map(name: "addresses")
 }
@@ -166,6 +182,7 @@ model Announcement {
   headline String @default("") @db.VarChar(255)
   details String
   addedAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
 
   @@map(name: "announcements")
 }
