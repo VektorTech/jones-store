@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Category } from "@prisma/client";
 import { listToEnum } from "@Lib/utils";
+import SizeOptions from "@Components/common/SizeOptions";
 
 const removeEmpty = (obj: { [key: string]: any }) => {
   const newObj = { ...obj };
@@ -69,7 +70,6 @@ export default function Filter({
     });
   };
 
-
   const sizesObj = useMemo(
     () => listToEnum([...Array(37)].map((_, i) => String(2 + i / 2))),
     []
@@ -132,11 +132,7 @@ export default function Filter({
       </FilterParam>
 
       <FilterParam type="US Sizes">
-        <RadioList
-          name="sizes"
-          checkbox
-          grid
-          values={sizesObj}
+        <SizeOptions
           checkedItems={
             filterState.sizes instanceof Array ? filterState.sizes : []
           }
@@ -146,16 +142,6 @@ export default function Filter({
               sizes: items,
             })
           }
-          render={({ label, checked }) => (
-            <span
-              className={
-                "filter__param-box" +
-                (checked ? " filter__param-box--checked" : "")
-              }
-            >
-              {label}
-            </span>
-          )}
         />
       </FilterParam>
 
@@ -244,7 +230,9 @@ const PriceRange = ({
 
       if (minRef.current && maxRef.current && rangeRef.current) {
         minRef.current.style.left = pMinPercentage + "%";
-        maxRef.current.style.left = `calc(${pMaxPercentage}% - ${maxRef.current.offsetWidth * 1.5}px)`;
+        maxRef.current.style.left = `calc(${pMaxPercentage}% - ${
+          maxRef.current.offsetWidth * 1.5
+        }px)`;
 
         rangeRef.current.style.left = pMinPercentage + "%";
         rangeRef.current.style.width = pMaxPercentage - pMinPercentage + "%";
