@@ -36,7 +36,7 @@ model User {
 
 model Order {
   id Int @id @default(autoincrement())
-  userId String @unique
+  userId String
   user User @relation(fields: [userId], references: [id])
   orderLine OrderLine[]
   status OrderStatus
@@ -58,6 +58,7 @@ model OrderLine {
   order Order @relation(fields: [orderId], references: [id])
   review Review?
   quantity Int
+  size Float
   total Float
 
   @@map(name: "order_items")
@@ -66,6 +67,7 @@ model OrderLine {
 model UserPayment {
   id Int @id @default(autoincrement())
   createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
   orderId Int @unique
   order Order @relation(fields: [orderId], references: [id])
   paymentMethod PaymentType
