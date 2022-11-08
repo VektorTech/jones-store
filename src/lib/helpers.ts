@@ -1,16 +1,33 @@
-import { ObjectSchema } from "yup";
+import { ObjectSchema, ValidationError } from "yup";
 
-export function validateInput(input: any, schema: ObjectSchema<any>) {
+export function validateInputs(
+  input: any,
+  schema: ObjectSchema<any>
+): ValidationError | void {
   try {
     schema.validateSync(input, {
       strict: true,
       stripUnknown: true,
       abortEarly: false,
     });
-  } catch (err: any) {
-    return err.errors;
+  } catch (err: unknown) {
+    if (err instanceof ValidationError) {
+      return err;
+    }
   }
 }
+
+export const validateInput =
+  (schema: ObjectSchema<any>) => (param: string, value: string) => {
+    try {
+      schema.fields[param].validateSync(value);
+      return "";
+    } catch (err: unknown) {
+      if (err instanceof ValidationError) {
+        return err.message;
+      }
+    }
+  };
 
 export function postWishlistItem(id: string) {
   return fetch("/api/wishlist", {

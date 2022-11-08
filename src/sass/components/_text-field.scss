@@ -17,6 +17,11 @@
     }
   }
 
+  &__error {
+    color: #ff0000;
+    font-size: $text-xs;
+  }
+
   &__input {
     display: block;
     height: 3.2rem;
@@ -29,6 +34,10 @@
 
   &__control {
     @extend %text-input-field;
+
+    &--error {
+      @extend %text-input-field--error;
+    }
 
     &-btn {
       @extend %text-input-icon;

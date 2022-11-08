@@ -106,6 +106,14 @@
   &:focus {
     border-color: v.$c-control-black;
   }
+
+  &--error {
+    border-color: #ff0000;
+
+    &:focus {
+      border-color: #ff0000;
+    }
+  }
 }
 
 %text-input-icon {
@@ -171,5 +179,12 @@
   &:hover,
   &:focus-visible {
     background-color: mix(v.$c-gray, #fff, 80%);
+  }
+}
+
+%link {
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
   }
 }

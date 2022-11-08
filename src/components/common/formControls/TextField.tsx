@@ -8,19 +8,23 @@ export default function TextField({
   type = "text",
   multiline = false,
   defaultValue,
+  error,
   value = "",
   onChange,
   ...inputProps
 }: {
   label?: string;
   multiline?: boolean;
+  error?: string;
 } & (JSX.IntrinsicElements["input"] & JSX.IntrinsicElements["textarea"])) {
   const [_type, setType] = useState(type);
-  const [_value, setValue] = useState(value);
+  const [_value, setValue] = useState<string | number | readonly string[]>(
+    value
+  );
 
   useEffect(() => {
-    setValue(value);
-  }, [value]);
+    setValue(defaultValue || value);
+  }, [value, defaultValue]);
 
   let Icon;
 
@@ -73,7 +77,10 @@ export default function TextField({
                 onChange?.(e);
                 setValue(e.currentTarget.value);
               }}
-              className="text-field__control text-field__control--multiline"
+              className={
+                "text-field__control text-field__control--multiline" +
+                (error ? " text-field__control--error" : "")
+              }
             ></textarea>
           ) : (
             <>
@@ -86,12 +93,16 @@ export default function TextField({
                   onChange?.(e);
                   setValue(e.currentTarget.value);
                 }}
-                className="text-field__control"
+                className={
+                  "text-field__control" +
+                  (error ? " text-field__control--error" : "")
+                }
               />
               {Icon}
             </>
           )}
         </span>
+        <span className="text-field__error">{error}</span>
       </label>
     </div>
   );

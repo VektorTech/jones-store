@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import prisma from "@Lib/prisma";
 import { userLoginSchema } from "@Lib/validations";
 import { User } from "@prisma/client";
-import { validateInput } from "@Lib/helpers";
+import { validateInputs } from "@Lib/helpers";
 import { DefaultResponse } from "src/types/shared";
 import RouteHandler from "@Lib/RouteHandler";
 import { ServerError } from "@Lib/utils";
@@ -14,9 +14,9 @@ const signinRoute = async (
   res: NextApiResponse<DefaultResponse>,
   next: Function
 ) => {
-  const error = validateInput(req.body, userLoginSchema);
+  const error = validateInputs(req.body, userLoginSchema);
   if (error) {
-    return next(new ServerError(error, 400));
+    return next(new ServerError(error.errors.join("\n"), 400));
   }
 
   const { email, password } = userLoginSchema.cast(req.body) as User;
@@ -79,7 +79,7 @@ const signinRoute = async (
 
     await req.session.save();
 
-    return res.json({ message: `${user.username}, Sign In Successful` });
+    return res.json({ success: true, message: `${user.username}, Sign In Successful` });
   }
 
   next(new ServerError("Authentication Failed", 401));

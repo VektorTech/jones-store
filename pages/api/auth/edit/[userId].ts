@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@Lib/prisma";
 import { userSchema } from "@Lib/validations";
 import { User } from "@prisma/client";
-import { validateInput } from "@Lib/helpers";
+import { validateInputs } from "@Lib/helpers";
 import { DefaultResponse } from "src/types/shared";
 import RouteHandler from "@Lib/RouteHandler";
 import { isAuthorizedUser } from "@Lib/apiMiddleware";
@@ -14,9 +14,9 @@ async function editUserRoute(
   res: NextApiResponse<DefaultResponse>,
   next: Function
 ) {
-  const error = validateInput(req.body, userSchema);
+  const error = validateInputs(req.body, userSchema);
   if (error) {
-    return next(new ServerError(error, 400));
+    return next(new ServerError(error.errors.join("\n"), 400));
   }
 
   const { username, email, firstName, lastName, phoneNumber, avatarURL } =

@@ -14,19 +14,37 @@
     }
   }
 
+  &__header {
+    font-size: $text-xl;
+    text-align: center;
+  }
+
   &__form {
     float: left;
     width: 50%;
-    padding: 0 20rem;
+    padding: 0;
     visibility: hidden;
     transition: visibility 0.3s;
+
+    @include respond-to("small") {
+      padding: 0 5rem;
+    }
+
+    @include respond-to("medium") {
+      padding: 0 15rem;
+    }
+
+    @include respond-to("large") {
+      padding: 0 20rem;
+    }
 
     &--active {
       visibility: visible;
     }
   }
 
-  &__button {
+  &__switch {
+    @extend %link;
     padding-top: 2rem;
     margin: auto;
     display: block;

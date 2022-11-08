@@ -96,7 +96,14 @@ export default function Form({
       {error && (
         <div className="form__error">
           <RiErrorWarningFill className="form__error-icon" />
-          <span className="form__error-message">{error}</span>
+          <span className="form__error-message">
+            {error.split("\n").map((err) => (
+              <>
+                {err}
+                <br />
+              </>
+            ))}
+          </span>
         </div>
       )}
       <div className="form__content">{children}</div>

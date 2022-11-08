@@ -1,36 +1,75 @@
-import Form from "@Components/Form";
+import { useState } from "react";
 
+import Form from "@Components/Form";
 import TextField from "@Components/common/formControls/TextField";
 import Button from "@Components/common/formControls/Button";
+import { userLoginSchema } from "@Lib/validations";
+import { validateInput, validateInputs } from "@Lib/helpers";
 
 const defaultUserCred = {
   user: "devnuggetsbusinesss@gmail.com",
   pass: "Password101",
 };
 
+const validateFormField = validateInput(userLoginSchema);
+
 export default function SignIn() {
+  const [formErrors, setFormErrors] = useState<formParams>({});
+
   return (
-    <Form
-      method="POST"
-      action="/api/auth/signin"
-      afterSubmit={(res, status) => {
-        console.log(status, res);
-        // setTimeout(() => (location.href = location.origin), 3000);
-      }}
-    >
-      <h2>Sign In</h2>
-      <TextField
-        value={defaultUserCred.user}
-        name="email"
-        label="Email or User"
-      />
-      <TextField
-        value={defaultUserCred.pass}
-        name="password"
-        type="password"
-        label="Password"
-      />
-      <Button type="submit">Sign In</Button>
-    </Form>
+    <>
+      <h2 className="auth__header">Sign In</h2>
+      <Form
+        method="POST"
+        action="/api/auth/signin"
+        beforeSubmit={(params) => {
+          const error = validateInputs(params, userLoginSchema);
+          if (error) {
+            error.inner.forEach((error) => {
+              setFormErrors((formErrors) => ({
+                ...formErrors,
+                [error.path as string]: error.message,
+              }));
+            });
+            return [params, false];
+          }
+        }}
+        afterSubmit={() => {
+          location.href = location.origin;
+        }}
+      >
+        <TextField
+          error={formErrors["email"]}
+          defaultValue={defaultUserCred.user}
+          name="email"
+          label="Email or User"
+          onBlur={(e) =>
+            setFormErrors({
+              ...formErrors,
+              email: validateFormField("email", e.target.value),
+            })
+          }
+        />
+        <TextField
+          error={formErrors["password"]}
+          defaultValue={defaultUserCred.pass}
+          name="password"
+          type="password"
+          label="Password"
+          onBlur={(e) =>
+            setFormErrors({
+              ...formErrors,
+              password: validateFormField("password", e.target.value),
+            })
+          }
+        />
+        <Button type="submit">Sign In</Button>
+      </Form>
+    </>
   );
+}
+
+interface formParams {
+  email?: string;
+  password?: string;
 }

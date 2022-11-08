@@ -11,15 +11,15 @@ export default function AuthForm({ isNewUser = false }) {
       <div className={"auth__container " + (signUp ? "auth__container--signup" : "auth__container--signin")}>
         <div className={"auth__form" + (signUp ? " auth__form--active" : "")}>
           <SignUp />
-          <button className="auth__button" onClick={() => setSignUp(false)}>
-            Already have an account?
+          <button className="auth__switch" onClick={() => setSignUp(false)}>
+            Already have an account? Sign in here
           </button>
         </div>
 
         <div className={"auth__form" + (!signUp ? " auth__form--active" : "")}>
           <SignIn />
-          <button className="auth__button" onClick={() => setSignUp(true)}>
-            Don&apos;t have an account?
+          <button className="auth__switch" onClick={() => setSignUp(true)}>
+            Don&apos;t have an account? Register here
           </button>
         </div>
       </div>

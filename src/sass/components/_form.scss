@@ -4,24 +4,25 @@
   &__error {
     color: #ff0000;
     margin: 2rem 0;
-	min-height: 4rem;
+    min-height: 4rem;
     border-radius: 0.3rem;
     border: 0.1rem solid #ff0000;
-    background-color: #ffe3e3;
+    background-color: #ffebeb;
     padding: 1rem;
     text-transform: capitalize;
     font-weight: 400;
+    text-align: center;
     font-size: $text-sm;
 
     &-icon {
       font-size: 2.5rem;
-	  float: left;
-	  margin-right: 0.5rem;
-	  margin-top: -0.3rem;
+      float: left;
+      margin-right: 0.5rem;
+      margin-top: -0.3rem;
     }
 
-	&-message {
-		display: inline;
-	}
+    &-message {
+      display: inline;
+    }
   }
 }
