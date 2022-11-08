@@ -39,7 +39,7 @@ export default function Reviews({ productId }: { productId: string }) {
               <Form
                 method="POST"
                 action={`/api/products/${productId}/review`}
-                afterSubmit={(data, status) => {
+                afterSubmit={(data) => {
                   console.log(data, status);
                 }}
               >
