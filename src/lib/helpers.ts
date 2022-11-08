@@ -26,6 +26,7 @@ export const validateInput =
       if (err instanceof ValidationError) {
         return err.message;
       }
+      return "";
     }
   };
 
