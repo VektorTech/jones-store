@@ -10,7 +10,12 @@ import prisma from "@Lib/prisma";
 import SEO from "@Components/common/SEO";
 import RatingStars from "@Components/common/RatingStars";
 import Product from "@Components/common/Product";
-import { Gender, Product as ProductType, Category } from "@prisma/client";
+import {
+  Gender,
+  Product as ProductType,
+  Category,
+  PaymentType,
+} from "@prisma/client";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import Dropdown from "@Components/common/formControls/Dropdown";
 import Button from "@Components/common/formControls/Button";
@@ -271,7 +276,39 @@ export default function ProductPage({
               Add To Cart
             </Button>
           </form>
-          <Button>Buy Now</Button>
+          <Button
+            onClick={(e) => {
+              fetch("/api/checkout", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  items: [
+                    {
+                      id: product.id,
+                      qty: quantity,
+                      size: checkedSize,
+                    },
+                  ],
+                  provider: PaymentType.STRIPE,
+                }),
+              })
+                .then((res) => {
+                  const resBody = res.json();
+                  if (res.ok) {
+                    return resBody;
+                  }
+                  return Promise.reject(resBody);
+                })
+                .then(({ data }) => {
+                  location.href = data;
+                })
+                .catch((err) => console.error(err.error));
+            }}
+          >
+            Buy Now
+          </Button>
 
           <button
             className="product-view__share-button"

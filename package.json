@@ -15,6 +15,7 @@
     "bcryptjs": "^2.4.3",
     "friendly-username-generator": "^2.0.4",
     "iron-session": "^6.2.1",
+    "micro": "^9.4.1",
     "moment": "^2.29.4",
     "next": "12.3.0",
     "next-share": "^0.19.0",
@@ -25,6 +26,7 @@
     "react-icons": "^4.4.0",
     "react-spinners": "^0.13.6",
     "sanitize-html": "^2.7.2",
+    "stripe": "^10.16.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
