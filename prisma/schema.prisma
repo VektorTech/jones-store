@@ -60,7 +60,7 @@ model OrderLine {
   quantity Int
   total Float
 
-  @@map(name: "order_item")
+  @@map(name: "order_items")
 }
 
 model UserPayment {
