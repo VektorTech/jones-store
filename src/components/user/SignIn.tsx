@@ -43,6 +43,7 @@ export default function SignIn() {
           defaultValue={defaultUserCred.user}
           name="email"
           label="Email or User"
+          required
           onBlur={(e) =>
             setFormErrors({
               ...formErrors,
@@ -56,6 +57,7 @@ export default function SignIn() {
           name="password"
           type="password"
           label="Password"
+          required
           onBlur={(e) =>
             setFormErrors({
               ...formErrors,

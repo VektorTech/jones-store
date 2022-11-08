@@ -35,6 +35,10 @@
   &__control {
     @extend %text-input-field;
 
+    &:invalid {
+      background-color: #ffebeb;
+    }
+
     &--error {
       @extend %text-input-field--error;
     }

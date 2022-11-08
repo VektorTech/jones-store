@@ -39,12 +39,13 @@ export default function SignUp() {
           error={formErrors["username"]}
           name="username"
           label="User"
-          onBlur={(e) =>
+          required
+          onBlur={(e) => {
             setFormErrors({
               ...formErrors,
               username: validateFormField("username", e.target.value),
-            })
-          }
+            });
+          }}
           value={generatedName.current}
         />
         <TextField
@@ -52,6 +53,7 @@ export default function SignUp() {
           name="email"
           label="Email"
           type="email"
+          required
           onBlur={(e) =>
             setFormErrors({
               ...formErrors,
@@ -64,6 +66,7 @@ export default function SignUp() {
           name="password"
           type="password"
           label="Password"
+          required
           onBlur={(e) =>
             setFormErrors({
               ...formErrors,
