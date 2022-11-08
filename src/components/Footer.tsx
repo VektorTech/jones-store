@@ -11,6 +11,7 @@ import logoImg from "@Images/jones-logo.png";
 import SocialIcons from "./common/SocialButtons";
 import Modal from "./Modal";
 import Dropdown from "./common/formControls/Dropdown";
+import Logo from "./common/Logo";
 
 export default function Footer() {
   const { currentDialog, setDialog } = useDialog();
@@ -21,11 +22,7 @@ export default function Footer() {
       <div className="footer__container">
         <div className="footer__col">
           <div className="footer__logo">
-            <Link href="/">
-              <a>
-                <Image width={80} height={46} alt="" src={logoImg} />
-              </a>
-            </Link>
+            <Logo />
           </div>
           <h3 className="footer__sub-heading">Contact</h3>
           <p className="footer__contact">

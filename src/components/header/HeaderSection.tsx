@@ -17,6 +17,7 @@ import Form from "@Components/Form";
 import { CartItem } from "@prisma/client";
 import { getPathString } from "@Lib/utils";
 import { useRouter } from "next/router";
+import Logo from "@Components/common/Logo";
 const CategoriesData = require("@Lib/CategoriesData.json");
 
 export default function HeaderSection({
@@ -67,18 +68,14 @@ export default function HeaderSection({
           <div className="header__menu-button">
             <button
               className="header__menu-toggle"
-              onClick={() => setDialog( DialogType.SIDEBAR_DIALOG)}
+              onClick={() => setDialog(DialogType.SIDEBAR_DIALOG)}
             >
               <FiMenu />
             </button>
           </div>
 
           <div className="header__logo">
-            <Link href="/">
-              <a>
-                <Image width={80} height={46} alt="" src={logoImg} />
-              </a>
-            </Link>
+            <Logo />
           </div>
 
           <div className="header__nav">
