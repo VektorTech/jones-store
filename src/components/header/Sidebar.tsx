@@ -6,7 +6,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 
 import { BsCart3, BsXLg, BsPerson } from "react-icons/bs";
-import { FiSearch } from "react-icons/fi";
+import { FiSearch, FiLogOut, FiLogIn } from "react-icons/fi";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { getPathString } from "@Lib/utils";
 import Form from "@Components/Form";
@@ -119,6 +119,16 @@ export default function Sidebar({ userId }: { userId?: string }) {
           </div>
           <div className="sidebar__icon-links">
             <ul>
+              {isAuth ? (
+                <li className="sidebar__icon-links-item">
+                  <Link href="/profile">
+                    <a className="sidebar__anchor">
+                      <BsPerson />
+                      <span>Profile</span>
+                    </a>
+                  </Link>
+                </li>
+              ) : null}
               <li className="sidebar__icon-links-item">
                 {isAuth ? (
                   <Form
@@ -130,14 +140,14 @@ export default function Sidebar({ userId }: { userId?: string }) {
                     action="/api/auth/signout"
                   >
                     <button className="sidebar__link-btn" type="submit">
-                      <BsPerson />
+                      <FiLogOut />
                       Logout
                     </button>
                   </Form>
                 ) : (
                   <Link href="/signin">
                     <a className="sidebar__anchor">
-                      <BsPerson />
+                      <FiLogIn />
                       <span>Login / Register</span>
                     </a>
                   </Link>
