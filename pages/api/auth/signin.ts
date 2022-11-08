@@ -36,34 +36,32 @@ const signinRoute = async (
     !user.deactivated &&
     bcrypt.compareSync(password, user.password)
   ) {
+    const cart = await prisma.cart.findUnique({
+      where: { userId: user.id },
+    });
+
     if (req.session.guest) {
       try {
         req.session.guest.wishlist.forEach(async (item) => {
-          await prisma.wishlist
-            .create({
-              data: {
-                userId: user?.id as string,
-                productId: item.productId as string,
-              },
-            });
-        });
-
-        const cart = await prisma.cart.findUnique({
-          where: { userId: user.id },
+          await prisma.wishlist.create({
+            data: {
+              userId: user?.id as string,
+              productId: item.productId as string,
+            },
+          });
         });
 
         if (cart) {
           req.session.guest.cart.forEach(async (item) => {
-            await prisma.cartItem
-              .create({
-                data: {
-                  cartId: cart?.id,
-                  productId: item.productId as string,
-                  quantity: Number(item.quantity),
-                  size: Number(item.size),
-                  total: Number(item.total),
-                },
-              });
+            await prisma.cartItem.create({
+              data: {
+                cartId: cart?.id,
+                productId: item.productId as string,
+                quantity: Number(item.quantity),
+                size: Number(item.size),
+                total: Number(item.total),
+              },
+            });
           });
         }
 
@@ -79,7 +77,29 @@ const signinRoute = async (
 
     await req.session.save();
 
-    return res.json({ success: true, message: `${user.username}, Sign In Successful` });
+    const cartItems = await prisma.cartItem.findMany({
+      where: { cartId: cart?.id },
+    });
+    return res.json({
+      success: true,
+      message: `${user.username}, Sign In Successful`,
+      data: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phoneNumber: user.phoneNumber,
+        avatarURL: user.avatarURL,
+        deactivated: user.deactivated,
+        cart: cartItems,
+        wishlist: await prisma.wishlist.findMany({
+          where: { userId: user.id },
+        }),
+        cartTotal: cartItems.reduce((_total, { total }) => _total + total, 0),
+        isAuth: true,
+      },
+    });
   }
 
   next(new ServerError("Authentication Failed", 401));

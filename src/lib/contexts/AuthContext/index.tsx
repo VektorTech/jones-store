@@ -9,14 +9,15 @@ const authState: {
   addToCart: (id: string, quantity: number, size: number) => Promise<void>;
   removeFromCart: (id: string) => Promise<void>;
   useSelector: (callback: (user: UserType) => void) => void;
+  setAuthUser: (user: UserType) => void;
 } = {
   user: undefined,
-
   addToWishlist: (id) => Promise.resolve(),
   removeFromWishlist: (id) => Promise.resolve(),
   addToCart: (id, quantity, size) => Promise.resolve(),
   removeFromCart: (id) => Promise.resolve(),
   useSelector: () => null,
+  setAuthUser: () => null,
 };
 
 const AuthContext = createContext(authState);
@@ -37,12 +38,14 @@ export const AuthProvider = ({
     addCartItem,
     removeCartItem,
     useSelector,
+    setAuthUser
   } = useUser(currentUser);
 
   return (
     <AuthContext.Provider
       value={{
         useSelector,
+        setAuthUser,
         addToWishlist: addWishlistItem,
         removeFromWishlist: removeWishlistItem,
         addToCart: addCartItem,

@@ -158,6 +158,12 @@ export default function useUser(currentUser: UserType) {
     removeWishlistItem,
     addCartItem,
     removeCartItem,
+    setAuthUser: (user: UserType) => {
+      updateUser({
+        type: UserActions.SET_USER,
+        payload: { ...user },
+      });
+    },
     useSelector,
   };
 }

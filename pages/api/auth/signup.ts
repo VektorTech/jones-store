@@ -24,11 +24,20 @@ async function signupRoute(
   ) as unknown as User;
   const passwordHashed = bcrypt.hashSync(password);
 
-  const { id, role } = await prisma.user.create({
+  const user = await prisma.user.create({
     data: {
       username,
       email: email,
       password: passwordHashed,
+    },
+  });
+
+  const { id, role } = user;
+
+  const cart = await prisma.cart.create({
+    data: {
+      userId: id,
+      total: 0,
     },
   });
 
@@ -43,17 +52,10 @@ async function signupRoute(
         });
       });
 
-      const cart = await prisma.cart.create({
-        data: {
-          userId: id,
-          total: 0,
-        },
-      });
-
       req.session.guest.cart.forEach(async (item) => {
         await prisma.cartItem.create({
           data: {
-            cartId: cart?.id,
+            cartId: cart.id,
             productId: item.productId as string,
             quantity: Number(item.quantity),
             size: Number(item.size),
@@ -73,9 +75,28 @@ async function signupRoute(
   };
   await req.session.save();
 
-  res
-    .status(201)
-    .json({ message: `Successfully Created User Account, ${username}` });
+  const cartItems = await prisma.cartItem.findMany({
+    where: { cartId: cart.id },
+  });
+  res.status(201).json({
+    message: `Successfully Created User Account, ${username}`,
+    data: {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phoneNumber: user.phoneNumber,
+      avatarURL: user.avatarURL,
+      deactivated: user.deactivated,
+      cart: cartItems,
+      wishlist: await prisma.wishlist.findMany({
+        where: { userId: user.id },
+      }),
+      cartTotal: cartItems.reduce((_total, { total }) => _total + total, 0),
+      isAuth: true,
+    },
+  });
 }
 
 export default RouteHandler().post(signupRoute);
