@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@Lib/prisma";
 import { DefaultResponse } from "src/types/shared";
 import { newsletterRecipientSchema } from "@Lib/validations";
-import { validateInput } from "@Lib/helpers";
+import { validateInputs } from "@Lib/helpers";
 import RouteHandler from "@Lib/RouteHandler";
 import { ServerError } from "@Lib/utils";
 
@@ -13,9 +13,9 @@ async function NewsletterRoute(
   next: Function
 ) {
   const { email } = req.query;
-  const error = validateInput({ email }, newsletterRecipientSchema);
+  const error = validateInputs({ email }, newsletterRecipientSchema);
   if (error) {
-    return next(new ServerError(error, 400));
+    return next(new ServerError(error.errors.join("\n"), 400));
   }
 
   await prisma.newsletterRecipient.create({
