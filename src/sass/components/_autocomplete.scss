@@ -7,6 +7,18 @@
   color: $c-text-black;
   position: relative;
 
+  &__label {
+    @extend %form-label;
+
+    &-text {
+      @extend %form-label-text;
+    }
+
+    &-asterisk {
+      @extend %form-label-asterisk;
+    }
+  }
+
   &__input {
     display: block;
     height: 3.2rem;
