@@ -99,7 +99,7 @@
       height: auto;
       transform-origin: top;
       transform: scaleY(1);
-      transition: transform 0.3s;
+      transition: transform 0.3s, padding 0.3s;
     }
 
     &-link {
