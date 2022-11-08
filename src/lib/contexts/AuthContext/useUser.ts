@@ -4,7 +4,7 @@ import {
   postCartItem,
   deleteCartItem,
 } from "@Lib/helpers";
-import { CartItem } from "@prisma/client";
+import { Cart, CartItem } from "@prisma/client";
 import { useEffect, useReducer } from "react";
 import { UserType } from "src/types/shared";
 
@@ -36,8 +36,14 @@ const authReducer = (
   action: { type: UserActions; payload: any }
 ) => {
   switch (action.type) {
-    case UserActions.SET_USER:
-      return { ...user, ...action.payload };
+    case UserActions.SET_USER: {
+      const cartTotal: CartItem[] = action.payload.cart.reduce(
+        (_total: number, { total }: CartItem) => _total + total,
+        0
+      );
+
+      return { ...user, ...action.payload, cartTotal };
+    }
     case UserActions.ADD_WISHLIST_ITEM:
       return {
         ...user,
@@ -49,9 +55,9 @@ const authReducer = (
         ],
       };
     case UserActions.ADD_CART_ITEM: {
-      const newCart: CartItem[] = user.cart.filter(
-        (item) => item.productId != action.payload.productId
-      ).concat(action.payload);
+      const newCart: CartItem[] = user.cart
+        .filter((item) => item.productId != action.payload.productId)
+        .concat(action.payload);
 
       return {
         ...user,
