@@ -88,9 +88,7 @@
     }
 
     &-link[href] {
-      &:hover {
-        text-decoration: underline;
-      }
+      @extend %link;
     }
   }
 
