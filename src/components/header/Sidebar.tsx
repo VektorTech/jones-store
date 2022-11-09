@@ -9,7 +9,7 @@ import { BsCart3, BsXLg, BsPerson } from "react-icons/bs";
 import { FiSearch, FiLogOut, FiLogIn } from "react-icons/fi";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { getPathString } from "@Lib/utils";
-import Form from "@Components/Form";
+import Form from "@Components/common/Form";
 import { CartItem } from "@prisma/client";
 
 const CategoriesData = require("@Lib/CategoriesData.json");

@@ -1,10 +1,10 @@
 import { User, Review as ReviewType } from "@prisma/client";
 import { useState, useEffect } from "react";
-import Button from "./common/formControls/Button";
-import TextField from "./common/formControls/TextField";
-import Form from "./Form";
-import Modal from "./Modal";
-import RatingStars from "./common/RatingStars";
+import Button from "../common/formControls/Button";
+import TextField from "../common/formControls/TextField";
+import Form from "../common/Form";
+import Modal from "../Modal";
+import RatingStars from "../common/RatingStars";
 import Review from "./Review";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import Link from "next/link";

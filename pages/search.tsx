@@ -6,11 +6,13 @@ import SEO from "@Components/common/SEO";
 
 import { Product as ProductType } from "@prisma/client";
 import Product from "@Components/common/Product";
-import Pagination from "@Components/productList/Pagination";
+import Pagination from "@Components/products/Pagination";
 import { useRouter } from "next/router";
 import Dropdown from "@Components/common/formControls/Dropdown";
-
-const RESULTS_PER_PAGE = 20;
+import { RESULTS_PER_PAGE } from "@Lib/constants";
+import Constraints from "@Components/products/constraints";
+import FilterSortSection from "@Components/products/FilterSortSection";
+import ProductsGrid from "@Components/products/ProductsGrid";
 
 const SearchPage: NextPage<{
   query: string;
@@ -23,57 +25,16 @@ const SearchPage: NextPage<{
   return (
     <div>
       <SEO title={`"${query}"`} />
-
-      <div className="constraints">
-        <div className="constraints__container">
-          <hr className="constraints__hr" />
-          <h1 className="constraints__title">&ldquo;{query}&rdquo;</h1>
-          {products.length ? (
-            <p className="constraints__summary">
-              Showing <strong>{Number(offset) + 1}</strong> &mdash;{" "}
-              <strong>{Number(offset) + products.length}</strong> of{" "}
-              <strong>{count}</strong> results
-            </p>
-          ) : (
-            <p>
-              <strong>Nothing Found!</strong>
-            </p>
-          )}
-          <div className="constraints__filters"></div>
-        </div>
-      </div>
-
-      <div className="filter-sort">
-        <div className="filter-sort__container">
-          <div className="filter-sort__sort-by">
-            <Dropdown
-              label="Sort By"
-              className="filter-sort__sort-select"
-              options={{
-                relevance: "Relevance",
-                asc_price: "Price: Low - High",
-                price: "Price: High - Low",
-                asc_ratings: "Ratings: Low - High",
-                ratings: "Ratings: High - Low",
-              }}
-              onOptionSelect={(order) => {
-                if (order) {
-                  router.query.order = order;
-                  router.push(router);
-                }
-              }}
-            />
-          </div>
-        </div>
-      </div>
+      <Constraints
+        isSearch
+        allProductsCount={count}
+        currentProductsCount={products.length}
+      />
+      <FilterSortSection />
 
       <div className="results">
         <div className={"results__container"}>
-          <div className="results__grid">
-            {products.map((product) => (
-              <Product key={product.id} {...product} />
-            ))}
-          </div>
+          <ProductsGrid products={products} />
           <Pagination
             resultsCount={count}
             limit={RESULTS_PER_PAGE}
@@ -90,7 +51,7 @@ export const getServerSideProps = withSessionSsr(async function ({
   req,
   query,
 }) {
-  const { search = "", offset = 0, limit = RESULTS_PER_PAGE, order, } = query;
+  const { search = "", offset = 0, limit = RESULTS_PER_PAGE, order } = query;
 
   const productColumns = {
     title: true,
@@ -120,7 +81,7 @@ export const getServerSideProps = withSessionSsr(async function ({
       where: { title: { contains: search as string, mode: "insensitive" } },
       skip: Number(offset),
       take: Number(limit),
-      ...orderBy
+      ...orderBy,
     })) || null;
 
   let count = await prisma.product.count({

@@ -1,7 +1,7 @@
 import { Review as ReviewType, User } from "@prisma/client";
 import moment from "moment";
 import Image from "next/image";
-import RatingStars from "./common/RatingStars";
+import RatingStars from "../common/RatingStars";
 
 import UserAvatar from "@Images/user-avatar.jpg";
 

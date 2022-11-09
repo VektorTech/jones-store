@@ -5,10 +5,10 @@ import App, { AppProps, AppContext } from "next/app";
 import Router from "next/router";
 import NProgress from "nprogress";
 
-import Layout from "@Components/Layout";
+import Layout from "@Components/layouts/Layout";
 import SEO from "@Components/common/SEO";
 import Head from "next/head";
-import AdminLayout from "@Components/AdminLayout";
+import AdminLayout from "@Components/layouts/AdminLayout";
 import { getIronSession } from "iron-session";
 import { NextResponse } from "next/server";
 import { sessionOptions } from "@Lib/config";

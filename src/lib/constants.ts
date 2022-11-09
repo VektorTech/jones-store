@@ -13,3 +13,4 @@ export const allowedTags = Object.freeze([
   "strike",
   "small",
 ]);
+export const RESULTS_PER_PAGE = 20;

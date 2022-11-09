@@ -1,3 +1,4 @@
+import ProductsGrid from "@Components/products/ProductsGrid";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import { Product as ProductType } from "@prisma/client";
 import Link from "next/link";
@@ -24,7 +25,8 @@ export default function ProductsSection({
     <section className="products-section">
       <div className="products-section__container">
         <h2 className="products-section__heading">#shop {title}</h2>
-        <div className="products-section__products">{productsComponent}</div>
+        {/* <div className="products-section__products">{productsComponent}</div> */}
+        <ProductsGrid products={products} />
         <p className="products-section__products-link">
           <Link href={url}>
             <a>View All {title}</a>

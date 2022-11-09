@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import Form, { beforeSubmitType } from "@Components/Form";
+import Form, { beforeSubmitType } from "@Components/common/Form";
 import { cloudinaryUpload, listToEnum } from "@Lib/utils";
 
 import TextField from "@Components/common/formControls/TextField";

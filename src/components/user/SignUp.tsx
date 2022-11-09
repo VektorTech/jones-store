@@ -3,7 +3,7 @@ import { generateUsername } from "friendly-username-generator";
 
 import TextField from "@Components/common/formControls/TextField";
 import Button from "@Components/common/formControls/Button";
-import Form from "@Components/Form";
+import Form from "@Components/common/Form";
 import { userSchema } from "@Lib/validations";
 import { validateInput, validateInputs } from "@Lib/helpers";
 import { useAuthState } from "@Lib/contexts/AuthContext";

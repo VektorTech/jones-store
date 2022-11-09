@@ -6,6 +6,7 @@ import { Wishlist, Product as ProductType } from "@prisma/client";
 import SEO from "@Components/common/SEO";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import Product from "@Components/common/Product";
+import ProductsGrid from "@Components/products/ProductsGrid";
 
 const WishlistPage: NextPage<WishlistPageProps> = ({ wishlistItems }) => {
   const { removeFromWishlist } = useAuthState();
@@ -13,19 +14,13 @@ const WishlistPage: NextPage<WishlistPageProps> = ({ wishlistItems }) => {
   return (
     <div>
       <SEO title="Wishlist" />
-
-      {wishlistItems?.map((product) => (
-        <div key={product.id}>
-          <Product {...product} />
-          <button
-            onClick={() =>
-              removeFromWishlist(product.id).then(() => location?.reload())
-            }
-          >
-            Remove
-          </button>
-        </div>
-      ))}
+      <ProductsGrid
+        actions={{
+          Remove: (productId) =>
+            removeFromWishlist(productId).then(() => location?.reload()),
+        }}
+        products={wishlistItems as ProductType[]}
+      />
     </div>
   );
 };

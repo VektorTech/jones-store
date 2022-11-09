@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Form from "@Components/Form";
+import Form from "@Components/common/Form";
 import TextField from "@Components/common/formControls/TextField";
 import Button from "@Components/common/formControls/Button";
 import { userLoginSchema } from "@Lib/validations";

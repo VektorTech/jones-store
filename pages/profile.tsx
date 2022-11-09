@@ -7,7 +7,7 @@ import { cloudinaryUpload } from "@Lib/utils";
 import { phoneRegExp, userSchema } from "@Lib/validations";
 import TextField from "@Components/common/formControls/TextField";
 import Button from "@Components/common/formControls/Button";
-import Form from "@Components/Form";
+import Form from "@Components/common/Form";
 
 export default function Profile({ user }: { user: User }) {
   const [img, setImg] = useState("/assets/images/user-avatar.jpg");

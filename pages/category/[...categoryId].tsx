@@ -1,8 +1,8 @@
 import { BsSliders } from "react-icons/bs";
 
-import Filter from "@Components/productList/Filter";
-import BreadCrumbs from "@Components/productList/BreadCrumbs";
-import Pagination from "@Components/productList/Pagination";
+import FilterAccordion from "@Components/products/filter/FilterAccordion";
+import BreadCrumbs from "@Components/products/BreadCrumbs";
+import Pagination from "@Components/products/Pagination";
 
 import prisma from "@Lib/prisma";
 import { withSessionSsr } from "@Lib/withSession";
@@ -16,8 +16,10 @@ import { useEffect, useState } from "react";
 import Product from "@Components/common/Product";
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 import { useRouter } from "next/router";
-
-const RESULTS_PER_PAGE = 20;
+import Constraints from "@Components/products/constraints";
+import FilterSortSection from "@Components/products/FilterSortSection";
+import { RESULTS_PER_PAGE } from "@Lib/constants";
+import ProductsGrid from "@Components/products/ProductsGrid";
 
 export default function CategoryPage({
   categoryId,
@@ -31,7 +33,6 @@ export default function CategoryPage({
   const router = useRouter();
   const {
     offset = 0,
-    limit = RESULTS_PER_PAGE,
     colorways,
     sizes,
     height,
@@ -59,102 +60,14 @@ export default function CategoryPage({
     return () => removeEventListener("resize", hideFilter);
   }, []);
 
-  const currentPaths = router.asPath
-    .split("?")[0]
-    .split("/")
-    .filter(Boolean)
-    .reduce((arr: { url: string; text: string }[], str: string) => {
-      return arr.concat({
-        url: (arr[arr.length - 1]?.url || "") + "/" + str,
-        text: str.toUpperCase(),
-      });
-    }, [])
-    .splice(1);
-
   return (
     <>
       <SEO title={categoryId.toUpperCase()} />
-      <div className="constraints">
-        <div className="constraints__container">
-          <BreadCrumbs items={currentPaths} />
-          <hr className="constraints__hr" />
-          <h1 className="constraints__title">{categoryId}</h1>
-          {products.length ? (
-            <p className="constraints__summary">
-              Showing <strong>{Number(offset) + 1}</strong> &mdash;{" "}
-              <strong>{Number(offset) + products.length}</strong> of{" "}
-              <strong>{count}</strong> results
-            </p>
-          ) : (
-            <p>
-              <strong>Nothing Found!</strong>
-            </p>
-          )}
-          <div className="constraints__filters">
-            {(Array.isArray(colorways) ? colorways : [colorways]).map(
-              (color) => (
-                <button key={color} className="constraints__filter">
-                  <strong>Colorway</strong> <span>{color}</span>
-                </button>
-              )
-            )}
-            {(Array.isArray(sizes) ? sizes : [sizes]).map((size) =>
-              size ? (
-                <button key={size} className="constraints__filter">
-                  <strong>Sizes</strong> <span>{size}</span>
-                </button>
-              ) : null
-            )}
-          </div>
-        </div>
-      </div>
-
-      <div className="filter-sort">
-        <div className="filter-sort__container">
-          <Button
-            onClick={() => setFilterActive(!filterActive)}
-            className="filter-sort__toggle"
-          >
-            <BsSliders className="filter-sort__toggle-icon" />
-            <span>filter</span>
-          </Button>
-
-          <div className="filter-sort__sort-by">
-            <Dropdown
-              label="Sort By"
-              className="filter-sort__sort-select"
-              options={{
-                relevance: "Relevance",
-                asc_price: "Price: Low - High",
-                price: "Price: High - Low",
-                asc_ratings: "Ratings: Low - High",
-                ratings: "Ratings: High - Low",
-              }}
-              onOptionSelect={(order) => {
-                if (order) {
-                  const newQuery = { ...router.query, order };
-                  router.replace({
-                    pathname: location.pathname,
-                    query: newQuery,
-                  });
-                }
-              }}
-            />
-          </div>
-        </div>
-      </div>
+      <Constraints allProductsCount={count} currentProductsCount={count} />
+      <FilterSortSection toggleFilter={() => setFilterActive(!filterActive)} />
 
       <div className="results">
-        <Filter
-          active={filterActive}
-          current={categoryId}
-          urlPath={router.asPath.split("?")[0]}
-          currentSizes={sizes}
-          currentColor={typeof colorways == "string" ? colorways : ""}
-          currentHeight={typeof height == "string" ? height : ""}
-          currentPrice={typeof price == "string" ? price : ""}
-          setState={() => setFilterActive(false)}
-        />
+        <FilterAccordion active={filterActive} setState={() => setFilterActive(false)} />
 
         <div
           className={
@@ -162,11 +75,7 @@ export default function CategoryPage({
             (filterActive ? " results__container--filter" : "")
           }
         >
-          <div className="results__grid">
-            {products.map((product) => (
-              <Product key={product.id} {...product} />
-            ))}
-          </div>
+          <ProductsGrid products={products} />
           <Pagination
             resultsCount={count}
             limit={RESULTS_PER_PAGE}

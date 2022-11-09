@@ -8,7 +8,7 @@ export default function AutoComplete({
   name,
   ...inputProps
 }: {
-  options: { [value: string]: string };
+  options: { [value: string | number]: string | number };
   label?: string;
 } & JSX.IntrinsicElements["input"]) {
   const [collapsed, setCollapsed] = useState(true);
@@ -16,11 +16,11 @@ export default function AutoComplete({
   const [search, setSearch] = useState("");
 
   const filtered = Object.keys(options).filter((_value) =>
-    new RegExp(search, "i").test(options[_value])
+    new RegExp(search, "i").test(options[_value].toString())
   );
 
   useEffect(() => {
-    setSearch(options[value] || "");
+    setSearch(options[value]?.toString() || "");
   }, [options, value]);
 
   return (

@@ -14,7 +14,8 @@ export enum DialogType {
   SEARCH_BOX,
   MODAL_ANNOUNCEMENT,
   MODAL_LANG_CURRENCY,
-  MODAL_PRODUCT_VIEW
+  MODAL_PRODUCT_VIEW,
+  MODAL_SHARE,
 };
 
 const uiState: {

@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import Popup from "@Components/common/Popup";
-import Form from "@Components/Form";
+import Form from "@Components/common/Form";
 import { CartItem } from "@prisma/client";
 import { getPathString } from "@Lib/utils";
 import { useRouter } from "next/router";
