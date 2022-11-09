@@ -21,13 +21,13 @@ export default function MainColorParam({
         render={({ label, checked, value }) => (
           <span
             className={
-              "filter__param-option" +
-              (checked ? " filter__param-option--checked" : "")
+              "filter-param__option" +
+              (checked ? " filter-param__option--checked" : "")
             }
           >
             <span
               style={{ background: label }}
-              className="filter__param-option-color"
+              className="filter-param__option-color"
             ></span>
             {value}
           </span>

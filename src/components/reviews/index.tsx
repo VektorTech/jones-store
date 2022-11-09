@@ -26,7 +26,7 @@ export default function Reviews({ productId }: { productId: string }) {
     (reviews.length || 1);
 
   return (
-    <div className="product-view__details-panel product-view__reviews-panel">
+    <div className="product-details__panel product-details__reviews-panel">
       {user?.isAuth ? (
         <>
           <button onClick={() => setReviewModal(true)}>Write A Review</button>{" "}

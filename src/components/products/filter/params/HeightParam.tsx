@@ -19,8 +19,8 @@ export default function HeightParam({
         render={({ label, checked }) => (
           <span
             className={
-              "filter__param-option" +
-              (checked ? " filter__param-option--checked" : "")
+              "filter-param__option" +
+              (checked ? " filter-param__option--checked" : "")
             }
           >
             {label} TOP

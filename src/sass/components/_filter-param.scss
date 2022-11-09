@@ -1,0 +1,105 @@
+@use "../abstracts" as *;
+
+.filter-param {
+  $param: &;
+
+  border-bottom: 0.1rem solid $c-gray;
+  padding: 1rem 1.5rem;
+  color: $c-text-black;
+
+  @include respond-to("large") {
+    padding: 1rem 2.5rem;
+  }
+
+  &__section {
+    &--collapsed {
+      & #{$param}-type {
+        & svg {
+          transform: rotate(-180deg);
+        }
+      }
+
+      & #{$param}-body {
+        height: 0;
+        padding: 0;
+        transform: scaleY(0);
+      }
+    }
+  }
+
+  &__type {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    padding: 0.5rem 0;
+    cursor: pointer;
+
+    & svg {
+      transition: transform 0.3s;
+    }
+  }
+
+  &__body {
+    padding-top: 1rem;
+    overflow: hidden;
+    height: auto;
+    transform-origin: top;
+    transform: scaleY(1);
+    transition: transform 0.3s, padding 0.3s;
+  }
+
+  &__link {
+    & + & {
+      margin-top: 1rem;
+    }
+
+    &--active {
+      color: $c-text-red;
+    }
+  }
+
+  &__option {
+    width: 100%;
+    text-overflow: ellipsis;
+
+    &--active,
+    &--checked {
+      &::after {
+        content: "";
+        width: 0.6rem;
+        height: 1.3rem;
+        display: inline-block;
+        margin-bottom: 0.2rem;
+        margin-left: 1rem;
+        border-right: 0.1rem solid $c-text-black;
+        border-bottom: 0.1rem solid $c-text-black;
+        transform: rotate(45deg);
+      }
+    }
+
+    &--active {
+      &::after {
+        border-color: $c-text-red;
+      }
+    }
+
+    &-color {
+      display: inline-block;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      border: 0.1rem solid #000;
+      margin-right: 1rem;
+      vertical-align: middle;
+    }
+  }
+
+  &__box {
+    @extend %checkbox;
+
+    &--checked {
+      @extend %checkbox--checked;
+    }
+  }
+}

@@ -15,45 +15,4 @@
       }
     }
   }
-
-  &__grid {
-    @extend %product-grid;
-  }
-
-  // ----
-
-  &__pagination {
-    height: 5rem;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 1rem;
-    overflow: hidden;
-    color: $c-text-black;
-    padding: 1rem;
-    font-weight: 400;
-    font-size: $text-sm;
-
-    @include respond-to("medium") {
-      // &--filter {
-      //   width: 70%;
-      // }
-    }
-
-
-    &-button {
-      padding: 0 0.5rem;
-      text-align: center;
-
-      &--active {
-        border-bottom: 0.2rem solid $c-text-black;
-      }
-
-      &--disabled,
-      &--disabled[href] {
-        color: $c-text-gray;
-        cursor: auto;
-      }
-    }
-  }
 }

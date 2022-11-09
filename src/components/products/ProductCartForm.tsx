@@ -50,7 +50,7 @@ export default function ProductCartForm({ product }: { product: Product }) {
               />
             </div> */}
       <SizeOptions />
-      <div className="product-view__quantity">
+      <div className="product-cart-form__quantity">
         <button
           onClick={() => setQuantity(Math.max(quantity - 1, 1))}
           type="button"
@@ -73,7 +73,7 @@ export default function ProductCartForm({ product }: { product: Product }) {
           e.preventDefault();
           addToCart(id, quantity, Number(checkedSize));
         }}
-        className="product-view__add-cart"
+        className="product-cart-form__submit"
       >
         Add To Cart
       </Button>

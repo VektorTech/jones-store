@@ -126,7 +126,7 @@ export default function Carousel({
         onClick={() => setDialog(DialogType.MODAL_PRODUCT_VIEW)}
         onMouseMove={handleMouseOver}
         onMouseOut={handleMouseLeave}
-        className="product-view__gallery-controls"
+        className="carousel__controls"
       >
         <button
           onClick={(e) => {
@@ -137,7 +137,7 @@ export default function Carousel({
             }
           }}
           onMouseMove={(e) => e.stopPropagation()}
-          className="gallery__prev"
+          className="carousel__controls-button carousel__prev"
         >
           <BsArrowLeft />
         </button>
@@ -150,7 +150,7 @@ export default function Carousel({
             }
           }}
           onMouseMove={(e) => e.stopPropagation()}
-          className="gallery__next"
+          className="carousel__controls-button carousel__next"
         >
           <BsArrowRight />
         </button>

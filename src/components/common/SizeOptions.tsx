@@ -24,7 +24,7 @@ export default function SizeOptions({
       render={({ label, checked }) => (
         <span
           className={
-            "filter__param-box" + (checked ? " filter__param-box--checked" : "")
+            "filter-param__box" + (checked ? " filter-param__box--checked" : "")
           }
         >
           {label}

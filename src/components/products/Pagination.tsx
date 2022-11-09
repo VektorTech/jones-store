@@ -31,7 +31,7 @@ export default function Pagination({
   const router = useRouter();
 
   return (
-    <div className="results__pagination">
+    <div className="pagination">
       <Link href={currentPage > 1 ? getOffsetPath(router, 0) : "#"}>
         <a
           onClick={(e) => {
@@ -40,8 +40,8 @@ export default function Pagination({
             }
           }}
           className={
-            "results__pagination-button" +
-            (currentPage <= 1 ? " results__pagination-button--disabled" : "")
+            "pagination__button" +
+            (currentPage <= 1 ? " pagination__button--disabled" : "")
           }
         >
           <AiOutlineDoubleLeft />
@@ -57,8 +57,8 @@ export default function Pagination({
             }
           }}
           className={
-            "results__pagination-button" +
-            (currentPage <= 1 ? " results__pagination-button--disabled" : "")
+            "pagination__button" +
+            (currentPage <= 1 ? " pagination__button--disabled" : "")
           }
         >
           <AiOutlineLeft />
@@ -73,9 +73,9 @@ export default function Pagination({
           >
             <a
               className={
-                "results__pagination-button" +
+                "pagination__button" +
                 (pageNum == currentPage
-                  ? " results__pagination-button--active"
+                  ? " pagination__button--active"
                   : "")
               }
             >
@@ -87,9 +87,9 @@ export default function Pagination({
 
       {pageCount > 2 && (
         <>
-          <span className="results__pagination-button">&#8230;</span>
+          <span className="pagination__button">&#8230;</span>
           <Link href={getOffsetPath(router, (pageCount - 1) * limit)}>
-            <a className="results__pagination-button">{pageCount}</a>
+            <a className="pagination__button">{pageCount}</a>
           </Link>
         </>
       )}
@@ -105,9 +105,9 @@ export default function Pagination({
             }
           }}
           className={
-            "results__pagination-button" +
+            "pagination__button" +
             (currentPage == pageCount
-              ? " results__pagination-button--disabled"
+              ? " pagination__button--disabled"
               : "")
           }
         >
@@ -129,9 +129,9 @@ export default function Pagination({
             }
           }}
           className={
-            "results__pagination-button" +
+            "pagination__button" +
             (currentPage == pageCount
-              ? " results__pagination-button--disabled"
+              ? " pagination__button--disabled"
               : "")
           }
         >

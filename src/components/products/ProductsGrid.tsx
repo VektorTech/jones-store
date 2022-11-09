@@ -9,7 +9,7 @@ export default function ProductsGrid({
   actions?: { [action: string]: (productId: string) => void };
 }) {
   return (
-    <div className="results__grid">
+    <div className="products-grid">
       {products.map((product) => (
         <div key={product.id}>
           <Product {...product} />

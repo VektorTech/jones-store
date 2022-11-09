@@ -188,3 +188,17 @@
     text-decoration: none;
   }
 }
+
+%checkbox {
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  border: 0.1rem solid v.$c-control-black;
+  font-weight: 400;
+  border-radius: 0.2rem;
+  font-size: v.$text-sm;
+
+  &--checked {
+    background-color: v.$c-gray;
+  }
+}

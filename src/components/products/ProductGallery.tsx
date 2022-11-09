@@ -14,15 +14,15 @@ export default function ProductGallery({
   const [activeImage, setActiveImage] = useState(0);
 
   return (
-    <div className="product-view__gallery">
-      <div className="product-view__gallery-container">
-        <div className="product-view__images">
+    <div className="product-gallery">
+      <div className="product-gallery__container">
+        <div className="product-gallery__images">
           <ul>
             {images.map((url, i) => (
               <li key={url}>
                 <button
                   className={
-                    i == activeImage ? "product-view__thumb-active" : ""
+                    i == activeImage ? "product-gallery__thumb-active" : ""
                   }
                   onClick={() => setActiveImage(i)}
                 >
@@ -39,8 +39,8 @@ export default function ProductGallery({
             ))}
           </ul>
         </div>
-        <div className="product-view__picture">
-          <div className="product-view__picture-container">
+        <div className="product-gallery__picture">
+          <div className="product-gallery__picture-container">
             <Carousel
               onUpdate={(i: number) => setActiveImage(i)}
               aIndex={activeImage}
@@ -63,7 +63,7 @@ export default function ProductGallery({
               ))}
             </Carousel>
           </div>
-          <button className="product-view__wish">
+          <button className="product-gallery__wish">
             <AiOutlineHeart />
           </button>
         </div>

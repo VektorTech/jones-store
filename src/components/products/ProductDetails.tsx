@@ -24,7 +24,7 @@ export default function ProductDetails({ product }: { product: Product }) {
     reviews: JSX.Element;
   } = {
     description: (
-      <div className="product-view__details-panel product-view__description-panel">
+      <div className="product-details-panel product-description-panel">
         {product.details}
       </div>
     ),
@@ -45,14 +45,14 @@ export default function ProductDetails({ product }: { product: Product }) {
   };
 
   return (
-    <div className="product-view__details">
-      <div className="product-view__details-tabs">
+    <div className="product-details">
+      <div className="product-details__tabs">
         <ul>
           <li
             className={
-              "product-view__details-tab" +
+              "product-details__tab" +
               (tabName == "description"
-                ? " product-view__details-tab--active"
+                ? " product-details__tab--active"
                 : "")
             }
           >
@@ -62,9 +62,9 @@ export default function ProductDetails({ product }: { product: Product }) {
           </li>
           <li
             className={
-              "product-view__details-tab" +
+              "product-details__tab" +
               (tabName == "size_guide"
-                ? " product-view__details-tab--active"
+                ? " product-details__tab--active"
                 : "")
             }
           >
@@ -72,15 +72,15 @@ export default function ProductDetails({ product }: { product: Product }) {
           </li>
           <li
             className={
-              "product-view__details-tab" +
-              (tabName == "reviews" ? " product-view__details-tab--active" : "")
+              "product-details__tab" +
+              (tabName == "reviews" ? " product-details__tab--active" : "")
             }
           >
             <button onClick={() => setTabName("reviews")}>Reviews</button>
           </li>
         </ul>
       </div>
-      <div className="product-view__details-body">{tabs[tabName]}</div>
+      <div className="product-details__body">{tabs[tabName]}</div>
     </div>
   );
 }

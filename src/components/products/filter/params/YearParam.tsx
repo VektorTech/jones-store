@@ -23,8 +23,8 @@ export default function YearParam({
         render={({ label, checked }) => (
           <span
             className={
-              "filter__param-option" +
-              (checked ? " filter__param-option--checked" : "")
+              "filter-param__option" +
+              (checked ? " filter-param__option--checked" : "")
             }
           >
             {label}

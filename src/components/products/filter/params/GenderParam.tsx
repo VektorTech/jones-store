@@ -7,8 +7,8 @@ export default function GenderParam({ current }: { current?: string; }) {
       {["men", "women", "kids", "baby", "unisex"].map((gender) => (
         <p
           className={
-            "filter__param-link" +
-            (gender == current ? " filter__param-link--active" : "")
+            "filter-param__link" +
+            (gender == current ? " filter-param__link--active" : "")
           }
           key={gender}
         >

@@ -11,21 +11,21 @@ export default function FilterHeaderParam({
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div className="filter__param">
+    <div className="filter-param">
       <div
         className={
-          "filter__param-section" +
-          (collapsed ? " filter__param-section--collapsed" : "")
+          "filter-param__section" +
+          (collapsed ? " filter-param__section--collapsed" : "")
         }
       >
         <span
           onClick={() => setCollapsed(!collapsed)}
-          className="filter__param-type"
+          className="filter-param__type"
         >
           <span>{type}</span>
           <IoIosArrowUp />
         </span>
-        <div className="filter__param-body">{children}</div>
+        <div className="filter-param__body">{children}</div>
       </div>
     </div>
   );
