@@ -201,7 +201,6 @@
     width: 100%;
     z-index: 1;
     height: 0;
-    transition: height 0.3s;
     font-size: $text-sm;
     overflow: hidden;
     position: absolute;
@@ -214,8 +213,6 @@
     }
 
     & ul {
-      top: 50%;
-      transform: translateY(-50%);
       position: relative;
       padding: 2rem;
       display: flex;
@@ -237,7 +234,8 @@
     }
 
     &--visible {
-      height: calc(10rem);
+      // height: calc(10rem);
+      height: auto;
       border-bottom: 0.1rem solid #000;
     }
   }
