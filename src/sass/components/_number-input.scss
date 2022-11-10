@@ -1,0 +1,20 @@
+@use "../abstracts" as *;
+
+.number-input {
+  width: 9rem;
+  height: 3rem;
+  font-weight: 400;
+  border: 0.1rem solid #000;
+
+  > * {
+    width: 33.333%;
+    text-align: center;
+    display: inline-block;
+    height: 100%;
+  }
+
+  &__control {
+    border-left: 0.1rem solid #000;
+    border-right: 0.1rem solid #000;
+  }
+}

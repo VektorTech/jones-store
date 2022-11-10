@@ -128,16 +128,18 @@
 }
 
 %form-button {
-  padding: 0.5rem 2rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   background-color: v.$c-background-black;
   color: #fff;
-  font-variant: small-caps;
-  text-transform: lowercase;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 2rem;
   font-weight: 400;
-  font-size: v.$text-md;
+  font-size: v.$text-sm;
   transition: background-color 0.3s v.$timing-func-ui;
 
   &:hover,

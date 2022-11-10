@@ -56,6 +56,26 @@ async function ConfirmPayment(
           where: { id: Number(orderId) },
           data: { status: OrderStatus.PAYMENT_RECEIVED },
         });
+
+        const cart = await prisma.cart.findUnique({
+          where: { userId: userId },
+        });
+
+        if (!cart) {
+          return;
+        }
+
+        const orderLineItems = await prisma.orderLine.findMany({
+          where: { orderId },
+        });
+
+        orderLineItems.forEach((item) =>
+          prisma.cartItem.delete({
+            where: {
+              cartId_productId: { cartId: cart.id, productId: item.productId },
+            },
+          })
+        );
       }
     } catch (e) {
       console.log(e);

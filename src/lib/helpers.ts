@@ -81,3 +81,15 @@ export function deleteCartItem(id: string) {
     .then((res) => res.json())
     .catch(console.log);
 }
+
+export function emptyUserCart() {
+  return fetch("/api/cart", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({ empty: "true" }),
+  })
+    .then((res) => res.json())
+    .catch(console.log);
+}

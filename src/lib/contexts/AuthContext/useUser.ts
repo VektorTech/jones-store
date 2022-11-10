@@ -3,12 +3,13 @@ import {
   postWishlistItem,
   postCartItem,
   deleteCartItem,
+  emptyUserCart,
 } from "@Lib/helpers";
 import { Cart, CartItem } from "@prisma/client";
 import { useEffect, useReducer } from "react";
 import { UserType } from "src/types/shared";
 
-const initUser: UserType = {
+export const initUser: UserType = {
   id: "",
   avatarURL: "",
   username: "",
@@ -29,6 +30,7 @@ enum UserActions {
   REMOVE_WISHLIST_ITEM,
   ADD_CART_ITEM,
   REMOVE_CART_ITEM,
+  EMPTY_CART,
 }
 
 const authReducer = (
@@ -89,13 +91,17 @@ const authReducer = (
         ),
       };
     }
+    case UserActions.EMPTY_CART:
+      return { ...user, ...action.payload };
     default:
       return user;
   }
 };
 
 export default function useUser(currentUser: UserType) {
-  const [userState, updateUser] = useReducer(authReducer, initUser);
+  const [userState, updateUser] = useReducer<
+    (state: UserType, action: { type: UserActions; payload: any }) => UserType
+  >(authReducer, initUser);
 
   useEffect(() => {
     if (currentUser && currentUser.id != "guest") {
@@ -155,6 +161,14 @@ export default function useUser(currentUser: UserType) {
     }
   };
 
+  const emptyCart = () => {
+    emptyUserCart();
+    updateUser({
+      type: UserActions.EMPTY_CART,
+      payload: { cart: [], cartTotal: 0 },
+    });
+  };
+
   const useSelector = (callback: (user: UserType) => void) =>
     callback(userState);
 
@@ -164,6 +178,7 @@ export default function useUser(currentUser: UserType) {
     removeWishlistItem,
     addCartItem,
     removeCartItem,
+    emptyCart,
     setAuthUser: (user: UserType) => {
       updateUser({
         type: UserActions.SET_USER,

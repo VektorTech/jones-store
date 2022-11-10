@@ -164,14 +164,12 @@ export default function Sidebar({ userId }: { userId?: string }) {
                 </Link>
               </li>
               <li className="sidebar__icon-links-item">
-                <Link href="/cart">
-                  <a className="sidebar__anchor">
-                    <BsCart3 />
-                    <span>
-                      Cart{cartCount ? ` (${cartCount}) ($${cartTotal})` : ""}
-                    </span>
-                  </a>
-                </Link>
+                <button onClick={() => setDialog(DialogType.CART)} className="sidebar__anchor">
+                  <BsCart3 />
+                  <span>
+                    Cart{cartCount ? ` (${cartCount}) ($${cartTotal})` : ""}
+                  </span>
+                </button>
               </li>
             </ul>
           </div>

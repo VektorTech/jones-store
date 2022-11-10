@@ -63,13 +63,23 @@ async function postCartRoute(
       }
 
       if (cart && product && product.stockQty) {
-        const item = await prisma.cartItem.create({
-          data: {
+        const cartItemData = {
+          size: Number(size),
+          quantity: Math.min(Number(qty), product.stockQty),
+          total: (product.price - (product.discount || 0)) * Number(qty),
+        };
+        const item = await prisma.cartItem.upsert({
+          create: {
             cartId: cart.id,
             productId: product.id,
-            size: Number(size),
-            quantity: Math.min(Number(qty), product.stockQty),
-            total: (product.price - (product.discount || 0)) * Number(qty),
+            ...cartItemData,
+          },
+          update: cartItemData,
+          where: {
+            cartId_productId: {
+              cartId: cart.id,
+              productId: product.id,
+            },
           },
         });
 
@@ -83,7 +93,9 @@ async function postCartRoute(
         productId,
         size,
         quantity: Math.min(Number(qty), product.stockQty),
-        total: (product.price - (product.discount || 0)) * Math.min(Number(qty), product.stockQty),
+        total:
+          (product.price - (product.discount || 0)) *
+          Math.min(Number(qty), product.stockQty),
       };
       guest.cart = [
         ...(guest.cart.filter((item) => item.productId != productId) || []),
@@ -106,7 +118,7 @@ async function deleteCartRoute(
   res: NextApiResponse<DefaultResponse>,
   next: Function
 ) {
-  const { productId } = req.body;
+  const { productId, empty } = req.body;
   const { user, guest } = req.session;
 
   if (user) {
@@ -115,21 +127,31 @@ async function deleteCartRoute(
     });
 
     if (cart) {
-      await prisma.cartItem.delete({
-        where: {
-          cartId_productId: {
-            cartId: cart.id,
-            productId,
+      if (empty) {
+        await prisma.cartItem.deleteMany({
+          where: { cartId: cart.id },
+        });
+      } else {
+        await prisma.cartItem.delete({
+          where: {
+            cartId_productId: {
+              cartId: cart.id,
+              productId,
+            },
           },
-        },
-      });
+        });
+      }
     } else {
       return next(new ServerError("Cannot Find User/Cart", 404));
     }
   } else if (guest) {
-    guest.cart = guest.cart.filter(
-      (cartItem) => productId != cartItem.productId
-    );
+    if (empty) {
+      guest.cart = [];
+    } else {
+      guest.cart = guest.cart.filter(
+        (cartItem) => productId != cartItem.productId
+      );
+    }
     await req.session.save();
   }
 

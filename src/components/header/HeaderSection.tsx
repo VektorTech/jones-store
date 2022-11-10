@@ -228,26 +228,25 @@ export default function HeaderSection({
                 {wishlistCount ? <span>{wishlistCount}</span> : null}
               </li>
               <li className="header__button header__button-cart">
-                <Link href="/cart">
-                  <a
-                    onPointerEnter={(e) => setHoveredElement("header-cart-btn")}
-                    onPointerLeave={(e) => setHoveredElement("")}
-                    className="header__button-link"
-                    id="header-cart-btn"
+                <button
+                  onClick={() => setDialog(DialogType.CART)}
+                  onPointerEnter={(e) => setHoveredElement("header-cart-btn")}
+                  onPointerLeave={(e) => setHoveredElement("")}
+                  className="header__button-link"
+                  id="header-cart-btn"
+                >
+                  <BsCart3 />
+                  <Popup
+                    currentId={hoveredElement}
+                    hoverElementId="header-cart-btn"
                   >
-                    <BsCart3 />
-                    <Popup
-                      currentId={hoveredElement}
-                      hoverElementId="header-cart-btn"
-                    >
-                      {cartCount ? (
-                        <span style={{ fontWeight: "400" }}>${cartTotal}</span>
-                      ) : (
-                        "Empty"
-                      )}
-                    </Popup>
-                  </a>
-                </Link>
+                    {cartCount ? (
+                      <span style={{ fontWeight: "400" }}>${cartTotal}</span>
+                    ) : (
+                      "Empty"
+                    )}
+                  </Popup>
+                </button>
                 {cartCount ? <span>{cartCount}</span> : null}
               </li>
             </ul>

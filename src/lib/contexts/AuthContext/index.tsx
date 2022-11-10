@@ -1,21 +1,23 @@
 import { createContext, ReactElement, useContext } from "react";
-import useUser from "./useUser";
+import useUser, { initUser } from "./useUser";
 import { UserType } from "src/types/shared";
 
 const authState: {
-  user?: UserType;
+  user: UserType;
   addToWishlist: (id: string) => Promise<void>;
   removeFromWishlist: (id: string) => Promise<void>;
   addToCart: (id: string, quantity: number, size: number) => Promise<void>;
+  emptyCart: () => void;
   removeFromCart: (id: string) => Promise<void>;
   useSelector: (callback: (user: UserType) => void) => void;
   setAuthUser: (user: UserType) => void;
 } = {
-  user: undefined,
+  user: initUser,
   addToWishlist: (id) => Promise.resolve(),
   removeFromWishlist: (id) => Promise.resolve(),
   addToCart: (id, quantity, size) => Promise.resolve(),
   removeFromCart: (id) => Promise.resolve(),
+  emptyCart: () => null,
   useSelector: () => null,
   setAuthUser: () => null,
 };
@@ -37,6 +39,7 @@ export const AuthProvider = ({
     removeWishlistItem,
     addCartItem,
     removeCartItem,
+    emptyCart,
     useSelector,
     setAuthUser
   } = useUser(currentUser);
@@ -50,6 +53,7 @@ export const AuthProvider = ({
         removeFromWishlist: removeWishlistItem,
         addToCart: addCartItem,
         removeFromCart: removeCartItem,
+        emptyCart,
         user,
       }}
     >

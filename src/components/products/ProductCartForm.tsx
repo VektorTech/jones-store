@@ -1,72 +1,27 @@
-import { useState, Suspense } from "react";
-import RadioList from "@Components/common/formControls/RadioList";
-import { listToEnum } from "@Lib/utils";
+import { useState } from "react";
 import SizeOptions from "@Components/common/SizeOptions";
 import { Product } from "@prisma/client";
 import Button from "@Components/common/formControls/Button";
 import { useAuthState } from "@Lib/contexts/AuthContext";
+import NumberInput from "@Components/common/formControls/NumberInput";
 
 export default function ProductCartForm({ product }: { product: Product }) {
   const [checkedSize, setCheckedSize] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
 
-  const {
-    id,
-    title,
-    gender,
-    price,
-    discount,
-    sku,
-    year,
-    color,
-    salesCount,
-    stockQty,
-    sizes: sizesOptions,
-  } = product;
+  const { id, stockQty } = product;
   const { addToCart } = useAuthState();
-
-  // const allSizes = listToEnum(sizesOptions);
 
   return (
     <form method="POST" action="/api/cart">
-      {/* <div className="product-view__size-selector">
-              <RadioList
-                name="sizes"
-                label="Size: Please Select"
-                grid
-                values={allSizes}
-                checkedItems={[checkedSize]}
-                onChecked={(value) => setCheckedSize(value as string)}
-                render={({ label, checked }) => (
-                  <span
-                    className={
-                      "filter__param-box" +
-                      (checked ? " filter__param-box--checked" : "")
-                    }
-                  >
-                    {label}
-                  </span>
-                )}
-              />
-            </div> */}
-      <SizeOptions />
-      <div className="product-cart-form__quantity">
-        <button
-          onClick={() => setQuantity(Math.max(quantity - 1, 1))}
-          type="button"
-        >
-          {" "}
-          -{" "}
-        </button>
-        <input readOnly name="qty" key={quantity} defaultValue={quantity} />
-        <button
-          onClick={() => setQuantity(Math.min(quantity + 1, stockQty))}
-          type="button"
-        >
-          {" "}
-          +{" "}
-        </button>
-      </div>
+      <p>Size: Please Select</p>
+      <SizeOptions onChecked={(items) => setCheckedSize(items as string)} />
+      <NumberInput
+        onChange={(value) => setQuantity(value)}
+        value={quantity}
+        min={1}
+        max={stockQty}
+      />
       <input type="hidden" name="productId" defaultValue={id} />
       <Button
         onClick={(e) => {

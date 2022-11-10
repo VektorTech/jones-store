@@ -1,0 +1,238 @@
+@use "../abstracts" as *;
+
+.cart {
+  $self: &;
+
+  width: 100%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0.3s;
+
+  &--active {
+    pointer-events: unset;
+    visibility: visible;
+  }
+
+  &__backdrop {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    transition: background-color 0.3s $timing-func-ui;
+
+    #{$self}--active & {
+      background-color: $c-backdrop;
+      transform: translateX(0);
+    }
+  }
+
+  &__container {
+    position: absolute;
+    width: calc(100% - 1.5rem);
+    max-width: 58rem;
+    background-color: #fff;
+    padding: 1rem;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    transform: translateX(100%);
+    transition: transform 0.3s $timing-func-ui;
+
+    #{$self}--active & {
+      transform: translateX(0);
+    }
+
+    @include respond-to("medium") {
+      padding: 3.5rem;
+      gap: 1rem;
+    }
+  }
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  %cart-head {
+    display: inline-block;
+  }
+
+  &__heading {
+    @extend %cart-head;
+    font-size: $text-lg;
+    margin: 0;
+  }
+
+  &__clear {
+    @extend %cart-head;
+    margin-left: 1rem;
+    margin-right: auto;
+    font-size: $text-sm;
+    font-weight: 400;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__close {
+    @extend %round-button;
+  }
+
+  &__content {
+    height: 100%;
+    padding: 2rem 0;
+  }
+
+  &__product {
+    display: grid;
+    height: 11rem;
+    margin-bottom: 3rem;
+    column-gap: 0.5rem;
+    font-size: $text-sm;
+    font-weight: 400;
+    grid-template-rows: repeat(6, 1fr);
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-areas:
+      "i i i t t t t t t t r r"
+      "i i i t t t t t t t r r"
+      "i i i g g g g g g g q q"
+      "i i i s s s s s s s q q"
+      "i i i c c c c c c c c c"
+      "i i i p p p p p p p p p";
+
+    & > span:first-child {
+      grid-area: i;
+      border: 0.1rem solid #dfdfdf !important;
+      width: 100% !important;
+
+      @include respond-to("small") {
+        width: 11rem !important;
+      }
+    }
+
+    @include respond-to("small") {
+      grid-template-areas:
+        "i i i t t t t t t p p p"
+        "i i i t t t t t t p p p"
+        "i i i g g g g g g c c c"
+        "i i i s s s s s s c c c"
+        "i i i q q q q q q r r r"
+        "i i i q q q q q q r r r";
+    }
+
+    @include respond-to("medium") {
+      column-gap: 2rem;
+    }
+  }
+
+  &__product-image {
+    padding: 0.5rem !important;
+  }
+
+  &__product-title {
+    grid-area: t;
+    align-self: end;
+    font-weight: 600;
+    white-space: nowrap;
+    font-size: $text-md;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  &__product-gender {
+    grid-area: g;
+    color: $c-text-dark;
+  }
+  &__product-size {
+    grid-area: s;
+    font-weight: 300;
+    padding-top: 0.5rem;
+  }
+  &__product-price {
+    grid-area: p;
+    align-self: end;
+    text-align: right;
+    font-size: $text-md;
+  }
+  &__product-cost {
+    grid-area: c;
+    text-align: right;
+    font-size: $text-md;
+    font-weight: 300;
+  }
+  &__product-quantity {
+    grid-area: q;
+    justify-self: right;
+  }
+  &__product-remove {
+    grid-area: r;
+    font-size: $text-xs;
+    margin: 0 0rem 0.6rem 0.5rem;
+    padding: 0;
+  }
+
+  &__details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 0.5rem;
+    column-gap: 1rem;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  %cart-total {
+    text-align: right;
+    font-weight: 400;
+    font-size: $text-sm;
+    color: $c-text-dark;
+
+    &-value {
+      text-align: right;
+      font-weight: 400;
+      font-size: $text-md;
+    }
+  }
+
+  &__total {
+    @extend %cart-total;
+    &-value {
+      @extend %cart-total-value;
+    }
+  }
+
+  &__sub-total {
+    @extend %cart-total;
+    &-value {
+      @extend %cart-total-value;
+    }
+  }
+
+  &__shipping {
+    @extend %cart-total;
+    &-value {
+      @extend %cart-total-value;
+    }
+  }
+
+  &__checkout {
+    &-button {
+      width: 100%;
+      font-size: $text-md;
+      padding: 1rem 0;
+    }
+  }
+}

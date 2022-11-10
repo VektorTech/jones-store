@@ -8,12 +8,7 @@ import { MouseEventHandler, useRef, useState } from "react";
 import { getPathString } from "@Lib/utils";
 import { ProductComponentType } from "src/types/shared";
 import { useAuthState } from "@Lib/contexts/AuthContext";
-
-const currencyFormatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  currencyDisplay: "code",
-});
+import { currencyFormatter } from "@Lib/intl";
 
 export default function Product({
   small = false,

@@ -7,15 +7,17 @@ export default function SizeOptions({
   checkedItems,
   onChecked,
   label,
+  checkbox = false,
 }: {
   checkedItems?: string[];
   onChecked?: (items: string | string[], value?: string | undefined) => void;
   label?: string;
+  checkbox?: boolean;
 }) {
   return (
     <RadioList
       name="sizes"
-      checkbox
+      checkbox={checkbox}
       label={label}
       grid
       values={sizeListObj}

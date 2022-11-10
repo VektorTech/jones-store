@@ -2,7 +2,7 @@ import Image from "next/image";
 import Img from "next/future/image";
 
 import { AiOutlineHeart } from "react-icons/ai";
-import { HiOutlineShare } from "react-icons/hi";
+import { FiPackage } from "react-icons/fi";
 
 import BreadCrumbs from "@Components/products/BreadCrumbs";
 import { withSessionSsr } from "@Lib/withSession";
@@ -61,6 +61,7 @@ export default function ProductPage({
     color,
     salesCount,
     stockQty,
+    shippingCost,
     sizes: sizesOptions,
   } = product;
 
@@ -100,6 +101,10 @@ export default function ProductPage({
 
           <p className="product-view__price">
             {currencyFormatter.format(cartPrice)} <span>{percentageOff}</span>
+          </p>
+
+          <p className="product-view__price">
+            <FiPackage /> { shippingCost ? `Shipping: ${currencyFormatter.format(shippingCost)}` : "Free Shipping" }
           </p>
 
           <p className="product-view__sold">

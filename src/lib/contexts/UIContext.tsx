@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 
 export enum DialogType {
   SIDEBAR_DIALOG,
+  CART,
   SEARCH_BOX,
   MODAL_ANNOUNCEMENT,
   MODAL_LANG_CURRENCY,
