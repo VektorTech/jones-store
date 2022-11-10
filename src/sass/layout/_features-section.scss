@@ -22,6 +22,7 @@
   &__col {
     margin: 2.2rem 0;
     flex: 1;
+    text-align: center;
 
     @include respond-to("small") {
       flex-basis: calc(50% - 1rem);
