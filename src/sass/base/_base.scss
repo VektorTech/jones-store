@@ -9,6 +9,10 @@ body {
   background-color: $c-background-color;
 }
 
+body.grabbing {
+  cursor: grabbing;
+}
+
 article {
   overflow: hidden;
 }
