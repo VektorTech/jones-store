@@ -31,8 +31,7 @@
     background-color: $c-gray;
   }
 
-  &__min,
-  &__max {
+  &__thumb {
     display: inline-block;
     position: relative;
     width: 1.2rem;
@@ -49,7 +48,7 @@
     }
   }
 
-  &__thumb--grabbing {
+  body.grabbing &__thumb {
     cursor: grabbing;
   }
 

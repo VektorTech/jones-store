@@ -12,7 +12,11 @@ export default function PriceFilterParam({
 }) {
   return (
     <FilterHeaderParam type="Filter By Price">
-      <PriceRange onUpdate={setFilterState} preset={[minPrice, maxPrice]} />
+      <PriceRange
+        onUpdate={setFilterState}
+        minPrice={minPrice}
+        maxPrice={maxPrice}
+      />
     </FilterHeaderParam>
   );
 }

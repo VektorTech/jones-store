@@ -1,196 +1,214 @@
-import { useState, useRef, useEffect, useMemo, ReactNode } from "react";
+import { useState, useRef, useEffect } from "react";
+
+const HIGHEST_PRICE = 1000;
 
 export default function PriceRange({
-	preset,
-	onUpdate,
-  }: {
-	preset?: [min: string | number, max: string | number];
-	onUpdate?: (minPrice: number, maxPrice: number) => void;
-  }) {
-	const HIGHEST_PRICE = 1000;
-	const [valueMin, setValMin] = useState<string | number>(preset?.[0] || 0);
-	const [valueMax, setValMax] = useState<string | number>(
-	  preset?.[1] || HIGHEST_PRICE.toString()
-	);
+  minPrice = 0,
+  maxPrice = HIGHEST_PRICE,
+  onUpdate,
+}: {
+  minPrice?: number;
+  maxPrice?: number;
+  onUpdate?: (minPrice: number, maxPrice: number) => void;
+}) {
+  const [minValue, setMinValue] = useState<number>(minPrice);
+  const [maxValue, setMaxValue] = useState<number>(maxPrice);
 
-	const [activeThumb, setActiveThumb] = useState("");
-	const minRef = useRef<HTMLSpanElement>(null);
-	const maxRef = useRef<HTMLSpanElement>(null);
-	const rangeRef = useRef<HTMLSpanElement>(null);
-	const controlRef = useRef<HTMLDivElement>(null);
+  const [activeHandle, setActiveHandle] = useState<"MIN" | "MAX" | "">("");
+  const minHandleRef = useRef<HTMLSpanElement>(null);
+  const maxHandleRef = useRef<HTMLSpanElement>(null);
+  const rangeRef = useRef<HTMLSpanElement>(null);
+  const controlRef = useRef<HTMLDivElement>(null);
 
-	useEffect(() => {
-	  if (activeThumb == "") {
-		onUpdate?.(Number(valueMin), Number(valueMax));
-	  }
-	}, [activeThumb, valueMin, valueMax]);
+  const calculatePercentage = (num: number) =>
+    (num / (controlRef.current?.offsetWidth || 1)) * 100;
 
-	useEffect(() => {
-	  if (preset) {
-		const pMin = preset[0];
-		const pMax = preset[1];
+  const updateControlUI = (min: number, max: number) => {
+    const minThumb = minHandleRef.current;
+    const maxThumb = maxHandleRef.current;
+    const rangeTrack = rangeRef.current;
+    const control = controlRef.current;
 
-		const pMinPercentage = (Number(pMin) / HIGHEST_PRICE) * 100;
-		const pMaxPercentage = (Number(pMax) / HIGHEST_PRICE) * 100;
+    if (!(minThumb && maxThumb && control && rangeTrack)) {
+      return;
+    }
 
-		if (minRef.current && maxRef.current && rangeRef.current) {
-		  minRef.current.style.left = pMinPercentage + "%";
-		  maxRef.current.style.left = `calc(${pMaxPercentage}% - ${
-			maxRef.current.offsetWidth * 1.5
-		  }px)`;
+    const limit = control.offsetWidth - maxThumb.offsetWidth * 2;
+    const minThumbLeft =
+      (Number(min) / HIGHEST_PRICE) *
+      calculatePercentage(limit + minThumb.offsetWidth);
+    const maxThumbLeft =
+      (Number(max) / HIGHEST_PRICE) *
+        calculatePercentage(limit + minThumb.offsetWidth) -
+      calculatePercentage(minThumb.offsetWidth);
 
-		  rangeRef.current.style.left = pMinPercentage + "%";
-		  rangeRef.current.style.width = pMaxPercentage - pMinPercentage + "%";
-		}
+    minThumb.style.left = minThumbLeft + "%";
+    maxThumb.style.left = maxThumbLeft + "%";
 
-		setValMin(pMin);
-		setValMax(pMax);
-	  }
-	}, [preset]);
+    minThumb.classList.toggle(
+      "price-range__thumb--above",
+      minThumbLeft >= calculatePercentage(limit)
+    );
 
-	useEffect(() => {
-	  const mouseUpHandler = (e: PointerEvent | TouchEvent) => {
-		setActiveThumb("");
-	  };
-
-	  const asPercentage = (num: number) =>
-		(num / Number(controlRef.current?.offsetWidth)) * 100;
-
-	  const mouseMoveHandler = (event: TouchEvent | PointerEvent) => {
-		const minThumb = minRef.current;
-		const maxThumb = maxRef.current;
-		const rangeTrack = rangeRef.current;
-		const control = controlRef.current;
-
-		if (!(minThumb && maxThumb && control && rangeTrack)) {
-		  return;
-		}
-
-		let clientX = 0;
-		if (event instanceof PointerEvent) {
-		  clientX = event.clientX;
-		} else if (event instanceof TouchEvent) {
-		  clientX = event.touches[0].clientX;
-		}
-
-		const pageX = clientX - control.offsetLeft;
-		const limit = control.offsetWidth - maxThumb.offsetWidth * 2;
-
-		if (activeThumb == "min") {
-		  const thumbLeft = asPercentage(
-			Math.max(
-			  0,
-			  Math.min(pageX - minThumb.offsetWidth / 2, maxThumb.offsetLeft)
-			)
-		  );
-		  minThumb.style.left = thumbLeft + "%";
-		  minThumb.classList.toggle(
-			"price-range__thumb--above",
-			thumbLeft >= asPercentage(limit)
-		  );
-
-		  let minPrice = Number(
-			(minThumb.offsetLeft / (control.offsetWidth - minThumb.offsetWidth)) *
-			  HIGHEST_PRICE
-		  ).toFixed(0);
-		  setValMin(minPrice);
-		} else if (activeThumb == "max") {
-		  const thumbLeft = asPercentage(
-			Math.min(
-			  Math.max(
-				minThumb.offsetLeft - minThumb.offsetWidth,
-				pageX - maxThumb.offsetWidth * 1.5
-			  ),
-			  limit
-			)
-		  );
-		  maxThumb.style.left = thumbLeft + "%";
-		  let maxPrice = Number(
-			(maxThumb.offsetLeft / (control.offsetWidth - maxThumb.offsetWidth)) *
-			  HIGHEST_PRICE
-		  ).toFixed(0);
-		  setValMax(maxPrice);
-		}
-
-		rangeTrack.style.left = asPercentage(minThumb.offsetLeft) + "%";
-		rangeTrack.style.width =
-		  asPercentage(maxThumb.offsetLeft - minThumb.offsetLeft) + "%";
-	  };
-
-	  const resizeObserver = new ResizeObserver((entries) => {
-		if (rangeRef.current && minRef.current && maxRef.current) {
-		  rangeRef.current.style.left =
-			asPercentage(minRef.current.offsetLeft) + "%";
-		  rangeRef.current.style.width =
-			asPercentage(maxRef.current.offsetLeft - minRef.current.offsetLeft) +
-			"%";
-		}
-	  });
-
-	  if (controlRef.current) {
-		resizeObserver.observe(controlRef.current);
-	  }
-
-	  if (activeThumb) {
-		document.addEventListener("pointerup", mouseUpHandler);
-		document.addEventListener("pointermove", mouseMoveHandler);
-
-		document.addEventListener("touchend", mouseUpHandler);
-		document.addEventListener("touchmove", mouseMoveHandler);
-	  }
-
-	  return () => {
-		document.removeEventListener("pointerup", mouseUpHandler);
-		document.removeEventListener("pointermove", mouseMoveHandler);
-
-		document.removeEventListener("touchend", mouseUpHandler);
-		document.removeEventListener("touchmove", mouseMoveHandler);
-		resizeObserver.disconnect();
-	  };
-	}, [activeThumb]);
-
-	return (
-	  <div className="price-range">
-		<input
-		  defaultValue={`Price: $${valueMin} — ${
-			valueMax == HIGHEST_PRICE ? "Over $" + valueMax : "$" + valueMax
-		  }`}
-		  key={`Price: $${valueMin} — $${valueMax}`}
-		  readOnly
-		  className="price-range__input"
-		/>
-		<input
-		  type="hidden"
-		  name="price"
-		  defaultValue={`${valueMin}-${valueMax}`}
-		  key={`${valueMin}-${valueMax}`}
-		/>
-		<div ref={controlRef} className="price-range__control">
-		  <span className="price-range__range"></span>
-		  <span ref={rangeRef} className="price-range__bar"></span>
-		  <span
-			ref={minRef}
-			onPointerDown={(e) => {
-			  e.preventDefault();
-			  setActiveThumb("min");
-			}}
-			onTouchStart={(e) => {
-			  setActiveThumb("min");
-			}}
-			className="price-range__min"
-		  ></span>
-		  <span
-			ref={maxRef}
-			onPointerDown={(e) => {
-			  e.preventDefault();
-			  setActiveThumb("max");
-			}}
-			onTouchStart={(e) => {
-			  setActiveThumb("max");
-			}}
-			className="price-range__max"
-		  ></span>
-		</div>
-	  </div>
-	);
+    rangeTrack.style.left = calculatePercentage(minThumb.offsetLeft) + "%";
+    rangeTrack.style.width =
+      calculatePercentage(maxThumb.offsetLeft - minThumb.offsetLeft) + "%";
   };
+
+  useEffect(() => {
+    if (activeHandle == "") {
+      onUpdate?.(minValue, maxValue);
+    }
+  }, [activeHandle, minValue, maxValue]);
+
+  useEffect(() => {
+    setMinValue(minPrice);
+    setMaxValue(maxPrice);
+    updateControlUI(minPrice, maxPrice);
+  }, [maxPrice, minPrice]);
+
+  useEffect(() => {
+    const minThumb = minHandleRef.current;
+    const maxThumb = maxHandleRef.current;
+    const rangeTrack = rangeRef.current;
+    const control = controlRef.current;
+
+    if (!(minThumb && maxThumb && control && rangeTrack)) {
+      return;
+    }
+
+    const mouseUpHandler = (e: PointerEvent | TouchEvent) => {
+      setActiveHandle("");
+      document.body.classList.remove("grabbing");
+    };
+
+    const limit = control.offsetWidth - maxThumb.offsetWidth * 2;
+    const controlBounds = control.getBoundingClientRect();
+    const mouseMoveHandler = (event: TouchEvent | PointerEvent) => {
+      let clientX = 0;
+      if (event instanceof PointerEvent) {
+        clientX = event.clientX;
+      } else if (event instanceof TouchEvent) {
+        clientX = event.touches[0].clientX;
+      }
+
+      const pageX = clientX - controlBounds.left;
+
+      if (activeHandle == "MIN") {
+        const thumbLeft = calculatePercentage(
+          Math.max(
+            0,
+            Math.min(pageX - minThumb.offsetWidth / 2, maxThumb.offsetLeft)
+          )
+        );
+        minThumb.style.left = thumbLeft + "%";
+        minThumb.classList.toggle(
+          "price-range__thumb--above",
+          thumbLeft >= calculatePercentage(limit)
+        );
+
+        const pricePercentage =
+          thumbLeft / calculatePercentage(limit + maxThumb.offsetWidth);
+
+        const newMinValue = pricePercentage * HIGHEST_PRICE;
+        setMinValue(newMinValue);
+      } else if (activeHandle == "MAX") {
+        const thumbLeft = calculatePercentage(
+          Math.min(
+            Math.max(
+              minThumb.offsetLeft - minThumb.offsetWidth,
+              pageX - maxThumb.offsetWidth * 1.5
+            ),
+            limit
+          )
+        );
+        maxThumb.style.left = thumbLeft + "%";
+
+        const pricePercentage =
+          (thumbLeft + calculatePercentage(minThumb.offsetWidth)) /
+          calculatePercentage(limit + minThumb.offsetWidth);
+
+        const newMaxValue = Number(pricePercentage * HIGHEST_PRICE);
+        setMaxValue(newMaxValue);
+      }
+
+      rangeTrack.style.left = calculatePercentage(minThumb.offsetLeft) + "%";
+      rangeTrack.style.width =
+        calculatePercentage(maxThumb.offsetLeft - minThumb.offsetLeft) + "%";
+    };
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      updateControlUI(Number(minValue), Number(maxValue));
+    });
+
+    if (control) {
+      resizeObserver.observe(control);
+    }
+
+    if (activeHandle) {
+      document.addEventListener("pointerup", mouseUpHandler);
+      document.addEventListener("pointermove", mouseMoveHandler);
+
+      document.addEventListener("touchend", mouseUpHandler);
+      document.addEventListener("touchmove", mouseMoveHandler);
+    }
+
+    return () => {
+      document.removeEventListener("pointerup", mouseUpHandler);
+      document.removeEventListener("pointermove", mouseMoveHandler);
+
+      document.removeEventListener("touchend", mouseUpHandler);
+      document.removeEventListener("touchmove", mouseMoveHandler);
+      resizeObserver.disconnect();
+    };
+  }, [activeHandle]);
+
+  return (
+    <div className="price-range">
+      <input
+        defaultValue={`Price: $${minValue.toFixed(0)} — ${
+          maxValue == HIGHEST_PRICE
+            ? "Over $" + maxValue.toFixed(0)
+            : "$" + maxValue.toFixed(0)
+        }`}
+        key={`Price: $${minValue} — $${maxValue}`}
+        readOnly
+        className="price-range__input"
+      />
+      <input
+        type="hidden"
+        name="price"
+        defaultValue={`${minValue}-${maxValue}`}
+        key={`${minValue}-${maxValue}`}
+      />
+      <div ref={controlRef} className="price-range__control">
+        <span className="price-range__range"></span>
+        <span ref={rangeRef} className="price-range__bar"></span>
+        <span
+          ref={minHandleRef}
+          onPointerDown={(e) => {
+            e.preventDefault();
+            document.body.classList.add("grabbing");
+            setActiveHandle("MIN");
+          }}
+          onTouchStart={(e) => {
+            setActiveHandle("MIN");
+          }}
+          className="price-range__thumb price-range__min"
+        ></span>
+        <span
+          ref={maxHandleRef}
+          onPointerDown={(e) => {
+            e.preventDefault();
+            document.body.classList.add("grabbing");
+            setActiveHandle("MAX");
+          }}
+          onTouchStart={(e) => {
+            setActiveHandle("MAX");
+          }}
+          className="price-range__thumb price-range__max"
+        ></span>
+      </div>
+    </div>
+  );
+}
