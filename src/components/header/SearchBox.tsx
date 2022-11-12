@@ -22,12 +22,26 @@ export default function SearchBoxContainer() {
 
   useDebounce(
     () => {
+      const controller = new AbortController();
+
       if (active) {
-        fetch(`${location.origin}/api/products/search?q=${searchTerm}&limit=5`)
-          .then((res) => res.json())
+        fetch(
+          `${location.origin}/api/products/search?q=${searchTerm}&limit=5`,
+          {
+            signal: controller.signal,
+          }
+        )
+          .then((res) => {
+            const respJson = res.json();
+            if (res.ok) {
+              return respJson;
+            }
+            return Promise.reject(respJson);
+          })
           .then((res) => setProducts(res.data || []))
           .catch(console.log);
       }
+      return () => controller.abort();
     },
     500,
     [active, searchTerm]
@@ -89,7 +103,9 @@ export default function SearchBoxContainer() {
             retro
           </button>
         </div>
-        <h3 className="search__results-info">{products.length} Jordans Found</h3>
+        <h3 className="search__results-info">
+          {products.length} Jordans Found
+        </h3>
         <div className="search__results">
           {products.map((product) => (
             <Product key={product.id} small {...product} />

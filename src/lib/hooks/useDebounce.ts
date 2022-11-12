@@ -6,8 +6,14 @@ export const useDebounce = (
   deps: DependencyList
 ) => {
   useEffect(() => {
-    const timerID = setTimeout(callback, delay);
-    return () => clearTimeout(timerID);
+    let cleanup: () => void;
+    const timerID = setTimeout(() => {
+      cleanup = callback();
+    }, delay);
+    return () => {
+      cleanup?.();
+      clearTimeout(timerID);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 };
