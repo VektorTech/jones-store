@@ -9,8 +9,8 @@ export default function PriceFilterParam() {
     <FilterHeaderParam type="Filter By Price">
       <PriceRange
         onUpdate={(min, max) => filterListings({ price: [min, max] })}
-        minPrice={filterState.price[0]}
-        maxPrice={filterState.price[1]}
+        minPrice={Math.floor(filterState.price[0])}
+        maxPrice={Math.floor(filterState.price[1])}
       />
     </FilterHeaderParam>
   );
