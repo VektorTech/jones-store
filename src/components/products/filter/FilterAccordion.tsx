@@ -15,6 +15,7 @@ import SizesParam from "./params/SizesParam";
 import HeightParam from "./params/HeightParam";
 import PriceFilterParam from "./params/PriceFilterParam";
 import YearParam from "./params/YearParam";
+import { useProductsState } from "@Lib/contexts/ProductsContext";
 
 const removeEmpty = (obj: { [key: string]: any }) => {
   const newObj = { ...obj };
@@ -35,43 +36,15 @@ export default function FilterAccordion({
 }) {
   const router = useRouter();
   const { categoryId, colorways, sizes, height, price, year } = router.query;
+  const { clearFilters } = useProductsState();
 
   const [filterState, setFilterState] = useState({
     colorways,
     sizes,
     height,
     price,
-    year
+    year,
   });
-
-  const [minPrice, maxPrice] =
-    typeof filterState.price == "string"
-      ? filterState.price.split("-")
-      : [0, 1000];
-
-  const onSubmit = () => {
-    const newQuery = removeEmpty({
-      ...router.query,
-      ...filterState,
-      categoryId: null,
-    });
-    router.replace({ pathname: location.pathname, query: newQuery });
-  };
-
-  const onClear = () => {
-    setFilterState({
-      colorways: [""],
-      sizes: [""],
-      height: "",
-      price: "0-1000",
-      year: "2022"
-    });
-  };
-
-  const sizesObj = useMemo(
-    () => listToEnum([...Array(37)].map((_, i) => String(2 + i / 2))),
-    []
-  );
 
   return (
     <div className={"filter" + (active ? " filter--active" : "")}>
@@ -82,58 +55,19 @@ export default function FilterAccordion({
         </button>
       </div>
 
-      <GenderParam current={categoryId?.[0]} />
-      <MainColorParam
-        colorways={filterState.colorways}
-        setFilterState={(colors) =>
-          setFilterState({
-            ...filterState,
-            colorways: colors,
-          })
-        }
-      />
-      <SizesParam
-        sizes={filterState.sizes}
-        setFilterState={(checkedSizes) =>
-          setFilterState({
-            ...filterState,
-            sizes: checkedSizes,
-          })
-        }
-      />
-      <HeightParam
-        heights={filterState.height}
-        setFilterState={(checkedHeights) =>
-          setFilterState({
-            ...filterState,
-            sizes: checkedHeights,
-          })
-        }
-      />
-      <PriceFilterParam
-        minPrice={Number(minPrice)}
-        maxPrice={Number(maxPrice)}
-        setFilterState={(minPrice, maxPrice) =>
-          setFilterState({
-            ...filterState,
-            price: `${minPrice}-${maxPrice}`,
-          })
-        }
-      />
-      <YearParam
-        setFilterState={(year) =>
-          setFilterState({
-            ...filterState,
-            year,
-          })
-        }
-      />
+      <GenderParam />
+      <MainColorParam />
+      <SizesParam />
+      <HeightParam />
+      <PriceFilterParam />
+      <YearParam />
 
       <div className="filter__confirm">
-        <Button onClick={onSubmit} type="submit" className="filter__done">
-          See Results
-        </Button>
-        <Button onClick={onClear} type="submit" className="filter__clear-all">
+        <Button
+          onClick={clearFilters}
+          type="submit"
+          className="filter__clear-all"
+        >
           clear filters
         </Button>
       </div>

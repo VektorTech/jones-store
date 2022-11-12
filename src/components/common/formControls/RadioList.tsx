@@ -8,6 +8,7 @@ export default function RadioList({
   render: RenderComponent,
   grid,
   checkedItems,
+  reverse,
   onChecked,
   name = "",
   className = "",
@@ -25,20 +26,20 @@ export default function RadioList({
   label?: string;
   checkbox?: boolean;
   grid?: boolean;
+  reverse?: boolean;
   onChecked?: (items: string[] | string, value?: string) => void;
   checkedItems?: (string | number)[];
   values: { [value: string | number]: string | number };
 } & JSX.IntrinsicElements["input"]) {
-
   const initState = useMemo<{ [value: string]: boolean }>(
     () =>
-      Object.keys(values).reduce((obj: any, value: string) => {
+      (reverse ? Object.keys(values).reverse() : Object.keys(values)).reduce((obj: any, value: string) => {
         obj[value] = !!checkedItems?.includes(value);
         return obj;
       }, {}),
-    [values, checkedItems]
+    [values, checkedItems, reverse]
   );
-  const valuesArr = Object.keys(values);
+  const valuesArr = (reverse ? Object.keys(values).reverse() : Object.keys(values));
 
   const [groupState, setGroupState] = useState(initState);
   const [all, setAll] = useState(valuesArr.length < 10);

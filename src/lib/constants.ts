@@ -14,3 +14,4 @@ export const allowedTags = Object.freeze([
   "small",
 ]);
 export const RESULTS_PER_PAGE = 20;
+export const HIGHEST_PRICE = 1000;

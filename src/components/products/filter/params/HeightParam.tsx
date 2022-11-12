@@ -1,21 +1,19 @@
 import RadioList from "@Components/common/formControls/RadioList";
+import { useProductsState } from "@Lib/contexts/ProductsContext";
 import { Category } from "@prisma/client";
 import FilterHeaderParam from "../FilterHeaderParam";
 
-export default function HeightParam({
-  heights,
-  setFilterState,
-}: {
-  heights?: string[] | string;
-  setFilterState: (checkedHeights: string | string[]) => void;
-}) {
+export default function HeightParam() {
+  const { filterListings, filterState } = useProductsState();
+
   return (
     <FilterHeaderParam type="Height">
       <RadioList
         name="height"
         values={Category}
-        checkedItems={typeof heights == "string" ? [heights] : []}
-        onChecked={(items) => setFilterState(items)}
+        checkbox
+        checkedItems={filterState.height}
+        onChecked={(items) => filterListings({ height: items })}
         render={({ label, checked }) => (
           <span
             className={

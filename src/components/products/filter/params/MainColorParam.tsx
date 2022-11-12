@@ -1,22 +1,19 @@
 import RadioList from "@Components/common/formControls/RadioList";
+import { useProductsState } from "@Lib/contexts/ProductsContext";
 import FilterHeaderParam from "../FilterHeaderParam";
 
-export default function MainColorParam({
-  colorways,
-  setFilterState,
-}: {
-  colorways?: string[] | string;
-  setFilterState: (colors: string | string[]) => void;
-}) {
+export default function MainColorParam() {
+  const { filterListings, filterState } = useProductsState();
+
   return (
     <FilterHeaderParam type="Main Color">
       <RadioList
         name="colorways"
         checkbox
         values={colorsHex}
-        checkedItems={colorways instanceof Array ? colorways : []}
+        checkedItems={filterState.color}
         onChecked={(items) =>
-			setFilterState(items)
+          filterListings({ color: items })
         }
         render={({ label, checked, value }) => (
           <span

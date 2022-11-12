@@ -3,13 +3,14 @@ import { BsSliders } from "react-icons/bs";
 import Button from "@Components/common/formControls/Button";
 import Dropdown from "@Components/common/formControls/Dropdown";
 import { useRouter } from "next/router";
+import { useProductsState } from "@Lib/contexts/ProductsContext";
 
 export default function FilterSortSection({
   toggleFilter,
 }: {
   toggleFilter?: () => void;
 }) {
-  const router = useRouter();
+  const { sortListings } = useProductsState();
 
   return (
     <div className="filter-sort">
@@ -24,7 +25,6 @@ export default function FilterSortSection({
             label="Sort By"
             className="filter-sort__sort-select"
             options={{
-              relevance: "Relevance",
               asc_price: "Price: Low - High",
               price: "Price: High - Low",
               asc_ratings: "Ratings: Low - High",
@@ -32,11 +32,7 @@ export default function FilterSortSection({
             }}
             onOptionSelect={(order) => {
               if (order) {
-                const newQuery = { ...router.query, order };
-                router.replace({
-                  pathname: location.pathname,
-                  query: newQuery,
-                });
+                sortListings(order);
               }
             }}
           />
