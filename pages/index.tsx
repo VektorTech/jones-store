@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
     const newArrivals =
       (await prisma.product
         .findMany({
-          take: 4,
+          take: 5,
           select: productColumns,
           orderBy: { dateAdded: "desc" },
         })
@@ -55,7 +55,7 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
     const bestSellers =
       (await prisma.product
         .findMany({
-          take: 4,
+          take: 5,
           select: productColumns,
           orderBy: { salesCount: "desc" },
         })

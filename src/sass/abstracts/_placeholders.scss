@@ -152,11 +152,17 @@
 %product-grid {
   @extend %container;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
+  justify-content: center;
   padding-bottom: 3rem;
   gap: 1rem;
 
   @include m.respond-to("small") {
+    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include m.respond-to("medium") {
     gap: 1.5rem;
     grid-template-columns: repeat(4, 1fr);
   }

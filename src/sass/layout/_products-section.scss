@@ -40,13 +40,30 @@
 
   &__products {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     justify-content: space-between;
-    padding: 3rem 0;
+    margin: 3rem 0 0;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    scroll-snap-type: x mandatory;
     gap: 1rem;
 
     @include respond-to("small") {
       gap: 1.5rem;
+    }
+  }
+
+  &__scroll {
+    text-align: right;
+    margin-bottom: 3rem;
+
+    &-button {
+      font-size: 2.5rem;
+      color: $c-text-light;
+
+      & + & {
+        margin-left: 1rem;
+      }
     }
   }
 }

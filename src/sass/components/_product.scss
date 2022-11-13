@@ -5,6 +5,7 @@
 
   flex: 1 0 100%;
   font-size: $text-sm;
+  scroll-snap-align: center;
 
   & > a {
     display: block;
