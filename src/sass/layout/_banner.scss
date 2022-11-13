@@ -50,12 +50,10 @@
     color: #fff;
     text-align: center;
     text-transform: uppercase;
-    opacity: 0;
     visibility: hidden;
-    transition: opacity 0.6s $timing-func-ui, visibility 0.6s;
+    transition: visibility 1s;
 
     &--active {
-      opacity: 1;
       visibility: visible;
     }
 
@@ -92,6 +90,13 @@
     font-style: italic;
     font-weight: 400;
 
+    transition: transform 1s;
+    transform: scaleY(0);
+
+    #{$self}__content--active & {
+      transform: scaleY(1);
+    }
+
     & span {
       color: $c-red;
     }
@@ -108,46 +113,12 @@
   &__title {
     font-size: $text-xxl;
     font-weight: 700;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 1s;
 
-    &-type {
-      position: absolute;
-      font-size: 16vw;
-      font-weight: 900;
-      font-style: italic;
-      color: #ffffff16;
-      height: auto;
-      max-width: 90rem;
-      left: 0;
-      right: 0;
-      margin-top: -3rem;
-      white-space: nowrap;
-      transition: transform 0.6s ease-out;
-
-      @supports (-webkit-text-stroke: 0.1rem #cecece2a) {
-        & {
-          -webkit-text-stroke: 0.1rem #cecece2a;
-          color: transparent;
-        }
-      }
-
-      @include respond-to("x-small") {
-        text-align: left;
-        margin-left: -3.5rem;
-        margin-top: 4rem;
-        font-size: 9.8vw;
-      }
-
-      @include respond-to("medium") {
-        margin-left: -3rem;
-        margin-top: -2rem;
-        font-size: 12.5vw;
-      }
-
-      @include respond-to("large") {
-        margin-left: -6rem;
-        margin-top: 0rem;
-        font-size: 11vw;
-      }
+    #{$self}__content--active & {
+      transform: scaleY(1);
     }
 
     @include respond-to("x-small") {
@@ -168,11 +139,62 @@
     }
   }
 
+  &__title-type {
+    position: absolute;
+    font-size: 16vw;
+    font-weight: 900;
+    font-style: italic;
+    color: #ffffff16;
+    height: auto;
+    max-width: 90rem;
+    left: 0;
+    right: 0;
+    margin-top: -3rem;
+    white-space: nowrap;
+    transition: transform 0.6s ease-out, opacity 1s;
+    opacity: 0;
+
+    #{$self}__content--active & {
+      opacity: 1;
+    }
+
+    @supports (-webkit-text-stroke: 0.1rem #cecece2a) {
+      & {
+        -webkit-text-stroke: 0.1rem #cecece2a;
+        color: transparent;
+      }
+    }
+
+    @include respond-to("x-small") {
+      text-align: left;
+      margin-left: -3.5rem;
+      margin-top: 4rem;
+      font-size: 9.8vw;
+    }
+
+    @include respond-to("medium") {
+      margin-left: -3rem;
+      margin-top: -2rem;
+      font-size: 12.5vw;
+    }
+
+    @include respond-to("large") {
+      margin-left: -6rem;
+      margin-top: 0rem;
+      font-size: 11vw;
+    }
+  }
+
   &__image {
     margin: 0 auto;
     margin-top: 20vh;
     width: calc(8rem + 12vh + 15vw);
-    transition: transform 0.6s ease-out;
+    transition: transform 0.6s ease-out, opacity 1s;
+    opacity: 0;
+
+    #{$self}__content--active & {
+      opacity: 1;
+    }
 
     > span {
       overflow: visible !important;
