@@ -69,13 +69,20 @@ async function ConfirmPayment(
           where: { orderId },
         });
 
-        orderLineItems.forEach((item) =>
+        orderLineItems.forEach((item) => {
+          prisma.product.update({
+            where: { id: item.productId },
+            data: {
+              salesCount: { increment: 1 },
+              stockQty: { decrement: item.quantity },
+            },
+          });
           prisma.cartItem.delete({
             where: {
               cartId_productId: { cartId: cart.id, productId: item.productId },
             },
-          })
-        );
+          });
+        });
       }
     } catch (e) {
       console.log(e);
