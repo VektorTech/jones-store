@@ -1,3 +1,4 @@
+import { useProductsState } from "@Lib/contexts/ProductsContext";
 import { useRouter } from "next/router";
 import BreadCrumbs from "../BreadCrumbs";
 import ConstraintButtons from "./ConstraintButtons";
@@ -5,33 +6,30 @@ import ConstraintButtons from "./ConstraintButtons";
 export default function Constraints({
   allProductsCount,
   currentProductsCount,
-  isSearch
+  isSearch,
 }: {
   allProductsCount: number;
   currentProductsCount: number;
   isSearch?: boolean;
 }) {
   const router = useRouter();
-  const {
-    categoryId,
-    search,
-    offset = 0,
-    colorways,
-    sizes,
-    height,
-    price,
-  } = router.query;
+  const { search } = router.query;
+  const { filterState, clearFilters } = useProductsState();
 
   return (
     <div className="constraints">
       <div className="constraints__container">
-        { !isSearch ? <BreadCrumbs /> : null }
+        {!isSearch ? <BreadCrumbs /> : null}
         <hr className="constraints__hr" />
-        <h1 className="constraints__title">{isSearch ? <>&ldquo;{search}&rdquo;</> : categoryId}</h1>
+        <h1 className="constraints__title">
+          {isSearch ? (
+            <>&ldquo;{search}&rdquo;</>
+          ) : (
+            filterState.gender.toLowerCase()
+          )}
+        </h1>
         {currentProductsCount ? (
           <p className="constraints__summary">
-            Showing <strong>{Number(offset) + 1}</strong> &mdash;{" "}
-            <strong>{Number(offset) + currentProductsCount}</strong> of{" "}
             <strong>{allProductsCount}</strong> results
           </p>
         ) : (
@@ -39,16 +37,14 @@ export default function Constraints({
             <strong>Nothing Found!</strong>
           </p>
         )}
-        <div className="constraints__filters">
-          <ConstraintButtons
-            paramName="Colorway"
-            items={Array.isArray(colorways) ? colorways : [colorways || ""]}
-          />
-          <ConstraintButtons
-            paramName="Size"
-            items={Array.isArray(sizes) ? sizes : [sizes || ""]}
-          />
-        </div>
+        {!isSearch ? (
+          <div className="constraints__filters">
+            <ConstraintButtons paramName="color" items={filterState.color} />
+            <ConstraintButtons paramName="Size" items={filterState.size} />
+            <ConstraintButtons paramName="height" items={filterState.height} />
+            <ConstraintButtons paramName="year" items={filterState.year} />
+          </div>
+        ) : null}
       </div>
     </div>
   );
