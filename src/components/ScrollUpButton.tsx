@@ -9,13 +9,15 @@ export function ScrollUpButton() {
   const scrollTop = useScrollTop();
 
   if (buttonRef.current) {
+    const scrollRatio =
+      scrollTop / (document.documentElement.scrollHeight - innerHeight);
+
     buttonRef.current.style.setProperty(
       "--animation-duration-offset",
-      (
-        scrollTop /
-        (document.documentElement.scrollHeight - innerHeight)
-      ).toString()
+      scrollRatio.toString()
     );
+
+    buttonRef.current.classList.toggle("scroll-up--active", scrollRatio > 0.3);
   }
 
   return (

@@ -9,13 +9,24 @@
   height: 5rem;
   background-color: #fff;
   border-radius: 50%;
-  display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   border: 0.1rem solid #000;
+  display: none;
 
   --animation-duration-offset: 0;
+
+  &--active {
+    display: flex;
+    animation: jump 0.3s forwards;
+  }
+
+  @keyframes jump {
+    0% { opacity: 0; transform: translateY(100%); }
+    80% { transform: translateY(-50%); }
+    100% { opacity: 1; transform: translateY(0%); }
+  }
 
   &__container {
     width: 25%;
