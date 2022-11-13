@@ -44,7 +44,6 @@ export default function ProductGallery({
             <Carousel
               onUpdate={(i: number) => setActiveImage(i)}
               aIndex={activeImage}
-              //   key={product.id + "carousel"}
             >
               {images.map((url, i) => (
                 <Img

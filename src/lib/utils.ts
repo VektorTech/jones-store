@@ -95,3 +95,25 @@ export const listToEnum = <T extends string | number>(list: T[]) => {
     return enumAccumulated;
   }, Object.create({}));
 };
+
+export const map = (
+  inMin: number,
+  inMax: number,
+  outMin: number,
+  outMax: number,
+  value: number
+) => ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
+
+export const clamp = (num: number, min: number, max: number) =>
+  Math.max(min, Math.min(num, max));
+
+export const throttle = (callback: Function, timeout: number) => {
+  let wait = false;
+  return function (this: any, ...args: unknown[]) {
+    if (!wait) {
+      callback.apply(this, args);
+      wait = true;
+      setTimeout(() => (wait = false), timeout);
+    }
+  };
+};

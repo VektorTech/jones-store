@@ -121,6 +121,7 @@
       right: 0;
       margin-top: -3rem;
       white-space: nowrap;
+      transition: transform 0.6s ease-out;
 
       @supports (-webkit-text-stroke: 0.1rem #cecece2a) {
         & {
@@ -131,17 +132,20 @@
 
       @include respond-to("x-small") {
         text-align: left;
-        transform: translate(-7%, -18%);
-        font-size: 12.8vw;
+        margin-left: -3.5rem;
+        margin-top: 4rem;
+        font-size: 9.8vw;
       }
 
       @include respond-to("medium") {
-        transform: translate(-7%, 15%);
-        font-size: 11.5vw;
+        margin-left: -3rem;
+        margin-top: -2rem;
+        font-size: 12.5vw;
       }
 
       @include respond-to("large") {
-        transform: translate(-8%, 10%);
+        margin-left: -6rem;
+        margin-top: 0rem;
         font-size: 11vw;
       }
     }
@@ -168,6 +172,7 @@
     margin: 0 auto;
     margin-top: 20vh;
     width: calc(8rem + 12vh + 15vw);
+    transition: transform 0.6s ease-out;
 
     > span {
       overflow: visible !important;

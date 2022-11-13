@@ -1,4 +1,5 @@
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
+import useMouseCoords from "@Lib/hooks/useMouseCoords";
 import React, { useState, useRef, useEffect } from "react";
 import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
 import Modal from "./Modal";
@@ -14,6 +15,7 @@ export default function Carousel({
 }) {
   const carousel = useRef<HTMLDivElement>(null);
   const slidesContainer = useRef<HTMLDivElement>(null);
+  const controls = useRef<HTMLDivElement>(null);
   const transitioning = useRef<boolean>(false);
   const { currentDialog, setDialog } = useDialog();
   const activeModal = currentDialog == DialogType.MODAL_PRODUCT_VIEW;
@@ -21,6 +23,7 @@ export default function Carousel({
   const [carouselWidth, setCarouselWidth] = useState(
     carousel.current?.clientWidth || 0
   );
+  const [x, y] = useMouseCoords(controls.current);
 
   const getChildrenAsSlides = (): Array<React.ReactNode> | undefined => {
     if (Array.isArray(children)) {
@@ -77,29 +80,16 @@ export default function Carousel({
     return () => sc?.removeEventListener("transitionend", reset);
   }, [slideNumber, updatedChildren, len]);
 
-  const handleMouseOver: React.MouseEventHandler<HTMLDivElement> = ({
-    clientX,
-    clientY,
-  }) => {
+  const handlePointerOver: React.PointerEventHandler<HTMLDivElement> = () => {
     const activeSlide = slidesContainer.current?.querySelector(
       ".carousel__slide--active"
     );
     if (activeSlide instanceof HTMLElement) {
-      const carouselBounds = carousel.current?.getBoundingClientRect();
-      const carouselLeft = carouselBounds?.x || 0;
-      const carouselTop = carouselBounds?.y || 0;
-      const activeSlideWidth = activeSlide.offsetWidth;
-      const activeSlideHeight = activeSlide.offsetHeight;
-      const activeSlideXMid = activeSlideWidth / 2;
-      const activeSlideYMid = activeSlideHeight / 2;
-
-      const shiftX = -(clientX - (carouselLeft + activeSlideXMid));
-      const shiftY = -(clientY - (carouselTop + activeSlideYMid));
-      activeSlide.style.transform = `scale(3) translate3d(${shiftX}px, ${shiftY}px, 0)`;
+      activeSlide.style.transform = `scale(3) translate3d(${-x}px, ${-y}px, 0)`;
     }
   };
 
-  const handleMouseLeave = () => {
+  const handlePointerLeave = () => {
     const activeSlide = slidesContainer.current?.querySelector(
       ".carousel__slide--active"
     );
@@ -124,8 +114,9 @@ export default function Carousel({
       </Modal>
       <div
         onClick={() => setDialog(DialogType.MODAL_PRODUCT_VIEW)}
-        onMouseMove={handleMouseOver}
-        onMouseOut={handleMouseLeave}
+        onPointerMove={handlePointerOver}
+        onPointerOut={handlePointerLeave}
+        ref={controls}
         className="carousel__controls"
       >
         <button
@@ -136,7 +127,7 @@ export default function Carousel({
               setSlideNumber((slideNumber - 1 + len) % len);
             }
           }}
-          onMouseMove={(e) => e.stopPropagation()}
+          onPointerMove={(e) => e.stopPropagation()}
           className="carousel__controls-button carousel__prev"
         >
           <BsArrowLeft />
@@ -149,7 +140,7 @@ export default function Carousel({
               setSlideNumber((slideNumber + 1) % len);
             }
           }}
-          onMouseMove={(e) => e.stopPropagation()}
+          onPointerMove={(e) => e.stopPropagation()}
           className="carousel__controls-button carousel__next"
         >
           <BsArrowRight />

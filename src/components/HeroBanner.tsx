@@ -10,6 +10,32 @@ import BannerImage2 from "@Images/jordan-1-banner-2.png";
 import BannerImage3 from "@Images/jordan-1-banner-3.png";
 import { useAnnouncementState } from "@Lib/contexts/UIContext";
 import { useRouter } from "next/router";
+import useMouseCoords from "@Lib/hooks/useMouseCoords";
+import useScrollTop from "@Lib/hooks/useScrollTop";
+
+const slidesData = [
+  {
+    secondary: { main: "verified", rest: "authentic sneakers" },
+    type: "heirloom",
+    title: "retro high og",
+    imageSrc: BannerImage1,
+    actionUrl: "/category/men/retro-high-og",
+  },
+  {
+    secondary: { main: "elevated", rest: "new build" },
+    type: "SIGNAL BLUE",
+    title: "air - mid se",
+    imageSrc: BannerImage3,
+    actionUrl: "/category/men/retro-high-og",
+  },
+  {
+    secondary: { main: "authentic", rest: "1980s detailing" },
+    type: "pollen",
+    title: "retro high og",
+    imageSrc: BannerImage2,
+    actionUrl: "/category/men/retro-high-og",
+  },
+];
 
 export default function HeroBanner() {
   const announcementVisible = useAnnouncementState();
@@ -17,21 +43,24 @@ export default function HeroBanner() {
   const short = router.pathname != "/";
 
   const [activeView, setActiveView] = useState(2);
-  const requestRef = useRef(0);
+  const rAFRef = useRef(0);
+  const bannerRef = useRef<HTMLDivElement>(null);
+  const [x, y] = useMouseCoords(bannerRef.current, 25);
+  const scrollTop = useScrollTop();
 
   useEffect(() => {
     let currentTime = performance.now();
     const VIEWS_COUNT = 3;
-    const INTERVAL = 5000;
+    const INTERVAL = 6000;
 
-    requestRef.current = requestAnimationFrame(function changeSlide(tick) {
+    rAFRef.current = requestAnimationFrame(function changeSlide(tick) {
       if (tick - currentTime > INTERVAL) {
         setActiveView((i) => (i + 1) % VIEWS_COUNT);
         currentTime = tick;
       }
-      requestRef.current = requestAnimationFrame(changeSlide);
+      rAFRef.current = requestAnimationFrame(changeSlide);
     });
-    return () => cancelAnimationFrame(requestRef.current);
+    return () => cancelAnimationFrame(rAFRef.current);
   }, [activeView]);
 
   return (
@@ -43,7 +72,7 @@ export default function HeroBanner() {
         (announcementVisible ? " banner--with-announcement" : "")
       }
     >
-      <div className="banner__container">
+      <div ref={bannerRef} className="banner__container">
         <div className="banner__background"></div>
         {short ? null : (
           <>
@@ -94,98 +123,41 @@ export default function HeroBanner() {
             </div>
 
             <div className="banner__main">
-              <div
-                className={
-                  "banner__content" +
-                  (activeView == 0 ? " banner__content--active" : "")
-                }
-              >
-                <div className="banner__headings">
-                  <p className="banner__secondary-text">
-                    <span>verified</span> authentic sneakers
-                  </p>
-                  <h2 className="banner__title-type">heirloom</h2>
-                  <h3 className="banner__title">retro high og</h3>
-                </div>
-                <div className="banner__image">
-                  <Image
-                    layout="responsive"
-                    width={220}
-                    height={144}
-                    src={BannerImage1}
-                    alt=""
-                  />
-                </div>
-                <div className="banner__action-button">
-                  <Link href="/category/men/retro-high-og">
-                    <a className="banner__action-button-element">
-                      <span>buy yours</span>
-                    </a>
-                  </Link>
-                </div>
-              </div>
-
-              <div
-                className={
-                  "banner__content" +
-                  (activeView == 1 ? " banner__content--active" : "")
-                }
-              >
-                <div className="banner__headings">
-                  <p className="banner__secondary-text">
-                    <span>authentic</span> 1980s detailing
-                  </p>
-                  <h2 className="banner__title-type">pollen</h2>
-                  <h3 className="banner__title">retro high og</h3>
-                </div>
-                <div className="banner__image">
-                  <Image
-                    layout="responsive"
-                    width={220}
-                    height={144}
-                    src={BannerImage2}
-                    alt=""
-                  />
-                </div>
-                <div className="banner__action-button">
-                  <Link href="/category/men/retro-high-og">
-                    <a className="banner__action-button-element">
-                      <span>buy yours</span>
-                    </a>
-                  </Link>
-                </div>
-              </div>
-
-              <div
-                className={
-                  "banner__content" +
-                  (activeView == 2 ? " banner__content--active" : "")
-                }
-              >
-                <div className="banner__headings">
-                  <p className="banner__secondary-text">
-                    <span>elevated</span> new build
-                  </p>
-                  <h2 className="banner__title-type">SIGNAL BLUE</h2>
-                  <h3 className="banner__title">air - mid se</h3>
-                </div>
-                <div className="banner__image">
-                  <Image
-                    layout="responsive"
-                    width={220}
-                    height={144}
-                    src={BannerImage3}
-                    alt=""
-                  />
-                </div>
-                <div className="banner__action-button">
-                  <Link href="/category/men/retro-high-og">
-                    <a className="banner__action-button-element">
-                      <span>buy yours</span>
-                    </a>
-                  </Link>
-                </div>
-              </div>
+              {
+                slidesData.map((data, i) => (
+                  <div
+                    key={data.title + data.type}
+                    className={
+                      "banner__content" +
+                      (activeView == i ? " banner__content--active" : "")
+                    }
+                  >
+                    <div className="banner__headings">
+                      <p className="banner__secondary-text">
+                        <span>{data.secondary.main}</span> {data.secondary.rest}
+                      </p>
+                      <h2 style={{ transform: `translateX(${-x * 0.3}px)` }} className="banner__title-type">{data.type}</h2>
+                      <h3 className="banner__title">{data.title}</h3>
+                    </div>
+                    <div style={{ transform: `translate(${-x * 1.2}px, ${(-y * 0.4) + scrollTop * 0.1}px)` }} className="banner__image">
+                      <Image
+                        layout="responsive"
+                        width={220}
+                        height={144}
+                        src={data.imageSrc}
+                        alt=""
+                      />
+                    </div>
+                    <div className="banner__action-button">
+                      <Link href={data.actionUrl}>
+                        <a className="banner__action-button-element">
+                          <span>buy yours</span>
+                        </a>
+                      </Link>
+                    </div>
+                  </div>
+                ))
+              }
             </div>
           </>
         )}
