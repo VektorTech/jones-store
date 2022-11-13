@@ -106,7 +106,27 @@ MyApp.getInitialProps = async (context: AppContext) => {
       }
       user = { ...user, cart };
     } else if (session.guest) {
-      user = session.guest;
+      const wishlist = await Promise.all(
+        session.guest.wishlist.map(async (item) => {
+          return {
+            ...item,
+            product: await prisma.product.findUnique({
+              where: { id: item.productId },
+            }),
+          };
+        })
+      );
+      const cart = await Promise.all(
+        session.guest.cart.map(async (item) => {
+          return {
+            ...item,
+            product: await prisma.product.findUnique({
+              where: { id: item.productId },
+            }),
+          };
+        })
+      );
+      user = { ...session.guest, wishlist, cart };
     } else {
       session.guest = {
         id: "guest",

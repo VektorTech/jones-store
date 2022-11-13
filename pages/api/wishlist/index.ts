@@ -37,7 +37,7 @@ async function postWishlistRoute(
         guest.wishlist = [
           ...(guest.wishlist.filter((item) => item.productId != productId) ||
             []),
-          { userId: "guest", productId, product },
+          { userId: "guest", productId, product: {} },
         ];
         await req.session.save();
 

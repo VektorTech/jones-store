@@ -99,7 +99,7 @@ async function postCartRoute(
       };
       guest.cart = [
         ...(guest.cart.filter((item) => item.productId != productId) || []),
-        { product, cartId: "guest-cart", ...item },
+        { cartId: "guest-cart", ...item, product: {} },
       ];
       await req.session.save();
 
