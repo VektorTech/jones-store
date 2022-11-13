@@ -10,7 +10,6 @@ import { FiSearch, FiLogOut, FiLogIn } from "react-icons/fi";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { getPathString } from "@Lib/utils";
 import Form from "@Components/common/Form";
-import { CartItem } from "@prisma/client";
 
 const CategoriesData = require("@Lib/CategoriesData.json");
 
@@ -21,10 +20,10 @@ export default function Sidebar({ userId }: { userId?: string }) {
   const { currentDialog, setDialog } = useDialog();
 
   const { user } = useAuthState();
-  const isAuth = user?.isAuth;
-  const wishlistCount = user?.wishlist?.length;
-  const cartCount = user?.cart.length;
-  const cartTotal = user?.cartTotal;
+  const isAuth = user.isAuth;
+  const wishlistCount = user.wishlist.count;
+  const cartCount = user.cart.count;
+  const cartTotal = user.cart.total;
 
   const sidebarRef = useRef<HTMLDivElement>(null);
   const sidebarVisible = currentDialog == DialogType.SIDEBAR_DIALOG;

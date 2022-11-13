@@ -22,7 +22,7 @@ export default function Product({
   id,
 }: ProductComponentType) {
   const { addToWishlist, removeFromWishlist, user } = useAuthState();
-  const isOnWishlist = user?.wishlist?.some((item) => item.productId == id);
+  const isOnWishlist = !!user.wishlist.items[id];
   const handleWishlistAction = () => {
     if (isOnWishlist) {
       return removeFromWishlist(id);

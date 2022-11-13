@@ -1,51 +1,23 @@
 import Button from "./common/formControls/Button";
 import { BsXLg } from "react-icons/bs";
 import { useAuthState } from "@Lib/contexts/AuthContext";
-import { useEffect, useState } from "react";
-import { PaymentType, Product } from "@prisma/client";
+import { PaymentType } from "@prisma/client";
 import { currencyFormatter } from "@Lib/intl";
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 import CartProductItem from "./CartItem";
 
 export default function Cart() {
-  const [products, setProducts] = useState<Product[]>([]);
   const { user, addToCart, removeFromCart, emptyCart } = useAuthState();
-  const shippingTotalCost = products.reduce(
-    (shippingTotal, { shippingCost }) => shippingTotal + shippingCost,
-    0
-  );
+  const shippingTotalCost = user.cart.shippingTotal || 0;
   const { currentDialog, setDialog } = useDialog();
   const active = currentDialog == DialogType.CART;
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    if (active) {
-      Promise.all(
-        user.cart.map((cartItem) =>
-          fetch(`/api/products/${cartItem.productId}`, {
-            signal: controller.signal,
-          }).then((res) => {
-            const respJson = res.json();
-            if (res.ok) {
-              return respJson.then((res) => res.data);
-            }
-            return Promise.reject(respJson);
-          })
-        )
-      )
-        .then(setProducts)
-        .catch(console.log);
-    }
-    return () => controller.abort();
-  }, [user.cart, active]);
 
   return (
     <div className={"cart" + (active ? " cart--active" : "")}>
       <div onClick={() => setDialog(null)} className="cart__backdrop"></div>
       <div className="cart__container">
         <div className="cart__top">
-          <h3 className="cart__heading">Cart {`(${products.length})`}</h3>
+          <h3 className="cart__heading">Cart {`(${user.cart.count})`}</h3>
           <button onClick={() => emptyCart()} className="cart__clear">
             {"(Clear Cart)"}
           </button>
@@ -55,15 +27,15 @@ export default function Cart() {
         </div>
         <div className="cart__content">
           <ul className="cart__list">
-            {products.map((product, index) => (
+            {user.cart.productIds.sort().map((id, index) => (
               <CartProductItem
-                removeAction={() => removeFromCart(product.id)}
+                removeAction={() => removeFromCart(id)}
                 updateAction={(quantity: number) =>
-                  addToCart(product.id, quantity, user.cart[index].size)
+                  addToCart(id, quantity, user.cart.items[id].size)
                 }
-                key={`cart-${product.id}`}
-                product={product}
-                cartItem={user.cart[index]}
+                key={`cart-${id}`}
+                product={user.cart.items[id].product}
+                cartItem={user.cart.items[id]}
               />
             ))}
           </ul>
@@ -72,7 +44,7 @@ export default function Cart() {
           <div className="cart__details">
             <p className="cart__sub-total">Sub-total:</p>
             <p className="cart__sub-total-value">
-              {currencyFormatter.format(user.cartTotal)}
+              {currencyFormatter.format(user.cart.total)}
             </p>
             <p className="cart__shipping">Shipping:</p>
             <p className="cart__shipping-value">
@@ -80,10 +52,12 @@ export default function Cart() {
             </p>
             <p className="cart__total">Total:</p>
             <p className="cart__total-value">
-              {currencyFormatter.format(user.cartTotal + shippingTotalCost)}
+              {currencyFormatter.format(
+                user.cart.total + shippingTotalCost
+              )}
             </p>
           </div>
-          <Button onClick={checkout} className="cart__checkout-button">
+          <Button onClick={stripeCheckout} className="cart__checkout-button">
             Checkout
           </Button>
         </div>
@@ -92,7 +66,7 @@ export default function Cart() {
   );
 }
 
-function checkout() {
+function stripeCheckout() {
   fetch("/api/cart-checkout", {
     method: "POST",
     headers: {

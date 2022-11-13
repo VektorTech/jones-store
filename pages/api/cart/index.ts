@@ -85,7 +85,7 @@ async function postCartRoute(
 
         return res.json({
           message: "Product Successfully Added To Cart",
-          data: item,
+          data: { ...item, product},
         });
       }
     } else if (guest && product && product.stockQty) {
@@ -99,13 +99,13 @@ async function postCartRoute(
       };
       guest.cart = [
         ...(guest.cart.filter((item) => item.productId != productId) || []),
-        item,
+        { product, cartId: "guest-cart", ...item },
       ];
       await req.session.save();
 
       return res.json({
         message: "Product Successfully Added To Cart",
-        data: item,
+        data: { product, cartId: "guest-cart", ...item },
       });
     }
   }

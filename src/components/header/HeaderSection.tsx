@@ -33,10 +33,10 @@ export default function HeaderSection({
   const headerRef = useRef<HTMLElement>(null);
 
   const { user } = useAuthState();
-  const isAuth = user?.isAuth;
-  const wishlistCount = user?.wishlist?.length;
-  const cartCount = user?.cart?.length;
-  const cartTotal = user?.cartTotal;
+  const isAuth = user.isAuth;
+  const wishlistCount = user.wishlist.count;
+  const cartCount = user.cart.count;
+  const cartTotal = user.cart.total;
 
   useEffect(() => {
     const mainBanner = document.getElementById("main-banner");

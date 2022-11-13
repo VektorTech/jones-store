@@ -84,13 +84,23 @@ MyApp.getInitialProps = async (context: AppContext) => {
         select: {
           id: true,
           username: true,
-          wishlist: true,
+          wishlist: {
+            select: { product: true, productId: true, userId: true },
+          },
           cart: true,
         },
         where: { id: session.user.id },
       });
       if (user && user.cart) {
         cart = await prisma.cartItem.findMany({
+          select: {
+            product: true,
+            cartId: true,
+            size: true,
+            quantity: true,
+            total: true,
+            productId: true,
+          },
           where: { cartId: user.cart.id },
         });
       }

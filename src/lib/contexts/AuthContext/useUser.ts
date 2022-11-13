@@ -5,11 +5,16 @@ import {
   deleteCartItem,
   emptyUserCart,
 } from "@Lib/helpers";
-import { Cart, CartItem } from "@prisma/client";
 import { useEffect, useReducer } from "react";
-import { UserType } from "src/types/shared";
+import {
+  CartType,
+  UserProducts,
+  UserTypeNormalized,
+  UserType,
+  WishlistType,
+} from "src/types/shared";
 
-export const initUser: UserType = {
+export const initUser: UserTypeNormalized = {
   id: "",
   avatarURL: "",
   username: "",
@@ -18,9 +23,20 @@ export const initUser: UserType = {
   lastName: "",
   phoneNumber: "",
   deactivated: false,
-  wishlist: [],
-  cart: [],
-  cartTotal: 0,
+  wishlist: {
+    productIds: [],
+    items: {},
+    count: 0,
+    total: 0,
+    shippingTotal: 0,
+  },
+  cart: {
+    productIds: [],
+    items: {},
+    count: 0,
+    total: 0,
+    shippingTotal: 0,
+  },
   isAuth: false,
 };
 
@@ -34,61 +50,133 @@ enum UserActions {
 }
 
 const authReducer = (
-  user: UserType,
+  user: UserTypeNormalized,
   action: { type: UserActions; payload: any }
 ) => {
   switch (action.type) {
     case UserActions.SET_USER: {
-      const cartTotal: CartItem[] = action.payload.cart.reduce(
-        (_total: number, { total }: CartItem) => _total + total,
+      return { ...user, ...action.payload };
+    }
+    case UserActions.ADD_WISHLIST_ITEM: {
+      const newProductIds = [
+        ...user.wishlist.productIds.filter(
+          (id) => id != action.payload.productId
+        ),
+        action.payload.productId,
+      ];
+      const newItems: UserProducts<WishlistType>["items"] = {
+        ...user.wishlist.items,
+        [action.payload.productId]: {
+          ...user.wishlist.items[action.payload.productId],
+          ...action.payload,
+        },
+      };
+      const newTotal = newProductIds.reduce(
+        (_total, id) => newItems[id].product.price + _total,
+        0
+      );
+      const newShippingTotal = newProductIds.reduce(
+        (_total, id) => newItems[id].product.shippingCost + _total,
         0
       );
 
-      return { ...user, ...action.payload, cartTotal };
-    }
-    case UserActions.ADD_WISHLIST_ITEM:
       return {
         ...user,
-        wishlist: [
-          ...user.wishlist.filter(
-            (item) => item.productId != action.payload.productId
-          ),
-          action.payload,
-        ],
+        wishlist: {
+          productIds: newProductIds,
+          items: newItems,
+          count: newProductIds.length,
+          total: newTotal,
+          shippingTotal: newShippingTotal,
+        },
       };
+    }
     case UserActions.ADD_CART_ITEM: {
-      const newCart: CartItem[] = user.cart
-        .filter((item) => item.productId != action.payload.productId)
-        .concat(action.payload);
-
-      return {
-        ...user,
-        cart: [...newCart],
-        cartTotal: newCart.reduce(
-          (_total: number, { total }: CartItem) => _total + total,
-          0
-        ),
+      const newProductIds = [
+        ...user.cart.productIds.filter((id) => id != action.payload.productId),
+        action.payload.productId,
+      ];
+      const newItems: UserProducts<CartType>["items"] = {
+        ...user.cart.items,
+        [action.payload.productId]: {
+          ...user.cart.items[action.payload.productId],
+          ...action.payload,
+        },
       };
-    }
-    case UserActions.REMOVE_WISHLIST_ITEM:
-      return {
-        ...user,
-        wishlist: user.wishlist.filter(
-          ({ productId = "" }) => productId != action.payload
-        ),
-      };
-    case UserActions.REMOVE_CART_ITEM: {
-      const newCart: CartItem[] = user.cart.filter(
-        ({ productId = "" }) => productId != action.payload
+      const newTotal = newProductIds.reduce(
+        (_total, id) => newItems[id].total + _total,
+        0
+      );
+      const newShippingTotal = newProductIds.reduce(
+        (_total, id) => newItems[id]?.product.shippingCost + _total,
+        0
       );
 
       return {
         ...user,
-        cart: newCart,
-        cartTotal: newCart.reduce(
-          (_total: number, { total }: CartItem) => _total + total,
-          0
-        ),
+        cart: {
+          productIds: newProductIds,
+          items: newItems,
+          count: newProductIds.length,
+          total: newTotal,
+          shippingTotal: newShippingTotal,
+        },
+      };
+    }
+    case UserActions.REMOVE_WISHLIST_ITEM: {
+      const newProductIds = user.wishlist.productIds.filter(
+        (id) => id != action.payload
+      );
+      const newItems: UserProducts<WishlistType>["items"] = {
+        ...user.wishlist.items,
+        [action.payload]: null,
+      };
+      const newTotal = newProductIds.reduce(
+        (_total, id) => newItems[id].product.price + _total,
+        0
+      );
+      const newShippingTotal = newProductIds.reduce(
+        (_total, id) => newItems[id].product.shippingCost + _total,
+        0
+      );
+
+      return {
+        ...user,
+        wishlist: {
+          productIds: newProductIds,
+          items: newItems,
+          count: newProductIds.length,
+          total: newTotal,
+          shippingTotal: newShippingTotal,
+        },
+      };
+    }
+    case UserActions.REMOVE_CART_ITEM: {
+      const newProductIds = user.cart.productIds.filter(
+        (id) => id != action.payload
+      );
+      const newItems: UserProducts<CartType>["items"] = {
+        ...user.cart.items,
+        [action.payload]: null,
+      };
+      const newTotal = newProductIds.reduce(
+        (_total, id) => newItems[id].total + _total,
+        0
+      );
+      const newShippingTotal = newProductIds.reduce(
+        (_total, id) => newItems[id].product.shippingCost + _total,
+        0
+      );
+
+      return {
+        ...user,
+        cart: {
+          productIds: newProductIds,
+          items: newItems,
+          count: newProductIds.length,
+          total: newTotal,
+          shippingTotal: newShippingTotal,
+        },
       };
     }
     case UserActions.EMPTY_CART:
@@ -98,25 +186,62 @@ const authReducer = (
   }
 };
 
+function isCartType(obj: any): obj is CartType {
+  return "cartId" in obj;
+}
+
+const normalizeUserProductItems = (items: (CartType | WishlistType)[]) => {
+  return items.reduce(
+    (userProducts: UserProducts<CartType | WishlistType>, item) => {
+      userProducts.productIds.push(item.productId);
+      userProducts.items[item.productId] = item;
+      userProducts.count++;
+      if (isCartType(item)) {
+        userProducts.total += item.total;
+      } else {
+        userProducts.total += item.product.price - (item.product.discount || 0);
+      }
+      userProducts.shippingTotal += item.product.shippingCost || 0;
+      return userProducts;
+    },
+    {
+      productIds: [],
+      items: {},
+      count: 0,
+      total: 0,
+      shippingTotal: 0,
+    }
+  );
+};
+
 export default function useUser(currentUser: UserType) {
   const [userState, updateUser] = useReducer<
-    (state: UserType, action: { type: UserActions; payload: any }) => UserType
+    (
+      state: UserTypeNormalized,
+      action: { type: UserActions; payload: any }
+    ) => UserTypeNormalized
   >(authReducer, initUser);
 
   useEffect(() => {
-    if (currentUser && currentUser.id != "guest") {
+    if (!currentUser) {
+      return;
+    }
+
+    const user = {
+      ...currentUser,
+      cart: normalizeUserProductItems(currentUser.cart),
+      wishlist: normalizeUserProductItems(currentUser.wishlist),
+    };
+
+    if (currentUser.id != "guest") {
       updateUser({
         type: UserActions.SET_USER,
-        payload: { ...currentUser, isAuth: true },
+        payload: { ...user, isAuth: true },
       });
-    } else if (currentUser) {
-      const cartTotal = (currentUser.cart as CartItem[]).reduce(
-        (_total: number, { total }: CartItem) => _total + total,
-        0
-      );
+    } else {
       updateUser({
         type: UserActions.SET_USER,
-        payload: { ...currentUser, cartTotal },
+        payload: { ...user },
       });
     }
   }, [currentUser]);
@@ -169,7 +294,7 @@ export default function useUser(currentUser: UserType) {
     });
   };
 
-  const useSelector = (callback: (user: UserType) => void) =>
+  const useSelector = (callback: (user: UserTypeNormalized) => void) =>
     callback(userState);
 
   return {
@@ -179,7 +304,7 @@ export default function useUser(currentUser: UserType) {
     addCartItem,
     removeCartItem,
     emptyCart,
-    setAuthUser: (user: UserType) => {
+    setAuthUser: (user: UserTypeNormalized) => {
       updateUser({
         type: UserActions.SET_USER,
         payload: { ...user },

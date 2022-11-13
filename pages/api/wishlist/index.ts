@@ -21,6 +21,7 @@ async function postWishlistRoute(
           userId: user?.id as string,
           productId: productId as string,
         },
+        select: { product: true, productId: true, userId: true }
       });
 
       return res.json({
@@ -28,17 +29,23 @@ async function postWishlistRoute(
         data: wishlist,
       });
     } else if (guest) {
-      guest.wishlist = [
-        ...(guest?.wishlist.filter((item) => item.productId != productId) ||
-          []),
-        { productId },
-      ];
-      await req.session.save();
-
-      return res.json({
-        message: "Product Successfully Added To Wishlist",
-        data: { productId, userId: "guest" },
+      const product = await prisma.product.findUnique({
+        where: { id: productId },
       });
+
+      if (product) {
+        guest.wishlist = [
+          ...(guest.wishlist.filter((item) => item.productId != productId) ||
+            []),
+          { userId: "guest", productId, product },
+        ];
+        await req.session.save();
+
+        return res.json({
+          message: "Product Successfully Added To Wishlist",
+          data: { productId, product, userId: "guest" },
+        });
+      }
     }
   }
 

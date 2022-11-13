@@ -10,11 +10,27 @@ export interface DefaultResponse {
   data?: unknown;
 }
 
-export type UserType = Partial<User> & {
-  wishlist: Wishlist[] | never[];
-  cart: CartItem[] | never[];
+export type WishlistType = Wishlist & { product: Product };
+export type CartType = CartItem & { product: Product };
+
+export interface UserProducts<T extends WishlistType | CartType> {
+  productIds: string[];
+  items: { [productId: string]: T };
+  count: number;
+  total: number;
+  shippingTotal: number;
+}
+
+export type UserTypeNormalized = Partial<User> & {
+  wishlist: UserProducts<WishlistType>;
+  cart: UserProducts<CartType>;
   isAuth: boolean;
-  cartTotal: number;
+};
+
+export type UserType = Partial<User> & {
+  wishlist: WishlistType[];
+  cart: CartType[];
+  isAuth: boolean;
 };
 
 export interface ProductComponentType extends Product {

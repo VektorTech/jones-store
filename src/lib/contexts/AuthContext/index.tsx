@@ -1,16 +1,16 @@
 import { createContext, ReactElement, useContext } from "react";
 import useUser, { initUser } from "./useUser";
-import { UserType } from "src/types/shared";
+import { UserTypeNormalized, UserType } from "src/types/shared";
 
 const authState: {
-  user: UserType;
+  user: UserTypeNormalized;
   addToWishlist: (id: string) => Promise<void>;
   removeFromWishlist: (id: string) => Promise<void>;
   addToCart: (id: string, quantity: number, size: number) => Promise<void>;
   emptyCart: () => void;
   removeFromCart: (id: string) => Promise<void>;
-  useSelector: (callback: (user: UserType) => void) => void;
-  setAuthUser: (user: UserType) => void;
+  useSelector: (callback: (user: UserTypeNormalized) => void) => void;
+  setAuthUser: (user: UserTypeNormalized) => void;
 } = {
   user: initUser,
   addToWishlist: (id) => Promise.resolve(),
