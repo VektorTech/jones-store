@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 
 export default function useMouseCoords<T extends HTMLElement>(
   element: T | null,
-  limit?: number
+  limit?: number,
+  throttleTimer = 0
 ) {
   const [coords, setCoords] = useState([0, 0]);
 
@@ -34,10 +35,10 @@ export default function useMouseCoords<T extends HTMLElement>(
       }
       setCoords([shiftX, shiftY]);
     },
-    100);
+    throttleTimer);
     element.addEventListener("pointermove", handlePointerEvent);
     return () => element.removeEventListener("pointermove", handlePointerEvent);
-  }, [element, limit]);
+  }, [element, limit, throttleTimer]);
 
   return coords;
 }

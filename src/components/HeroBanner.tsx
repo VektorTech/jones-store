@@ -45,7 +45,7 @@ export default function HeroBanner() {
   const [activeView, setActiveView] = useState(2);
   const rAFRef = useRef(0);
   const bannerRef = useRef<HTMLDivElement>(null);
-  const [x, y] = useMouseCoords(bannerRef.current, 25);
+  const [x, y] = useMouseCoords(bannerRef.current, 25, 100);
   const scrollTop = useScrollTop();
 
   useEffect(() => {
@@ -123,41 +123,51 @@ export default function HeroBanner() {
             </div>
 
             <div className="banner__main">
-              {
-                slidesData.map((data, i) => (
-                  <div
-                    key={data.title + data.type}
-                    className={
-                      "banner__content" +
-                      (activeView == i ? " banner__content--active" : "")
-                    }
-                  >
-                    <div className="banner__headings">
-                      <p className="banner__secondary-text">
-                        <span>{data.secondary.main}</span> {data.secondary.rest}
-                      </p>
-                      <h2 style={{ transform: `translateX(${-x * 0.3}px)` }} className="banner__title-type">{data.type}</h2>
-                      <h3 className="banner__title">{data.title}</h3>
-                    </div>
-                    <div style={{ transform: `translate(${-x * 1.2}px, ${(-y * 0.4) + scrollTop * 0.1}px)` }} className="banner__image">
-                      <Image
-                        layout="responsive"
-                        width={220}
-                        height={144}
-                        src={data.imageSrc}
-                        alt=""
-                      />
-                    </div>
-                    <div className="banner__action-button">
-                      <Link href={data.actionUrl}>
-                        <a className="banner__action-button-element">
-                          <span>buy yours</span>
-                        </a>
-                      </Link>
-                    </div>
+              {slidesData.map((data, i) => (
+                <div
+                  key={data.title + data.type}
+                  className={
+                    "banner__content" +
+                    (activeView == i ? " banner__content--active" : "")
+                  }
+                >
+                  <div className="banner__headings">
+                    <p className="banner__secondary-text">
+                      <span>{data.secondary.main}</span> {data.secondary.rest}
+                    </p>
+                    <h2
+                      style={{ transform: `translateX(${-x * 0.3}px)` }}
+                      className="banner__title-type"
+                    >
+                      {data.type}
+                    </h2>
+                    <h3 className="banner__title">{data.title}</h3>
                   </div>
-                ))
-              }
+                  <div
+                    style={{
+                      transform: `translate(${-x * 1.2}px, ${
+                        -y * 0.4 + scrollTop * 0.1
+                      }px)`,
+                    }}
+                    className="banner__image"
+                  >
+                    <Image
+                      layout="responsive"
+                      width={220}
+                      height={144}
+                      src={data.imageSrc}
+                      alt=""
+                    />
+                  </div>
+                  <div className="banner__action-button">
+                    <Link href={data.actionUrl}>
+                      <a className="banner__action-button-element">
+                        <span>buy yours</span>
+                      </a>
+                    </Link>
+                  </div>
+                </div>
+              ))}
             </div>
           </>
         )}
