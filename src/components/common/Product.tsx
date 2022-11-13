@@ -10,6 +10,8 @@ import { ProductComponentType } from "src/types/shared";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import { currencyFormatter } from "@Lib/intl";
 
+const MAX_IMAGE_SLIDES = 3;
+
 export default function Product({
   small = false,
   title,
@@ -52,14 +54,14 @@ export default function Product({
         <a>
           <div className="product__wrapper">
             <div className="product__image">
-              {mediaURLs.map((url, i) => (
+              {mediaURLs.slice(0, MAX_IMAGE_SLIDES).map((url, i) => (
                 <Image
                   key={url}
                   src={url}
                   objectFit="contain"
                   layout="fill"
                   className={`product__image-img${
-                    i == imageIndex % mediaURLs.length
+                    i == imageIndex % MAX_IMAGE_SLIDES
                       ? " product__image-img--active"
                       : ""
                   }`}
