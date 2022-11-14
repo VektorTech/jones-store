@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import prisma from "@Lib/prisma";
 import { userLoginSchema } from "@Lib/validations";
 import { User } from "@prisma/client";
-import { validateInputs } from "@Lib/helpers";
+import { normalizeUserProductItems, validateInputs } from "@Lib/helpers";
 import { DefaultResponse } from "src/types/shared";
 import RouteHandler from "@Lib/RouteHandler";
 import { ServerError } from "@Lib/utils";
@@ -97,11 +97,8 @@ const signinRoute = async (
         phoneNumber: user.phoneNumber,
         avatarURL: user.avatarURL,
         deactivated: user.deactivated,
-        cart: cartItems,
-        wishlist: await prisma.wishlist.findMany({
-          where: { userId: user.id },
-        }),
-        cartTotal: cartItems.reduce((_total, { total }) => _total + total, 0),
+        cart: normalizeUserProductItems(cartItems),
+        wishlist: normalizeUserProductItems(wishlistItems),
         isAuth: true,
       },
     });
