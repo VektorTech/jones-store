@@ -6,7 +6,7 @@ import Button from "@Components/common/formControls/Button";
 import { userLoginSchema } from "@Lib/validations";
 import { validateInput, validateInputs } from "@Lib/helpers";
 import { useAuthState } from "@Lib/contexts/AuthContext";
-import { UserType } from "src/types/shared";
+import { UserType, UserTypeNormalized } from "src/types/shared";
 import Router from "next/router";
 
 const defaultUserCred = {
@@ -39,7 +39,7 @@ export default function SignIn() {
           }
         }}
         afterSubmit={(res) => {
-          setAuthUser(res.data as UserType);
+          setAuthUser(res.data as UserTypeNormalized);
           Router.push(location.origin);
         }}
       >

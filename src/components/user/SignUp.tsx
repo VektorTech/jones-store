@@ -7,7 +7,7 @@ import Form from "@Components/common/Form";
 import { userSchema } from "@Lib/validations";
 import { validateInput, validateInputs } from "@Lib/helpers";
 import { useAuthState } from "@Lib/contexts/AuthContext";
-import { UserType } from "src/types/shared";
+import { UserType, UserTypeNormalized } from "src/types/shared";
 import Router from "next/router";
 
 const validateFormField = validateInput(userSchema);
@@ -36,7 +36,7 @@ export default function SignUp() {
           }
         }}
         afterSubmit={(res) => {
-          setAuthUser(res.data as UserType);
+          setAuthUser(res.data as UserTypeNormalized);
           Router.push(location.origin);
         }}
       >
