@@ -141,7 +141,9 @@ export default function HeroBanner() {
                     >
                       {data.type}
                     </h2>
-                    <h3 className="banner__title">{data.title}</h3>
+                    <h3 className="banner__title">
+                      <span>{data.title}</span>
+                    </h3>
                   </div>
                   <div
                     style={{

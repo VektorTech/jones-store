@@ -113,12 +113,18 @@
   &__title {
     font-size: $text-xxl;
     font-weight: 700;
-    transform: scaleY(0);
-    transform-origin: bottom;
-    transition: transform 1s;
+    overflow: hidden;
+
+    > span {
+      display: inline-block;
+      transform: translateY(100%);
+      transition: transform 1s;
+    }
 
     #{$self}__content--active & {
-      transform: scaleY(1);
+      > span {
+        transform: translateY(0%);
+      }
     }
 
     @include respond-to("x-small") {
