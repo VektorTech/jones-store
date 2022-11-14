@@ -143,11 +143,10 @@ model Product {
   dateAdded DateTime @default(now())
   mediaURLs String[]
   price Float
-  discount Float?
+  discount Float @default(0.0)
   shippingCost Float @default(0.0)
   details String
-  salesCount Int?
-  ratings Int?
+  salesCount Int @default(0)
   color String @default("") @db.VarChar(25)
   sizes Float[]
   year Int?
@@ -169,7 +168,7 @@ model Review {
   productId String
   product Product @relation(fields: [productId], references: [id])
   comment String?
-  rating Float
+  rating Float @default(5)
   addedAt DateTime @default(now())
   updatedAt DateTime? @updatedAt
   orderLineId Int? @unique

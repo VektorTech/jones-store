@@ -21,7 +21,6 @@ async function getProductRoute(
       title: true,
       mediaURLs: true,
       price: true,
-      ratings: true,
       gender: true,
     },
     skip: Number(offset),

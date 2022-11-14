@@ -19,7 +19,6 @@ export default function Constraints({
   return (
     <div className="constraints">
       <div className="constraints__container">
-        {!isSearch ? <BreadCrumbs /> : null}
         <hr className="constraints__hr" />
         <h1 className="constraints__title">
           {isSearch ? (

@@ -17,7 +17,6 @@ async function productSearchRoute(
       title: true,
       mediaURLs: true,
       price: true,
-      ratings: true,
       gender: true,
       sku: true
     },

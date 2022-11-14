@@ -196,7 +196,6 @@ export const getStaticProps = async function ({
     discount: true,
     mediaURLs: true,
     gender: true,
-    ratings: true,
     details: true,
     color: true,
     year: true,
@@ -214,12 +213,16 @@ export const getStaticProps = async function ({
     where: { sku: { equals: sku, mode: "insensitive" } },
   });
 
+  const ratings = await prisma.review.aggregate({
+    where: { productId: product?.id },
+    _avg: { rating: true },
+  });
+
   const relatedProducts = await prisma.product.findMany({
     select,
     where: {
       id: { not: product?.id },
       gender: product?.gender,
-      type: product?.type,
       color: product?.color,
     },
     take: 4,

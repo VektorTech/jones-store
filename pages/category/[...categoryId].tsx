@@ -24,6 +24,7 @@ import ProductsProvider, {
   filterStateType,
   useProductsState,
 } from "@Lib/contexts/ProductsContext";
+import { ProductComponentType } from "src/types/shared";
 
 function CategoryPage({ categoryId }: { categoryId: string }) {
   const { products } = useProductsState();
@@ -83,7 +84,7 @@ export default function CategoryPageWithContext({
   count,
 }: {
   categoryId: string;
-  products: ProductType[];
+  products: ProductComponentType[];
   count: number;
 }) {
   const router = useRouter();
@@ -136,18 +137,30 @@ export const getServerSideProps = withSessionSsr(async function ({
     discount: true,
     mediaURLs: true,
     gender: true,
-    ratings: true,
     sku: true,
     id: true,
     type: true,
     color: true,
     year: true,
     sizes: true,
+    dateAdded: true,
   };
 
-  const allProducts = await prisma.product.findMany({
-    select,
-  });
+  const allProducts = await Promise.all(
+    (
+      await prisma.product.findMany({
+        select,
+        orderBy: { dateAdded: "desc" },
+      })
+    ).map(async (p) => ({
+      ...p,
+      dateAdded: p.dateAdded.toJSON(),
+      ratings: await prisma.review.aggregate({
+        where: { productId: p.id },
+        _avg: { rating: true },
+      }),
+    }))
+  );
 
   return {
     props: {

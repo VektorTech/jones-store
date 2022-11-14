@@ -8,6 +8,7 @@ import ProductsSection from "@Components/home/ProductsSection";
 import GenderSection from "@Components/home/GenderSection";
 import FeaturesSection from "@Components/home/FeaturesSection";
 import { Product } from "@prisma/client";
+import { ProductComponentType } from "src/types/shared";
 
 const Home: NextPage<HomePropTypes> = ({ newArrivals, bestSellers }) => {
   return (
@@ -39,27 +40,40 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
       discount: true,
       mediaURLs: true,
       gender: true,
-      ratings: true,
       sku: true,
       id: true,
     };
-    const newArrivals =
-      (await prisma.product
-        .findMany({
+    const newArrivals = await Promise.all(
+      (
+        await prisma.product.findMany({
           take: 5,
           select: productColumns,
           orderBy: { dateAdded: "desc" },
         })
-        .catch(console.log)) || null;
+      ).map(async (p) => ({
+        ...p,
+        ratings: await prisma.review.aggregate({
+          where: { productId: p.id },
+          _avg: { rating: true },
+        }),
+      }))
+    );
 
-    const bestSellers =
-      (await prisma.product
-        .findMany({
+    const bestSellers = await Promise.all(
+      (
+        await prisma.product.findMany({
           take: 5,
           select: productColumns,
           orderBy: { salesCount: "desc" },
         })
-        .catch(console.log)) || null;
+      ).map(async (p) => ({
+        ...p,
+        ratings: await prisma.review.aggregate({
+          where: { productId: p.id },
+          _avg: { rating: true },
+        }),
+      }))
+    );
 
     return {
       props: {
@@ -73,6 +87,6 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
 export default Home;
 
 interface HomePropTypes {
-  newArrivals: Product[];
-  bestSellers: Product[];
+  newArrivals: ProductComponentType[];
+  bestSellers: ProductComponentType[];
 }

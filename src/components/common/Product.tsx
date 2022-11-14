@@ -92,7 +92,7 @@ export default function Product({
                 {title}
               </h3>
               <div className="product__rating">
-                <RatingStars count={ratings || 0} />
+                <RatingStars count={ratings} />
               </div>
               <p className="product__price">
                 <span className="product__amount">
