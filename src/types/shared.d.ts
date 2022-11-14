@@ -1,4 +1,4 @@
-import { User, Wishlist, Product, CartItem } from "@prisma/client";
+import { User, Wishlist, Product, CartItem, Review } from "@prisma/client";
 
 /* Shared */
 export type HTTPMethods = "GET" | "POST" | "PUT" | "DELETE";
@@ -35,6 +35,7 @@ export type UserType = Partial<User> & {
 
 export interface ProductComponentType extends Product {
   small?: boolean;
+  ratings: number;
 }
 
 export type AsyncAPIHandler = (
