@@ -77,6 +77,11 @@ async function signupRoute(
 
   const cartItems = await prisma.cartItem.findMany({
     where: { cartId: cart.id },
+    include: { product: true },
+  });
+  const wishlistItems = await prisma.wishlist.findMany({
+    where: { userId: user.id },
+    include: { product: true },
   });
   res.status(201).json({
     message: `Successfully Created User Account, ${username}`,

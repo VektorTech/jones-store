@@ -79,6 +79,11 @@ const signinRoute = async (
 
     const cartItems = await prisma.cartItem.findMany({
       where: { cartId: cart?.id },
+      include: { product: true },
+    });
+    const wishlistItems = await prisma.wishlist.findMany({
+      where: { userId: user.id },
+      include: { product: true },
     });
     return res.json({
       success: true,
