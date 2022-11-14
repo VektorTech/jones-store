@@ -30,16 +30,11 @@ const SearchPage: NextPage<{
         allProductsCount={count}
         currentProductsCount={products.length}
       />
-      <FilterSortSection />
+      {/* <FilterSortSection /> */}
 
       <div className="results">
         <div className={"results__container"}>
           <ProductsGrid products={products} />
-          <Pagination
-            resultsCount={count}
-            limit={RESULTS_PER_PAGE}
-            offset={Number(offset)}
-          />
         </div>
       </div>
     </div>
@@ -53,46 +48,32 @@ export const getServerSideProps = withSessionSsr(async function ({
 }) {
   const { search = "", offset = 0, limit = RESULTS_PER_PAGE, order } = query;
 
-  const productColumns = {
+  const select = {
     title: true,
     price: true,
     discount: true,
     mediaURLs: true,
     gender: true,
-    ratings: true,
     sku: true,
     id: true,
+    type: true,
+    color: true,
+    year: true,
+    sizes: true,
+    dateAdded: true,
   };
-
-  const orderBy: { orderBy: any } = { orderBy: {} };
-  if (order && typeof order == "string") {
-    const orderings: { [order: string]: any } = {
-      asc_price: { price: "asc" },
-      price: { price: "desc" },
-      asc_ratings: { ratings: "asc" },
-      ratings: { ratings: "desc" },
-    };
-    orderBy["orderBy"] = { ...orderings[order] };
-  }
 
   const results =
     (await prisma.product.findMany({
-      select: productColumns,
+      select,
       where: { title: { contains: search as string, mode: "insensitive" } },
-      skip: Number(offset),
-      take: Number(limit),
-      ...orderBy,
     })) || null;
-
-  let count = await prisma.product.count({
-    where: { title: { contains: search as string, mode: "insensitive" } },
-  });
 
   return {
     props: {
       query: search,
       products: results,
-      count,
+      count: results.length
     },
   };
 });
