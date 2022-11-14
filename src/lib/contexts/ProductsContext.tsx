@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useState, useRef } from "react";
-import { Product } from "@prisma/client";
 import { HIGHEST_PRICE } from "@Lib/constants";
+import { ProductComponentType } from "src/types/shared";
 
 export interface filterStateType {
   gender: string;
@@ -22,7 +22,7 @@ const _filterState: filterStateType = {
 };
 
 const ProductsState: {
-  products: Product[];
+  products: ProductComponentType[];
   filterState: filterStateType;
   filterListings: (action: { [type: string]: unknown }) => void;
   sortListings: (sortBy: string) => void;
@@ -35,23 +35,27 @@ const ProductsState: {
   filterState: _filterState,
 };
 
-const getGenderPredicate = (gender: string) => (product: Product) =>
-  product.gender == gender;
-const getColorPredicate = (colors: string[]) => (product: Product) =>
-  colors.includes(product.color);
-const getSizesPredicate = (sizes: number[]) => (product: Product) =>
-  sizes.some((size) => product.sizes.includes(Number(size)));
-const getHeightPredicate = (height: string[]) => (product: Product) =>
-  height.includes(product.type);
+const getGenderPredicate =
+  (gender: string) => (product: ProductComponentType) =>
+    product.gender == gender;
+const getColorPredicate =
+  (colors: string[]) => (product: ProductComponentType) =>
+    colors.includes(product.color);
+const getSizesPredicate =
+  (sizes: number[]) => (product: ProductComponentType) =>
+    sizes.some((size) => product.sizes.includes(Number(size)));
+const getHeightPredicate =
+  (height: string[]) => (product: ProductComponentType) =>
+    height.includes(product.type);
 const getPricePredicate =
   ([minPrice, maxPrice]: [minPrice: number, maxPrice: number]) =>
-  (product: Product) => {
+  (product: ProductComponentType) => {
     if (maxPrice >= HIGHEST_PRICE) {
       return product.price >= minPrice;
     }
     return product.price >= minPrice && product.price <= maxPrice;
   };
-const getYearPredicate = (years: number[]) => (product: Product) =>
+const getYearPredicate = (years: number[]) => (product: ProductComponentType) =>
   years.includes(product.year || new Date().getFullYear());
 
 interface FilterPredicateType<T> {
@@ -82,7 +86,7 @@ export default function ProductsProvider({
   children,
   preFilter = {},
 }: {
-  products: Product[];
+  products: ProductComponentType[];
   children: ReactNode;
   preFilter?: Partial<filterStateType>;
 }) {
@@ -94,7 +98,7 @@ export default function ProductsProvider({
 
   const getFilteredListings = () => {
     params = new URLSearchParams();
-    const predicate = compose<Product>(
+    const predicate = compose<ProductComponentType>(
       ...Object.keys(filterState.current).map((type) => {
         const value =
           filterState.current[type as keyof typeof filterState.current];
@@ -137,20 +141,29 @@ export default function ProductsProvider({
       "",
       `/category/${filterState.current.gender.toLowerCase()}`
     );
-  }
+  };
 
   const sortListings = (sortBy: string) => {
-    let compare: (a: Product, b: Product) => number = () => 0;
+    let compare: (
+      a: ProductComponentType,
+      b: ProductComponentType
+    ) => number = (aProduct, bProduct) =>
+      new Date(bProduct.dateAdded).valueOf() -
+      new Date(aProduct.dateAdded).valueOf();
     if (sortBy == "asc_price") {
       compare = (aProduct, bProduct) => aProduct.price - bProduct.price;
     } else if (sortBy == "price") {
       compare = (aProduct, bProduct) => bProduct.price - aProduct.price;
     } else if (sortBy == "asc_ratings") {
-      compare = (aProduct, bProduct) =>
-        (aProduct.ratings || 0) - (bProduct.ratings || 0);
+      compare = (aProduct, bProduct) => aProduct.ratings - bProduct.ratings;
     } else if (sortBy == "ratings") {
+      compare = (aProduct, bProduct) => bProduct.ratings - aProduct.ratings;
+    } else if (sortBy == "year_new") {
       compare = (aProduct, bProduct) =>
-        (bProduct.ratings || 0) - (aProduct.ratings || 0);
+        (bProduct.year ?? 0) - (aProduct.year ?? 0);
+    } else if (sortBy == "year_old") {
+      compare = (aProduct, bProduct) =>
+        (aProduct.year ?? 0) - (bProduct.year ?? 0);
     }
 
     setProductListing((listings) => [...listings].sort(compare));

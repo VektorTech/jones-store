@@ -25,10 +25,13 @@ export default function FilterSortSection({
             label="Sort By"
             className="filter-sort__sort-select"
             options={{
+              "default": "Default",
               asc_price: "Price: Low - High",
               price: "Price: High - Low",
               asc_ratings: "Ratings: Low - High",
               ratings: "Ratings: High - Low",
+              year_new: "Year: Newest",
+              year_old: "Year: Oldest",
             }}
             onOptionSelect={(order) => {
               if (order) {
