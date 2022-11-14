@@ -1,3 +1,4 @@
+import { CartType, UserProducts, WishlistType } from "src/types/shared";
 import { ObjectSchema, ValidationError } from "yup";
 
 export function validateInputs(
@@ -93,3 +94,33 @@ export function emptyUserCart() {
     .then((res) => res.json())
     .catch(console.log);
 }
+
+function isCartType(obj: any): obj is CartType {
+  return "cartId" in obj;
+}
+
+export const normalizeUserProductItems = (
+  items: (CartType | WishlistType)[]
+) => {
+  return items.reduce(
+    (userProducts: UserProducts<CartType | WishlistType>, item) => {
+      userProducts.productIds.push(item.productId);
+      userProducts.items[item.productId] = item;
+      userProducts.count++;
+      if (isCartType(item)) {
+        userProducts.total += item.total;
+      } else {
+        userProducts.total += item.product.price - (item.product.discount || 0);
+      }
+      userProducts.shippingTotal += item.product.shippingCost || 0;
+      return userProducts;
+    },
+    {
+      productIds: [],
+      items: {},
+      count: 0,
+      total: 0,
+      shippingTotal: 0,
+    }
+  );
+};

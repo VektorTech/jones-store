@@ -4,6 +4,7 @@ import {
   postCartItem,
   deleteCartItem,
   emptyUserCart,
+  normalizeUserProductItems,
 } from "@Lib/helpers";
 import { useEffect, useReducer } from "react";
 import {
@@ -184,34 +185,6 @@ const authReducer = (
     default:
       return user;
   }
-};
-
-function isCartType(obj: any): obj is CartType {
-  return "cartId" in obj;
-}
-
-const normalizeUserProductItems = (items: (CartType | WishlistType)[]) => {
-  return items.reduce(
-    (userProducts: UserProducts<CartType | WishlistType>, item) => {
-      userProducts.productIds.push(item.productId);
-      userProducts.items[item.productId] = item;
-      userProducts.count++;
-      if (isCartType(item)) {
-        userProducts.total += item.total;
-      } else {
-        userProducts.total += item.product.price - (item.product.discount || 0);
-      }
-      userProducts.shippingTotal += item.product.shippingCost || 0;
-      return userProducts;
-    },
-    {
-      productIds: [],
-      items: {},
-      count: 0,
-      total: 0,
-      shippingTotal: 0,
-    }
-  );
 };
 
 export default function useUser(currentUser: UserType) {
