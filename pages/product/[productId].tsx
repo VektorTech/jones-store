@@ -34,6 +34,7 @@ import ShareButton from "@Components/common/ShareButton";
 import ProductGallery from "@Components/products/ProductGallery";
 import ProductCartForm from "@Components/products/ProductCartForm";
 import ProductDetails from "@Components/products/ProductDetails";
+import { ProductComponentType } from "src/types/shared";
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -46,8 +47,8 @@ export default function ProductPage({
   relatedProducts,
   sizes,
 }: {
-  product: ProductType;
-  relatedProducts: ProductType[];
+  product: ProductComponentType;
+  relatedProducts: ProductComponentType[];
   sizes: { width: number; height: number }[];
 }) {
   const {
@@ -216,7 +217,7 @@ export const getStaticProps = async function ({
   const ratings = await prisma.review.aggregate({
     where: { productId: product?.id },
     _avg: { rating: true },
-  });
+  }).then(r => r._avg.rating);
 
   const relatedProducts = await prisma.product.findMany({
     select,
@@ -237,7 +238,7 @@ export const getStaticProps = async function ({
 
   return {
     props: {
-      product,
+      product: { ...product, ratings },
       relatedProducts,
       sizes,
     },

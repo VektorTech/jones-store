@@ -55,7 +55,7 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
         ratings: await prisma.review.aggregate({
           where: { productId: p.id },
           _avg: { rating: true },
-        }),
+        }).then(r => r._avg.rating),
       }))
     );
 
@@ -71,7 +71,7 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
         ratings: await prisma.review.aggregate({
           where: { productId: p.id },
           _avg: { rating: true },
-        }),
+        }).then(r => r._avg.rating),
       }))
     );
 

@@ -1,11 +1,12 @@
 import Product from "@Components/common/Product";
 import { Product as ProductType } from "@prisma/client";
+import { ProductComponentType } from "src/types/shared";
 
 export default function ProductsGrid({
   products,
   actions = {},
 }: {
-  products: ProductType[];
+  products: ProductComponentType[];
   actions?: { [action: string]: (productId: string) => void };
 }) {
   return (

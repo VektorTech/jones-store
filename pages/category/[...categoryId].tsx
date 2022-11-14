@@ -158,7 +158,7 @@ export const getServerSideProps = withSessionSsr(async function ({
       ratings: await prisma.review.aggregate({
         where: { productId: p.id },
         _avg: { rating: true },
-      }),
+      }).then(r => r._avg.rating),
     }))
   );
 

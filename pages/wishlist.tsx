@@ -7,6 +7,7 @@ import SEO from "@Components/common/SEO";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import Product from "@Components/common/Product";
 import ProductsGrid from "@Components/products/ProductsGrid";
+import { ProductComponentType } from "src/types/shared";
 
 const WishlistPage: NextPage<WishlistPageProps> = ({ wishlistItems }) => {
   const { removeFromWishlist } = useAuthState();
@@ -19,7 +20,7 @@ const WishlistPage: NextPage<WishlistPageProps> = ({ wishlistItems }) => {
           Remove: (productId) =>
             removeFromWishlist(productId).then(() => location?.reload()),
         }}
-        products={wishlistItems as ProductType[]}
+        products={wishlistItems as ProductComponentType[]}
       />
     </div>
   );
@@ -38,7 +39,6 @@ export const getServerSideProps = withSessionSsr(async function ({
     discount: true,
     mediaURLs: true,
     gender: true,
-    ratings: true,
     details: true,
     color: true,
     year: true,
@@ -47,7 +47,6 @@ export const getServerSideProps = withSessionSsr(async function ({
     shippingCost: true,
     sizes: true,
     type: true,
-    // review: true,
     sku: true,
     id: true,
   };
@@ -60,7 +59,7 @@ export const getServerSideProps = withSessionSsr(async function ({
         include: { product: true },
       })
       .then((list) =>
-        list.map(({ product }) => ({ ...product, dateAdded: null }))
+        list.map(({ product }) => ({ ...product, dateAdded: null, ratings: 0 }))
       )
       .catch(console.log);
   } else if (guest) {
@@ -72,7 +71,7 @@ export const getServerSideProps = withSessionSsr(async function ({
           select,
           where: { id: item.productId },
         });
-        return { ...item, ...product };
+        return { ...item, ...product, ratings: 0 };
       })
     );
   }
@@ -85,7 +84,7 @@ export const getServerSideProps = withSessionSsr(async function ({
 });
 
 interface WishlistPageProps {
-  wishlistItems: (Wishlist & ProductType)[];
+  wishlistItems: (Wishlist & ProductComponentType)[];
 }
 
 export default WishlistPage;

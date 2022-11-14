@@ -13,10 +13,11 @@ import { RESULTS_PER_PAGE } from "@Lib/constants";
 import Constraints from "@Components/products/constraints";
 import FilterSortSection from "@Components/products/FilterSortSection";
 import ProductsGrid from "@Components/products/ProductsGrid";
+import { ProductComponentType } from "src/types/shared";
 
 const SearchPage: NextPage<{
   query: string;
-  products: ProductType[];
+  products: ProductComponentType[];
   count: number;
 }> = ({ query, products, count }) => {
   const router = useRouter();
@@ -63,17 +64,30 @@ export const getServerSideProps = withSessionSsr(async function ({
     dateAdded: true,
   };
 
-  const results =
-    (await prisma.product.findMany({
-      select,
-      where: { title: { contains: search as string, mode: "insensitive" } },
-    })) || null;
+  const results = await Promise.all(
+    (
+      await prisma.product.findMany({
+        select,
+        where: { title: { contains: search as string, mode: "insensitive" } },
+        orderBy: { dateAdded: "desc" },
+      })
+    ).map(async (p) => ({
+      ...p,
+      dateAdded: p.dateAdded.toJSON(),
+      ratings: await prisma.review
+        .aggregate({
+          where: { productId: p.id },
+          _avg: { rating: true },
+        })
+        .then((r) => r._avg.rating),
+    }))
+  );
 
   return {
     props: {
       query: search,
       products: results,
-      count: results.length
+      count: results.length,
     },
   };
 });

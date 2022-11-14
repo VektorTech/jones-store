@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRef } from "react";
 
 import Product from "../common/Product";
+import { ProductComponentType } from "src/types/shared";
 
 export default function ProductsSection({
   title,
@@ -14,7 +15,7 @@ export default function ProductsSection({
   url,
 }: {
   title: string;
-  products: ProductType[];
+  products: ProductComponentType[];
   url: string;
 }) {
   const productsComponent = products?.map((product) => (
