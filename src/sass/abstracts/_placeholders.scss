@@ -154,7 +154,8 @@
   &--invert {
     background-color: #fff;
     color: v.$c-text-black;
-    border: 0.1rem solid v.$c-text-black;
+    box-shadow: inset 0 0 0 0.1rem v.$c-text-black;
+
 
     &:hover,
     &:focus-visible {
