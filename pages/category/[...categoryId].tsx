@@ -11,7 +11,7 @@ import SEO from "@Components/common/SEO";
 import Button from "@Components/common/formControls/Button";
 import Dropdown from "@Components/common/formControls/Dropdown";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import Product from "@Components/common/Product";
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
@@ -88,37 +88,56 @@ export default function CategoryPageWithContext({
   count: number;
 }) {
   const router = useRouter();
-  const queryAsFilter: Partial<filterStateType> = {
-    price: [0, HIGHEST_PRICE],
+  const ref = useRef<{ updateFilterState: Function }>();
+
+  const getQueryAsFilter = () => {
+    const queryAsFilter: Partial<filterStateType> = {
+      price: [0, HIGHEST_PRICE],
+    };
+
+    Object.keys(router.query).forEach((param) => {
+      const value = router.query[param];
+      if (
+        param == "categoryId" &&
+        value &&
+        value[0] &&
+        Gender[value[0].toUpperCase() as Gender]
+      ) {
+        queryAsFilter["gender"] = value[0].toUpperCase();
+      }
+      if (param == "size" || param == "year") {
+        queryAsFilter[param] = Array.isArray(value)
+          ? value.map((v) => Number(v))
+          : [Number(value)];
+      }
+      if (param == "min_price" && queryAsFilter["price"]) {
+        queryAsFilter["price"][0] = Number(value);
+      }
+      if (param == "max_price" && queryAsFilter["price"]) {
+        queryAsFilter["price"][1] = Number(value);
+      }
+      if (param == "color" || param == "height") {
+        queryAsFilter[param] = Array.isArray(value) ? value : [value || ""];
+      }
+    });
+
+    return queryAsFilter;
   };
-  Object.keys(router.query).forEach((param) => {
-    const value = router.query[param];
-    if (
-      param == "categoryId" &&
-      value &&
-      value[0] &&
-      Gender[value[0].toUpperCase() as Gender]
-    ) {
-      queryAsFilter["gender"] = value[0].toUpperCase();
-    }
-    if (param == "size" || param == "year") {
-      queryAsFilter[param] = Array.isArray(value)
-        ? value.map((v) => Number(v))
-        : [Number(value)];
-    }
-    if (param == "min_price" && queryAsFilter["price"]) {
-      queryAsFilter["price"][0] = Number(value);
-    }
-    if (param == "max_price" && queryAsFilter["price"]) {
-      queryAsFilter["price"][1] = Number(value);
-    }
-    if (param == "color" || param == "height") {
-      queryAsFilter[param] = Array.isArray(value) ? value : [value || ""];
-    }
+
+  useEffect(() => {
+    const routeChangeHandler = () => {
+      if (ref.current) ref.current.updateFilterState?.(getQueryAsFilter());
+    };
+    router.events.on("routeChangeComplete", routeChangeHandler);
+    return () => router.events.off("routeChangeComplete", routeChangeHandler);
   });
 
   return (
-    <ProductsProvider preFilter={queryAsFilter} products={products}>
+    <ProductsProvider
+      ref={ref}
+      preFilter={getQueryAsFilter()}
+      products={products}
+    >
       <CategoryPage categoryId={categoryId} />
     </ProductsProvider>
   );
@@ -155,10 +174,12 @@ export const getServerSideProps = withSessionSsr(async function ({
     ).map(async (p) => ({
       ...p,
       dateAdded: p.dateAdded.toJSON(),
-      ratings: await prisma.review.aggregate({
-        where: { productId: p.id },
-        _avg: { rating: true },
-      }).then(r => r._avg.rating),
+      ratings: await prisma.review
+        .aggregate({
+          where: { productId: p.id },
+          _avg: { rating: true },
+        })
+        .then((r) => r._avg.rating),
     }))
   );
 

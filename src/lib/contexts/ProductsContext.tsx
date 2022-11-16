@@ -1,4 +1,12 @@
-import { createContext, ReactNode, useContext, useState, useRef } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useState,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+} from "react";
 import { HIGHEST_PRICE } from "@Lib/constants";
 import { ProductComponentType } from "src/types/shared";
 
@@ -24,15 +32,17 @@ const _filterState: filterStateType = {
 const ProductsState: {
   products: ProductComponentType[];
   filterState: filterStateType;
+  sortBy: string;
   filterListings: (action: { [type: string]: unknown }) => void;
   sortListings: (sortBy: string) => void;
   clearFilters: () => void;
 } = {
   products: [],
+  filterState: _filterState,
+  sortBy: "",
   filterListings: () => null,
   sortListings: () => null,
   clearFilters: () => null,
-  filterState: _filterState,
 };
 
 const getGenderPredicate =
@@ -81,19 +91,23 @@ const ProductsContext = createContext(ProductsState);
 
 export const useProductsState = () => useContext(ProductsContext);
 
-export default function ProductsProvider({
-  products,
-  children,
-  preFilter = {},
-}: {
-  products: ProductComponentType[];
-  children: ReactNode;
-  preFilter?: Partial<filterStateType>;
-}) {
+function ProductsProvider(
+  {
+    products,
+    children,
+    preFilter = {},
+  }: {
+    products: ProductComponentType[];
+    children: ReactNode;
+    preFilter?: Partial<filterStateType>;
+  },
+  ref: any
+) {
   const filterState = useRef<filterStateType>({
     ..._filterState,
     ...preFilter,
   });
+  const sortByRef = useRef("");
   let params = new URLSearchParams();
 
   const getFilteredListings = () => {
@@ -144,6 +158,8 @@ export default function ProductsProvider({
   };
 
   const sortListings = (sortBy: string) => {
+    sortByRef.current = sortBy;
+
     let compare: (
       a: ProductComponentType,
       b: ProductComponentType
@@ -171,6 +187,17 @@ export default function ProductsProvider({
 
   const [productListing, setProductListing] = useState(getFilteredListings());
 
+  useImperativeHandle(ref, () => ({
+    updateFilterState: (preFilter:  Partial<filterStateType>) => {
+      filterState.current = {
+        ..._filterState,
+        ...preFilter,
+      };
+      sortByRef.current = "";
+      setProductListing(getFilteredListings());
+    },
+  }));
+
   return (
     <ProductsContext.Provider
       value={{
@@ -179,9 +206,12 @@ export default function ProductsProvider({
         sortListings,
         clearFilters,
         filterState: filterState.current,
+        sortBy: sortByRef.current,
       }}
     >
       {children}
     </ProductsContext.Provider>
   );
 }
+
+export default forwardRef(ProductsProvider);

@@ -10,7 +10,7 @@ export default function FilterSortSection({
 }: {
   toggleFilter?: () => void;
 }) {
-  const { sortListings } = useProductsState();
+  const { sortListings, sortBy } = useProductsState();
 
   return (
     <div className="filter-sort">
@@ -24,6 +24,7 @@ export default function FilterSortSection({
           <Dropdown
             label="Sort By"
             className="filter-sort__sort-select"
+            value={sortBy}
             options={{
               "default": "Default",
               asc_price: "Price: Low - High",

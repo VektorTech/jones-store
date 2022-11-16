@@ -83,9 +83,6 @@ export default function ProductPage({
   return (
     <>
       <SEO title={product.title} />
-      <div className="product-page__wrapper">
-        <BreadCrumbs />
-      </div>
 
       <div className="product-view">
         <ProductGallery images={product.mediaURLs} dimensions={sizes} />
