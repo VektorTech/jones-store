@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier-format": "prettier --config .prettierrc {{src,pages}/**/*.{ts,tsx},middleware.ts} --write"
+    "pretty-up": "prettier --config .prettierrc {{src,pages}/**/*.{ts,tsx},middleware.ts} --write",
+    "db:migrate": "npx prisma migrate dev"
   },
   "dependencies": {
     "@prisma/client": "^4.3.1",
