@@ -13,6 +13,7 @@ import { isSelectKey } from "@Lib/utils";
 export default function Dropdown({
   label = "Select Option",
   options,
+  value: _value,
   className,
   name = "",
   onOptionSelect,
@@ -22,7 +23,7 @@ export default function Dropdown({
   options: { [value: string]: string };
   label?: string;
 } & JSX.IntrinsicElements["input"]) {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(_value?.toString() ?? "");
   const [collapsed, setCollapsed] = useState(true);
   const MenuListRef = useRef<HTMLUListElement>(null);
   const DropdownRef = useRef<HTMLDivElement>(null);
@@ -34,6 +35,12 @@ export default function Dropdown({
       DropdownRef.current?.focus();
     }
   }, [collapsed]);
+
+  useEffect(() => {
+    if (_value != value) {
+      setValue?.(_value?.toString() ?? "");
+    }
+  }, [_value]);
 
   useEffect(() => {
     onOptionSelect?.(value);
