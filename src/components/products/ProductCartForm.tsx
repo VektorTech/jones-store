@@ -14,7 +14,7 @@ export default function ProductCartForm({ product }: { product: Product }) {
 
   return (
     <form method="POST" action="/api/cart">
-      <p>Size: Please Select</p>
+      <p><strong>Size:</strong> Please Select</p>
       <SizeOptions onChecked={(items) => setCheckedSize(items as string)} />
       <NumberInput
         onChange={(value) => setQuantity(value)}
@@ -29,6 +29,8 @@ export default function ProductCartForm({ product }: { product: Product }) {
           addToCart(id, quantity, Number(checkedSize));
         }}
         className="product-cart-form__submit"
+        large
+        invert
       >
         Add To Cart
       </Button>

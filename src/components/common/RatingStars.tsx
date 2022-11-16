@@ -1,5 +1,5 @@
 import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
-import { useState, cloneElement } from "react";
+import { useState, cloneElement, MouseEvent } from "react";
 
 export default function RatingStars({
   count = 0,
@@ -13,36 +13,38 @@ export default function RatingStars({
   count = interactive ? hoverIndex : count;
 
   return (
-    <>
-      {[...Array(5)].map((empty, index) => {
-        let key = `${count}:${index}`;
-        empty = <BsStar className="star" key={key} />;
-        if (count - index >= 1) {
-          empty = <BsStarFill className="star" key={key} />;
-        } else if (count - index >= 0.5) {
-          empty = <BsStarHalf className="star" key={key} />;
-        }
-        if (interactive) {
-          return cloneElement(empty, {
-            onMouseOver: (e) => {
-              const left = e.currentTarget.getBoundingClientRect().x;
-              const width = e.currentTarget.clientWidth;
-              const mouseX = e.pageX;
-              const value = mouseX < left + width / 2 ? 0.5 : 1;
-              setHoverIndex(index + value);
-            },
-            onMouseOut: () => setHoverIndex(ratingValue),
-            onClick: () => {
-              if (interactive) {
-                setRatingValue(hoverIndex);
-              }
-            },
-            className: "ratings__interactive",
-          });
-        }
-        return empty;
-      })}
+    <div className="stars">
+      <div className="stars__icons">
+        {[...Array(5)].map((empty, index) => {
+          let key = `${count}:${index}`;
+          empty = <BsStar className="stars__star" key={key} />;
+          if (count - index >= 1) {
+            empty = <BsStarFill className="stars__star" key={key} />;
+          } else if (count - index >= 0.5) {
+            empty = <BsStarHalf className="stars__star" key={key} />;
+          }
+          if (interactive) {
+            return cloneElement(empty, {
+              onMouseOver: (e: MouseEvent) => {
+                const left = e.currentTarget.getBoundingClientRect().x;
+                const width = e.currentTarget.clientWidth;
+                const mouseX = e.pageX;
+                const value = mouseX < left + width / 2 ? 0.5 : 1;
+                setHoverIndex(index + value);
+              },
+              onMouseOut: () => setHoverIndex(ratingValue),
+              onClick: () => {
+                if (interactive) {
+                  setRatingValue(hoverIndex);
+                }
+              },
+              className: "stars__interactive",
+            });
+          }
+          return empty;
+        })}
+      </div>
       {interactive && <input type="hidden" name="rating" value={ratingValue} />}
-    </>
+    </div>
   );
 }

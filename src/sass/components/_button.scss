@@ -2,4 +2,12 @@
 
 .button {
   @extend %form-button;
+
+  &--lg {
+    @extend %form-button--lg;
+  }
+
+  &--invert {
+    @extend %form-button--invert;
+  }
 }

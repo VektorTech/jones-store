@@ -42,5 +42,14 @@
 
   &__panel {
     width: 100%;
+    padding: 2rem 0;
+  }
+
+  &__prompt {
+    margin-bottom: 2rem;
+  }
+
+  &__link[href] {
+    @extend %link;
   }
 }

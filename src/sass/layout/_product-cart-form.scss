@@ -1,5 +1,8 @@
 @use "../abstracts" as *;
 
 .product-cart-form {
-
+	&__submit {
+		width: 100%;
+		margin-top: 2rem;
+	}
 }

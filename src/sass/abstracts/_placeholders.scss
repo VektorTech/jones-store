@@ -146,6 +146,21 @@
   &:focus-visible {
     background-color: mix(v.$c-background-black, #fff, 85%);
   }
+
+  &--lg {
+    padding: 1rem 2.2rem;
+  }
+
+  &--invert {
+    background-color: #fff;
+    color: v.$c-text-black;
+    border: 0.1rem solid v.$c-text-black;
+
+    &:hover,
+    &:focus-visible {
+      background-color: #efefef;
+    }
+  }
 }
 
 //

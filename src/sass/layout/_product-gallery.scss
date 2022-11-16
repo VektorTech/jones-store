@@ -7,7 +7,7 @@
   &__container {
     position: sticky;
     display: flex;
-    top: var(--header-height);
+    top: calc(var(--header-height) + 1rem);
   }
 
   @include respond-to("medium") {
@@ -40,8 +40,10 @@
   }
 
   &__wish {
+    @extend %round-button;
     position: absolute;
     top: 0;
     right: 0;
+    font-size: 2.5rem;
   }
 }

@@ -29,7 +29,7 @@ export default function Reviews({ productId }: { productId: string }) {
     <div className="product-details__panel product-details__reviews-panel">
       {user?.isAuth ? (
         <>
-          <button onClick={() => setReviewModal(true)}>Write A Review</button>{" "}
+          <Button onClick={() => setReviewModal(true)}>Write A Review</Button>{" "}
           <Modal
             title="Write Review"
             visible={reviewModal}
@@ -51,10 +51,10 @@ export default function Reviews({ productId }: { productId: string }) {
           </Modal>{" "}
         </>
       ) : (
-        <p>
+        <p className="product-details__prompt">
           Please{" "}
           <Link href="/login">
-            <a>login</a>
+            <a className="product-details__link">login</a>
           </Link>{" "}
           to submit a review.
         </p>

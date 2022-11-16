@@ -95,17 +95,15 @@ export default function ProductPage({
           <p className="product-view__gender">{gender}</p>
 
           <div className="product-view__details">
-            <p className="product-view__sku">SKU: {sku.toUpperCase()}</p>
-            <p className="product-view__sku">Release Year: {year}</p>
-            <p className="product-view__sku">Colorway: {color}</p>
+            <p className="product-view__details-info">
+              SKU: {sku.toUpperCase()}
+            </p>
+            <p className="product-view__details-info">Release Year: {year}</p>
+            <p className="product-view__details-info">Colorway: {color}</p>
           </div>
 
           <p className="product-view__price">
             {currencyFormatter.format(cartPrice)} <span>{percentageOff}</span>
-          </p>
-
-          <p className="product-view__price">
-            <FiPackage /> { shippingCost ? `Shipping: ${currencyFormatter.format(shippingCost)}` : "Free Shipping" }
           </p>
 
           <p className="product-view__sold">
@@ -115,6 +113,8 @@ export default function ProductPage({
           <ProductCartForm product={product} />
 
           <Button
+            className="product-view__buy"
+            large
             onClick={(e) => {
               fetch("/api/checkout", {
                 method: "POST",
@@ -159,12 +159,14 @@ export default function ProductPage({
         <ProductDetails product={product} />
       </div>
 
-      {relatedProducts.length ? (
-        <div className="related-products">
-          <h2 className="related-products__heading">Related Products</h2>
-          <ProductsGrid products={relatedProducts} />
-        </div>
-      ) : null}
+      <div className="related-products">
+        {relatedProducts.length ? (
+          <>
+            <h2 className="related-products__heading">Related Products</h2>
+            <ProductsGrid products={relatedProducts} />
+          </>
+        ) : null}
+      </div>
     </>
   );
 }
@@ -214,10 +216,12 @@ export const getStaticProps = async function ({
     where: { sku: { equals: sku, mode: "insensitive" } },
   });
 
-  const ratings = await prisma.review.aggregate({
-    where: { productId: product?.id },
-    _avg: { rating: true },
-  }).then(r => r._avg.rating);
+  const ratings = await prisma.review
+    .aggregate({
+      where: { productId: product?.id },
+      _avg: { rating: true },
+    })
+    .then((r) => r._avg.rating);
 
   const relatedProducts = await prisma.product.findMany({
     select,

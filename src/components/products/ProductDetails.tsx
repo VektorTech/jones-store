@@ -24,7 +24,7 @@ export default function ProductDetails({ product }: { product: Product }) {
     reviews: JSX.Element;
   } = {
     description: (
-      <div className="product-details-panel product-description-panel">
+      <div className="product-details__panel product-description-panel">
         {product.details}
       </div>
     ),

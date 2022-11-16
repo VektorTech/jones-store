@@ -17,6 +17,7 @@
     grid-column: 1 / 13;
     font-size: $text-md;
 
+
     @include respond-to("medium") {
       grid-column: 8 / 13;
     }
@@ -24,16 +25,22 @@
 
   &__share-button {
     @extend %round-button;
+    width: 4.5rem;
+    height: 4.5rem;
+    margin-top: 1rem;
   }
 
   &__name {
     font-size: $text-xl;
+    margin: 0;
   }
 
   &__gender {
     text-transform: uppercase;
     font-size: $text-sm;
     font-weight: bold;
+    margin-top: 0.5rem;
+    color: $c-text-dark;
   }
 
   &__ratings,
@@ -44,6 +51,28 @@
   &__price {
     font-size: $text-lg;
     font-weight: 600;
+  }
+
+  &__shipping {
+    font-size: $text-xs;
+    font-weight: 600;
+  }
+
+  &__details {
+    padding-top: 1rem;
+
+    &-info {
+      margin-top: 0.5rem;
+    }
+  }
+
+  &__sold {
+    margin: 1rem 0;
+  }
+
+  &__buy {
+    width: 100%;
+    margin-top: 1rem;
   }
 }
 
