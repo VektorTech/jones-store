@@ -97,28 +97,30 @@
 
   &__product {
     display: grid;
-    height: 11rem;
     margin-bottom: 3rem;
+    height: 13rem;
     column-gap: 0.5rem;
     font-size: $text-sm;
     font-weight: 400;
     grid-template-rows: repeat(6, 1fr);
     grid-template-columns: repeat(12, 1fr);
     grid-template-areas:
-      "i i i t t t t t t t r r"
-      "i i i t t t t t t t r r"
-      "i i i g g g g g g g q q"
-      "i i i s s s s s s s q q"
-      "i i i c c c c c c c c c"
-      "i i i p p p p p p p p p";
+      "t t t t t t t t t r r r"
+      "t t t t t t t t t r r r"
+      "g g g g g g g g g q q q"
+      "s s s s s s s s s q q q"
+      "c c c c c c c c c c c c"
+      "p p p p p p p p p p p p";
 
     & > span:first-child {
       grid-area: i;
-      border: 0.1rem solid #dfdfdf !important;
-      width: 100% !important;
+      display: none !important;
 
       @include respond-to("small") {
+        display: inline-block !important;
+        border: 0.1rem solid #dfdfdf !important;
         width: 11rem !important;
+        height: 11rem;
       }
     }
 
@@ -178,8 +180,12 @@
   &__product-remove {
     grid-area: r;
     font-size: $text-xs;
-    margin: 0 0rem 0.6rem 0.5rem;
     padding: 0;
+    margin-bottom: 0.6rem;
+
+    @include respond-to("small") {
+      margin: 0 0rem 1.2rem 0.5rem;
+    }
   }
 
   &__details {
