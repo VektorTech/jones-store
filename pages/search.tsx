@@ -8,6 +8,7 @@ import ProductsGrid from "@Components/products/ProductsGrid";
 
 import prisma from "@Lib/prisma";
 import { withSessionSsr } from "@Lib/withSession";
+import { getProductRatings } from "@Lib/helpers";
 
 const SearchPage: NextPage<SearchPageType> = ({ query, products, count }) => {
   return (
@@ -33,7 +34,8 @@ export const getServerSideProps = withSessionSsr(async function ({
   req,
   query,
 }) {
-  const { search = "" } = query;
+  const { search = "", q = "" } = query;
+  const searchQuery = search || q;
 
   const select = {
     title: true,
@@ -54,24 +56,21 @@ export const getServerSideProps = withSessionSsr(async function ({
     (
       await prisma.product.findMany({
         select,
-        where: { title: { contains: search as string, mode: "insensitive" } },
+        where: {
+          title: { contains: searchQuery as string, mode: "insensitive" },
+        },
         orderBy: { dateAdded: "desc" },
       })
-    ).map(async (p) => ({
-      ...p,
-      dateAdded: p.dateAdded.toJSON(),
-      ratings: await prisma.review
-        .aggregate({
-          where: { productId: p.id },
-          _avg: { rating: true },
-        })
-        .then((r) => r._avg.rating),
+    ).map(async (product) => ({
+      ...product,
+      dateAdded: product.dateAdded.toJSON(),
+      ratings: await getProductRatings(product.id),
     }))
   );
 
   return {
     props: {
-      query: search,
+      query: searchQuery,
       products: results,
       count: results.length,
     },

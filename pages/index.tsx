@@ -7,6 +7,7 @@ import GenderSection from "@Components/home/GenderSection";
 
 import { withSessionSsr } from "@Lib/withSession";
 import prisma from "@Lib/prisma";
+import { getProductRatings } from "@Lib/helpers";
 
 const Home: NextPage<HomePropTypes> = ({ newArrivals, bestSellers }) => {
   return (
@@ -46,14 +47,9 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
             select: productColumns,
             orderBy: { dateAdded: "desc" },
           })
-        ).map(async (p) => ({
-          ...p,
-          ratings: await prisma.review
-            .aggregate({
-              where: { productId: p.id },
-              _avg: { rating: true },
-            })
-            .then((r) => r._avg.rating),
+        ).map(async (product) => ({
+          ...product,
+          ratings: await getProductRatings(product.id),
         }))
       ),
       bestSellers = await Promise.all(
@@ -63,14 +59,9 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
             select: productColumns,
             orderBy: { salesCount: "desc" },
           })
-        ).map(async (p) => ({
-          ...p,
-          ratings: await prisma.review
-            .aggregate({
-              where: { productId: p.id },
-              _avg: { rating: true },
-            })
-            .then((r) => r._avg.rating),
+        ).map(async (product) => ({
+          ...product,
+          ratings: await getProductRatings(product.id),
         }))
       );
 

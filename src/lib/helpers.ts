@@ -1,6 +1,9 @@
 import { ObjectSchema, ValidationError } from "yup";
 
 import type { CartType, UserProducts, WishlistType } from "src/types/shared";
+import { Product } from "@prisma/client";
+
+import prisma from "@Lib/prisma";
 
 export function validateInputs(
   input: any,
@@ -124,4 +127,13 @@ export const normalizeUserProductItems = (
       shippingTotal: 0,
     }
   );
+};
+
+export const getProductRatings = async (productId: string) => {
+  const aggAvg = await prisma.review.aggregate({
+    where: { productId },
+    _avg: { rating: true },
+  });
+
+  return await aggAvg._avg.rating ?? 0;
 };

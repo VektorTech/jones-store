@@ -19,6 +19,7 @@ import ProductsProvider, {
   filterStateType,
   useProductsState,
 } from "@Lib/contexts/ProductsContext";
+import { getProductRatings } from "@Lib/helpers";
 
 function CategoryPage({ categoryId }: { categoryId: string }) {
   const { products } = useProductsState();
@@ -156,15 +157,10 @@ export const getServerSideProps = withSessionSsr(async function ({ params }) {
         select,
         orderBy: { dateAdded: "desc" },
       })
-    ).map(async (p) => ({
-      ...p,
-      dateAdded: p.dateAdded.toJSON(),
-      ratings: await prisma.review
-        .aggregate({
-          where: { productId: p.id },
-          _avg: { rating: true },
-        })
-        .then((r) => r._avg.rating),
+    ).map(async (product) => ({
+      ...product,
+      dateAdded: product.dateAdded.toJSON(),
+      ratings: await getProductRatings(product.id),
     }))
   );
 

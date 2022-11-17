@@ -12,6 +12,7 @@ import ProductDetails from "@Components/products/ProductDetails";
 import prisma from "@Lib/prisma";
 import { getPathString } from "@Lib/utils";
 import { NextPage } from "next";
+import { getProductRatings } from "@Lib/helpers";
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -22,7 +23,7 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 const ProductPage: NextPage<ProductPageType> = ({
   product,
   relatedProducts,
-  sizes,
+  imageDimensions,
 }) => {
   const {
     id,
@@ -50,7 +51,7 @@ const ProductPage: NextPage<ProductPageType> = ({
         <ProductGallery
           productId={id}
           images={product.mediaURLs}
-          dimensions={sizes}
+          dimensions={imageDimensions}
         />
 
         <div className="product-view__cart">
@@ -143,26 +144,29 @@ export const getStaticProps = async function ({
     where: { sku: { equals: sku, mode: "insensitive" } },
   });
 
-  const ratings = await prisma.review
-    .aggregate({
-      where: { productId: product?.id },
-      _avg: { rating: true },
-    })
-    .then((r) => r._avg.rating);
+  const ratings = product ? await getProductRatings(product.id) : 0;
 
-  const relatedProducts = await prisma.product.findMany({
-    select,
-    where: {
-      id: { not: product?.id },
-      gender: product?.gender,
-      color: product?.color,
-    },
-    take: 4,
-  });
+  const relatedProducts = await Promise.all(
+    (
+      await prisma.product.findMany({
+        select,
+        where: {
+          id: { not: product?.id },
+          gender: product?.gender,
+          color: product?.color,
+        },
+        take: 5,
+      })
+    ).map(async (product) => ({
+      ...product,
+      ratings: await getProductRatings(product.id),
+    }))
+  );
 
-  let sizes: { width: number; height: number }[] = [];
+  let imageDimensions: { width: number; height: number }[] = [];
+
   if (product) {
-    sizes = await Promise.all(
+    imageDimensions = await Promise.all(
       product.mediaURLs.map(async (url) => await probe(url))
     );
   }
@@ -171,7 +175,7 @@ export const getStaticProps = async function ({
     props: {
       product: { ...product, ratings },
       relatedProducts,
-      sizes,
+      imageDimensions,
     },
   };
 };
@@ -181,5 +185,5 @@ export default ProductPage;
 interface ProductPageType {
   product: ProductComponentType;
   relatedProducts: ProductComponentType[];
-  sizes: { width: number; height: number }[];
+  imageDimensions: { width: number; height: number }[];
 }

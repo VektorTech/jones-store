@@ -10,7 +10,7 @@ export default function Constraints({
   isSearch,
 }: PropTypes) {
   const router = useRouter();
-  const { search } = router.query;
+  const { search, q } = router.query;
   const { filterState } = useProductsState();
 
   return (
@@ -19,7 +19,7 @@ export default function Constraints({
         <hr className="constraints__hr" />
         <h1 className="constraints__title">
           {isSearch ? (
-            <>&ldquo;{search}&rdquo;</>
+            <>&ldquo;{search || q}&rdquo;</>
           ) : (
             filterState.gender.toLowerCase()
           )}
