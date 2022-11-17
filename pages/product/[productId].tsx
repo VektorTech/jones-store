@@ -47,7 +47,11 @@ const ProductPage: NextPage<ProductPageType> = ({
       <SEO title={product.title} />
 
       <div className="product-view">
-        <ProductGallery images={product.mediaURLs} dimensions={sizes} />
+        <ProductGallery
+          productId={id}
+          images={product.mediaURLs}
+          dimensions={sizes}
+        />
 
         <div className="product-view__cart">
           <h1 className="product-view__name">{title}</h1>

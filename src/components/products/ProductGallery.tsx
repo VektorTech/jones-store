@@ -1,12 +1,19 @@
 import Image from "next/image";
 import FutureImage from "next/future/image";
 import { useState } from "react";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 import Carousel from "@Components/Carousel";
+import { useAuthState } from "@Lib/contexts/AuthContext";
 
-export default function ProductGallery({ images, dimensions }: PropTypes) {
+export default function ProductGallery({
+  productId,
+  images,
+  dimensions,
+}: PropTypes) {
   const [activeImage, setActiveImage] = useState(0);
+  const { addToWishlist, removeFromWishlist, user } = useAuthState();
+  const isOnWishlist = user.wishlist.productIds.some((id) => id == productId);
 
   return (
     <div className="product-gallery">
@@ -58,8 +65,15 @@ export default function ProductGallery({ images, dimensions }: PropTypes) {
               ))}
             </Carousel>
           </div>
-          <button className="product-gallery__wish">
-            <AiOutlineHeart />
+          <button
+            onClick={() =>
+              isOnWishlist
+                ? removeFromWishlist(productId)
+                : addToWishlist(productId)
+            }
+            className="product-gallery__wish"
+          >
+            {isOnWishlist ? <AiFillHeart /> : <AiOutlineHeart />}
           </button>
         </div>
       </div>
@@ -68,6 +82,7 @@ export default function ProductGallery({ images, dimensions }: PropTypes) {
 }
 
 interface PropTypes {
+  productId: string;
   images: string[];
   dimensions: { width: number; height: number }[];
 }
