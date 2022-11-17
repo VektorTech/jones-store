@@ -17,6 +17,7 @@ export default function SizeOptions({
       checkbox={checkbox}
       label={label}
       grid
+      className="size-options"
       values={values ?? sizeListObj}
       checkedItems={checkedItems}
       onChecked={onChecked}

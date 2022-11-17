@@ -1,0 +1,5 @@
+.size-options {
+  & .radio-list__list--grid {
+	grid-template-columns: repeat(auto-fit, minmax(2rem, 4rem));
+  }
+}
