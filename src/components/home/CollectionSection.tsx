@@ -24,62 +24,46 @@ export default function CollectionSection() {
               wardrobe this season.
             </p>
           </div>
-          <div className="collections__block">
-            <Link href="/category/type/low">
-              <a className="collections__block-link">
-                <Image
-                  className="collections__block-image"
-                  alt=""
-                  layout="fill"
-                  src={jordanLowImage}
-                />
-                <div className="collections__block-content">
-                  <h3 className="collections__block-title">Low</h3>
-                  <p className="collections__block-action-text">
-                    <span>discover</span>
-                  </p>
-                </div>
-              </a>
-            </Link>
-          </div>
-          <div className="collections__block">
-            <Link href="/category/type/mid">
-              <a className="collections__block-link">
-                <Image
-                  className="collections__block-image"
-                  alt=""
-                  layout="fill"
-                  src={jordanMidImage}
-                />
-                <div className="collections__block-content">
-                  <h3 className="collections__block-title">Mid</h3>
-                  <p className="collections__block-action-text">
-                    <span>discover</span>
-                  </p>
-                </div>
-              </a>
-            </Link>
-          </div>
-          <div className="collections__block">
-            <Link href="/category/type/high">
-              <a className="collections__block-link">
-                <Image
-                  className="collections__block-image"
-                  alt=""
-                  layout="fill"
-                  src={jordanHighImage}
-                />
-                <div className="collections__block-content">
-                  <h3 className="collections__block-title">High</h3>
-                  <p className="collections__block-action-text">
-                    <span>discover</span>
-                  </p>
-                </div>
-              </a>
-            </Link>
-          </div>
+          {collectionImages.map(({ href, imageSrc, title }) => (
+            <div key={title} className="collections__block">
+              <Link href={href}>
+                <a className="collections__block-link">
+                  <Image
+                    className="collections__block-image"
+                    alt=""
+                    layout="fill"
+                    src={imageSrc}
+                  />
+                  <div className="collections__block-content">
+                    <h3 className="collections__block-title">{title}</h3>
+                    <p className="collections__block-action-text">
+                      <span>discover</span>
+                    </p>
+                  </div>
+                </a>
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
+
+const collectionImages = [
+  {
+    href: "/category/type/low",
+    imageSrc: jordanLowImage,
+    title: "Low",
+  },
+  {
+    href: "/category/type/mid",
+    imageSrc: jordanMidImage,
+    title: "Mid",
+  },
+  {
+    href: "/category/type/high",
+    imageSrc: jordanHighImage,
+    title: "High",
+  },
+];
