@@ -20,40 +20,40 @@ export default function PriceRange({
     (num / (controlRef.current?.offsetWidth || 1)) * 100;
 
   const updateControlUI = (min: number, max: number) => {
-    const minThumb = minHandleRef.current;
-    const maxThumb = maxHandleRef.current;
+    const minHandle = minHandleRef.current;
+    const maxHandle = maxHandleRef.current;
     const rangeTrack = rangeRef.current;
     const control = controlRef.current;
 
-    if (!(minThumb && maxThumb && control && rangeTrack)) {
+    if (!(minHandle && maxHandle && control && rangeTrack)) {
       return;
     }
 
-    const limit = control.offsetWidth - maxThumb.offsetWidth * 2;
-    const minThumbLeft =
+    const limit = control.offsetWidth - maxHandle.offsetWidth * 2;
+    const minHandleLeft =
       (Number(min) / HIGHEST_PRICE) *
-      calculatePercentage(limit + minThumb.offsetWidth);
-    const maxThumbLeft =
+      calculatePercentage(limit + minHandle.offsetWidth);
+    const maxHandleLeft =
       (Number(max) / HIGHEST_PRICE) *
-        calculatePercentage(limit + minThumb.offsetWidth) -
-      calculatePercentage(minThumb.offsetWidth);
+        calculatePercentage(limit + minHandle.offsetWidth) -
+      calculatePercentage(minHandle.offsetWidth);
 
-    minThumb.style.left = minThumbLeft + "%";
-    maxThumb.style.left = maxThumbLeft + "%";
+    minHandle.style.left = minHandleLeft + "%";
+    maxHandle.style.left = maxHandleLeft + "%";
 
-    minThumb.classList.toggle(
+    minHandle.classList.toggle(
       "price-range__thumb--above",
-      minThumbLeft >= calculatePercentage(limit)
+      minHandleLeft >= calculatePercentage(limit)
     );
 
-    rangeTrack.style.left = calculatePercentage(minThumb.offsetLeft) + "%";
+    rangeTrack.style.left = calculatePercentage(minHandle.offsetLeft) + "%";
     rangeTrack.style.width =
-      calculatePercentage(maxThumb.offsetLeft - minThumb.offsetLeft) + "%";
+      calculatePercentage(maxHandle.offsetLeft - minHandle.offsetLeft) + "%";
   };
 
   useEffect(() => {
     if (activeHandle == "") {
-      onUpdate?.(minValue, maxValue);
+      onUpdate?.(Math.round(minValue), Math.round(maxValue));
     }
   }, [activeHandle, minValue, maxValue]);
 
@@ -64,12 +64,12 @@ export default function PriceRange({
   }, [maxPrice, minPrice]);
 
   useEffect(() => {
-    const minThumb = minHandleRef.current;
-    const maxThumb = maxHandleRef.current;
+    const minHandle = minHandleRef.current;
+    const maxHandle = maxHandleRef.current;
     const rangeTrack = rangeRef.current;
     const control = controlRef.current;
 
-    if (!(minThumb && maxThumb && control && rangeTrack)) {
+    if (!(minHandle && maxHandle && control && rangeTrack)) {
       return;
     }
 
@@ -78,7 +78,7 @@ export default function PriceRange({
       document.body.classList.remove("grabbing");
     };
 
-    const limit = control.offsetWidth - maxThumb.offsetWidth * 2;
+    const limit = control.offsetWidth - maxHandle.offsetWidth * 2;
     const controlBounds = control.getBoundingClientRect();
     const mouseMoveHandler = (event: TouchEvent | PointerEvent) => {
       let clientX = 0;
@@ -94,17 +94,17 @@ export default function PriceRange({
         const thumbLeft = calculatePercentage(
           Math.max(
             0,
-            Math.min(pageX - minThumb.offsetWidth / 2, maxThumb.offsetLeft)
+            Math.min(pageX - minHandle.offsetWidth / 2, maxHandle.offsetLeft)
           )
         );
-        minThumb.style.left = thumbLeft + "%";
-        minThumb.classList.toggle(
+        minHandle.style.left = thumbLeft + "%";
+        minHandle.classList.toggle(
           "price-range__thumb--above",
           thumbLeft >= calculatePercentage(limit)
         );
 
         const pricePercentage =
-          thumbLeft / calculatePercentage(limit + maxThumb.offsetWidth);
+          thumbLeft / calculatePercentage(limit + maxHandle.offsetWidth);
 
         const newMinValue = pricePercentage * HIGHEST_PRICE;
         setMinValue(newMinValue);
@@ -112,25 +112,25 @@ export default function PriceRange({
         const thumbLeft = calculatePercentage(
           Math.min(
             Math.max(
-              minThumb.offsetLeft - minThumb.offsetWidth,
-              pageX - maxThumb.offsetWidth * 1.5
+              minHandle.offsetLeft - minHandle.offsetWidth,
+              pageX - maxHandle.offsetWidth * 1.5
             ),
             limit
           )
         );
-        maxThumb.style.left = thumbLeft + "%";
+        maxHandle.style.left = thumbLeft + "%";
 
         const pricePercentage =
-          (thumbLeft + calculatePercentage(minThumb.offsetWidth)) /
-          calculatePercentage(limit + minThumb.offsetWidth);
+          (thumbLeft + calculatePercentage(minHandle.offsetWidth)) /
+          calculatePercentage(limit + minHandle.offsetWidth);
 
         const newMaxValue = Number(pricePercentage * HIGHEST_PRICE);
         setMaxValue(newMaxValue);
       }
 
-      rangeTrack.style.left = calculatePercentage(minThumb.offsetLeft) + "%";
+      rangeTrack.style.left = calculatePercentage(minHandle.offsetLeft) + "%";
       rangeTrack.style.width =
-        calculatePercentage(maxThumb.offsetLeft - minThumb.offsetLeft) + "%";
+        calculatePercentage(maxHandle.offsetLeft - minHandle.offsetLeft) + "%";
     };
 
     const resizeObserver = new ResizeObserver((entries) => {
@@ -162,10 +162,10 @@ export default function PriceRange({
   return (
     <div className="price-range">
       <input
-        defaultValue={`Price: $${minValue.toFixed(0)} — ${
+        defaultValue={`Price: $${Math.round(minValue)} — ${
           maxValue == HIGHEST_PRICE
-            ? "Over $" + maxValue.toFixed(0)
-            : "$" + maxValue.toFixed(0)
+            ? "Over $" + Math.round(maxValue)
+            : "$" + Math.round(maxValue)
         }`}
         key={`Price: $${minValue} — $${maxValue}`}
         readOnly
