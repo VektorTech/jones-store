@@ -46,6 +46,7 @@ export default function ProductGallery({ images, dimensions }: PropTypes) {
                   style={{
                     objectPosition: "top",
                     objectFit: "contain",
+                    maxHeight: "100%",
                     height: "100%",
                     position: "static",
                   }}
