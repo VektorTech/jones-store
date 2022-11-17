@@ -19,8 +19,7 @@ import {
 import useScrollTop from "@Lib/hooks/useScrollTop";
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 import { useAuthState } from "@Lib/contexts/AuthContext";
-
-const CategoriesData = require("@Lib/CategoriesData.json");
+import { currencyFormatter2 } from "@Lib/intl";
 
 export default function HeaderSection() {
   const { setDialog } = useDialog();
@@ -239,7 +238,9 @@ export default function HeaderSection() {
                     hoverElementId="header-cart-btn"
                   >
                     {cartCount ? (
-                      <span style={{ fontWeight: "400" }}>${cartTotal}</span>
+                      <span style={{ fontWeight: "400" }}>
+                        {currencyFormatter2.format(cartTotal)}
+                      </span>
                     ) : (
                       "Empty"
                     )}

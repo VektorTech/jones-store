@@ -15,6 +15,7 @@ import {
 import { useDialog, DialogType } from "@Lib/contexts/UIContext";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import useTabTrapIn from "@Lib/hooks/useKeyTrap";
+import { currencyFormatter2 } from "@Lib/intl";
 
 export default function Sidebar() {
   const [submenu, setSubmenu] = useState<Array<any> | null>(null);
@@ -172,7 +173,12 @@ export default function Sidebar() {
                 >
                   <BsCart3 />
                   <span>
-                    Cart{cartCount ? ` (${cartCount}) ($${cartTotal})` : ""}
+                    Cart
+                    {cartCount
+                      ? ` (${cartCount}) (${currencyFormatter2.format(
+                          cartTotal
+                        )})`
+                      : ""}
                   </span>
                 </button>
               </li>
