@@ -36,7 +36,7 @@ export default function Constraints({
         {!isSearch ? (
           <div className="constraints__filters">
             <ConstraintButtons paramName="color" items={filterState.color} />
-            <ConstraintButtons paramName="Size" items={filterState.size} />
+            <ConstraintButtons paramName="size" items={filterState.size} />
             <ConstraintButtons paramName="height" items={filterState.height} />
             <ConstraintButtons paramName="year" items={filterState.year} />
           </div>
