@@ -78,7 +78,7 @@ export default function CategoryPageWithContext({
   products: ProductComponentType[];
 }) {
   const router = useRouter();
-  const ref = useRef<{ updateFilterState: Function }>();
+  const ref = useRef<{ updateFilterState: Function }>(null);
 
   const getQueryAsFilter = () => {
     const queryAsFilter: Partial<filterStateType> = {

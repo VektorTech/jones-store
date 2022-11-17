@@ -8,6 +8,7 @@ import {
   useRef,
   useImperativeHandle,
   forwardRef,
+  ForwardedRef
 } from "react";
 
 import { HIGHEST_PRICE } from "@Lib/constants";
@@ -109,7 +110,7 @@ function ProductsProvider(
     children: ReactNode;
     preFilter?: Partial<filterStateType>;
   },
-  ref: any
+  ref: ForwardedRef<{ updateFilterState: Function; } | null>
 ) {
   const filterState = useRef<filterStateType>({
     ..._filterState,
