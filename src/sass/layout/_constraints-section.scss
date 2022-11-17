@@ -21,7 +21,6 @@
     margin-bottom: 0;
     font-weight: 700;
     white-space: nowrap;
-
   }
 
   &__summary {
@@ -49,6 +48,11 @@
     &--clear {
       color: $c-red-light;
       border-color: $c-red-light;
+      display: inline-block;
+
+      @include respond-to("large") {
+        display: none;
+      }
     }
 
     &-close {

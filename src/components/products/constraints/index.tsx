@@ -11,7 +11,7 @@ export default function Constraints({
 }: PropTypes) {
   const router = useRouter();
   const { search, q } = router.query;
-  const { filterState } = useProductsState();
+  const { filterState, clearFilters } = useProductsState();
 
   return (
     <div className="constraints">
@@ -41,6 +41,13 @@ export default function Constraints({
             <ConstraintButtons paramName="year" items={filterState.year} />
           </div>
         ) : null}
+
+        <button
+          onClick={clearFilters}
+          className="constraints__filter constraints__filter--clear"
+        >
+          clear all
+        </button>
       </div>
     </div>
   );
