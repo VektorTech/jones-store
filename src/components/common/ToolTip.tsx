@@ -1,7 +1,7 @@
 import { ReactNode, useState, useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
 
-function Popup({ hoverElementId, children, currentId }: PropTypes) {
+function ToolTip({ hoverElementId, children, currentId }: PropTypes) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMountedClient, setIsMountedClient] = useState(false);
   const active = hoverElementId == currentId;
@@ -53,7 +53,7 @@ function Popup({ hoverElementId, children, currentId }: PropTypes) {
   return null;
 }
 
-export default Popup;
+export default ToolTip;
 
 interface PropTypes {
   hoverElementId: string;

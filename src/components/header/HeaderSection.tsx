@@ -8,7 +8,7 @@ import { FiSearch, FiMenu } from "react-icons/fi";
 import { BiCaretDown } from "react-icons/bi";
 
 import Logo from "@Components/common/Logo";
-import Popup from "@Components/common/Popup";
+import ToolTip from "@Components/common/ToolTip";
 import Form from "@Components/common/Form";
 import {
   ColorwaysList,
@@ -173,7 +173,7 @@ export default function HeaderSection() {
                     id="header-account-btn"
                   >
                     <BsPerson />
-                    <Popup
+                    <ToolTip
                       currentId={hoveredElement}
                       hoverElementId="header-account-btn"
                     >
@@ -213,7 +213,7 @@ export default function HeaderSection() {
                           </Link>
                         </>
                       )}
-                    </Popup>
+                    </ToolTip>
                   </a>
                 </Link>
               </li>
@@ -234,7 +234,7 @@ export default function HeaderSection() {
                   id="header-cart-btn"
                 >
                   <BsCart3 />
-                  <Popup
+                  <ToolTip
                     currentId={hoveredElement}
                     hoverElementId="header-cart-btn"
                   >
@@ -243,7 +243,7 @@ export default function HeaderSection() {
                     ) : (
                       "Empty"
                     )}
-                  </Popup>
+                  </ToolTip>
                 </button>
                 {cartCount ? <span>{cartCount}</span> : null}
               </li>
