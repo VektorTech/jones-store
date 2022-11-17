@@ -71,13 +71,8 @@ export default function ProductDetails({ product }: PropTypes) {
   );
 }
 
-const SizeGuide = dynamic(() => import("@Components/SizeGuide"), {
-  suspense: true,
-});
-
-const Reviews = dynamic(() => import("@Components/reviews"), {
-  suspense: true,
-});
+const SizeGuide = dynamic(() => import("@Components/SizeGuide"));
+const Reviews = dynamic(() => import("@Components/reviews"));
 
 const cssOverride: CSSProperties = {
   margin: "2rem auto 0 auto",

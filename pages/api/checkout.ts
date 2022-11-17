@@ -45,7 +45,7 @@ async function PostCheckoutRoute(
       const total = items.reduce((_total, { qty }, index) => {
         const product = products[index];
         if (product) {
-          return _total + (product.price - (product.discount ?? 0)) * qty;
+          return _total + (product.price - product.discount) * qty;
         }
         return _total;
       }, 0);

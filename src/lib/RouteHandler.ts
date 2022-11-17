@@ -36,10 +36,10 @@ export default function RouteHandler() {
         error.message = error.meta?.target + " already exists in database";
       }
 
-      response.status(error.status ?? 500).json({
+      response.status(error.status || 500).json({
         success: false,
         error: true,
-        message: error.message ?? "Internal Server Error",
+        message: error.message || "Internal Server Error",
       });
     } else {
       const { method } = request;

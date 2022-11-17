@@ -10,7 +10,7 @@ import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 
 export default function Cart() {
   const { user, addToCart, removeFromCart, emptyCart } = useAuthState();
-  const shippingTotalCost = user.cart.shippingTotal ?? 0;
+  const shippingTotalCost = user.cart.shippingTotal;
   const { currentDialog, setDialog } = useDialog();
   const active = currentDialog == DialogType.CART;
 

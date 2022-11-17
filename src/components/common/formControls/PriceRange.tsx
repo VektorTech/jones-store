@@ -17,7 +17,7 @@ export default function PriceRange({
   const controlRef = useRef<HTMLDivElement>(null);
 
   const calculatePercentage = (num: number) =>
-    (num / (controlRef.current?.offsetWidth ?? 1)) * 100;
+    (num / (controlRef.current?.offsetWidth || 1)) * 100;
 
   const updateControlUI = (min: number, max: number) => {
     const minThumb = minHandleRef.current;

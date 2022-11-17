@@ -111,9 +111,9 @@ export const normalizeUserProductItems = (
       if (isCartType(item)) {
         userProducts.total += item.total;
       } else {
-        userProducts.total += item.product.price - (item.product.discount ?? 0);
+        userProducts.total += item.product.price - item.product.discount;
       }
-      userProducts.shippingTotal += item.product.shippingCost ?? 0;
+      userProducts.shippingTotal += item.product.shippingCost;
       return userProducts;
     },
     {

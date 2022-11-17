@@ -19,15 +19,16 @@ export default function Reviews({ productId }: PropTypes) {
 
   useEffect(() => {
     const controller = new AbortController();
+
     fetch(`/api/products/${productId}/review`, { signal: controller.signal })
       .then((res) => {
-        const responseBody = res.json();
+        const respJson = res.json();
         if (res.ok) {
-          return responseBody;
+          return respJson;
         }
-        return responseBody.then((error) => Promise.reject(error));
+        return Promise.reject(respJson);
       })
-      .then((res) => setReviews(res.data))
+      .then((res) => setReviews(res.data ?? []))
       .catch();
 
     return controller.abort.bind(controller);
@@ -35,7 +36,7 @@ export default function Reviews({ productId }: PropTypes) {
 
   const averageRatings =
     reviews.reduce((total, { rating }) => total + rating, 0) /
-    (reviews.length ?? 1);
+    (reviews.length || 1);
 
   return (
     <div className="product-details__panel product-details__reviews-panel">

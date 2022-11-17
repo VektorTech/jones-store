@@ -37,7 +37,7 @@ const ProductPage: NextPage<ProductPageType> = ({
     stockQty,
   } = product;
 
-  const cartPrice = (price - (discount ?? 0)) * 1;
+  const cartPrice = (price - discount) * 1;
   const percentageOff = discount
     ? `${Math.floor((discount / price) * 100)}% off`
     : "";

@@ -97,7 +97,7 @@ export default function Product({
               </div>
               <p className="product__price">
                 <span className="product__amount">
-                  {currencyFormatter.format(price - (discount ?? 0))}
+                  {currencyFormatter.format(price - discount)}
                 </span>
 
                 {discount ? (
