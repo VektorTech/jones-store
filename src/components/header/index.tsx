@@ -1,24 +1,15 @@
-import { useAnnouncementState } from "@Lib/contexts/UIContext";
-import { useAuthState } from "@Lib/contexts/AuthContext";
 import Announcement from "./Announcement";
 import HeaderSection from "./HeaderSection";
 import SearchBox from "./SearchBox";
 import Sidebar from "./Sidebar";
 
-function Header() {
-  const [announcementVisible] = useAnnouncementState();
-  const { user } = useAuthState();
-
+export default function Header() {
   return (
     <>
       <SearchBox />
-      <Sidebar userId={user?.id} />
+      <Sidebar />
       <Announcement />
-      <HeaderSection announcementVisible={announcementVisible} />
+      <HeaderSection />
     </>
   );
-}
-
-export default function _Header() {
-  return <Header />;
 }

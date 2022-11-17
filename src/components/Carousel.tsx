@@ -1,18 +1,12 @@
-import { DialogType, useDialog } from "@Lib/contexts/UIContext";
-import useMouseCoords from "@Lib/hooks/useMouseCoords";
 import React, { useState, useRef, useEffect } from "react";
 import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
+
 import Modal from "./Modal";
 
-export default function Carousel({
-  children,
-  aIndex,
-  onUpdate,
-}: {
-  children: React.ReactNode;
-  aIndex: number;
-  onUpdate?: Function;
-}) {
+import { DialogType, useDialog } from "@Lib/contexts/UIContext";
+import useMouseCoords from "@Lib/hooks/useMouseCoords";
+
+export default function Carousel({ children, aIndex, onUpdate }: PropTypes) {
   const carousel = useRef<HTMLDivElement>(null);
   const slidesContainer = useRef<HTMLDivElement>(null);
   const controls = useRef<HTMLDivElement>(null);
@@ -21,7 +15,7 @@ export default function Carousel({
   const activeModal = currentDialog == DialogType.MODAL_PRODUCT_VIEW;
   const [slideNumber, setSlideNumber] = useState(aIndex);
   const [carouselWidth, setCarouselWidth] = useState(
-    carousel.current?.clientWidth || 0
+    carousel.current?.clientWidth ?? 0
   );
   const [x, y] = useMouseCoords(controls.current);
 
@@ -30,7 +24,7 @@ export default function Carousel({
       return React.Children.map(children, (child, index) => {
         return React.cloneElement(child, {
           className:
-            (child.props.className || "") +
+            (child.props.className ?? "") +
             " carousel__slide" +
             (slideNumber == index ? " carousel__slide--active" : ""),
           width: carouselWidth,
@@ -58,7 +52,7 @@ export default function Carousel({
       setCarouselWidth(carousel.current.clientWidth);
     }
     const handleResize = () => {
-      setCarouselWidth(carousel.current?.clientWidth || 0);
+      setCarouselWidth(carousel.current?.clientWidth ?? 0);
     };
     addEventListener("resize", handleResize);
     return () => removeEventListener("resize", handleResize);
@@ -148,4 +142,10 @@ export default function Carousel({
       </div>
     </>
   );
+}
+
+interface PropTypes {
+  children: React.ReactNode;
+  aIndex: number;
+  onUpdate?: Function;
 }

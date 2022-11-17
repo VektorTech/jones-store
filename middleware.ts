@@ -1,11 +1,12 @@
 // see https://nextjs.org/docs/advanced-features/middleware for more information.
 
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+
+import { Role } from "@prisma/client";
+import { NextResponse } from "next/server";
 import { getIronSession } from "iron-session/edge";
 
 import { sessionOptions } from "@Lib/config";
-import { Role } from "@prisma/client";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();

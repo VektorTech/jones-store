@@ -1,20 +1,17 @@
-import { CartItem, Product } from "@prisma/client";
 import Image from "next/image";
+import { CartItem, Product } from "@prisma/client";
+
 import NumberInput from "./common/formControls/NumberInput";
-import { currencyFormatter } from "@Lib/intl";
 import Button from "./common/formControls/Button";
+
+import { currencyFormatter } from "@Lib/intl";
 
 export default function CartProductItem({
   product,
   cartItem,
   removeAction,
   updateAction,
-}: {
-  product: Product;
-  cartItem: CartItem;
-  removeAction: () => void;
-  updateAction: (quantity: number) => void;
-}) {
+}: PropTypes) {
   if (!cartItem || !product) {
     return null;
   }
@@ -34,11 +31,11 @@ export default function CartProductItem({
       <span className="cart__product-gender">{product.gender}</span>
       <span className="cart__product-size">Size: {cartItem.size}</span>
       <span className="cart__product-price">
-        {currencyFormatter.format(product.price - (product.discount || 0))}
+        {currencyFormatter.format(product.price - (product.discount ?? 0))}
       </span>
       <span className="cart__product-cost">
         {currencyFormatter.format(
-          (product.price - (product.discount || 0)) * cartItem.quantity
+          (product.price - (product.discount ?? 0)) * cartItem.quantity
         )}
       </span>
       <NumberInput
@@ -53,4 +50,11 @@ export default function CartProductItem({
       </Button>
     </li>
   );
+}
+
+interface PropTypes {
+  product: Product;
+  cartItem: CartItem;
+  removeAction: () => void;
+  updateAction: (quantity: number) => void;
 }

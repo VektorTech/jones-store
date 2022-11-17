@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { DefaultResponse } from "src/types/shared";
 
-import prisma from "@Lib/prisma";
-import { DefaultResponse } from "src/types/shared";
 import RouteHandler from "@Lib/RouteHandler";
+import prisma from "@Lib/prisma";
 import { checkGuest } from "@Lib/apiMiddleware";
 import { ServerError } from "@Lib/utils";
 
@@ -21,7 +21,7 @@ async function postWishlistRoute(
           userId: user?.id as string,
           productId: productId as string,
         },
-        select: { product: true, productId: true, userId: true }
+        select: { product: true, productId: true, userId: true },
       });
 
       return res.json({
@@ -35,7 +35,7 @@ async function postWishlistRoute(
 
       if (product) {
         guest.wishlist = [
-          ...(guest.wishlist.filter((item) => item.productId != productId) ||
+          ...(guest.wishlist.filter((item) => item.productId != productId) ??
             []),
           { userId: "guest", productId, product: {} },
         ];
@@ -85,8 +85,7 @@ async function deleteWishlistRoute(
 
 async function getWishlistRoute(
   req: NextApiRequest,
-  res: NextApiResponse<DefaultResponse>,
-  next: Function
+  res: NextApiResponse<DefaultResponse>
 ) {
   const { user, guest } = req.session;
 

@@ -35,7 +35,6 @@
   @extend %text-overflow;
 }
 
-//! Form Controls
 %dropdown-menu {
   position: absolute;
   z-index: 1000;
@@ -164,7 +163,6 @@
   }
 }
 
-//
 %product-grid {
   @extend %container;
   display: grid;
@@ -188,7 +186,6 @@
   }
 }
 
-//
 %round-button {
   display: flex;
   width: 3.5rem;

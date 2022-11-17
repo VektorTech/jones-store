@@ -13,33 +13,21 @@ export default function RadioList({
   name = "",
   className = "",
   ...inputProps
-}: {
-  render?: ({
-    label,
-    value,
-    checked,
-  }: {
-    label: string | number;
-    value: string;
-    checked: boolean;
-  }) => ReactElement;
-  label?: string;
-  checkbox?: boolean;
-  grid?: boolean;
-  reverse?: boolean;
-  onChecked?: (items: string[] | string, value?: string) => void;
-  checkedItems?: (string | number)[];
-  values: { [value: string | number]: string | number };
-} & JSX.IntrinsicElements["input"]) {
+}: PropTypes & JSX.IntrinsicElements["input"]) {
   const initState = useMemo<{ [value: string]: boolean }>(
     () =>
-      (reverse ? Object.keys(values).reverse() : Object.keys(values)).reduce((obj: any, value: string) => {
-        obj[value] = !!checkedItems?.includes(value);
-        return obj;
-      }, {}),
+      (reverse ? Object.keys(values).reverse() : Object.keys(values)).reduce(
+        (obj: any, value: string) => {
+          obj[value] = !!checkedItems?.includes(value);
+          return obj;
+        },
+        {}
+      ),
     [values, checkedItems, reverse]
   );
-  const valuesArr = (reverse ? Object.keys(values).reverse() : Object.keys(values));
+  const valuesArr = reverse
+    ? Object.keys(values).reverse()
+    : Object.keys(values);
 
   const [groupState, setGroupState] = useState(initState);
   const [all, setAll] = useState(valuesArr.length < 10);
@@ -131,4 +119,23 @@ export default function RadioList({
       </fieldset>
     </div>
   );
+}
+
+interface PropTypes {
+  render?: ({
+    label,
+    value,
+    checked,
+  }: {
+    label: string | number;
+    value: string;
+    checked: boolean;
+  }) => ReactElement;
+  label?: string;
+  checkbox?: boolean;
+  grid?: boolean;
+  reverse?: boolean;
+  onChecked?: (items: string[] | string, value?: string) => void;
+  checkedItems?: (string | number)[];
+  values: { [value: string | number]: string | number };
 }

@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Role } from "@prisma/client";
+
 import { ServerError } from "./utils";
 
 export const authorizeRole =

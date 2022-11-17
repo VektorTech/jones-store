@@ -7,6 +7,7 @@ import {
   FocusEventHandler,
 } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+
 import useArrowKeyTrap from "@Lib/hooks/useKeyTrap";
 import { isSelectKey } from "@Lib/utils";
 
@@ -18,11 +19,7 @@ export default function Dropdown({
   name = "",
   onOptionSelect,
   ...inputProps
-}: {
-  onOptionSelect?: (value: string) => void;
-  options: { [value: string]: string };
-  label?: string;
-} & JSX.IntrinsicElements["input"]) {
+}: PropTypes & JSX.IntrinsicElements["input"]) {
   const [value, setValue] = useState(_value?.toString() ?? "");
   const [collapsed, setCollapsed] = useState(true);
   const MenuListRef = useRef<HTMLUListElement>(null);
@@ -120,4 +117,10 @@ export default function Dropdown({
       </div>
     </div>
   );
+}
+
+interface PropTypes {
+  onOptionSelect?: (value: string) => void;
+  options: { [value: string]: string };
+  label?: string;
 }

@@ -1,5 +1,6 @@
-import { CartType, UserProducts, WishlistType } from "src/types/shared";
 import { ObjectSchema, ValidationError } from "yup";
+
+import type { CartType, UserProducts, WishlistType } from "src/types/shared";
 
 export function validateInputs(
   input: any,
@@ -110,9 +111,9 @@ export const normalizeUserProductItems = (
       if (isCartType(item)) {
         userProducts.total += item.total;
       } else {
-        userProducts.total += item.product.price - (item.product.discount || 0);
+        userProducts.total += item.product.price - (item.product.discount ?? 0);
       }
-      userProducts.shippingTotal += item.product.shippingCost || 0;
+      userProducts.shippingTotal += item.product.shippingCost ?? 0;
       return userProducts;
     },
     {

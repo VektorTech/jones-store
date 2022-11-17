@@ -10,8 +10,9 @@ import {
   EmailShareButton,
   EmailIcon,
 } from "next-share";
-import Modal from "@Components/Modal";
 import { HiOutlineShare } from "react-icons/hi";
+
+import Modal from "@Components/Modal";
 
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 
@@ -20,12 +21,7 @@ export default function ShareButton({
   description,
   image,
   hashtags,
-}: {
-  title: string;
-  description: string;
-  image: string;
-  hashtags: string;
-}) {
+}: PropTypes) {
   const { currentDialog, setDialog } = useDialog();
   const shareModalOpen = currentDialog == DialogType.MODAL_SHARE;
 
@@ -85,4 +81,11 @@ export default function ShareButton({
       </Modal>
     </div>
   );
+}
+
+interface PropTypes {
+  title: string;
+  description: string;
+  image: string;
+  hashtags: string;
 }

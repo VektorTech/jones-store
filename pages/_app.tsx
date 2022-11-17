@@ -1,24 +1,26 @@
 import "@Sass/main.scss";
 import "nprogress/nprogress.css";
 
+import type { IncomingMessage } from "http";
+import type { UserType } from "src/types/shared";
+
 import App, { AppProps, AppContext } from "next/app";
+import { ReactElement } from "react";
 import Router from "next/router";
+import Head from "next/head";
+import { NextResponse } from "next/server";
 import NProgress from "nprogress";
+import { getIronSession } from "iron-session";
 
 import Layout from "@Components/layouts/Layout";
 import SEO from "@Components/common/SEO";
-import Head from "next/head";
 import AdminLayout from "@Components/layouts/AdminLayout";
-import { getIronSession } from "iron-session";
-import { NextResponse } from "next/server";
+import ErrorBoundary from "@Components/ErrorBoundary";
+
+import prisma from "@Lib/prisma";
 import { sessionOptions } from "@Lib/config";
-import { IncomingMessage } from "http";
-import { ReactElement } from "react";
 import { AuthProvider } from "@Lib/contexts/AuthContext";
 import { UIProvider } from "@Lib/contexts/UIContext";
-import prisma from "@Lib/prisma";
-import { UserType } from "src/types/shared";
-import ErrorBoundary from "@Components/ErrorBoundary";
 
 NProgress.configure({ showSpinner: false });
 Router.events.on("routeChangeStart", () => NProgress.start());

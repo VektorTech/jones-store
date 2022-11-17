@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { DefaultResponse } from "src/types/shared";
 
+import RouteHandler from "@Lib/RouteHandler";
 import prisma from "@Lib/prisma";
-import { DefaultResponse } from "src/types/shared";
 import { newsletterRecipientSchema } from "@Lib/validations";
 import { validateInputs } from "@Lib/helpers";
-import RouteHandler from "@Lib/RouteHandler";
 import { ServerError } from "@Lib/utils";
 
 async function NewsletterRoute(

@@ -1,12 +1,13 @@
+import type { ProductComponentType } from "src/types/shared";
+
+import { useRef, useState } from "react";
 import Link from "next/link";
-import { useEffect } from "react";
 import Image from "next/image";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 import RatingStars from "./RatingStars";
-import { MouseEventHandler, useRef, useState } from "react";
+
 import { getPathString } from "@Lib/utils";
-import { ProductComponentType } from "src/types/shared";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import { currencyFormatter } from "@Lib/intl";
 
@@ -96,7 +97,7 @@ export default function Product({
               </div>
               <p className="product__price">
                 <span className="product__amount">
-                  {currencyFormatter.format(price - (discount || 0))}
+                  {currencyFormatter.format(price - (discount ?? 0))}
                 </span>
 
                 {discount ? (

@@ -16,19 +16,28 @@ export default function useMouseCoords<T extends HTMLElement>(
       this: HTMLElement,
       { clientX, clientY }: PointerEvent
     ) {
-      if (!element) {
-        return;
-      }
       const elementBounds = element.getBoundingClientRect();
-      const halfW = elementBounds.width / 2;
-      const halfH = elementBounds.height / 2;
-      const centerX = elementBounds.left + halfW;
-      const centerY = elementBounds.top + halfH;
+      const halfWidth = elementBounds.width / 2;
+      const halfHeight = elementBounds.height / 2;
+      const centerX = elementBounds.left + halfWidth;
+      const centerY = elementBounds.top + halfHeight;
       let shiftX = 0;
       let shiftY = 0;
       if (limit) {
-        shiftX = map(centerX - halfH, centerX + halfH, -limit, limit, clientX);
-        shiftY = map(centerY - halfH, centerY + halfH, -limit, limit, clientY);
+        shiftX = map(
+          centerX - halfHeight,
+          centerX + halfHeight,
+          -limit,
+          limit,
+          clientX
+        );
+        shiftY = map(
+          centerY - halfHeight,
+          centerY + halfHeight,
+          -limit,
+          limit,
+          clientY
+        );
       } else {
         shiftX = clientX - centerX;
         shiftY = clientY - centerY;
@@ -36,6 +45,7 @@ export default function useMouseCoords<T extends HTMLElement>(
       setCoords([shiftX, shiftY]);
     },
     throttleTimer);
+
     element.addEventListener("pointermove", handlePointerEvent);
     return () => element.removeEventListener("pointermove", handlePointerEvent);
   }, [element, limit, throttleTimer]);

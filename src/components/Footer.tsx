@@ -1,17 +1,15 @@
 import Link from "next/link";
-import Image from "next/future/image";
 import NextImage from "next/image";
-import { useState } from "react";
 import { BiMap, BiPhone, BiTime } from "react-icons/bi";
 import { HiOutlineMail } from "react-icons/hi";
 import { FaPaperPlane } from "react-icons/fa";
-import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 
-import logoImg from "@Images/jones-logo.png";
 import SocialIcons from "./common/SocialButtons";
-import Modal from "./Modal";
 import Dropdown from "./common/formControls/Dropdown";
+import Modal from "./Modal";
 import Logo from "./common/Logo";
+
+import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 
 export default function Footer() {
   const { currentDialog, setDialog } = useDialog();

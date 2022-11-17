@@ -1,13 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { DefaultResponse } from "src/types/shared";
 
-import prisma from "@Lib/prisma";
-import { DefaultResponse } from "src/types/shared";
 import RouteHandler from "@Lib/RouteHandler";
+import prisma from "@Lib/prisma";
 
 async function productSearchRoute(
   req: NextApiRequest,
-  res: NextApiResponse<DefaultResponse>,
-  next: Function
+  res: NextApiResponse<DefaultResponse>
 ) {
   const { q, offset = 0, limit = 10 } = req.query;
 
@@ -18,7 +17,7 @@ async function productSearchRoute(
       mediaURLs: true,
       price: true,
       gender: true,
-      sku: true
+      sku: true,
     },
     where: {
       title: {

@@ -1,15 +1,7 @@
 import { ReactNode, useState, useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
 
-const Popup = ({
-  hoverElementId,
-  children,
-  currentId,
-}: {
-  hoverElementId: string;
-  currentId?: string;
-  children: ReactNode;
-}) => {
+function Popup({ hoverElementId, children, currentId }: PropTypes) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMountedClient, setIsMountedClient] = useState(false);
   const active = hoverElementId == currentId;
@@ -24,7 +16,7 @@ const Popup = ({
     if (hoverElement && active) {
       const containerBounds = containerRef.current?.getBoundingClientRect();
       const hoverElementBounds = hoverElement.getBoundingClientRect();
-      const containerWidth = containerBounds?.width || 0;
+      const containerWidth = containerBounds?.width ?? 0;
       const hoverElementX = hoverElementBounds.x;
       const hoverElementWidth = hoverElementBounds.width;
       const hoverElementY = hoverElementBounds.y;
@@ -59,6 +51,12 @@ const Popup = ({
     );
   }
   return null;
-};
+}
 
 export default Popup;
+
+interface PropTypes {
+  hoverElementId: string;
+  currentId?: string;
+  children: ReactNode;
+}

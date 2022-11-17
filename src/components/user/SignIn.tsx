@@ -1,13 +1,15 @@
+import type { UserTypeNormalized } from "src/types/shared";
+
 import { useState } from "react";
+import Router from "next/router";
 
 import Form from "@Components/common/Form";
 import TextField from "@Components/common/formControls/TextField";
 import Button from "@Components/common/formControls/Button";
+
 import { userLoginSchema } from "@Lib/validations";
 import { validateInput, validateInputs } from "@Lib/helpers";
 import { useAuthState } from "@Lib/contexts/AuthContext";
-import { UserType, UserTypeNormalized } from "src/types/shared";
-import Router from "next/router";
 
 const defaultUserCred = {
   user: "devnuggetsbusinesss@gmail.com",

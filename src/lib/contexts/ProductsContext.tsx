@@ -1,3 +1,5 @@
+import type { ProductComponentType } from "src/types/shared";
+
 import {
   createContext,
   ReactNode,
@@ -7,8 +9,8 @@ import {
   useImperativeHandle,
   forwardRef,
 } from "react";
+
 import { HIGHEST_PRICE } from "@Lib/constants";
-import { ProductComponentType } from "src/types/shared";
 
 export interface filterStateType {
   gender: string;
@@ -48,15 +50,19 @@ const ProductsState: {
 const getGenderPredicate =
   (gender: string) => (product: ProductComponentType) =>
     product.gender == gender;
+
 const getColorPredicate =
   (colors: string[]) => (product: ProductComponentType) =>
     colors.includes(product.color);
+
 const getSizesPredicate =
   (sizes: number[]) => (product: ProductComponentType) =>
     sizes.some((size) => product.sizes.includes(Number(size)));
+
 const getHeightPredicate =
   (height: string[]) => (product: ProductComponentType) =>
     height.includes(product.type);
+
 const getPricePredicate =
   ([minPrice, maxPrice]: [minPrice: number, maxPrice: number]) =>
   (product: ProductComponentType) => {
@@ -65,8 +71,9 @@ const getPricePredicate =
     }
     return product.price >= minPrice && product.price <= maxPrice;
   };
+
 const getYearPredicate = (years: number[]) => (product: ProductComponentType) =>
-  years.includes(product.year || new Date().getFullYear());
+  years.includes(product.year ?? new Date().getFullYear());
 
 interface FilterPredicateType<T> {
   (value: T, index: number, array: T[]): boolean | unknown;
@@ -112,7 +119,7 @@ function ProductsProvider(
 
   const getFilteredListings = () => {
     params = new URLSearchParams();
-    const predicate = compose<ProductComponentType>(
+    const combinedPredicates = compose<ProductComponentType>(
       ...Object.keys(filterState.current).map((type) => {
         const value =
           filterState.current[type as keyof typeof filterState.current];
@@ -121,7 +128,8 @@ function ProductsProvider(
             if (type == "price") {
               params.append("min_price", value[0].toString());
               params.append("max_price", value[1].toString());
-            } else value.forEach((v) => params.append(type, v.toString()));
+            } else
+              value.forEach((value) => params.append(type, value.toString()));
           } else {
             params.append(type, (value as string).toString());
           }
@@ -133,7 +141,7 @@ function ProductsProvider(
       })
     );
 
-    return products.filter(predicate);
+    return products.filter(combinedPredicates);
   };
 
   const filterListings = (action: { [type: string]: unknown }) => {
@@ -188,7 +196,7 @@ function ProductsProvider(
   const [productListing, setProductListing] = useState(getFilteredListings());
 
   useImperativeHandle(ref, () => ({
-    updateFilterState: (preFilter:  Partial<filterStateType>) => {
+    updateFilterState: (preFilter: Partial<filterStateType>) => {
       filterState.current = {
         ..._filterState,
         ...preFilter,

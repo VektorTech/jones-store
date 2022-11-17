@@ -17,7 +17,7 @@ export enum DialogType {
   MODAL_LANG_CURRENCY,
   MODAL_PRODUCT_VIEW,
   MODAL_SHARE,
-};
+}
 
 const uiState: {
   announcementVisible?: boolean;

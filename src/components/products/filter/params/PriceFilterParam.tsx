@@ -1,6 +1,7 @@
 import PriceRange from "@Components/common/formControls/PriceRange";
-import { useProductsState } from "@Lib/contexts/ProductsContext";
 import FilterHeaderParam from "../FilterHeaderParam";
+
+import { useProductsState } from "@Lib/contexts/ProductsContext";
 
 export default function PriceFilterParam() {
   const { filterListings, filterState } = useProductsState();

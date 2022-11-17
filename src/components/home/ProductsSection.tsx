@@ -1,24 +1,16 @@
-import { Product as ProductType } from "@prisma/client";
+import type { ProductComponentType } from "src/types/shared";
+
+import Link from "next/link";
+import { useRef } from "react";
 import {
   BsFillArrowLeftCircleFill,
   BsFillArrowRightCircleFill,
 } from "react-icons/bs";
-import Link from "next/link";
-import { useRef } from "react";
 
 import Product from "../common/Product";
-import { ProductComponentType } from "src/types/shared";
 
-export default function ProductsSection({
-  title,
-  products,
-  url,
-}: {
-  title: string;
-  products: ProductComponentType[];
-  url: string;
-}) {
-  const productsComponent = products?.map((product) => (
+export default function ProductsSection({ title, products, url }: PropTypes) {
+  const productsComponent = products.map((product) => (
     <Product {...product} key={product.id} />
   ));
   const listRef = useRef<HTMLDivElement>(null);
@@ -35,7 +27,7 @@ export default function ProductsSection({
             className="products-section__scroll-button"
             onClick={() =>
               listRef.current?.scrollBy({
-                left: -listRef.current.scrollWidth / 5,
+                left: -listRef.current?.scrollWidth / products.length,
                 behavior: "smooth",
               })
             }
@@ -46,7 +38,7 @@ export default function ProductsSection({
             className="products-section__scroll-button"
             onClick={() =>
               listRef.current?.scrollBy({
-                left: listRef.current.scrollWidth / 5,
+                left: listRef.current?.scrollWidth / products.length,
                 behavior: "smooth",
               })
             }
@@ -62,4 +54,10 @@ export default function ProductsSection({
       </div>
     </section>
   );
+}
+
+interface PropTypes {
+  title: string;
+  products: ProductComponentType[];
+  url: string;
 }

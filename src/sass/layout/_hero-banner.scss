@@ -207,6 +207,8 @@
 
       img {
         transform: rotate(-25deg);
+        user-select: none;
+        -webkit-user-drag: none;
       }
     }
 
@@ -280,7 +282,7 @@
       top: 8rem;
     }
 
-    &-element {
+    &-link {
       display: inline-block;
       border: 0.1rem solid #fff;
       width: min(22rem, max(12%, 15rem));
@@ -377,6 +379,25 @@
       bottom: -1rem;
       transform-origin: bottom left;
       transform: scale(0.7);
+    }
+  }
+
+  &__loader {
+    position: relative;
+    z-index: 100;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &-spinner {
+      margin: 0 auto;
+
+      :first-child {
+        background-color: #fff !important;
+      }
+
+      :last-child {
+        border-color: #fff !important;
+      }
     }
   }
 }

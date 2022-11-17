@@ -1,11 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import prisma from "@Lib/prisma";
+import type { DefaultResponse } from "src/types/shared";
+
 import Stripe from "stripe";
+import { OrderStatus } from "@prisma/client";
 import { buffer } from "micro";
 
-import { OrderStatus } from "@prisma/client";
 import RouteHandler from "@Lib/RouteHandler";
-import { DefaultResponse } from "src/types/shared";
+import prisma from "@Lib/prisma";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2022-08-01",
@@ -22,8 +23,7 @@ export const config = {
 
 async function ConfirmPayment(
   req: NextApiRequest,
-  res: NextApiResponse<DefaultResponse>,
-  next: Function
+  res: NextApiResponse<DefaultResponse>
 ) {
   const sig = req.headers["stripe-signature"];
   const reqBuffer = await buffer(req);
@@ -33,8 +33,8 @@ async function ConfirmPayment(
   try {
     event = stripe.webhooks.constructEvent(
       reqBuffer,
-      sig || "",
-      endpointSecret || ""
+      sig ?? "",
+      endpointSecret ?? ""
     );
   } catch (err) {
     if (err instanceof Error)
@@ -47,7 +47,7 @@ async function ConfirmPayment(
   if (event.type == "checkout.session.completed") {
     const session = event.data.object;
     // @ts-ignore
-    const { paymentId, orderId, userId } = session.metadata;
+    const { orderId, userId } = session.metadata;
     const { payment_status } = session as any;
 
     try {

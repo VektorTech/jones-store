@@ -1,3 +1,12 @@
+import type {
+  CartType,
+  UserProducts,
+  UserTypeNormalized,
+  UserType,
+  WishlistType,
+} from "src/types/shared";
+
+import { useEffect, useReducer } from "react";
 import {
   deleteWishlistItem,
   postWishlistItem,
@@ -6,14 +15,6 @@ import {
   emptyUserCart,
   normalizeUserProductItems,
 } from "@Lib/helpers";
-import { useEffect, useReducer } from "react";
-import {
-  CartType,
-  UserProducts,
-  UserTypeNormalized,
-  UserType,
-  WishlistType,
-} from "src/types/shared";
 
 export const initUser: UserTypeNormalized = {
   id: "",

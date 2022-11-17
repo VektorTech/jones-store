@@ -1,16 +1,11 @@
-import Carousel from "@Components/Carousel";
 import Image from "next/image";
-import Img from "next/future/image";
-import { useState, Suspense } from "react";
+import FutureImage from "next/future/image";
+import { useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 
-export default function ProductGallery({
-  images,
-  dimensions,
-}: {
-  images: string[];
-  dimensions: { width: number; height: number }[];
-}) {
+import Carousel from "@Components/Carousel";
+
+export default function ProductGallery({ images, dimensions }: PropTypes) {
   const [activeImage, setActiveImage] = useState(0);
 
   return (
@@ -46,7 +41,7 @@ export default function ProductGallery({
               aIndex={activeImage}
             >
               {images.map((url, i) => (
-                <Img
+                <FutureImage
                   key={"image:" + url}
                   style={{
                     objectPosition: "top",
@@ -69,4 +64,9 @@ export default function ProductGallery({
       </div>
     </div>
   );
+}
+
+interface PropTypes {
+  images: string[];
+  dimensions: { width: number; height: number }[];
 }

@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { DefaultResponse } from "src/types/shared";
 
-import prisma from "@Lib/prisma";
-import { DefaultResponse } from "src/types/shared";
 import RouteHandler from "@Lib/RouteHandler";
+import prisma from "@Lib/prisma";
 import { checkGuest } from "@Lib/apiMiddleware";
 import { ServerError } from "@Lib/utils";
 
@@ -15,13 +15,12 @@ async function getCartRoute(
 
   if (user) {
     const cart = await prisma.cart.findUnique({
-      where: { userId: user?.id },
-    });
-
-    const cartItems = await prisma.cartItem.findMany({
-      where: { cartId: cart?.id },
-      include: { product: true },
-    });
+        where: { userId: user.id },
+      }),
+      cartItems = await prisma.cartItem.findMany({
+        where: { cartId: cart?.id },
+        include: { product: true },
+      });
 
     res.json({
       message: "Successfully Retrieved Cart Items",
@@ -56,7 +55,7 @@ async function postCartRoute(
       if (!cart) {
         cart = await prisma.cart.create({
           data: {
-            userId: user?.id || "",
+            userId: user?.id ?? "",
             total: 0,
           },
         });
@@ -66,7 +65,7 @@ async function postCartRoute(
         const cartItemData = {
           size: Number(size),
           quantity: Math.min(Number(qty), product.stockQty),
-          total: (product.price - (product.discount || 0)) * Number(qty),
+          total: (product.price - (product.discount ?? 0)) * Number(qty),
         };
         const item = await prisma.cartItem.upsert({
           create: {
@@ -85,7 +84,7 @@ async function postCartRoute(
 
         return res.json({
           message: "Product Successfully Added To Cart",
-          data: { ...item, product},
+          data: { ...item, product },
         });
       }
     } else if (guest && product && product.stockQty) {
@@ -94,11 +93,11 @@ async function postCartRoute(
         size,
         quantity: Math.min(Number(qty), product.stockQty),
         total:
-          (product.price - (product.discount || 0)) *
+          (product.price - (product.discount ?? 0)) *
           Math.min(Number(qty), product.stockQty),
       };
       guest.cart = [
-        ...(guest.cart.filter((item) => item.productId != productId) || []),
+        ...(guest.cart.filter((item) => item.productId != productId) ?? []),
         { cartId: "guest-cart", ...item, product: {} },
       ];
       await req.session.save();

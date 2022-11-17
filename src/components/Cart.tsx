@@ -1,14 +1,16 @@
-import Button from "./common/formControls/Button";
 import { BsXLg } from "react-icons/bs";
-import { useAuthState } from "@Lib/contexts/AuthContext";
 import { PaymentType } from "@prisma/client";
+
+import Button from "./common/formControls/Button";
+import CartProductItem from "./CartItem";
+
+import { useAuthState } from "@Lib/contexts/AuthContext";
 import { currencyFormatter } from "@Lib/intl";
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
-import CartProductItem from "./CartItem";
 
 export default function Cart() {
   const { user, addToCart, removeFromCart, emptyCart } = useAuthState();
-  const shippingTotalCost = user.cart.shippingTotal || 0;
+  const shippingTotalCost = user.cart.shippingTotal ?? 0;
   const { currentDialog, setDialog } = useDialog();
   const active = currentDialog == DialogType.CART;
 
@@ -52,9 +54,7 @@ export default function Cart() {
             </p>
             <p className="cart__total">Total:</p>
             <p className="cart__total-value">
-              {currencyFormatter.format(
-                user.cart.total + shippingTotalCost
-              )}
+              {currencyFormatter.format(user.cart.total + shippingTotalCost)}
             </p>
           </div>
           <Button onClick={stripeCheckout} className="cart__checkout-button">

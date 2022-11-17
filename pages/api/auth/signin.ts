@@ -1,12 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { DefaultResponse } from "src/types/shared";
+
+import { User } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
+import RouteHandler from "@Lib/RouteHandler";
 import prisma from "@Lib/prisma";
 import { userLoginSchema } from "@Lib/validations";
-import { User } from "@prisma/client";
 import { normalizeUserProductItems, validateInputs } from "@Lib/helpers";
-import { DefaultResponse } from "src/types/shared";
-import RouteHandler from "@Lib/RouteHandler";
 import { ServerError } from "@Lib/utils";
 
 const signinRoute = async (
@@ -78,13 +79,14 @@ const signinRoute = async (
     await req.session.save();
 
     const cartItems = await prisma.cartItem.findMany({
-      where: { cartId: cart?.id },
-      include: { product: true },
-    });
-    const wishlistItems = await prisma.wishlist.findMany({
-      where: { userId: user.id },
-      include: { product: true },
-    });
+        where: { cartId: cart?.id },
+        include: { product: true },
+      }),
+      wishlistItems = await prisma.wishlist.findMany({
+        where: { userId: user.id },
+        include: { product: true },
+      });
+
     return res.json({
       success: true,
       message: `${user.username}, Sign In Successful`,

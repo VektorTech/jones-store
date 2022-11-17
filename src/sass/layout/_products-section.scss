@@ -61,6 +61,10 @@
       font-size: 2.5rem;
       color: $c-text-light;
 
+      &:hover {
+        color: $c-text-dark;
+      }
+
       & + & {
         margin-left: 1rem;
       }

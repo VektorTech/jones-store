@@ -1,8 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { DefaultResponse } from "src/types/shared";
 
-import prisma from "@Lib/prisma";
-import { DefaultResponse } from "src/types/shared";
 import RouteHandler from "@Lib/RouteHandler";
+import prisma from "@Lib/prisma";
+import { ServerError } from "@Lib/utils";
 
 async function productRoute(
   req: NextApiRequest,
@@ -11,13 +12,17 @@ async function productRoute(
 ) {
   const { productId } = req.query;
 
-  const product = await prisma.product.findUnique({
-    where: {
-      id: productId as string,
-    },
-  });
+  if (typeof productId == "string") {
+    const product = await prisma.product.findUnique({
+      where: {
+        id: productId as string,
+      },
+    });
 
-  res.json({ message: "Product Found", data: product });
+    return res.json({ message: "Product Found", data: product });
+  }
+
+  next(new ServerError("Malformed Request", 400));
 }
 
 export default RouteHandler().get(productRoute);

@@ -1,29 +1,41 @@
-import { User, Review as ReviewType } from "@prisma/client";
+import Link from "next/link";
 import { useState, useEffect } from "react";
+import { User, Review as ReviewType } from "@prisma/client";
+
 import Button from "../common/formControls/Button";
 import TextField from "../common/formControls/TextField";
 import Form from "../common/Form";
-import Modal from "../Modal";
 import RatingStars from "../common/RatingStars";
+import Modal from "../Modal";
 import Review from "./Review";
-import { useAuthState } from "@Lib/contexts/AuthContext";
-import Link from "next/link";
 
-export default function Reviews({ productId }: { productId: string }) {
+import { useAuthState } from "@Lib/contexts/AuthContext";
+
+export default function Reviews({ productId }: PropTypes) {
   const [reviewModal, setReviewModal] = useState(false);
   const [reviews, setReviews] = useState<(ReviewType & { user: User })[]>([]);
 
   const { user } = useAuthState();
 
   useEffect(() => {
-    fetch(`/api/products/${productId}/review`)
-      .then((res) => res.json())
-      .then((res) => setReviews(res.data));
+    const controller = new AbortController();
+    fetch(`/api/products/${productId}/review`, { signal: controller.signal })
+      .then((res) => {
+        const responseBody = res.json();
+        if (res.ok) {
+          return responseBody;
+        }
+        return responseBody.then((error) => Promise.reject(error));
+      })
+      .then((res) => setReviews(res.data))
+      .catch();
+
+    return controller.abort.bind(controller);
   }, [productId]);
 
   const averageRatings =
     reviews.reduce((total, { rating }) => total + rating, 0) /
-    (reviews.length || 1);
+    (reviews.length ?? 1);
 
   return (
     <div className="product-details__panel product-details__reviews-panel">
@@ -77,4 +89,8 @@ export default function Reviews({ productId }: { productId: string }) {
       </div>
     </div>
   );
+}
+
+interface PropTypes {
+  productId: string;
 }

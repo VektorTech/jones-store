@@ -1,6 +1,7 @@
 import RadioList from "@Components/common/formControls/RadioList";
-import { useProductsState } from "@Lib/contexts/ProductsContext";
 import FilterHeaderParam from "../FilterHeaderParam";
+
+import { useProductsState } from "@Lib/contexts/ProductsContext";
 
 export default function MainColorParam() {
   const { filterListings, filterState } = useProductsState();
@@ -12,9 +13,7 @@ export default function MainColorParam() {
         checkbox
         values={colorsHex}
         checkedItems={filterState.color}
-        onChecked={(items) =>
-          filterListings({ color: items })
-        }
+        onChecked={(items) => filterListings({ color: items })}
         render={({ label, checked, value }) => (
           <span
             className={

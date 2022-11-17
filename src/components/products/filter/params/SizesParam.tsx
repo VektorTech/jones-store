@@ -1,6 +1,7 @@
 import SizeOptions from "@Components/common/SizeOptions";
-import { useProductsState } from "@Lib/contexts/ProductsContext";
 import FilterHeaderParam from "../FilterHeaderParam";
+
+import { useProductsState } from "@Lib/contexts/ProductsContext";
 
 export default function SizesParam() {
   const { filterListings, filterState } = useProductsState();
@@ -9,7 +10,7 @@ export default function SizesParam() {
     <FilterHeaderParam type="US Sizes">
       <SizeOptions
         checkbox
-        checkedItems={filterState.size.map(s => s.toString())}
+        checkedItems={filterState.size.map((s) => s.toString())}
         onChecked={(items) => filterListings({ size: items })}
       />
     </FilterHeaderParam>

@@ -1,10 +1,13 @@
-import { DialogType, useDialog } from "@Lib/contexts/UIContext";
+import type { ProductComponentType } from "src/types/shared";
+
 import { useEffect, useRef, useState } from "react";
-import { ProductComponentType } from "src/types/shared";
-import { useDebounce } from "@Lib/hooks/useDebounce";
 import { FiSearch } from "react-icons/fi";
 import { VscChromeClose } from "react-icons/vsc";
+
 import Product from "@Components/common/Product";
+
+import { DialogType, useDialog } from "@Lib/contexts/UIContext";
+import { useDebounce } from "@Lib/hooks/useDebounce";
 
 export default function SearchBoxContainer() {
   const { currentDialog, setDialog } = useDialog();
@@ -38,10 +41,10 @@ export default function SearchBoxContainer() {
             }
             return Promise.reject(respJson);
           })
-          .then((res) => setProducts(res.data || []))
-          .catch(console.log);
+          .then((res) => setProducts(res.data ?? []))
+          .catch();
       }
-      return () => controller.abort();
+      return controller.abort.bind(controller);
     },
     500,
     [active, searchTerm]

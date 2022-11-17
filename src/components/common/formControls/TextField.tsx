@@ -1,5 +1,5 @@
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useEffect, useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export default function TextField({
   label,
@@ -12,18 +12,15 @@ export default function TextField({
   value = "",
   onChange,
   ...inputProps
-}: {
-  label?: string;
-  multiline?: boolean;
-  error?: string;
-} & (JSX.IntrinsicElements["input"] & JSX.IntrinsicElements["textarea"])) {
+}: PropTypes &
+  (JSX.IntrinsicElements["input"] & JSX.IntrinsicElements["textarea"])) {
   const [_type, setType] = useState(type);
   const [_value, setValue] = useState<string | number | readonly string[]>(
     value
   );
 
   useEffect(() => {
-    setValue(defaultValue || value);
+    setValue(defaultValue ?? value);
   }, [value, defaultValue]);
 
   let Icon;
@@ -106,4 +103,10 @@ export default function TextField({
       </label>
     </div>
   );
+}
+
+interface PropTypes {
+  label?: string;
+  multiline?: boolean;
+  error?: string;
 }

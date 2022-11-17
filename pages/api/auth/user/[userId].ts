@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { DefaultResponse } from "src/types/shared";
 
-import prisma from "@Lib/prisma";
-import { DefaultResponse } from "src/types/shared";
 import RouteHandler from "@Lib/RouteHandler";
+import prisma from "@Lib/prisma";
 import { isAuthorizedUser } from "@Lib/apiMiddleware";
 import { ServerError } from "@Lib/utils";
 

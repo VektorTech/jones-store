@@ -1,30 +1,28 @@
-import Link from "next/link";
-import Image from "next/future/image";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
 
+import Link from "next/link";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsCart3, BsPerson } from "react-icons/bs";
 import { FiSearch, FiMenu } from "react-icons/fi";
 import { BiCaretDown } from "react-icons/bi";
 
-import logoImg from "@Images/jones-logo.png";
-
-import useScrollTop from "@Lib/hooks/useScrollTop";
-import { useEffect, useRef, useState } from "react";
-import { DialogType, useDialog } from "@Lib/contexts/UIContext";
-import { useAuthState } from "@Lib/contexts/AuthContext";
+import Logo from "@Components/common/Logo";
 import Popup from "@Components/common/Popup";
 import Form from "@Components/common/Form";
-import { CartItem } from "@prisma/client";
-import { getPathString } from "@Lib/utils";
-import { useRouter } from "next/router";
-import Logo from "@Components/common/Logo";
+import {
+  ColorwaysList,
+  MenCategoriesList,
+  WomenCategoriesList,
+} from "./MenuLists";
+
+import useScrollTop from "@Lib/hooks/useScrollTop";
+import { DialogType, useDialog } from "@Lib/contexts/UIContext";
+import { useAuthState } from "@Lib/contexts/AuthContext";
+
 const CategoriesData = require("@Lib/CategoriesData.json");
 
-export default function HeaderSection({
-  announcementVisible,
-}: {
-  announcementVisible?: boolean;
-}) {
+export default function HeaderSection() {
   const { setDialog } = useDialog();
 
   const [dropdownNav, setDropdownNav] = useState<JSX.Element[] | null>(null);
@@ -266,43 +264,3 @@ export default function HeaderSection({
     </>
   );
 }
-
-const ColorwaysList = CategoriesData.colorways.map((name: string) => (
-  <li key={name} className="sidebar__links-item">
-    <Link href={"/category/colorways?colorways=" + name}>
-      <a className="sidebar__anchor">{name}</a>
-    </Link>
-  </li>
-));
-
-const MenCategoriesList = [
-  <li key={"men-sidebar"} className="sidebar__links-item">
-    <Link href={"/category/men"}>
-      <a className="sidebar__anchor">ALL MEN</a>
-    </Link>
-  </li>,
-].concat(
-  CategoriesData.men.map((name: string) => (
-    <li key={name} className="sidebar__links-item">
-      <Link href={"/category/men/" + getPathString(name)}>
-        <a className="sidebar__anchor">{name}</a>
-      </Link>
-    </li>
-  ))
-);
-
-const WomenCategoriesList = [
-  <li key={"men-sidebar"} className="sidebar__links-item">
-    <Link href={"/category/women"}>
-      <a className="sidebar__anchor">ALL WOMEN</a>
-    </Link>
-  </li>,
-].concat(
-  CategoriesData.women.map((name: string) => (
-    <li key={name} className="sidebar__links-item">
-      <Link href={"/category/women/" + getPathString(name)}>
-        <a className="sidebar__anchor">{name}</a>
-      </Link>
-    </li>
-  ))
-);

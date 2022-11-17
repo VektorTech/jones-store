@@ -1,14 +1,8 @@
-import Product from "@Components/common/Product";
-import { Product as ProductType } from "@prisma/client";
-import { ProductComponentType } from "src/types/shared";
+import type { ProductComponentType } from "src/types/shared";
 
-export default function ProductsGrid({
-  products,
-  actions = {},
-}: {
-  products: ProductComponentType[];
-  actions?: { [action: string]: (productId: string) => void };
-}) {
+import Product from "@Components/common/Product";
+
+export default function ProductsGrid({ products, actions = {} }: PropTypes) {
   return (
     <div className="products-grid">
       {products.map((product) => (
@@ -26,4 +20,9 @@ export default function ProductsGrid({
       ))}
     </div>
   );
+}
+
+interface PropTypes {
+  products: ProductComponentType[];
+  actions?: { [action: string]: (productId: string) => void };
 }

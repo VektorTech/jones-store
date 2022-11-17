@@ -1,5 +1,5 @@
-import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { useState, useEffect } from "react";
+import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
 export default function AutoComplete({
   label,
@@ -7,10 +7,7 @@ export default function AutoComplete({
   options,
   name,
   ...inputProps
-}: {
-  options: { [value: string | number]: string | number };
-  label?: string;
-} & JSX.IntrinsicElements["input"]) {
+}: PropTypes & JSX.IntrinsicElements["input"]) {
   const [collapsed, setCollapsed] = useState(true);
   const [value, setValue] = useState("");
   const [search, setSearch] = useState("");
@@ -20,7 +17,7 @@ export default function AutoComplete({
   );
 
   useEffect(() => {
-    setSearch(options[value]?.toString() || "");
+    setSearch(options[value]?.toString() ?? "");
   }, [options, value]);
 
   return (
@@ -31,8 +28,8 @@ export default function AutoComplete({
           <input
             value={search}
             onChange={(e) => setSearch(e.currentTarget.value)}
-            onFocus={(e) => setCollapsed(false)}
-            onBlur={(e) => {
+            onFocus={() => setCollapsed(false)}
+            onBlur={() => {
               if (!collapsed) {
                 setCollapsed(true);
               }
@@ -72,4 +69,9 @@ export default function AutoComplete({
       </div>
     </div>
   );
+}
+
+interface PropTypes {
+  options: { [value: string | number]: string | number };
+  label?: string;
 }

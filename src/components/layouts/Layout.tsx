@@ -1,14 +1,15 @@
+import { ReactNode } from "react";
+
 import Header from "../header";
 import Cart from "../Cart";
 import Footer from "../Footer";
-import { ReactElement } from "react";
 import HeroBanner from "../HeroBanner";
-
-import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 import { ScrollUpButton } from "../ScrollUpButton";
 import FeaturesSection from "../home/FeaturesSection";
 
-export default function Layout({ children }: { children: ReactElement }) {
+import { DialogType, useDialog } from "@Lib/contexts/UIContext";
+
+export default function Layout({ children }: { children: ReactNode }) {
   useDialog(
     (isVisible) => {
       document.body.style.overflow = isVisible ? "hidden" : "auto";

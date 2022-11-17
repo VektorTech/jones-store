@@ -1,5 +1,6 @@
-import { isSelectKey } from "@Lib/utils";
 import { useEffect } from "react";
+
+import { isSelectKey } from "@Lib/utils";
 
 let focusIndex = 0;
 
@@ -41,7 +42,7 @@ export default function useKeyTrap(
       allFocusableElements[focusIndex].focus();
     }
 
-    function Tabhandler(event: KeyboardEvent) {
+    function TabHandler(event: KeyboardEvent) {
       if (event.key == "Tab" || event.keyCode == 9) {
         if (event.shiftKey) {
           if (document.activeElement === firstFocusableElement) {
@@ -77,12 +78,12 @@ export default function useKeyTrap(
       event.preventDefault();
     }
 
-    container.addEventListener("keydown", arrow ? arrowHandler : Tabhandler);
+    container.addEventListener("keydown", arrow ? arrowHandler : TabHandler);
 
     const cleanup = () => {
       container.removeEventListener(
         "keydown",
-        arrow ? arrowHandler : Tabhandler
+        arrow ? arrowHandler : TabHandler
       );
 
       allFocusableElements.forEach((element, i) =>

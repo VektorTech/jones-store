@@ -21,13 +21,7 @@ export default function Form({
   action,
   beforeSubmit,
   afterSubmit,
-}: {
-  children: ReactNode;
-  method?: HTTPMethods;
-  action: string;
-  beforeSubmit?: beforeSubmitType;
-  afterSubmit?: afterSubmitType;
-}) {
+}: PropTypes) {
   const ref = useRef<HTMLFormElement>(null);
   const [error, setError] = useState("");
 
@@ -54,7 +48,7 @@ export default function Form({
       });
 
       const [updatedParams = params, shouldContinue = true] =
-        (await beforeSubmit?.(Object.assign({}, params), form)) || [
+        (await beforeSubmit?.(Object.assign({}, params), form)) ?? [
           params,
           true,
         ];
@@ -109,4 +103,12 @@ export default function Form({
       <div className="form__content">{children}</div>
     </form>
   );
+}
+
+interface PropTypes {
+  children: ReactNode;
+  method?: HTTPMethods;
+  action: string;
+  beforeSubmit?: beforeSubmitType;
+  afterSubmit?: afterSubmitType;
 }

@@ -1,10 +1,10 @@
-import AutoComplete from "@Components/common/formControls/AutoComplete";
+import { useRef } from "react";
+
 import RadioList from "@Components/common/formControls/RadioList";
+import FilterHeaderParam from "../FilterHeaderParam";
+
 import { useProductsState } from "@Lib/contexts/ProductsContext";
 import { listToEnum, range } from "@Lib/utils";
-import { Category } from "@prisma/client";
-import { useRef } from "react";
-import FilterHeaderParam from "../FilterHeaderParam";
 
 export default function YearParam() {
   const values = useRef(listToEnum(range(1985, new Date().getFullYear())));

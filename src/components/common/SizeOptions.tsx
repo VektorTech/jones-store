@@ -1,5 +1,6 @@
-import { listToEnum } from "@Lib/utils";
 import RadioList from "./formControls/RadioList";
+
+import { listToEnum } from "@Lib/utils";
 
 const sizeListObj = listToEnum([...Array(37)].map((_, i) => String(2 + i / 2)));
 
@@ -8,12 +9,7 @@ export default function SizeOptions({
   onChecked,
   label,
   checkbox = false,
-}: {
-  checkedItems?: string[];
-  onChecked?: (items: string | string[], value?: string | undefined) => void;
-  label?: string;
-  checkbox?: boolean;
-}) {
+}: PropTypes) {
   return (
     <RadioList
       name="sizes"
@@ -34,4 +30,11 @@ export default function SizeOptions({
       )}
     />
   );
+}
+
+interface PropTypes {
+  checkedItems?: string[];
+  onChecked?: (items: string | string[], value?: string | undefined) => void;
+  label?: string;
+  checkbox?: boolean;
 }

@@ -6,11 +6,7 @@ export default function PriceRange({
   minPrice = 0,
   maxPrice = HIGHEST_PRICE,
   onUpdate,
-}: {
-  minPrice?: number;
-  maxPrice?: number;
-  onUpdate?: (minPrice: number, maxPrice: number) => void;
-}) {
+}: PropTypes) {
   const [minValue, setMinValue] = useState<number>(minPrice);
   const [maxValue, setMaxValue] = useState<number>(maxPrice);
 
@@ -21,7 +17,7 @@ export default function PriceRange({
   const controlRef = useRef<HTMLDivElement>(null);
 
   const calculatePercentage = (num: number) =>
-    (num / (controlRef.current?.offsetWidth || 1)) * 100;
+    (num / (controlRef.current?.offsetWidth ?? 1)) * 100;
 
   const updateControlUI = (min: number, max: number) => {
     const minThumb = minHandleRef.current;
@@ -211,4 +207,10 @@ export default function PriceRange({
       </div>
     </div>
   );
+}
+
+interface PropTypes {
+  minPrice?: number;
+  maxPrice?: number;
+  onUpdate?: (minPrice: number, maxPrice: number) => void;
 }

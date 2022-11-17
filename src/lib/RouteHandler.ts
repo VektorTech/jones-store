@@ -1,7 +1,8 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import type { AsyncAPIHandler, HTTPMethods } from "src/types/shared";
-import { catchAsyncErrors, ServerError } from "./utils";
+import type { NextApiRequest, NextApiResponse } from "next";
+
 import { withSessionRoute } from "./withSession";
+import { catchAsyncErrors, ServerError } from "./utils";
 
 interface RouteHandlerReturnType {
   (req: NextApiRequest, res: NextApiResponse): void;
@@ -35,10 +36,10 @@ export default function RouteHandler() {
         error.message = error.meta?.target + " already exists in database";
       }
 
-      response.status(error.status || 500).json({
+      response.status(error.status ?? 500).json({
         success: false,
         error: true,
-        message: error.message || "Internal Server Error",
+        message: error.message ?? "Internal Server Error",
       });
     } else {
       const { method } = request;
@@ -59,7 +60,9 @@ export default function RouteHandler() {
 
   const createRouter: RouteHandlerReturnType = (req, res) => {
     if (!methodActions[req.method as HTTPMethods]?.length) {
-      return res.status(404).json({ success: false, message: "Route Not Found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Route Not Found" });
     } else {
       return withSessionRoute(next)(req, res);
     }

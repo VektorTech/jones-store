@@ -1,28 +1,15 @@
+import type { ProductComponentType } from "src/types/shared";
+
 import { NextPage } from "next";
+
+import SEO from "@Components/common/SEO";
+import Constraints from "@Components/products/constraints";
+import ProductsGrid from "@Components/products/ProductsGrid";
 
 import prisma from "@Lib/prisma";
 import { withSessionSsr } from "@Lib/withSession";
-import SEO from "@Components/common/SEO";
 
-import { Product as ProductType } from "@prisma/client";
-import Product from "@Components/common/Product";
-import Pagination from "@Components/products/Pagination";
-import { useRouter } from "next/router";
-import Dropdown from "@Components/common/formControls/Dropdown";
-import { RESULTS_PER_PAGE } from "@Lib/constants";
-import Constraints from "@Components/products/constraints";
-import FilterSortSection from "@Components/products/FilterSortSection";
-import ProductsGrid from "@Components/products/ProductsGrid";
-import { ProductComponentType } from "src/types/shared";
-
-const SearchPage: NextPage<{
-  query: string;
-  products: ProductComponentType[];
-  count: number;
-}> = ({ query, products, count }) => {
-  const router = useRouter();
-  const { offset = 0 } = router.query;
-
+const SearchPage: NextPage<SearchPageType> = ({ query, products, count }) => {
   return (
     <div>
       <SEO title={`"${query}"`} />
@@ -31,7 +18,6 @@ const SearchPage: NextPage<{
         allProductsCount={count}
         currentProductsCount={products.length}
       />
-      {/* <FilterSortSection /> */}
 
       <div className="results">
         <div className={"results__container"}>
@@ -47,7 +33,7 @@ export const getServerSideProps = withSessionSsr(async function ({
   req,
   query,
 }) {
-  const { search = "", offset = 0, limit = RESULTS_PER_PAGE, order } = query;
+  const { search = "" } = query;
 
   const select = {
     title: true,
@@ -93,3 +79,9 @@ export const getServerSideProps = withSessionSsr(async function ({
 });
 
 export default SearchPage;
+
+interface SearchPageType {
+  query: string;
+  products: ProductComponentType[];
+  count: number;
+}

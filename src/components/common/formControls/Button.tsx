@@ -4,11 +4,7 @@ export default function Button({
   large,
   invert,
   ...buttonProps
-}: {
-  children: React.ReactNode;
-  large?: boolean;
-  invert?: boolean;
-} & JSX.IntrinsicElements["button"]) {
+}: PropTypes & JSX.IntrinsicElements["button"]) {
   return (
     <button
       {...buttonProps}
@@ -22,4 +18,10 @@ export default function Button({
       {children}
     </button>
   );
+}
+
+interface PropTypes {
+  children: React.ReactNode;
+  large?: boolean;
+  invert?: boolean;
 }

@@ -1,6 +1,8 @@
-import { useProductsState } from "@Lib/contexts/ProductsContext";
 import Link from "next/link";
+
 import FilterHeaderParam from "../FilterHeaderParam";
+
+import { useProductsState } from "@Lib/contexts/ProductsContext";
 
 export default function GenderParam() {
   const { filterListings, filterState } = useProductsState();
@@ -11,7 +13,9 @@ export default function GenderParam() {
         <p
           className={
             "filter-param__link" +
-            (gender == filterState.gender.toLowerCase() ? " filter-param__link--active" : "")
+            (gender == filterState.gender.toLowerCase()
+              ? " filter-param__link--active"
+              : "")
           }
           key={gender}
         >

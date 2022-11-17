@@ -2,14 +2,10 @@ import { BsSliders } from "react-icons/bs";
 
 import Button from "@Components/common/formControls/Button";
 import Dropdown from "@Components/common/formControls/Dropdown";
-import { useRouter } from "next/router";
+
 import { useProductsState } from "@Lib/contexts/ProductsContext";
 
-export default function FilterSortSection({
-  toggleFilter,
-}: {
-  toggleFilter?: () => void;
-}) {
+export default function FilterSortSection({ toggleFilter }: PropTypes) {
   const { sortListings, sortBy } = useProductsState();
 
   return (
@@ -26,7 +22,7 @@ export default function FilterSortSection({
             className="filter-sort__sort-select"
             value={sortBy}
             options={{
-              "default": "Default",
+              default: "Default",
               asc_price: "Price: Low - High",
               price: "Price: High - Low",
               asc_ratings: "Ratings: Low - High",
@@ -44,4 +40,8 @@ export default function FilterSortSection({
       </div>
     </div>
   );
+}
+
+interface PropTypes {
+  toggleFilter?: () => void;
 }

@@ -6,7 +6,7 @@ export default function useLocalStorage(
   const [itemValue, setItemValue] = useState("");
 
   useEffect(() => {
-    setItemValue(localStorage.getItem(key) || "");
+    setItemValue(localStorage.getItem(key) ?? "");
   }, [key]);
 
   const setItem = (value: string) => {

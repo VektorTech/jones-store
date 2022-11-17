@@ -1,6 +1,8 @@
+import type { UserTypeNormalized, UserType } from "src/types/shared";
+
 import { createContext, ReactElement, useContext } from "react";
+
 import useUser, { initUser } from "./useUser";
-import { UserTypeNormalized, UserType } from "src/types/shared";
 
 const authState: {
   user: UserTypeNormalized;
@@ -41,7 +43,7 @@ export const AuthProvider = ({
     removeCartItem,
     emptyCart,
     useSelector,
-    setAuthUser
+    setAuthUser,
   } = useUser(currentUser);
 
   return (

@@ -1,8 +1,9 @@
-import ShoePrint from "@Images/jordan-shoe-print.png";
-import useScrollTop from "@Lib/hooks/useScrollTop";
 import Image from "next/image";
-
 import { useRef } from "react";
+
+import useScrollTop from "@Lib/hooks/useScrollTop";
+
+import ShoePrint from "@Images/jordan-shoe-print.png";
 
 export function ScrollUpButton() {
   const buttonRef = useRef<HTMLButtonElement>(null);

@@ -1,20 +1,17 @@
-import { useProductsState } from "@Lib/contexts/ProductsContext";
 import { useRouter } from "next/router";
-import BreadCrumbs from "../BreadCrumbs";
+
 import ConstraintButtons from "./ConstraintButtons";
+
+import { useProductsState } from "@Lib/contexts/ProductsContext";
 
 export default function Constraints({
   allProductsCount,
   currentProductsCount,
   isSearch,
-}: {
-  allProductsCount: number;
-  currentProductsCount: number;
-  isSearch?: boolean;
-}) {
+}: PropTypes) {
   const router = useRouter();
   const { search } = router.query;
-  const { filterState, clearFilters } = useProductsState();
+  const { filterState } = useProductsState();
 
   return (
     <div className="constraints">
@@ -47,4 +44,10 @@ export default function Constraints({
       </div>
     </div>
   );
+}
+
+interface PropTypes {
+  allProductsCount: number;
+  currentProductsCount: number;
+  isSearch?: boolean;
 }

@@ -1,27 +1,26 @@
-import { withSessionSsr } from "@Lib/withSession";
+import { ChangeEvent, useState } from "react";
 import Image from "next/image";
 import { User } from "@prisma/client";
-import prisma from "@Lib/prisma";
-import { ChangeEvent, useState } from "react";
-import { cloudinaryUpload } from "@Lib/utils";
-import { phoneRegExp, userSchema } from "@Lib/validations";
+
 import TextField from "@Components/common/formControls/TextField";
 import Button from "@Components/common/formControls/Button";
 import Form from "@Components/common/Form";
 
-export default function Profile({ user }: { user: User }) {
-  const [img, setImg] = useState("/assets/images/user-avatar.jpg");
+import { withSessionSsr } from "@Lib/withSession";
+import prisma from "@Lib/prisma";
+import { NextPage } from "next";
 
-  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
-    // cloudinaryUpload(e.target.files, (r) => setImg(r[0]?.secure_url));
-  };
+const ProfilePage: NextPage<ProfilePageType> = ({ user }) => {
+  const [imageSrc] = useState("/assets/images/user-avatar.jpg");
+
+  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {};
 
   return (
     <div className="profile">
       <div className="profile__avatar">
         <Image
           objectFit="cover"
-          src={user.avatarURL || img}
+          src={user.avatarURL ?? imageSrc}
           width={200}
           height={200}
           alt="profile"
@@ -39,9 +38,21 @@ export default function Profile({ user }: { user: User }) {
       <Form action={`/api/auth/edit/${user.id}`} method="POST">
         <TextField label="Username" value={user.username} name="username" />
         <TextField label="Email" value={user.email} name="email" type="email" />
-        <TextField label="First Name" value={user.firstName || ""} name="firstName" />
-        <TextField label="Last Name" value={user.lastName || ""} name="lastName" />
-        <TextField label="Phone" value={user.phoneNumber || ""} name="phoneNumber" />
+        <TextField
+          label="First Name"
+          value={user.firstName ?? ""}
+          name="firstName"
+        />
+        <TextField
+          label="Last Name"
+          value={user.lastName ?? ""}
+          name="lastName"
+        />
+        <TextField
+          label="Phone"
+          value={user.phoneNumber ?? ""}
+          name="phoneNumber"
+        />
         <TextField label="Password" name="password" type="password" />
         <Button type="submit">Save</Button>
       </Form>
@@ -59,7 +70,7 @@ export default function Profile({ user }: { user: User }) {
       </Form>
     </div>
   );
-}
+};
 
 export const getServerSideProps = withSessionSsr(async function ({
   params,
@@ -95,7 +106,13 @@ export const getServerSideProps = withSessionSsr(async function ({
 
   return {
     props: {
-      user: userRecord || null,
+      user: userRecord,
     },
   };
 });
+
+export default ProfilePage;
+
+interface ProfilePageType {
+  user: User;
+}

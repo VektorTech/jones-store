@@ -1,13 +1,14 @@
-import { withSessionSsr } from "@Lib/withSession";
-import { NextPage } from "next";
-import prisma from "@Lib/prisma";
+import type { ProductComponentType } from "src/types/shared";
 
-import { Wishlist, Product as ProductType } from "@prisma/client";
+import { NextPage } from "next";
+import { Wishlist } from "@prisma/client";
+
 import SEO from "@Components/common/SEO";
-import { useAuthState } from "@Lib/contexts/AuthContext";
-import Product from "@Components/common/Product";
 import ProductsGrid from "@Components/products/ProductsGrid";
-import { ProductComponentType } from "src/types/shared";
+
+import prisma from "@Lib/prisma";
+import { useAuthState } from "@Lib/contexts/AuthContext";
+import { withSessionSsr } from "@Lib/withSession";
 
 const WishlistPage: NextPage<WishlistPageProps> = ({ wishlistItems }) => {
   const { removeFromWishlist } = useAuthState();

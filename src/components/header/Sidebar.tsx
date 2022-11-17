@@ -1,19 +1,22 @@
-import { useDialog, DialogType } from "@Lib/contexts/UIContext";
-import { useAuthState } from "@Lib/contexts/AuthContext";
-import useTabTrapIn from "@Lib/hooks/useKeyTrap";
-import Link from "next/link";
 import React, { useEffect, useState, useRef } from "react";
-import { AiOutlineHeart } from "react-icons/ai";
-
+import Link from "next/link";
 import { BsCart3, BsXLg, BsPerson } from "react-icons/bs";
 import { FiSearch, FiLogOut, FiLogIn } from "react-icons/fi";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-import { getPathString } from "@Lib/utils";
+import { AiOutlineHeart } from "react-icons/ai";
+
 import Form from "@Components/common/Form";
+import {
+  ColorwaysList,
+  MenCategoriesList,
+  WomenCategoriesList,
+} from "./MenuLists";
 
-const CategoriesData = require("@Lib/CategoriesData.json");
+import { useDialog, DialogType } from "@Lib/contexts/UIContext";
+import { useAuthState } from "@Lib/contexts/AuthContext";
+import useTabTrapIn from "@Lib/hooks/useKeyTrap";
 
-export default function Sidebar({ userId }: { userId?: string }) {
+export default function Sidebar() {
   const [submenu, setSubmenu] = useState<Array<any> | null>(null);
   const [submenuActive, setSubmenuActive] = useState<boolean>(false);
 
@@ -163,7 +166,10 @@ export default function Sidebar({ userId }: { userId?: string }) {
                 </Link>
               </li>
               <li className="sidebar__icon-links-item">
-                <button onClick={() => setDialog(DialogType.CART)} className="sidebar__anchor">
+                <button
+                  onClick={() => setDialog(DialogType.CART)}
+                  className="sidebar__anchor"
+                >
                   <BsCart3 />
                   <span>
                     Cart{cartCount ? ` (${cartCount}) ($${cartTotal})` : ""}
@@ -197,43 +203,3 @@ export default function Sidebar({ userId }: { userId?: string }) {
     </div>
   );
 }
-
-const ColorwaysList = CategoriesData.colorways.map((name: string) => (
-  <li key={name} className="sidebar__links-item">
-    <Link href={"/category/colorways?colorways=" + name}>
-      <a className="sidebar__anchor">{name}</a>
-    </Link>
-  </li>
-));
-
-const MenCategoriesList = [
-  <li key={"men-sidebar"} className="sidebar__links-item">
-    <Link href={"/category/men"}>
-      <a className="sidebar__anchor">all men</a>
-    </Link>
-  </li>,
-].concat(
-  CategoriesData.men.map((name: string) => (
-    <li key={name} className="sidebar__links-item">
-      <Link href={"/category/men/" + getPathString(name)}>
-        <a className="sidebar__anchor">{name}</a>
-      </Link>
-    </li>
-  ))
-);
-
-const WomenCategoriesList = [
-  <li key={"men-sidebar"} className="sidebar__links-item">
-    <Link href={"/category/women"}>
-      <a className="sidebar__anchor">all women</a>
-    </Link>
-  </li>,
-].concat(
-  CategoriesData.women.map((name: string) => (
-    <li key={name} className="sidebar__links-item">
-      <Link href={"/category/women/" + getPathString(name)}>
-        <a className="sidebar__anchor">{name}</a>
-      </Link>
-    </li>
-  ))
-);

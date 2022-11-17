@@ -1,24 +1,21 @@
+import { VscChromeClose } from "react-icons/vsc";
+
 import {
   filterStateType,
   useProductsState,
 } from "@Lib/contexts/ProductsContext";
-import { VscChromeClose } from "react-icons/vsc";
 
-export default function ConstraintButtons({
-  paramName,
-  items,
-}: {
-  paramName: string;
-  items: string[] | number[];
-}) {
+export default function ConstraintButtons({ paramName, items }: PropTypes) {
   const { filterState, filterListings } = useProductsState();
 
-  const handleRemove = (val: string | number) => {
+  const handleRemove = (value: string | number) => {
     const values = filterState[paramName as keyof filterStateType];
 
     if (Array.isArray(values)) {
       filterListings({
-        [paramName]: [...values].filter((v: string | number) => v != val),
+        [paramName]: [...values].filter(
+          (_value: string | number) => _value != value
+        ),
       });
     }
   };
@@ -41,4 +38,9 @@ export default function ConstraintButtons({
       )}
     </>
   );
+}
+
+interface PropTypes {
+  paramName: string;
+  items: string[] | number[];
 }

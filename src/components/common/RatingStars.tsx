@@ -1,13 +1,7 @@
-import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
 import { useState, cloneElement, MouseEvent } from "react";
+import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
 
-export default function RatingStars({
-  count = 0,
-  interactive,
-}: {
-  count?: number;
-  interactive?: boolean;
-}) {
+export default function RatingStars({ count = 0, interactive }: PropTypes) {
   const [hoverIndex, setHoverIndex] = useState(0);
   const [ratingValue, setRatingValue] = useState(0);
   count = interactive ? hoverIndex : count;
@@ -47,4 +41,9 @@ export default function RatingStars({
       {interactive && <input type="hidden" name="rating" value={ratingValue} />}
     </div>
   );
+}
+
+interface PropTypes {
+  count?: number;
+  interactive?: boolean;
 }

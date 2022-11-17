@@ -1,17 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { Product } from "@prisma/client";
+import { DefaultResponse } from "src/types/shared";
 
+import RouteHandler from "@Lib/RouteHandler";
 import prisma from "@Lib/prisma";
 import { productSchema } from "@Lib/validations";
-import { Product } from "@prisma/client";
-import { DefaultResponse } from "src/types/shared";
 import { Role } from "@prisma/client";
-import RouteHandler from "@Lib/RouteHandler";
 import { authorizeRole, isAuthenticated } from "@Lib/apiMiddleware";
 
 async function getProductRoute(
   req: NextApiRequest,
-  res: NextApiResponse<DefaultResponse>,
-  next: Function
+  res: NextApiResponse<DefaultResponse>
 ) {
   const { offset = 0, limit = 10 } = req.query;
 

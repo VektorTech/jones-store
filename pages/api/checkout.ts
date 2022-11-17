@@ -1,12 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import prisma from "@Lib/prisma";
+import type { DefaultResponse } from "src/types/shared";
+
 import Stripe from "stripe";
+import { OrderStatus, PaymentType } from "@prisma/client";
 
 import RouteHandler from "@Lib/RouteHandler";
+import prisma from "@Lib/prisma";
 import { isAuthenticated } from "@Lib/apiMiddleware";
 import { ServerError } from "@Lib/utils";
-import { DefaultResponse } from "src/types/shared";
-import { OrderStatus, PaymentType } from "@prisma/client";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2022-08-01",
@@ -41,15 +42,15 @@ async function PostCheckoutRoute(
         )
       );
 
-      const total = items.reduce((_total, { id, qty }, index) => {
+      const total = items.reduce((_total, { qty }, index) => {
         const product = products[index];
         if (product) {
-          return _total + (product.price - (product.discount || 0)) * qty;
+          return _total + (product.price - (product.discount ?? 0)) * qty;
         }
         return _total;
       }, 0);
 
-      const shippingTotal = items.reduce((_total, { id, qty }, index) => {
+      const shippingTotal = items.reduce((_total, _, index) => {
         const product = products[index];
         if (product) {
           return _total + product.shippingCost;
@@ -60,7 +61,7 @@ async function PostCheckoutRoute(
       let { address } = (await prisma.userAddress.findFirst({
         select: { address: true },
         where: { userId: user.id, isDefault: true },
-      })) || { address: { id: "" } };
+      })) ?? { address: { id: "" } };
 
       if (!address.id) {
         address = await prisma.address.upsert({
@@ -111,9 +112,9 @@ async function PostCheckoutRoute(
             prisma.orderLine.create({
               data: {
                 quantity: qty,
-                total: qty * (products[index]?.price || 0),
+                total: qty * (products[index]?.price ?? 0),
                 orderId: order.id,
-                productId: products[index]?.id || "",
+                productId: products[index]?.id ?? "",
                 size: Number(size),
               },
             });
@@ -122,8 +123,8 @@ async function PostCheckoutRoute(
               price_data: {
                 currency: payment.currency,
                 product_data: {
-                  name: products[index]?.title || "",
-                  description: products[index]?.details || "",
+                  name: products[index]?.title ?? "",
+                  description: products[index]?.details ?? "",
                   images: products[index]?.mediaURLs,
                 },
                 unit_amount: total * 100,

@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { AsyncAPIHandler } from "src/types/shared";
+import type { AsyncAPIHandler } from "src/types/shared";
+
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from "./config";
 
 export function setCookie(key: string, value: string, days: number) {
@@ -15,7 +16,7 @@ export function getCookie(key: string) {
 
 export function eraseCookie(key: string) {
   const keyValue = getCookie(key);
-  setCookie(key, keyValue || "", -1);
+  setCookie(key, keyValue ?? "", -1);
 }
 
 type CloudinaryBatchResultType = Promise<

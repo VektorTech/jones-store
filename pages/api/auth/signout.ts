@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { DefaultResponse } from "src/types/shared";
 import RouteHandler from "@Lib/RouteHandler";
 import { isAuthenticated } from "@Lib/apiMiddleware";
+import { ServerError } from "@Lib/utils";
 
 async function signoutRoute(
   req: NextApiRequest,
@@ -11,12 +12,15 @@ async function signoutRoute(
 ) {
   const { user } = req.session;
 
-  req.session.destroy();
+  if (user) {
+    req.session.destroy();
 
-  res.json({
-    success: true,
-    message: `User, ${user?.username} Sign Out Successful`,
-  });
+    return res.json({
+      success: true,
+      message: `User, ${user?.username} Sign Out Successful`,
+    });
+  }
+  next(new ServerError("Unauthorized", 401));
 }
 
 export default RouteHandler().get(isAuthenticated, signoutRoute);

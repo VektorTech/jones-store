@@ -1,18 +1,19 @@
-import { Review as ReviewType, User } from "@prisma/client";
-import moment from "moment";
 import Image from "next/image";
+import moment from "moment";
+import { Review as ReviewType, User } from "@prisma/client";
+
 import RatingStars from "../common/RatingStars";
 
 import UserAvatar from "@Images/user-avatar.jpg";
 
-export default function Review({ user, addedAt, comment, rating }: ReviewType & { user: User }) {
+export default function Review({ user, addedAt, comment, rating }: PropTypes) {
   return (
     <div className="review">
       <div className="review__container">
         <div className="review__user-avatar">
           <Image
             className="review__user-avatar-element"
-            src={user.avatarURL || UserAvatar}
+            src={user.avatarURL ?? UserAvatar}
             objectFit={"cover"}
             layout="fill"
             alt=""
@@ -27,7 +28,8 @@ export default function Review({ user, addedAt, comment, rating }: ReviewType & 
                 className="review__date"
                 title={moment(addedAt).format("MMMM Do YYYY")}
               >
-                {" "} &mdash; {moment(addedAt).fromNow()}
+                {" "}
+                &mdash; {moment(addedAt).fromNow()}
               </span>
             </div>
 
@@ -41,3 +43,5 @@ export default function Review({ user, addedAt, comment, rating }: ReviewType & 
     </div>
   );
 }
+
+type PropTypes = ReviewType & { user: User };

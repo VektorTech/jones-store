@@ -1,37 +1,28 @@
-import { BsSliders } from "react-icons/bs";
+import type { ProductComponentType } from "src/types/shared";
+
+import { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/router";
+import { Gender } from "@prisma/client";
 
 import FilterAccordion from "@Components/products/filter/FilterAccordion";
-import BreadCrumbs from "@Components/products/BreadCrumbs";
-import Pagination from "@Components/products/Pagination";
+import SEO from "@Components/common/SEO";
+import Constraints from "@Components/products/constraints";
+import FilterSortSection from "@Components/products/FilterSortSection";
+import ProductsGrid from "@Components/products/ProductsGrid";
 
 import prisma from "@Lib/prisma";
 import { withSessionSsr } from "@Lib/withSession";
-import { Gender, Product as ProductType, Category } from "@prisma/client";
-import SEO from "@Components/common/SEO";
-import Button from "@Components/common/formControls/Button";
-import Dropdown from "@Components/common/formControls/Dropdown";
+import { HIGHEST_PRICE } from "@Lib/constants";
 
-import { useEffect, useState, useRef } from "react";
-
-import Product from "@Components/common/Product";
-import { DialogType, useDialog } from "@Lib/contexts/UIContext";
-import { useRouter } from "next/router";
-import Constraints from "@Components/products/constraints";
-import FilterSortSection from "@Components/products/FilterSortSection";
-import { HIGHEST_PRICE, RESULTS_PER_PAGE } from "@Lib/constants";
-import ProductsGrid from "@Components/products/ProductsGrid";
+import { useDialog } from "@Lib/contexts/UIContext";
 import ProductsProvider, {
   filterStateType,
   useProductsState,
 } from "@Lib/contexts/ProductsContext";
-import { ProductComponentType } from "src/types/shared";
 
 function CategoryPage({ categoryId }: { categoryId: string }) {
   const { products } = useProductsState();
   const count = products.length;
-
-  const router = useRouter();
-  const { offset = 0 } = router.query;
 
   const [filterActive, setFilterActive] = useState(false);
   const { currentDialog } = useDialog();
@@ -81,11 +72,9 @@ function CategoryPage({ categoryId }: { categoryId: string }) {
 export default function CategoryPageWithContext({
   categoryId,
   products,
-  count,
 }: {
   categoryId: string;
   products: ProductComponentType[];
-  count: number;
 }) {
   const router = useRouter();
   const ref = useRef<{ updateFilterState: Function }>();
@@ -117,7 +106,7 @@ export default function CategoryPageWithContext({
         queryAsFilter["price"][1] = Number(value);
       }
       if (param == "color" || param == "height") {
-        queryAsFilter[param] = Array.isArray(value) ? value : [value || ""];
+        queryAsFilter[param] = Array.isArray(value) ? value : [value ?? ""];
       }
     });
 
@@ -143,12 +132,8 @@ export default function CategoryPageWithContext({
   );
 }
 
-export const getServerSideProps = withSessionSsr(async function ({
-  params,
-  req,
-  query,
-}) {
-  const [category = "men", type] = params?.categoryId as string[];
+export const getServerSideProps = withSessionSsr(async function ({ params }) {
+  const [category = "men"] = params?.categoryId as string[];
 
   const select = {
     title: true,
@@ -187,7 +172,7 @@ export const getServerSideProps = withSessionSsr(async function ({
     props: {
       products: allProducts,
       count: allProducts.length,
-      categoryId: category || "",
+      categoryId: category ?? "",
     },
   };
 });

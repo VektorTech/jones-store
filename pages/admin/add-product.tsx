@@ -1,17 +1,17 @@
-import { useMemo } from "react";
-import Form, { beforeSubmitType } from "@Components/common/Form";
+import { Gender, Category } from "@prisma/client";
+
 import { cloudinaryUpload, listToEnum } from "@Lib/utils";
 
+import Form, { beforeSubmitType } from "@Components/common/Form";
 import TextField from "@Components/common/formControls/TextField";
 import AutoComplete from "@Components/common/formControls/AutoComplete";
 import Button from "@Components/common/formControls/Button";
 import Dropdown from "@Components/common/formControls/Dropdown";
-import RadioList from "@Components/common/formControls/RadioList";
 
-import { Gender, Category } from "@prisma/client";
 import SizeOptions from "@Components/common/SizeOptions";
 
 const CategoriesData = require("@Lib/CategoriesData.json");
+const Categories = listToEnum(CategoriesData?.colorways ?? []);
 
 export default function AddProduct() {
   const handleSubmit: beforeSubmitType = async (params, formElement) => {
@@ -27,13 +27,9 @@ export default function AddProduct() {
     }
   };
 
-  const sizesListObj = useMemo(
-    () => listToEnum([...Array(37)].map((_, i) => String(2 + i / 2))),
-    []
-  );
-
   return (
     <div className="admin__section">
+      <h2>Add Product</h2>
       <Form beforeSubmit={handleSubmit} method="POST" action="/api/products">
         <TextField name="title" label="Title" />
         <TextField name="id" label="ID" />
@@ -58,18 +54,8 @@ export default function AddProduct() {
         <TextField name="shippingCost" type="number" label="Shipping Cost" />
         <TextField name="stockQty" type="number" label="Stock Quantity" />
         <TextField name="sku" label="SKU" />
-        <SizeOptions label="Select Sizes" />
-        <AutoComplete
-          name="color"
-          label="Main Colorway"
-          options={CategoriesData.colorways.reduce(
-            (obj: any, colorway: any) => {
-              obj[colorway] = colorway;
-              return obj;
-            },
-            {}
-          )}
-        />
+        <SizeOptions checkbox label="Select Sizes" />
+        <AutoComplete name="color" label="Main Colorway" options={Categories} />
         <Button className="admin__section-button" type="submit">
           Add To Inventory
         </Button>

@@ -1,8 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import prisma from "@Lib/prisma";
-import { DefaultResponse } from "src/types/shared";
+import type { DefaultResponse } from "src/types/shared";
+
 import sanitizeHtml from "sanitize-html";
+
 import RouteHandler from "@Lib/RouteHandler";
+import prisma from "@Lib/prisma";
 import { authorizeRole, isAuthenticated } from "@Lib/apiMiddleware";
 import { Role } from "@prisma/client";
 import { allowedTags } from "@Lib/constants";
@@ -21,7 +23,9 @@ export default RouteHandler()
       await prisma.announcement.create({
         data: {
           headline: sanitizeHtml(headline, { allowedTags: [...allowedTags] }),
-          details: sanitizeHtml(details, { allowedTags: [...allowedTags, "a"] }),
+          details: sanitizeHtml(details, {
+            allowedTags: [...allowedTags, "a"],
+          }),
         },
       });
 

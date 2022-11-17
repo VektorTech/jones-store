@@ -1,14 +1,12 @@
 import type { NextPage, GetServerSideProps } from "next";
-
-import { withSessionSsr } from "@Lib/withSession";
-import prisma from "@Lib/prisma";
+import type { ProductComponentType } from "src/types/shared";
 
 import CollectionSection from "@Components/home/CollectionSection";
 import ProductsSection from "@Components/home/ProductsSection";
 import GenderSection from "@Components/home/GenderSection";
-import FeaturesSection from "@Components/home/FeaturesSection";
-import { Product } from "@prisma/client";
-import { ProductComponentType } from "src/types/shared";
+
+import { withSessionSsr } from "@Lib/withSession";
+import prisma from "@Lib/prisma";
 
 const Home: NextPage<HomePropTypes> = ({ newArrivals, bestSellers }) => {
   return (
@@ -29,11 +27,8 @@ const Home: NextPage<HomePropTypes> = ({ newArrivals, bestSellers }) => {
   );
 };
 
-// use SSG for loading all & SSR to view individual
 export const getServerSideProps: GetServerSideProps = withSessionSsr(
-  async function ({ params, req }) {
-    // const user = req.session.user;
-
+  async function () {
     const productColumns = {
       title: true,
       price: true,
@@ -43,37 +38,41 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
       sku: true,
       id: true,
     };
-    const newArrivals = await Promise.all(
-      (
-        await prisma.product.findMany({
-          take: 5,
-          select: productColumns,
-          orderBy: { dateAdded: "desc" },
-        })
-      ).map(async (p) => ({
-        ...p,
-        ratings: await prisma.review.aggregate({
-          where: { productId: p.id },
-          _avg: { rating: true },
-        }).then(r => r._avg.rating),
-      }))
-    );
 
-    const bestSellers = await Promise.all(
-      (
-        await prisma.product.findMany({
-          take: 5,
-          select: productColumns,
-          orderBy: { salesCount: "desc" },
-        })
-      ).map(async (p) => ({
-        ...p,
-        ratings: await prisma.review.aggregate({
-          where: { productId: p.id },
-          _avg: { rating: true },
-        }).then(r => r._avg.rating),
-      }))
-    );
+    const newArrivals = await Promise.all(
+        (
+          await prisma.product.findMany({
+            take: 5,
+            select: productColumns,
+            orderBy: { dateAdded: "desc" },
+          })
+        ).map(async (p) => ({
+          ...p,
+          ratings: await prisma.review
+            .aggregate({
+              where: { productId: p.id },
+              _avg: { rating: true },
+            })
+            .then((r) => r._avg.rating),
+        }))
+      ),
+      bestSellers = await Promise.all(
+        (
+          await prisma.product.findMany({
+            take: 5,
+            select: productColumns,
+            orderBy: { salesCount: "desc" },
+          })
+        ).map(async (p) => ({
+          ...p,
+          ratings: await prisma.review
+            .aggregate({
+              where: { productId: p.id },
+              _avg: { rating: true },
+            })
+            .then((r) => r._avg.rating),
+        }))
+      );
 
     return {
       props: {

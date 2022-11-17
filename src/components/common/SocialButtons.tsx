@@ -1,4 +1,3 @@
-import { SocialHandles } from "@Lib/config";
 import Link from "next/link";
 import {
   RiFacebookBoxFill,
@@ -9,13 +8,9 @@ import {
 } from "react-icons/ri";
 import { SiTiktok } from "react-icons/si";
 
-export default function SocialButtons({
-  vertical,
-  size = "sm",
-}: {
-  vertical?: boolean;
-  size?: "sm" | "md" | "lg";
-}) {
+import { SocialHandles } from "@Lib/config";
+
+export default function SocialButtons({ vertical, size = "sm" }: PropTypes) {
   return (
     <div
       className={`social-links${
@@ -71,4 +66,9 @@ export default function SocialButtons({
       ) : null}
     </div>
   );
+}
+
+interface PropTypes {
+  vertical?: boolean;
+  size?: "sm" | "md" | "lg";
 }

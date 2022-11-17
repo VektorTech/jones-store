@@ -13,7 +13,13 @@ export default function GenderSection() {
     <section className="gender">
       <div className="gender__container">
         <div className="gender__tall-img">
-          <Image alt="" objectFit="cover" objectPosition="bottom" width={4000} height={5216} layout="fill" src={womanTallImage} />
+          <Image
+            alt=""
+            objectFit="cover"
+            objectPosition="bottom"
+            layout="fill"
+            src={womanTallImage}
+          />
         </div>
         <div className="gender__grid">
           <div className="gender__block gender__block-men">

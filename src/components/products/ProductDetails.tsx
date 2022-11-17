@@ -1,19 +1,9 @@
-import { Product } from "@prisma/client";
-import { useState, Suspense } from "react";
-import { BarLoader } from "react-spinners";
-import { CSSProperties } from "react";
 import dynamic from "next/dynamic";
+import { useState, Suspense, CSSProperties } from "react";
+import { Product } from "@prisma/client";
+import { BarLoader } from "react-spinners";
 
-const SizeGuide = dynamic(() => import("@Components/SizeGuide"), {
-	suspense: true,
-  });
-
-  const Reviews = dynamic(() => import("@Components/reviews"), {
-	suspense: true,
-  });
-
-
-export default function ProductDetails({ product }: { product: Product }) {
+export default function ProductDetails({ product }: PropTypes) {
   const [tabName, setTabName] = useState<
     "description" | "size_guide" | "reviews"
   >("description");
@@ -30,14 +20,14 @@ export default function ProductDetails({ product }: { product: Product }) {
     ),
     size_guide: (
       <Suspense
-        fallback={<BarLoader speedMultiplier={2} cssOverride={override} />}
+        fallback={<BarLoader speedMultiplier={2} cssOverride={cssOverride} />}
       >
         <SizeGuide />
       </Suspense>
     ),
     reviews: (
       <Suspense
-        fallback={<BarLoader speedMultiplier={2} cssOverride={override} />}
+        fallback={<BarLoader speedMultiplier={2} cssOverride={cssOverride} />}
       >
         <Reviews productId={product.id} />
       </Suspense>
@@ -51,9 +41,7 @@ export default function ProductDetails({ product }: { product: Product }) {
           <li
             className={
               "product-details__tab" +
-              (tabName == "description"
-                ? " product-details__tab--active"
-                : "")
+              (tabName == "description" ? " product-details__tab--active" : "")
             }
           >
             <button onClick={() => setTabName("description")}>
@@ -63,9 +51,7 @@ export default function ProductDetails({ product }: { product: Product }) {
           <li
             className={
               "product-details__tab" +
-              (tabName == "size_guide"
-                ? " product-details__tab--active"
-                : "")
+              (tabName == "size_guide" ? " product-details__tab--active" : "")
             }
           >
             <button onClick={() => setTabName("size_guide")}>Size Guide</button>
@@ -85,6 +71,18 @@ export default function ProductDetails({ product }: { product: Product }) {
   );
 }
 
-const override: CSSProperties = {
+const SizeGuide = dynamic(() => import("@Components/SizeGuide"), {
+  suspense: true,
+});
+
+const Reviews = dynamic(() => import("@Components/reviews"), {
+  suspense: true,
+});
+
+const cssOverride: CSSProperties = {
   margin: "2rem auto 0 auto",
 };
+
+interface PropTypes {
+  product: Product;
+}

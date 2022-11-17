@@ -1,15 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-
-import prisma from "@Lib/prisma";
-import { DefaultResponse } from "src/types/shared";
-import RouteHandler from "@Lib/RouteHandler";
-import { authorizeRole, isAuthenticated } from "@Lib/apiMiddleware";
+import type { DefaultResponse } from "src/types/shared";
 import { Role } from "@prisma/client";
+
+import RouteHandler from "@Lib/RouteHandler";
+import prisma from "@Lib/prisma";
+import { authorizeRole, isAuthenticated } from "@Lib/apiMiddleware";
 
 async function usersRoute(
   req: NextApiRequest,
-  res: NextApiResponse<DefaultResponse>,
-  next: Function
+  res: NextApiResponse<DefaultResponse>
 ) {
   const { offset = 0, limit = 10 } = req.query;
 
@@ -31,5 +30,8 @@ async function usersRoute(
   res.json({ message: "Successfully Retrieved Users", data: users });
 }
 
-export default RouteHandler()
-  .get(isAuthenticated, authorizeRole(Role.ADMIN), usersRoute);
+export default RouteHandler().get(
+  isAuthenticated,
+  authorizeRole(Role.ADMIN),
+  usersRoute
+);

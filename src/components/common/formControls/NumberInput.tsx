@@ -6,15 +6,8 @@ export default function NumberInput({
   max = Infinity,
   className = "",
   onChange,
-}: {
-  value: number;
-  min: number;
-  max: number;
-  className?: string;
-  onChange?: (value: number) => void;
-}) {
-  const { min: getMin, max: getMax } = Math;
-  const [_value, setValue] = useState(getMin(getMax(value, min), max));
+}: PropTypes) {
+  const [_value, setValue] = useState(Math.min(Math.max(value, min), max));
 
   useEffect(() => {
     setValue(value);
@@ -30,7 +23,7 @@ export default function NumberInput({
     <div className={"number-input" + (className ? ` ${className}` : "")}>
       <button
         className="number-input__button"
-        onClick={() => setValue(getMax(_value - 1, min))}
+        onClick={() => setValue(Math.max(_value - 1, min))}
         type="button"
       >
         {" - "}
@@ -44,11 +37,19 @@ export default function NumberInput({
       />
       <button
         className="number-input__button"
-        onClick={() => setValue(getMin(_value + 1, max))}
+        onClick={() => setValue(Math.min(_value + 1, max))}
         type="button"
       >
         {" + "}
       </button>
     </div>
   );
+}
+
+interface PropTypes {
+  value: number;
+  min: number;
+  max: number;
+  className?: string;
+  onChange?: (value: number) => void;
 }

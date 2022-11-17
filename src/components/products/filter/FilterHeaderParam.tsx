@@ -1,13 +1,7 @@
 import { useState, ReactNode } from "react";
 import { IoIosArrowUp } from "react-icons/io";
 
-export default function FilterHeaderParam({
-  type,
-  children,
-}: {
-  type: string;
-  children: ReactNode;
-}) {
+export default function FilterHeaderParam({ type, children }: PropTypes) {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
@@ -29,4 +23,9 @@ export default function FilterHeaderParam({
       </div>
     </div>
   );
+}
+
+interface PropTypes {
+  type: string;
+  children: ReactNode;
 }

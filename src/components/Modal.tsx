@@ -1,8 +1,8 @@
-import useTabTrapIn from "@Lib/hooks/useKeyTrap";
 import React, { ReactElement, useRef, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-
 import { VscChromeClose } from "react-icons/vsc";
+
+import useTabTrapIn from "@Lib/hooks/useKeyTrap";
 
 export default function Modal({
   children,
@@ -10,13 +10,7 @@ export default function Modal({
   onClose,
   size = "md",
   visible = true,
-}: {
-  children: ReactElement;
-  title?: string;
-  onClose?: () => void;
-  size?: "sm" | "md" | "lg",
-  visible?: boolean;
-}) {
+}: PropTypes) {
   const [isMountedClient, setIsMountedClient] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -49,4 +43,12 @@ export default function Modal({
   }
 
   return null;
+}
+
+interface PropTypes {
+  children: ReactElement;
+  title?: string;
+  onClose?: () => void;
+  size?: "sm" | "md" | "lg";
+  visible?: boolean;
 }
