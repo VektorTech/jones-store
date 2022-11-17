@@ -10,6 +10,7 @@ import {
   EmailShareButton,
   EmailIcon,
 } from "next-share";
+import { CSSProperties } from "react";
 import { HiOutlineShare } from "react-icons/hi";
 
 import Modal from "@Components/Modal";
@@ -43,6 +44,7 @@ export default function ShareButton({
             url={typeof location != "undefined" ? location.href : ""}
             quote={description}
             hashtag={hashtags}
+            style={cssOverride}
           >
             <FacebookIcon size={32} round />
           </FacebookShareButton>
@@ -51,6 +53,7 @@ export default function ShareButton({
             url={typeof location != "undefined" ? location.href : ""}
             media={image}
             description={description}
+            style={cssOverride}
           >
             <PinterestIcon size={32} round />
           </PinterestShareButton>
@@ -58,6 +61,7 @@ export default function ShareButton({
           <TwitterShareButton
             url={typeof location != "undefined" ? location.href : ""}
             title={description}
+            style={cssOverride}
           >
             <TwitterIcon size={32} round />
           </TwitterShareButton>
@@ -66,6 +70,7 @@ export default function ShareButton({
             url={typeof location != "undefined" ? location.href : ""}
             title={title}
             separator=":: "
+            style={cssOverride}
           >
             <WhatsappIcon size={32} round />
           </WhatsappShareButton>
@@ -74,6 +79,7 @@ export default function ShareButton({
             url={typeof location != "undefined" ? location.href : ""}
             subject={title}
             body={description}
+            style={cssOverride}
           >
             <EmailIcon size={32} round />
           </EmailShareButton>
@@ -89,3 +95,7 @@ interface PropTypes {
   image: string;
   hashtags: string;
 }
+
+const cssOverride: CSSProperties = {
+  marginRight: "1rem"
+};
