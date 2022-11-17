@@ -32,7 +32,7 @@ export default function RatingStars({ count = 0, interactive }: PropTypes) {
                   setRatingValue(hoverIndex);
                 }
               },
-              className: "stars__interactive",
+              className: "stars--interactive stars__star",
             });
           }
           return empty;

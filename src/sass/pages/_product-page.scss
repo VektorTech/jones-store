@@ -51,6 +51,11 @@
   &__price {
     font-size: $text-lg;
     font-weight: 600;
+
+    > span {
+      font-weight: 400;
+      color: $c-text-dark;
+    }
   }
 
   &__shipping {

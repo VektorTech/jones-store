@@ -24,13 +24,14 @@ export default function Review({ user, addedAt, comment, rating }: PropTypes) {
           <div className="review__head">
             <div className="review__user">
               <span className="review__username">{user.username}</span>
-              <span
+              <wbr />
+              <time
                 className="review__date"
                 title={moment(addedAt).format("MMMM Do YYYY")}
               >
                 {" "}
                 &mdash; {moment(addedAt).fromNow()}
-              </span>
+              </time>
             </div>
 
             <div className="review__ratings">

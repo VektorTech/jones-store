@@ -43,6 +43,14 @@
   &__panel {
     width: 100%;
     padding: 2rem 0;
+
+    & .reviews {
+      margin-top: 2rem;
+
+      &__avg-ratings {
+        margin-bottom: 2rem;
+      }
+    }
   }
 
   &__prompt {
@@ -51,5 +59,14 @@
 
   &__link[href] {
     @extend %link;
+  }
+
+  &__reviews {
+    &-form {
+      & .stars {
+        margin-bottom: 2rem;
+        font-size: 3rem;
+      }
+    }
   }
 }

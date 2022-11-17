@@ -48,7 +48,7 @@ export default function Reviews({ productId }: PropTypes) {
             visible={reviewModal}
             onClose={() => setReviewModal(false)}
           >
-            <div>
+            <div className="product-details__reviews-form">
               <Form
                 method="POST"
                 action={`/api/products/${productId}/review`}

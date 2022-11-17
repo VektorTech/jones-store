@@ -1,7 +1,17 @@
 .stars {
+  display: inline-block;
+
+  &__icons {
+    white-space: nowrap;
+  }
+
   &__star {
     & + & {
       margin-left: 0.2rem;
     }
+  }
+
+  &--interactive {
+    cursor: pointer;
   }
 }
