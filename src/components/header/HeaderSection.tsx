@@ -40,7 +40,7 @@ export default function HeaderSection() {
 
     if (mainBanner) {
       setPinnedState(
-        scrollTop > mainBanner?.offsetTop + mainBanner?.clientHeight
+        scrollTop > mainBanner.offsetTop + mainBanner.clientHeight
       );
     }
   }, [scrollTop]);

@@ -13,7 +13,7 @@ export default function ProductGallery({
 }: PropTypes) {
   const [activeImage, setActiveImage] = useState(0);
   const { addToWishlist, removeFromWishlist, user } = useAuthState();
-  const isOnWishlist = user.wishlist.productIds.some((id) => id == productId);
+  const isOnWishlist = !!user.wishlist.items[productId];
 
   return (
     <div className="product-gallery">
@@ -57,6 +57,7 @@ export default function ProductGallery({
                     height: "100%",
                     position: "static",
                   }}
+                  priority
                   src={url}
                   width={dimensions[i].width}
                   height={dimensions[i].height}

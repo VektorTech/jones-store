@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { IoIosArrowBack } from "react-icons/io";
 
 import Button from "@Components/common/formControls/Button";
@@ -12,7 +11,6 @@ import YearParam from "./params/YearParam";
 import { useProductsState } from "@Lib/contexts/ProductsContext";
 
 export default function FilterAccordion({ active, setState }: PropTypes) {
-  const router = useRouter();
   const { clearFilters } = useProductsState();
 
   return (
