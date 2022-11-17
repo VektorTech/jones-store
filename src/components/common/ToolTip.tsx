@@ -23,8 +23,16 @@ function ToolTip({ hoverElementId, children, currentId }: PropTypes) {
       const hoverElementHeight = hoverElementBounds.height;
 
       if (containerRef.current) {
-        containerRef.current.style.left =
-          hoverElementX + hoverElementWidth / 2 - containerWidth / 2 + "px";
+        const newLeft =
+          hoverElementX + hoverElementWidth / 2 - containerWidth / 2;
+        const bodyOverflowRight = Math.max(
+          0,
+          newLeft +
+            containerRef.current.offsetWidth -
+            document.documentElement.offsetWidth
+        );
+
+        containerRef.current.style.left = newLeft - bodyOverflowRight + "px";
         containerRef.current.style.top =
           document.documentElement.scrollTop +
           hoverElementY +
