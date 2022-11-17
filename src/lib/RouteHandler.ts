@@ -12,6 +12,12 @@ interface RouteHandlerReturnType {
   delete: (...handlers: AsyncAPIHandler[]) => RouteHandlerReturnType;
 }
 
+function assertIsHTTPMethod(str?: string): asserts str is HTTPMethods {
+  if (!(str && ["GET", "POST", "PUT", "DELETE"].includes(str.toUpperCase()))) {
+    throw new ServerError("HTTP Method Not Supported", 500);
+  }
+}
+
 export default function RouteHandler() {
   const methodActions: Record<HTTPMethods, AsyncAPIHandler[]> = {
     GET: [],
@@ -43,10 +49,11 @@ export default function RouteHandler() {
       });
     } else {
       const { method } = request;
+      assertIsHTTPMethod(method);
 
-      if (methodActions[method as HTTPMethods][actionIndex]) {
+      if (methodActions[method][actionIndex]) {
         await catchAsyncErrors(
-          methodActions[method as HTTPMethods][actionIndex]
+          methodActions[method][actionIndex]
         )(request, response, (err: ServerError) =>
           next(request, response, err, actionIndex + 1)
         );
