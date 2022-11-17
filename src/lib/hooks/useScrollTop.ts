@@ -4,10 +4,13 @@ export default function useScrollTop() {
   const [scrollTop, setScrollTop] = useState(0);
 
   useEffect(() => {
-    addEventListener("scroll", () => {
+    const scrollHandler = () => {
       const _scrollTop = document.documentElement.scrollTop;
       setScrollTop(_scrollTop);
-    });
+    };
+
+    window.addEventListener("scroll", scrollHandler);
+    return () => window.removeEventListener("scroll", scrollHandler);
   }, []);
 
   return scrollTop;
