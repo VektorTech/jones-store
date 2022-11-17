@@ -30,7 +30,11 @@ export default function ProductCartForm({ product }: { product: Product }) {
       <Button
         onClick={(e) => {
           e.preventDefault();
-          addToCart(id, quantity, Number(checkedSize));
+          const size = Number(checkedSize);
+          if (quantity && size) {
+            addToCart(id, quantity, Number(checkedSize));
+          } else {
+          }
         }}
         className="product-cart-form__submit"
         large
@@ -43,7 +47,12 @@ export default function ProductCartForm({ product }: { product: Product }) {
         type="button"
         className="product-view__buy"
         large
-        onClick={() => buyNowHandler(product, quantity, checkedSize)}
+        onClick={() => {
+          if (quantity && checkedSize) {
+            buyNowHandler(product, quantity, checkedSize);
+          } else {
+          }
+        }}
       >
         Buy Now
       </Button>
