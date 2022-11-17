@@ -11,6 +11,7 @@ import {
 } from "react";
 
 import { HIGHEST_PRICE } from "@Lib/constants";
+import Router from "next/router";
 
 export interface filterStateType {
   gender: string;
@@ -148,9 +149,7 @@ function ProductsProvider(
     filterState.current = { ...filterState.current, ...action };
     setProductListing(getFilteredListings());
 
-    window.history.replaceState(
-      null,
-      "",
+    Router.replace(
       `/category/${filterState.current.gender.toLowerCase()}?${params.toString()}`
     );
   };
@@ -158,11 +157,7 @@ function ProductsProvider(
   const clearFilters = () => {
     filterState.current = _filterState;
     setProductListing(products);
-    window.history.replaceState(
-      null,
-      "",
-      `/category/${filterState.current.gender.toLowerCase()}`
-    );
+    Router.replace(`/category/${filterState.current.gender.toLowerCase()}`);
   };
 
   const sortListings = (sortBy: string) => {
