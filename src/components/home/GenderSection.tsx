@@ -20,6 +20,7 @@ export default function GenderSection() {
             layout="fill"
             src={womanTallImage}
           />
+          <h3 className="gender__text-overlay">Gender<br/>Collections</h3>
         </div>
         <div className="gender__grid">
           <div className="gender__block gender__block-men">

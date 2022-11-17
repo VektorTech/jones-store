@@ -32,8 +32,8 @@
 
     @include respond-to("medium") {
       flex-direction: row;
-      max-height: 55rem;
-      height: 28vw;
+      max-height: 50rem;
+      height: 25vw;
       gap: 1.5rem;
     }
   }

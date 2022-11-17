@@ -1,5 +1,7 @@
 @use "../abstracts" as *;
 
+@import url("https://fonts.googleapis.com/css2?family=Shrikhand&display=swap");
+
 .gender {
   width: 100%;
   background-color: $c-background-dark;
@@ -29,6 +31,27 @@
       max-height: 100rem;
       height: 40vw;
       overflow: hidden;
+    }
+  }
+
+  &__text-overlay {
+    font-family: "Shrikhand", cursive;
+    color: #fff;
+    position: absolute;
+    text-align: center;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    font-size: 12vw;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include respond-to("small") {
+      font-size: 6vw;
     }
   }
 
