@@ -3,12 +3,13 @@
 .not-found {
   text-align: center;
   padding: 10rem 0;
-  background-color: #fff;
+  background-color: $c-background-color;
+
+  @extend %page-container;
 
   &__title {
     font-size: 18vw;
     font-weight: 900;
-    width: 50%;
     margin: auto;
     position: relative;
   }
@@ -36,6 +37,8 @@
 
   &__link {
     @extend %form-button;
+    width: 12rem;
+    margin: auto;
 
     &[href] {
       color: #fff;
