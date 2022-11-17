@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Product, PaymentType } from "@prisma/client";
 
 import SizeOptions from "@Components/common/SizeOptions";
@@ -6,6 +6,7 @@ import Button from "@Components/common/formControls/Button";
 import NumberInput from "@Components/common/formControls/NumberInput";
 
 import { useAuthState } from "@Lib/contexts/AuthContext";
+import { listToEnum } from "@Lib/utils";
 
 export default function ProductCartForm({ product }: { product: Product }) {
   const [checkedSize, setCheckedSize] = useState<string>("");
@@ -13,13 +14,17 @@ export default function ProductCartForm({ product }: { product: Product }) {
 
   const { id, stockQty } = product;
   const { addToCart } = useAuthState();
+  const sizesValuesRef = useRef(listToEnum(product.sizes));
 
   return (
     <form method="POST" action="/api/cart">
       <p>
         <strong>Size:</strong> Please Select
       </p>
-      <SizeOptions onChecked={(items) => setCheckedSize(items as string)} />
+      <SizeOptions
+        values={sizesValuesRef.current}
+        onChecked={(items) => setCheckedSize(items as string)}
+      />
       <NumberInput
         onChange={(value) => setQuantity(value)}
         value={quantity}

@@ -5,10 +5,11 @@ import { listToEnum } from "@Lib/utils";
 const sizeListObj = listToEnum([...Array(37)].map((_, i) => String(2 + i / 2)));
 
 export default function SizeOptions({
+  values,
   checkedItems,
-  onChecked,
   label,
   checkbox = false,
+  onChecked,
 }: PropTypes) {
   return (
     <RadioList
@@ -16,7 +17,7 @@ export default function SizeOptions({
       checkbox={checkbox}
       label={label}
       grid
-      values={sizeListObj}
+      values={values ?? sizeListObj}
       checkedItems={checkedItems}
       onChecked={onChecked}
       render={({ label, checked }) => (
@@ -33,8 +34,12 @@ export default function SizeOptions({
 }
 
 interface PropTypes {
+  values?: {
+    [value: string]: string | number;
+    [value: number]: string | number;
+  };
   checkedItems?: string[];
-  onChecked?: (items: string | string[], value?: string | undefined) => void;
   label?: string;
   checkbox?: boolean;
+  onChecked?: (items: string | string[], value?: string | undefined) => void;
 }
