@@ -8,7 +8,7 @@ import {
   useRef,
   useImperativeHandle,
   forwardRef,
-  ForwardedRef
+  ForwardedRef,
 } from "react";
 
 import { HIGHEST_PRICE } from "@Lib/constants";
@@ -110,7 +110,7 @@ function ProductsProvider(
     children: ReactNode;
     preFilter?: Partial<filterStateType>;
   },
-  ref: ForwardedRef<{ updateFilterState: Function; } | null>
+  ref: ForwardedRef<{ updateFilterState: Function } | null>
 ) {
   const filterState = useRef<filterStateType>({
     ..._filterState,
@@ -151,14 +151,20 @@ function ProductsProvider(
     setProductListing(getFilteredListings());
 
     Router.replace(
-      `/category/${filterState.current.gender.toLowerCase()}?${params.toString()}`
+      `/category/${filterState.current.gender.toLowerCase()}?${params.toString()}`,
+      undefined,
+      { scroll: false, shallow: true }
     );
   };
 
   const clearFilters = () => {
     filterState.current = _filterState;
     setProductListing(products);
-    Router.replace(`/category/${filterState.current.gender.toLowerCase()}`);
+    Router.replace(
+      `/category/${filterState.current.gender.toLowerCase()}`,
+      undefined,
+      { scroll: false, shallow: true }
+    );
   };
 
   const sortListings = (sortBy: string) => {
