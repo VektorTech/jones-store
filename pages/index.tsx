@@ -77,18 +77,22 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
     const newArrivalsImgDataUrls: Record<string, string> = {};
     const bestSellersImgDataUrls: Record<string, string> = {};
 
-    for (let i = 0; i < PRODUCTS_COUNT; i++) {
-      const newArrivalsImageUrl = newArrivals[i].mediaURLs[0];
+    for await (const _product of newArrivals) {
+      const newArrivalsImageUrl = _product.mediaURLs[0];
       const newArrivalsImageId =
         newArrivalsImageUrl.match(/upload\/(.+)/)?.[1] ?? "";
-      const bestSellersImageUrl = bestSellers[i].mediaURLs[0];
+
+      newArrivalsImgDataUrls[_product.id] = await getBase64UrlCloudinary(
+        newArrivalsImageId
+      );
+    }
+
+    for await (const _product of bestSellers) {
+      const bestSellersImageUrl = _product.mediaURLs[0];
       const bestSellersImageId =
         bestSellersImageUrl.match(/upload\/(.+)/)?.[1] ?? "";
 
-      newArrivalsImgDataUrls[newArrivals[i].id] = await getBase64UrlCloudinary(
-        newArrivalsImageId
-      );
-      bestSellersImgDataUrls[bestSellers[i].id] = await getBase64UrlCloudinary(
+      bestSellersImgDataUrls[_product.id] = await getBase64UrlCloudinary(
         bestSellersImageId
       );
     }
