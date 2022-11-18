@@ -23,6 +23,7 @@ export default function FilterSortSection({ toggleFilter }: PropTypes) {
             value={sortBy}
             options={{
               default: "Default",
+              best: "Highest Sales",
               asc_price: "Price: Low - High",
               price: "Price: High - Low",
               asc_ratings: "Ratings: Low - High",

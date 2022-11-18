@@ -22,7 +22,7 @@ const Home: NextPage<HomePropTypes> = ({ newArrivals, bestSellers }) => {
       <ProductsSection
         products={bestSellers}
         title="best sellers"
-        url="/category/best"
+        url="/category/new?sort=best"
       />
     </>
   );

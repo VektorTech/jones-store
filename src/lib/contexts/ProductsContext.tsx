@@ -15,6 +15,9 @@ import { HIGHEST_PRICE } from "@Lib/constants";
 import Router from "next/router";
 
 export interface filterStateType {
+  search?: string;
+  sort?: string;
+  page: string;
   gender: string;
   color: string[];
   size: number[];
@@ -25,6 +28,7 @@ export interface filterStateType {
 export type filterStateKeys = keyof filterStateType;
 
 const _filterState: filterStateType = {
+  page: "",
   gender: "",
   color: [],
   size: [],
@@ -77,6 +81,17 @@ const getPricePredicate =
 const getYearPredicate = (years: number[]) => (product: ProductComponentType) =>
   years.includes(product.year ?? new Date().getFullYear());
 
+const getSearchPredicate =
+  (search: string) => (product: ProductComponentType) => {
+    const pattern = new RegExp(
+      search
+        .split("-")
+        .map((word) => `(?=.*${word})`)
+        .join("")
+    );
+    return pattern.test(product.title.toLowerCase());
+  };
+
 interface FilterPredicateType<T> {
   (value: T, index: number, array: T[]): boolean | unknown;
 }
@@ -88,6 +103,8 @@ const compose = <T extends unknown>(...predicates: FilterPredicateType<T>[]) =>
   );
 
 const actions: { [type: string]: Function } = {
+  page: () => () => true,
+  search: getSearchPredicate,
   gender: getGenderPredicate,
   color: getColorPredicate,
   size: getSizesPredicate,
@@ -125,7 +142,7 @@ function ProductsProvider(
       ...Object.keys(filterState.current).map((type) => {
         const value =
           filterState.current[type as keyof typeof filterState.current];
-        if (type != "gender") {
+        if (type != "gender" && type != "page" && type != "search") {
           if (Array.isArray(value)) {
             if (type == "price") {
               params.append("min_price", value[0].toString());
@@ -133,10 +150,10 @@ function ProductsProvider(
             } else
               value.forEach((value) => params.append(type, value.toString()));
           } else {
-            params.append(type, (value as string).toString());
+            params.append(type, ((value as string) ?? "").toString());
           }
         }
-        if (value && value.length) {
+        if (type != "sort" && value && value.length) {
           return actions[type](value);
         }
         return () => true;
@@ -149,22 +166,28 @@ function ProductsProvider(
   const filterListings = (action: { [type: string]: unknown }) => {
     filterState.current = { ...filterState.current, ...action };
     setProductListing(getFilteredListings());
+    const { search, gender, page } = filterState.current;
+    const pageId = gender.toLowerCase() || page;
 
     Router.replace(
-      `/category/${filterState.current.gender.toLowerCase()}?${params.toString()}`,
+      `/category/${pageId}${search ? "/" + search : ""}?${params.toString()}`,
       undefined,
-      { scroll: false, shallow: true }
+      {
+        scroll: false,
+        shallow: true,
+      }
     );
   };
 
   const clearFilters = () => {
-    filterState.current = _filterState;
-    setProductListing(products);
-    Router.replace(
-      `/category/${filterState.current.gender.toLowerCase()}`,
-      undefined,
-      { scroll: false, shallow: true }
-    );
+    const { gender } = filterState.current;
+    filterState.current = { ..._filterState, gender };
+    setProductListing(products.filter(getGenderPredicate(gender)));
+
+    Router.replace(`/category/${gender.toLowerCase()}`, undefined, {
+      scroll: false,
+      shallow: true,
+    });
   };
 
   const sortListings = (sortBy: string) => {
@@ -190,6 +213,9 @@ function ProductsProvider(
     } else if (sortBy == "year_old") {
       compare = (aProduct, bProduct) =>
         (aProduct.year ?? 0) - (bProduct.year ?? 0);
+    } else if (sortBy == "best") {
+      compare = (aProduct, bProduct) =>
+        bProduct.salesCount - aProduct.salesCount;
     }
 
     setProductListing((listings) => [...listings].sort(compare));
@@ -203,8 +229,9 @@ function ProductsProvider(
         ..._filterState,
         ...preFilter,
       };
-      sortByRef.current = "";
+      sortByRef.current = filterState.current.sort ?? "";
       setProductListing(getFilteredListings());
+      if (sortByRef.current) sortListings(sortByRef.current);
     },
   }));
 

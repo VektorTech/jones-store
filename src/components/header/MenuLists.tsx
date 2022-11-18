@@ -5,7 +5,7 @@ const CategoriesData = require("@Lib/CategoriesData.json");
 
 export const ColorwaysList = CategoriesData.colorways.map((name: string) => (
   <li key={name} className="sidebar__links-item">
-    <Link href={"/category/colorways?colorways=" + name}>
+    <Link href={"/category/colorways?color=" + name}>
       <a className="sidebar__anchor">{name}</a>
     </Link>
   </li>

@@ -52,17 +52,17 @@ export default function CollectionSection() {
 
 const collectionImages = [
   {
-    href: "/category/type/low",
+    href: "/category/new?height=LOW",
     imageSrc: jordanLowImage,
     title: "Low",
   },
   {
-    href: "/category/type/mid",
+    href: "/category/new?height=MID",
     imageSrc: jordanMidImage,
     title: "Mid",
   },
   {
-    href: "/category/type/high",
+    href: "/category/new?height=HIGH",
     imageSrc: jordanHighImage,
     title: "High",
   },

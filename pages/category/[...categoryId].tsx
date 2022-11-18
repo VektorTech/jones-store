@@ -94,6 +94,12 @@ export default function CategoryPageWithContext({
         Gender[value[0].toUpperCase() as Gender]
       ) {
         queryAsFilter["gender"] = value[0].toUpperCase();
+        if (value[1]) queryAsFilter["search"] = value[1];
+      } else if (
+        param == "categoryId" &&
+        (value == "colorways" || value == "new")
+      ) {
+        queryAsFilter["page"] = value;
       }
       if (param == "size" || param == "year") {
         queryAsFilter[param] = Array.isArray(value)
@@ -108,6 +114,9 @@ export default function CategoryPageWithContext({
       }
       if (param == "color" || param == "height") {
         queryAsFilter[param] = Array.isArray(value) ? value : [value ?? ""];
+      }
+      if (param == "sort" && typeof value == "string") {
+        queryAsFilter[param] = value;
       }
     });
 
