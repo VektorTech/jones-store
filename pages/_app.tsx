@@ -128,7 +128,6 @@ MyApp.getInitialProps = async (context: AppContext) => {
         cart: [],
         wishlist: [],
       };
-      await session.save();
       user = session.guest;
     }
   }

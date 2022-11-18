@@ -11,7 +11,16 @@ import { sessionOptions } from "@Lib/config";
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
   const session = await getIronSession(req, res, sessionOptions);
-  const { user } = session;
+  const { user, guest } = session;
+
+  if (!guest) {
+    session.guest = {
+      id: "guest",
+      cart: [],
+      wishlist: [],
+    };
+    await session.save();
+  }
 
   if (req.nextUrl.pathname.startsWith("/signin")) {
     if (user) {
@@ -29,5 +38,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/signin", "/admin/:path*"],
+  matcher: ["/signin", "/admin/:path*", "/(.*)"],
 };
