@@ -10,6 +10,7 @@ import RatingStars from "./RatingStars";
 import { getPathString } from "@Lib/utils";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import { currencyFormatter } from "@Lib/intl";
+import { DummyPlaceholder } from "@Lib/constants";
 
 const MAX_IMAGE_SLIDES = 3;
 
@@ -23,6 +24,7 @@ export default function Product({
   ratings,
   sku,
   id,
+  blurDataUrl,
 }: ProductComponentType) {
   const { addToWishlist, removeFromWishlist, user } = useAuthState();
   const isOnWishlist = !!user.wishlist.items[id];
@@ -59,6 +61,8 @@ export default function Product({
                 <Image
                   key={url}
                   src={url}
+                  blurDataURL={blurDataUrl ?? DummyPlaceholder}
+                  placeholder="blur"
                   objectFit="contain"
                   layout="fill"
                   className={`product__image-img${

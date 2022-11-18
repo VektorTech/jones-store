@@ -19,7 +19,7 @@ import ProductsProvider, {
   filterStateType,
   useProductsState,
 } from "@Lib/contexts/ProductsContext";
-import { getProductRatings } from "@Lib/helpers";
+import { getBase64UrlCloudinary, getProductRatings } from "@Lib/helpers";
 
 function CategoryPage({ categoryId }: { categoryId: string }) {
   const { products } = useProductsState();
@@ -73,9 +73,11 @@ function CategoryPage({ categoryId }: { categoryId: string }) {
 export default function CategoryPageWithContext({
   categoryId,
   products,
+  productImagePlaceholders,
 }: {
   categoryId: string;
   products: ProductComponentType[];
+  productImagePlaceholders: Record<string, string>;
 }) {
   const router = useRouter();
   const ref = useRef<{ updateFilterState: Function }>(null);
@@ -133,6 +135,7 @@ export default function CategoryPageWithContext({
 
   return (
     <ProductsProvider
+      productImagePlaceholders={productImagePlaceholders}
       ref={ref}
       preFilter={getQueryAsFilter()}
       products={products}
@@ -172,12 +175,23 @@ export const getServerSideProps = withSessionSsr(async function ({ params }) {
       ratings: await getProductRatings(product.id),
     }))
   );
+  const productImagePlaceholders: Record<string, string> = {};
+
+  for await (const _product of allProducts) {
+    const imageUrl = _product.mediaURLs[0];
+    const imageId = imageUrl.match(/upload\/(.+)/)?.[1] ?? "";
+
+    productImagePlaceholders[_product.id] = await getBase64UrlCloudinary(
+      imageId
+    );
+  }
 
   return {
     props: {
       products: allProducts,
       count: allProducts.length,
       categoryId: category ?? "",
+      productImagePlaceholders,
     },
   };
 });

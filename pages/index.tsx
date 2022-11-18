@@ -7,19 +7,26 @@ import GenderSection from "@Components/home/GenderSection";
 
 import { withSessionSsr } from "@Lib/withSession";
 import prisma from "@Lib/prisma";
-import { getProductRatings } from "@Lib/helpers";
+import { getBase64UrlCloudinary, getProductRatings } from "@Lib/helpers";
 
-const Home: NextPage<HomePropTypes> = ({ newArrivals, bestSellers }) => {
+const Home: NextPage<HomePropTypes> = ({
+  newArrivals,
+  bestSellers,
+  newArrivalsImgDataUrls,
+  bestSellersImgDataUrls,
+}) => {
   return (
     <>
       <CollectionSection />
       <ProductsSection
+        productImageDataUrls={newArrivalsImgDataUrls}
         products={newArrivals}
         title="new arrivals"
         url="/category/new"
       />
       <GenderSection />
       <ProductsSection
+        productImageDataUrls={bestSellersImgDataUrls}
         products={bestSellers}
         title="best sellers"
         url="/category/new?sort=best"
@@ -40,10 +47,12 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
       id: true,
     };
 
+    const PRODUCTS_COUNT = 5;
+
     const newArrivals = await Promise.all(
         (
           await prisma.product.findMany({
-            take: 5,
+            take: PRODUCTS_COUNT,
             select: productColumns,
             orderBy: { dateAdded: "desc" },
           })
@@ -55,7 +64,7 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
       bestSellers = await Promise.all(
         (
           await prisma.product.findMany({
-            take: 5,
+            take: PRODUCTS_COUNT,
             select: productColumns,
             orderBy: { salesCount: "desc" },
           })
@@ -65,10 +74,31 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
         }))
       );
 
+    const newArrivalsImgDataUrls: Record<string, string> = {};
+    const bestSellersImgDataUrls: Record<string, string> = {};
+
+    for (let i = 0; i < PRODUCTS_COUNT; i++) {
+      const newArrivalsImageUrl = newArrivals[i].mediaURLs[0];
+      const newArrivalsImageId =
+        newArrivalsImageUrl.match(/upload\/(.+)/)?.[1] ?? "";
+      const bestSellersImageUrl = bestSellers[i].mediaURLs[0];
+      const bestSellersImageId =
+        bestSellersImageUrl.match(/upload\/(.+)/)?.[1] ?? "";
+
+      newArrivalsImgDataUrls[newArrivals[i].id] = await getBase64UrlCloudinary(
+        newArrivalsImageId
+      );
+      bestSellersImgDataUrls[bestSellers[i].id] = await getBase64UrlCloudinary(
+        bestSellersImageId
+      );
+    }
+
     return {
       props: {
         newArrivals,
         bestSellers,
+        newArrivalsImgDataUrls,
+        bestSellersImgDataUrls,
       },
     };
   }
@@ -79,4 +109,6 @@ export default Home;
 interface HomePropTypes {
   newArrivals: ProductComponentType[];
   bestSellers: ProductComponentType[];
+  newArrivalsImgDataUrls: Record<string, string>;
+  bestSellersImgDataUrls: Record<string, string>;
 }

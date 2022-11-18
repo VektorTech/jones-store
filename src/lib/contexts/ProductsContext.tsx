@@ -37,17 +37,21 @@ const _filterState: filterStateType = {
   year: [],
 };
 
-const ProductsState: {
+interface ProductStateType {
   products: ProductComponentType[];
   filterState: filterStateType;
   sortBy: string;
+  productImagePlaceholders: Record<string, string>;
   filterListings: (action: { [type: string]: unknown }) => void;
   sortListings: (sortBy: string) => void;
   clearFilters: () => void;
-} = {
+}
+
+const ProductsState: ProductStateType = {
   products: [],
   filterState: _filterState,
   sortBy: "",
+  productImagePlaceholders: {},
   filterListings: () => null,
   sortListings: () => null,
   clearFilters: () => null,
@@ -122,10 +126,12 @@ function ProductsProvider(
     products,
     children,
     preFilter = {},
+    productImagePlaceholders,
   }: {
     products: ProductComponentType[];
     children: ReactNode;
     preFilter?: Partial<filterStateType>;
+    productImagePlaceholders: ProductStateType["productImagePlaceholders"];
   },
   ref: ForwardedRef<{ updateFilterState: Function } | null>
 ) {
@@ -238,10 +244,11 @@ function ProductsProvider(
   return (
     <ProductsContext.Provider
       value={{
-        products: productListing,
         filterListings,
         sortListings,
         clearFilters,
+        products: productListing,
+        productImagePlaceholders,
         filterState: filterState.current,
         sortBy: sortByRef.current,
       }}

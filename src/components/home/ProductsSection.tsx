@@ -9,9 +9,18 @@ import {
 
 import Product from "../common/Product";
 
-export default function ProductsSection({ title, products, url }: PropTypes) {
+export default function ProductsSection({
+  title,
+  products,
+  url,
+  productImageDataUrls,
+}: PropTypes) {
   const productsComponent = products.map((product) => (
-    <Product {...product} key={product.id} />
+    <Product
+      {...product}
+      key={product.id}
+      blurDataUrl={productImageDataUrls[product.id]}
+    />
   ));
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -60,4 +69,5 @@ interface PropTypes {
   title: string;
   products: ProductComponentType[];
   url: string;
+  productImageDataUrls: Record<string, string>;
 }

@@ -1,9 +1,10 @@
 import { ObjectSchema, ValidationError } from "yup";
 
 import type { CartType, UserProducts, WishlistType } from "src/types/shared";
-import { Product } from "@prisma/client";
 
 import prisma from "@Lib/prisma";
+
+import { CLOUDINARY_CLOUD_NAME } from "./config";
 
 export function validateInputs(
   input: any,
@@ -135,5 +136,14 @@ export const getProductRatings = async (productId: string) => {
     _avg: { rating: true },
   });
 
-  return await aggAvg._avg.rating ?? 0;
+  return (await aggAvg._avg.rating) ?? 0;
+};
+
+export const getBase64UrlCloudinary = async (imageId: string) => {
+  const response = await fetch(
+    `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/w_256/e_blur:20,q_1,f_webp/${imageId}`
+  );
+  const buffer = await response.arrayBuffer();
+  const data = Buffer.from(buffer).toString("base64");
+  return `data:image/webp;base64,${data}`;
 };

@@ -3,13 +3,16 @@ import type { ProductComponentType } from "src/types/shared";
 import Product from "@Components/common/Product";
 import MotionElement from "@Components/common/MotionElement";
 
+import { useProductsState } from "@Lib/contexts/ProductsContext";
+
 export default function ProductsGrid({ products, actions = {} }: PropTypes) {
+  const { productImagePlaceholders } = useProductsState();
   return (
     <div className="products-grid">
-      {products.map((product, i) => (
+      {products.map((product) => (
         <MotionElement key={product.id}>
           <div>
-            <Product {...product} />
+            <Product {...product} blurDataUrl={productImagePlaceholders[product.id]} />
 
             {Object.keys(actions).map((action) => (
               <button
