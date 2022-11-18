@@ -9,7 +9,7 @@ export const sessionOptions: IronSessionOptions = {
   },
 };
 
-export const DOMAIN_NAME = "localhost:3000";
+export const DOMAIN_NAME = "jones-store.vercel.app";
 
 export const CLOUDINARY_UPLOAD_PRESET = "r1841xex";
 export const CLOUDINARY_CLOUD_NAME = "dehtovbpt";
