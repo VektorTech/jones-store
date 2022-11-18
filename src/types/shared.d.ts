@@ -37,6 +37,7 @@ export interface ProductComponentType extends Product {
   small?: boolean;
   blurDataUrl?: string;
   ratings: number;
+  dateAdded: string;
 }
 
 export type AsyncAPIHandler = (

@@ -12,17 +12,25 @@ import { withSessionSsr } from "@Lib/withSession";
 
 const WishlistPage: NextPage<WishlistPageProps> = ({ wishlistItems }) => {
   const { removeFromWishlist } = useAuthState();
+  const products = wishlistItems.map(({ product }) => product);
 
   return (
-    <div>
-      <SEO title="Wishlist" />
-      <ProductsGrid
-        actions={{
-          Remove: (productId) =>
-            removeFromWishlist(productId).then(() => location?.reload()),
-        }}
-        products={wishlistItems as ProductComponentType[]}
-      />
+    <div className="page">
+      <div className="page__container">
+        <SEO title="Wishlist" />
+        <h1 className="main-heading">Wishlist</h1>
+        {products.length ? (
+          <ProductsGrid
+            actions={{
+              Remove: (productId) =>
+                removeFromWishlist(productId).then(() => location?.reload()),
+            }}
+            products={products}
+          />
+        ) : (
+          <h2 className="heading">Empty</h2>
+        )}
+      </div>
     </div>
   );
 };
@@ -34,45 +42,44 @@ export const getServerSideProps = withSessionSsr(async function ({
 }) {
   const { user, guest } = req.session;
 
-  const select = {
-    title: true,
-    price: true,
-    discount: true,
-    mediaURLs: true,
-    gender: true,
-    details: true,
-    color: true,
-    year: true,
-    stockQty: true,
-    salesCount: true,
-    shippingCost: true,
-    sizes: true,
-    type: true,
-    sku: true,
-    id: true,
-  };
+  let wishlistItems: WishlistPageProps["wishlistItems"] = [];
 
-  let wishlistItems = null;
   if (user) {
-    wishlistItems = await prisma.wishlist
+    const items = await prisma.wishlist
       .findMany({
-        where: { userId: user?.id },
+        where: { userId: user.id },
         include: { product: true },
       })
       .then((list) =>
-        list.map(({ product }) => ({ ...product, dateAdded: null, ratings: 0 }))
+        list.map((list) => ({
+          ...list,
+          product: {
+            ...list.product,
+            dateAdded: list.product.dateAdded.toJSON(),
+            ratings: 0,
+          },
+        }))
       )
       .catch(console.log);
-  } else if (guest) {
-    wishlistItems = guest.wishlist;
 
+    wishlistItems = items as Exclude<typeof items, void>;
+  } else if (guest) {
     wishlistItems = await Promise.all(
       guest.wishlist.map(async (item) => {
         const product = await prisma.product.findUnique({
-          select,
           where: { id: item.productId },
         });
-        return { ...item, ...product, ratings: 0 };
+        if (product) {
+          return {
+            ...item,
+            product: {
+              ...product,
+              dateAdded: product.dateAdded.toJSON(),
+              ratings: 0,
+            },
+          };
+        }
+        return item;
       })
     );
   }
@@ -85,7 +92,7 @@ export const getServerSideProps = withSessionSsr(async function ({
 });
 
 interface WishlistPageProps {
-  wishlistItems: (Wishlist & ProductComponentType)[];
+  wishlistItems: (Wishlist & { product: ProductComponentType })[];
 }
 
 export default WishlistPage;
