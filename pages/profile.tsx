@@ -17,7 +17,10 @@ const ProfilePage: NextPage<ProfilePageType> = ({ user }) => {
 
   return (
     <div className="profile">
+      <h1 className="profile__main-heading">Edit User Profile</h1>
+
       <div className="profile__avatar">
+        <h2 className="profile__heading">Avatar</h2>
         <Image
           objectFit="cover"
           src={user.avatarURL ?? imageSrc}
@@ -25,25 +28,24 @@ const ProfilePage: NextPage<ProfilePageType> = ({ user }) => {
           height={200}
           alt="profile"
         />
-        <button>Edit</button>
+        <form action="">
+          <input type="file" accept="image/*" onChange={handleImageUpload} />
+          <Button type="submit">Upload New Avatar</Button>
+        </form>
       </div>
 
-      <form action="">
-        <input type="file" accept="image/*" onChange={handleImageUpload} />
-        <Button type="submit">Upload New Avatar</Button>
-      </form>
-
-      <br />
-
       <Form action={`/api/auth/edit/${user.id}`} method="POST">
+        <h2 className="profile__heading">User Info</h2>
         <TextField label="Username" value={user.username} name="username" />
         <TextField label="Email" value={user.email} name="email" type="email" />
         <TextField
+          className="profile__name-input"
           label="First Name"
           value={user.firstName ?? ""}
           name="firstName"
         />
         <TextField
+          className="profile__name-input"
           label="Last Name"
           value={user.lastName ?? ""}
           name="lastName"
@@ -60,12 +62,13 @@ const ProfilePage: NextPage<ProfilePageType> = ({ user }) => {
       <br />
 
       <Form action="" method="POST">
+        <h2 className="profile__heading">Address</h2>
         <TextField label="Address Line 1" />
         <TextField label="Address Line 2" />
-        <TextField label="Unit #" />
-        <TextField label="City" />
-        <TextField label="Region" />
-        <TextField label="Postal Code" />
+        <TextField className="profile__address-input" label="Unit #" />
+        <TextField className="profile__address-input" label="City" />
+        <TextField className="profile__address-input" label="Region" />
+        <TextField className="profile__address-input" label="Postal Code" />
         <TextField label="Country" />
       </Form>
     </div>
