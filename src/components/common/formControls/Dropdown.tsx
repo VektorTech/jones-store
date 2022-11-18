@@ -5,25 +5,40 @@ import {
   KeyboardEventHandler,
   MouseEventHandler,
   FocusEventHandler,
+  forwardRef,
+  useImperativeHandle,
 } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
 import useArrowKeyTrap from "@Lib/hooks/useKeyTrap";
 import { isSelectKey } from "@Lib/utils";
 
-export default function Dropdown({
-  label = "Select Option",
-  options,
-  value: _value,
-  className,
-  name = "",
-  onOptionSelect,
-  ...inputProps
-}: PropTypes & JSX.IntrinsicElements["input"]) {
+export default forwardRef<
+  HTMLDivElement | null,
+  PropTypes & JSX.IntrinsicElements["input"]
+>(function Dropdown(
+  {
+    label = "Select Option",
+    options,
+    value: _value,
+    className,
+    name = "",
+    onOptionSelect,
+    ...inputProps
+  },
+  ref
+) {
   const [value, setValue] = useState(_value?.toString() ?? "");
   const [collapsed, setCollapsed] = useState(true);
   const MenuListRef = useRef<HTMLUListElement>(null);
   const DropdownRef = useRef<HTMLDivElement>(null);
+
+  useImperativeHandle<HTMLDivElement | null, HTMLDivElement | null>(ref, () => {
+    if (DropdownRef.current) {
+      return DropdownRef.current;
+    }
+    return null;
+  });
 
   useArrowKeyTrap(MenuListRef.current, !collapsed, true);
 
@@ -117,7 +132,7 @@ export default function Dropdown({
       </div>
     </div>
   );
-}
+});
 
 interface PropTypes {
   onOptionSelect?: (value: string) => void;

@@ -1,19 +1,25 @@
-import { ReactElement, useState, useEffect, useMemo } from "react";
+import { ReactElement, useState, useEffect, useMemo, forwardRef } from "react";
 
-export default function RadioList({
-  label,
-  values,
-  checkbox,
-  required,
-  render: RenderComponent,
-  grid,
-  checkedItems,
-  reverse,
-  onChecked,
-  name = "",
-  className = "",
-  ...inputProps
-}: PropTypes & JSX.IntrinsicElements["input"]) {
+export default forwardRef<
+  HTMLDivElement,
+  PropTypes & JSX.IntrinsicElements["input"]
+>(function RadioList(
+  {
+    label,
+    values,
+    checkbox,
+    required,
+    render: RenderComponent,
+    grid,
+    checkedItems,
+    reverse,
+    onChecked,
+    name = "",
+    className = "",
+    ...inputProps
+  },
+  ref
+) {
   const initState = useMemo<{ [value: string]: boolean }>(
     () =>
       (reverse ? Object.keys(values).reverse() : Object.keys(values)).reduce(
@@ -56,7 +62,10 @@ export default function RadioList({
   };
 
   return (
-    <div className={"radio-list" + (className ? ` ${className}` : "")}>
+    <div
+      ref={ref}
+      className={"radio-list" + (className ? ` ${className}` : "")}
+    >
       <fieldset>
         {label ? (
           <legend className="radio-list__legend">
@@ -119,7 +128,7 @@ export default function RadioList({
       </fieldset>
     </div>
   );
-}
+});
 
 interface PropTypes {
   render?: ({

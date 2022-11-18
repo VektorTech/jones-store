@@ -1,12 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, forwardRef } from "react";
 
 const HIGHEST_PRICE = 1000;
 
-export default function PriceRange({
-  minPrice = 0,
-  maxPrice = HIGHEST_PRICE,
-  onUpdate,
-}: PropTypes) {
+export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
+  { minPrice = 0, maxPrice = HIGHEST_PRICE, onUpdate },
+  ref
+) {
   const [minValue, setMinValue] = useState<number>(minPrice);
   const [maxValue, setMaxValue] = useState<number>(maxPrice);
 
@@ -160,7 +159,7 @@ export default function PriceRange({
   }, [activeHandle]);
 
   return (
-    <div className="price-range">
+    <div ref={ref} className="price-range">
       <input
         defaultValue={`Price: $${Math.round(minValue)} — ${
           maxValue == HIGHEST_PRICE
@@ -207,7 +206,7 @@ export default function PriceRange({
       </div>
     </div>
   );
-}
+});
 
 interface PropTypes {
   minPrice?: number;

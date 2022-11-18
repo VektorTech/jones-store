@@ -1,19 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, forwardRef } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
-export default function TextField({
-  label,
-  required,
-  className = "",
-  type = "text",
-  multiline = false,
-  defaultValue,
-  error,
-  value = "",
-  onChange,
-  ...inputProps
-}: PropTypes &
-  (JSX.IntrinsicElements["input"] & JSX.IntrinsicElements["textarea"])) {
+export default forwardRef<
+  HTMLDivElement,
+  PropTypes &
+    (JSX.IntrinsicElements["input"] & JSX.IntrinsicElements["textarea"])
+>(function TextField(
+  {
+    label,
+    required,
+    className = "",
+    type = "text",
+    multiline = false,
+    defaultValue,
+    error,
+    value = "",
+    onChange,
+    ...inputProps
+  },
+  ref
+) {
   const [_type, setType] = useState(type);
   const [_value, setValue] = useState<string | number | readonly string[]>(
     value
@@ -52,7 +58,10 @@ export default function TextField({
   }
 
   return (
-    <div className={"text-field" + (className ? ` ${className}` : "")}>
+    <div
+      ref={ref}
+      className={"text-field" + (className ? ` ${className}` : "")}
+    >
       <label className="text-field__label">
         <span className="text-field__label-text">
           {label}{" "}
@@ -103,7 +112,7 @@ export default function TextField({
       </label>
     </div>
   );
-}
+});
 
 interface PropTypes {
   label?: string;

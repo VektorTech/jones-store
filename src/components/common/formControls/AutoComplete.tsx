@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, forwardRef } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
-export default function AutoComplete({
-  label,
-  className,
-  options,
-  name,
-  ...inputProps
-}: PropTypes & JSX.IntrinsicElements["input"]) {
+export default forwardRef<
+  HTMLDivElement,
+  PropTypes & JSX.IntrinsicElements["input"]
+>(function AutoComplete(
+  { label, className, options, name, ...inputProps },
+  ref
+) {
   const [collapsed, setCollapsed] = useState(true);
   const [value, setValue] = useState("");
   const [search, setSearch] = useState("");
@@ -21,7 +21,10 @@ export default function AutoComplete({
   }, [options, value]);
 
   return (
-    <div className={"autocomplete" + (className ? ` ${className}` : "")}>
+    <div
+      ref={ref}
+      className={"autocomplete" + (className ? ` ${className}` : "")}
+    >
       <label className="autocomplete__label">
         <span className="autocomplete__label-text">{label}</span>
         <span className="autocomplete__input">
@@ -69,7 +72,7 @@ export default function AutoComplete({
       </div>
     </div>
   );
-}
+});
 
 interface PropTypes {
   options: { [value: string | number]: string | number };
