@@ -110,7 +110,7 @@ export default function HeroBanner() {
                       <div
                         style={{
                           transform: `translate(${-x * 1.2}px, ${
-                            -y * 0.4 + scrollTop * 0.1
+                            -y * 0.6 + scrollTop * 0.1
                           }px)`,
                         }}
                         className="banner__image"
