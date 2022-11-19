@@ -99,10 +99,8 @@
       border-right: 0.6rem solid $c-red-dark;
       border-top: 0.5rem solid transparent;
       border-bottom: 0.5rem solid transparent;
-      position: absolute;
       left: -0.5rem;
-      top: 50%;
-      transform: translateY(-50%);
+      @include vertical-center();
     }
 
     &::after {

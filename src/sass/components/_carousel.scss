@@ -25,9 +25,7 @@
     justify-content: space-between;
     align-items: center;
     font-size: 2.2rem;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    @include vertical-center();
     left: 0;
     right: 0;
     padding: 0 1rem;
