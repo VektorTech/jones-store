@@ -63,9 +63,7 @@
   }
 
   &__marquee {
-    animation: marquee 30s linear infinite;
-
-    @keyframes marquee {
+    @include inline-animation(30s, infinite, 0, linear) {
       from {
         transform: translateX(0);
       }

@@ -46,3 +46,28 @@
     right: initial;
   }
 }
+
+@mixin inline-animation(
+  $duration: 1s,
+  $count: 1,
+  $delay: 0,
+  $timing_func: ease-out,
+  $fill_mode: forwards,
+  $direction: normal,
+  $play_state: running
+) {
+  $name: inline-#{unique-id()};
+
+  @keyframes #{$name} {
+    @content;
+  }
+
+  animation-name: $name;
+  animation-duration: $duration;
+  animation-iteration-count: $count;
+  animation-delay: $delay;
+  animation-timing-function: $timing_func;
+  animation-fill-mode: $fill_mode;
+  animation-direction: $direction;
+  animation-play-state: $play_state;
+}
