@@ -79,11 +79,7 @@
     }
 
     &-content {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      @extend %full-size;
       padding: 1.5rem;
       color: #fff;
       background-color: #00000022;

@@ -17,11 +17,7 @@
   }
 
   &__container {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    @extend %full-size;
   }
 
   &__background {
@@ -34,12 +30,8 @@
   }
 
   &__main {
-    position: absolute;
     overflow: hidden;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    @extend %full-size;
   }
 
   &__content {
@@ -65,8 +57,8 @@
   &__headings {
     position: absolute;
     top: 0;
-    left: 0rem;
-    right: 0rem;
+    left: 0;
+    right: 0;
     user-select: none;
 
     @include respond-to("x-small") {
@@ -307,11 +299,7 @@
 
       &::before {
         content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
+        @extend %full-size;
         background-color: #fff;
         transform: scaleX(0);
         transform-origin: right;
@@ -319,11 +307,8 @@
       }
 
       > span {
+        @extend %full-size;
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
         display: flex;
         justify-content: center;
         align-items: center;
