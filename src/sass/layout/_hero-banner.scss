@@ -91,6 +91,7 @@
     font-weight: 400;
 
     transition: transform 1s;
+    transform-origin: bottom;
     transform: scaleY(0);
 
     #{$self}__content--active & {
@@ -118,12 +119,14 @@
     > span {
       display: inline-block;
       transform: translateY(100%);
-      transition: transform 1s;
+      opacity: 0;
+      transition: transform 1s, opacity 0.5s;
     }
 
     #{$self}__content--active & {
       > span {
         transform: translateY(0%);
+        opacity: 1;
       }
     }
 
