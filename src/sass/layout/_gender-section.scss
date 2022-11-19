@@ -49,6 +49,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0.8;
+    letter-spacing: 0.3rem;
 
     @include respond-to("small") {
       font-size: 6vw;
