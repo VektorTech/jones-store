@@ -38,9 +38,7 @@
 
   &--small {
     #{$self}__title {
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
+      @extend %truncate;
       max-width: 18rem;
       margin-top: 0.5rem;
     }
@@ -100,7 +98,7 @@
       border-top: 0.5rem solid transparent;
       border-bottom: 0.5rem solid transparent;
       left: -0.5rem;
-      @include vertical-center();
+      @extend %vertical-center;
     }
 
     &::after {

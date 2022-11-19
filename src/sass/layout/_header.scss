@@ -90,7 +90,7 @@
     }
 
     &-caret {
-      @include vertical-center();
+      @extend %vertical-center;
       margin-left: 0.2rem;
     }
   }

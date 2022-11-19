@@ -71,9 +71,3 @@
   animation-direction: $direction;
   animation-play-state: $play_state;
 }
-
-@mixin vertical-center {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-}

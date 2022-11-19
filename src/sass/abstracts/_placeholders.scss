@@ -21,9 +21,10 @@
   }
 }
 
-%text-overflow {
+%truncate {
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 %section-heading {
@@ -32,7 +33,7 @@
   font-weight: 600;
   font-style: italic;
   font-size: v.$text-xxl;
-  @extend %text-overflow;
+  @extend %truncate;
 }
 
 %dropdown-menu {
@@ -127,9 +128,7 @@
 }
 
 %form-button {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  @extend %truncate;
   background-color: v.$c-background-black;
   color: #fff;
   text-transform: uppercase;
@@ -224,4 +223,10 @@
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+%vertical-center {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }

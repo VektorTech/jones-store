@@ -57,7 +57,7 @@
     text-transform: uppercase;
     font-size: $text-lg;
     font-style: italic;
-    @extend %text-overflow;
+    @extend %truncate;
   }
 
   &__text {
