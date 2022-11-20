@@ -20,61 +20,60 @@ export default function GenderSection() {
             layout="fill"
             src={womanTallImage}
           />
-          <h3 className="gender__text-overlay">Gender<br/>Collections</h3>
+          <h3 className="gender__text-overlay">
+            Gender
+            <br />
+            Collections
+          </h3>
         </div>
         <div className="gender__grid">
-          <div className="gender__block gender__block-men">
-            <Link href="/category/men">
-              <a className="gender__block-link">
-                <Image alt="" layout="fill" src={manImage} />
-                <h3 className="gender__block-title">
-                  <span>shop Men</span>
-                </h3>
-              </a>
-            </Link>
-          </div>
-          <div className="gender__block gender__block-women">
-            <Link href="/category/women">
-              <a className="gender__block-link">
-                <Image alt="" layout="fill" src={womanImage} />
-                <h3 className="gender__block-title">
-                  <span>shop Women</span>
-                </h3>
-              </a>
-            </Link>
-          </div>
-          <div className="gender__block gender__block-kids">
-            <Link href="/category/kids">
-              <a className="gender__block-link">
-                <Image alt="" layout="fill" src={kidImage} />
-                <h3 className="gender__block-title">
-                  <span>shop Kids</span>
-                </h3>
-              </a>
-            </Link>
-          </div>
-          <div className="gender__block gender__block-babies">
-            <Link href="/category/baby">
-              <a className="gender__block-link">
-                <Image alt="" layout="fill" src={babyImage} />
-                <h3 className="gender__block-title">
-                  <span>shop Babies</span>
-                </h3>
-              </a>
-            </Link>
-          </div>
-          <div className="gender__block gender__block-unisex">
-            <Link href="/category/unisex">
-              <a className="gender__block-link">
-                <Image alt="" layout="fill" src={unisexImage} />
-                <h3 className="gender__block-title">
-                  <span>shop Unisex</span>
-                </h3>
-              </a>
-            </Link>
-          </div>
+          {genderSectionBlocks.map(({ className, href, imgSource, title }) => (
+            <div key={className} className={"gender__block " + className}>
+              <Link href={href}>
+                <a className="gender__block-link">
+                  <Image alt="" layout="fill" src={imgSource} />
+                  <h3 className="gender__block-title">
+                    <span>{title}</span>
+                  </h3>
+                </a>
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
+
+const genderSectionBlocks = [
+  {
+    className: "gender__block-men",
+    href: "/category/men",
+    imgSource: manImage,
+    title: "Shop Men",
+  },
+  {
+    className: "gender__block-women",
+    href: "/category/women",
+    imgSource: womanImage,
+    title: "Shop Women",
+  },
+  {
+    className: "gender__block-kids",
+    href: "/category/kids",
+    imgSource: kidImage,
+    title: "Shop Kids",
+  },
+  {
+    className: "gender__block-babies",
+    href: "/category/baby",
+    imgSource: babyImage,
+    title: "Shop Babies",
+  },
+  {
+    className: "gender__block-unisex",
+    href: "/category/unisex",
+    imgSource: unisexImage,
+    title: "Shop Unisex",
+  },
+];
