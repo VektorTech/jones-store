@@ -1,9 +1,9 @@
+import type { CartType, UserProducts, WishlistType } from "src/types/shared";
+import type { PrismaClient } from "@prisma/client";
+
 import { ObjectSchema, ValidationError } from "yup";
 
-import type { CartType, UserProducts, WishlistType } from "src/types/shared";
-
 import { CLOUDINARY_CLOUD_NAME } from "./config";
-import { PrismaClient } from "@prisma/client";
 
 export function validateInputs(
   input: any,

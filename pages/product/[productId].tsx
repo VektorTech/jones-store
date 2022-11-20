@@ -147,7 +147,7 @@ export const getStaticProps = async function ({
           type: product?.type
           // color: product?.color,
         },
-        take: 5,
+        take: 4,
       })
     ).map(async (product) => ({
       ...product,
