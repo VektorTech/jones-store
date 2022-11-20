@@ -140,10 +140,15 @@ export const getProductRatings = async (productId: string) => {
 };
 
 export const getBase64UrlCloudinary = async (imageId: string) => {
-  const response = await fetch(
-    `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/w_256/e_blur:20,q_1,f_webp/${imageId}`
-  );
-  const buffer = await response.arrayBuffer();
-  const data = Buffer.from(buffer).toString("base64");
-  return `data:image/webp;base64,${data}`;
+  try {
+    const response = await fetch(
+      `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/w_256/e_blur:20,q_1,f_webp/${imageId}`
+    );
+    const buffer = await response.arrayBuffer();
+    const data = Buffer.from(buffer).toString("base64");
+    return `data:image/webp;base64,${data}`;
+  } catch (e) {
+    console.log(e);
+    return "";
+  }
 };
