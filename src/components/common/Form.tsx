@@ -1,13 +1,16 @@
-import { ReactNode, FormEventHandler, useRef, useState } from "react";
+import React, { ReactNode, FormEventHandler, useRef, useState } from "react";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { DefaultResponse, HTTPMethods } from "src/types/shared";
 
 type beforeSubmitReturnType =
-  | [updatedParams?: { [key: string]: string }, shouldContinue?: boolean]
+  | [
+      updatedParams?: { [key: string]: string | string[] },
+      shouldContinue?: boolean
+    ]
   | void;
 
 export type beforeSubmitType = (
-  params: { [key: string]: string },
+  params: { [key: string]: string | string[] },
   form: HTMLFormElement
 ) => beforeSubmitReturnType | Promise<beforeSubmitReturnType>;
 
@@ -37,11 +40,17 @@ export default function Form({
       const formControls: HTMLInputElement[] = Array.from(
         form.querySelectorAll("[name]")
       );
-      const params: { [key: string]: string } = {};
+      const params: { [key: string]: string | string[] } = {};
 
       formControls.forEach((element) => {
-        if (element.type == "checkbox" || element.type == "radio") {
+        if (element.type == "radio") {
           if (element.checked) params[element.name] = element.value;
+        } else if (element.type == "checkbox") {
+          if (Array.isArray(params[element.name]) && element.checked) {
+            (params[element.name] as string[]).push(element.value);
+          } else if (element.checked) {
+            params[element.name] = [element.value];
+          }
         } else {
           params[element.name] = element.value;
         }
@@ -57,7 +66,15 @@ export default function Form({
         return;
       }
 
-      const searchParams = new URLSearchParams(updatedParams);
+      const searchParams = new URLSearchParams();
+      Object.keys(updatedParams).forEach((key) => {
+        const value = updatedParams[key];
+        if (Array.isArray(value)) {
+          value.forEach((_value) => searchParams.append(key, _value));
+        } else {
+          searchParams.append(key, value);
+        }
+      });
 
       const response = await fetch(
         action + (method == "GET" ? searchParams : ""),
@@ -75,9 +92,8 @@ export default function Form({
       }
       afterSubmit?.(responseBody);
     } catch (e: unknown) {
-      if (e instanceof TypeError) {
-        setError("Network Error");
-      } else if (e instanceof Error) {
+      console.log(e);
+      if (e instanceof Error) {
         setError(e.message);
       } else {
         setError("Something Went Wrong");
@@ -92,10 +108,10 @@ export default function Form({
           <RiErrorWarningFill className="form__error-icon" />
           <span className="form__error-message">
             {error.split("\n").map((err) => (
-              <>
+              <React.Fragment key={err}>
                 {err}
                 <br />
-              </>
+              </React.Fragment>
             ))}
           </span>
         </div>
