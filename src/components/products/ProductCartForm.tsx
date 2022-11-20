@@ -9,6 +9,7 @@ import { useAuthState } from "@Lib/contexts/AuthContext";
 import { listToEnum } from "@Lib/utils";
 import { ProductComponentType } from "src/types/shared";
 import { toast } from "react-toastify";
+import { currencyFormatter2 } from "@Lib/intl";
 
 export default function ProductCartForm({
   product,
@@ -18,7 +19,7 @@ export default function ProductCartForm({
   const [checkedSize, setCheckedSize] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
 
-  const { id, stockQty } = product;
+  const { id, stockQty, price, discount } = product;
   const { addToCart } = useAuthState();
   const sizesValuesRef = useRef(listToEnum(product.sizes));
 
@@ -67,7 +68,7 @@ export default function ProductCartForm({
           }
         }}
       >
-        Buy Now
+        Buy Now &mdash; {currencyFormatter2.format((price - discount) * quantity)}
       </Button>
     </form>
   );

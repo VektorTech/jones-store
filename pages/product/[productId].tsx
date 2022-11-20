@@ -37,6 +37,7 @@ const ProductPage: NextPage<ProductPageType> = ({
     color,
     salesCount,
     stockQty,
+    type,
     ratings,
   } = product;
 
@@ -63,10 +64,17 @@ const ProductPage: NextPage<ProductPageType> = ({
 
           <div className="product-view__details">
             <p className="product-view__details-info">
-              <strong>SKU:</strong> {sku.toUpperCase()}
+              <strong>Model No.:</strong> {sku.toUpperCase()}
             </p>
-            <p className="product-view__details-info"><strong>Release Year:</strong> {year}</p>
-            <p className="product-view__details-info"><strong>Colorway:</strong> {color}</p>
+            <p className="product-view__details-info">
+              <strong>Release Year:</strong> {year}
+            </p>
+            <p className="product-view__details-info">
+              <strong>Upper:</strong> {type.toLocaleLowerCase()}  Cut
+            </p>
+            <p className="product-view__details-info">
+              <strong>Colorway:</strong> {color}
+            </p>
           </div>
 
           <p className="product-view__price">
