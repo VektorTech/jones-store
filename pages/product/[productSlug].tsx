@@ -10,10 +10,10 @@ import ProductCartForm from "@Components/products/ProductCartForm";
 import ProductDetails from "@Components/products/ProductDetails";
 
 import prisma from "@Lib/prisma";
-import { getPathString } from "@Lib/utils";
 import { NextPage } from "next";
 import { getProductRatings } from "@Lib/helpers";
 import RatingStars from "@Components/common/RatingStars";
+import { currencyFormatter } from "@Lib/intl";
 
 const ProductPage: NextPage<ProductPageType> = ({
   product,
@@ -40,7 +40,9 @@ const ProductPage: NextPage<ProductPageType> = ({
     ? `${Math.floor((discount / price) * 100)}% off`
     : "";
 
-  if (!product) { return <div></div>; }
+  if (!product) {
+    return <div></div>;
+  }
 
   return (
     <>
@@ -106,73 +108,59 @@ const ProductPage: NextPage<ProductPageType> = ({
   );
 };
 
-export const getStaticPaths = async function () {
-  const products = await prisma.product.findMany({
-    select: { title: true, sku: true },
-  });
-
-  return {
-    paths: products.map(({ title, sku }) => ({
-      params: { productSlug: getPathString(title + " " + sku) },
-    })),
-    fallback: false,
-  };
-};
-
-export const getStaticProps = async function ({
+export const getServerSideProps = async function ({
   params,
 }: {
   params: { productSlug: string };
 }) {
-  const sku = params.productSlug
-    .substring(params.productSlug.length - 10)
-    .replace("-", " ");
+  const { productSlug } = params;
+
+  const sku = productSlug.substring(productSlug.length - 10).replace("-", " ");
 
   const product = await prisma.product.findFirst({
     where: { sku: { equals: sku, mode: "insensitive" } },
   });
 
-  const relatedProducts = await Promise.all(
-    (
-      await prisma.product.findMany({
-        where: {
-          id: { not: product?.id },
-          gender: product?.gender,
-          type: product?.type
-        },
-        take: 4,
-      })
-    ).map(async (product) => ({
-      ...product,
-      ratings: await getProductRatings(prisma, product.id),
-      dateAdded: product.dateAdded.toJSON(),
-    }))
-  );
-
-  let productFinal: ProductComponentType | null = null;
-
-  let imageDimensions: { width: number; height: number }[] = [];
-
   if (product) {
-    imageDimensions =
+    const imageDimensions =
       (await Promise.all(
         product.mediaURLs.map(async (url) => await probe(url))
       ).catch(console.log)) ?? [];
-    productFinal = {
+
+    const productFinal = {
       ...product,
       dateAdded: product.dateAdded.toJSON(),
       ratings: await getProductRatings(prisma, product.id),
     };
+
+    const relatedProducts = await Promise.all(
+      (
+        await prisma.product.findMany({
+          where: {
+            id: { not: product.id },
+            gender: product.gender,
+            type: product.type,
+          },
+          take: 4,
+        })
+      ).map(async (product) => ({
+        ...product,
+        ratings: await getProductRatings(prisma, product.id),
+        dateAdded: product.dateAdded.toJSON(),
+      }))
+    );
+
+    return {
+      props: {
+        product: productFinal,
+        relatedProducts,
+        imageDimensions,
+      },
+    };
   }
 
-  assertProductComponentType(productFinal);
-
   return {
-    props: {
-      product: productFinal,
-      relatedProducts,
-      imageDimensions,
-    },
+    notFound: true,
   };
 };
 
@@ -182,16 +170,4 @@ interface ProductPageType {
   product: ProductComponentType;
   relatedProducts: ProductComponentType[];
   imageDimensions: { width: number; height: number }[];
-}
-
-function assertProductComponentType(
-  product: (unknown & { dateAdded: unknown }) | null
-): asserts product is ProductComponentType {
-  if (
-    !product ||
-    !("dateAdded" in product && typeof product.dateAdded == "string") ||
-    !("ratings" in product)
-  ) {
-    throw new TypeError("ProductComponentType Expected");
-  }
 }
