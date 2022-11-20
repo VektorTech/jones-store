@@ -28,6 +28,7 @@
     "react-spinners": "^0.13.6",
     "react-toastify": "^9.1.1",
     "sanitize-html": "^2.7.2",
+    "sharp": "^0.31.2",
     "stripe": "^10.16.0",
     "yup": "^0.32.11"
   },
