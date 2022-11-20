@@ -148,25 +148,9 @@ export default function CategoryPageWithContext({
 export const getServerSideProps = withSessionSsr(async function ({ params }) {
   const [category = "men"] = params?.categoryId as string[];
 
-  const select = {
-    title: true,
-    price: true,
-    discount: true,
-    mediaURLs: true,
-    gender: true,
-    sku: true,
-    id: true,
-    type: true,
-    color: true,
-    year: true,
-    sizes: true,
-    dateAdded: true,
-  };
-
   const allProducts = await Promise.all(
     (
       await prisma.product.findMany({
-        select,
         orderBy: { dateAdded: "desc" },
       })
     ).map(async (product) => ({

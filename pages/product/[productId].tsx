@@ -121,35 +121,13 @@ export const getStaticProps = async function ({
     .substring(params.productId.length - 10)
     .replace("-", " ");
 
-  const select = {
-    title: true,
-    price: true,
-    discount: true,
-    mediaURLs: true,
-    gender: true,
-    details: true,
-    color: true,
-    year: true,
-    stockQty: true,
-    salesCount: true,
-    shippingCost: true,
-    sizes: true,
-    type: true,
-    sku: true,
-    id: true,
-  };
-
   const product = await prisma.product.findFirst({
-    select,
     where: { sku: { equals: sku, mode: "insensitive" } },
   });
-
-  const ratings = product ? await getProductRatings(product.id) : 0;
 
   const relatedProducts = await Promise.all(
     (
       await prisma.product.findMany({
-        select,
         where: {
           id: { not: product?.id },
           gender: product?.gender,
@@ -160,20 +138,30 @@ export const getStaticProps = async function ({
     ).map(async (product) => ({
       ...product,
       ratings: await getProductRatings(product.id),
+      dateAdded: product.dateAdded.toJSON(),
     }))
   );
+
+  let productFinal: ProductComponentType | null = null;
 
   let imageDimensions: { width: number; height: number }[] = [];
 
   if (product) {
     imageDimensions = await Promise.all(
       product.mediaURLs.map(async (url) => await probe(url))
-    );
+    ).catch(console.log) ?? [];
+    productFinal = {
+      ...product,
+      dateAdded: product.dateAdded.toJSON(),
+      ratings: await getProductRatings(product.id),
+    };
   }
+
+  assertProductComponentType(productFinal);
 
   return {
     props: {
-      product: { ...product, ratings },
+      product: productFinal,
       relatedProducts,
       imageDimensions,
     },
@@ -186,4 +174,16 @@ interface ProductPageType {
   product: ProductComponentType;
   relatedProducts: ProductComponentType[];
   imageDimensions: { width: number; height: number }[];
+}
+
+function assertProductComponentType(
+  product: (unknown & { dateAdded: unknown }) | null
+): asserts product is ProductComponentType {
+  if (
+    !product ||
+    !("dateAdded" in product && typeof product.dateAdded == "string") ||
+    !("ratings" in product)
+  ) {
+    throw new TypeError("ProductComponentType Expected");
+  }
 }
