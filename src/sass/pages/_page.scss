@@ -5,3 +5,7 @@
     @extend %page-container;
   }
 }
+
+.main-heading {
+  @extend %section-heading;
+}

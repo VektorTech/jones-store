@@ -1,0 +1,10 @@
+@use "../abstracts" as *;
+
+.wishlist {
+  &__empty {
+    font-size: $text-xl;
+    color: $c-text-dark;
+    text-align: center;
+    margin: 5rem 0;
+  }
+}

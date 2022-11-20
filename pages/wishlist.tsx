@@ -9,6 +9,7 @@ import ProductsGrid from "@Components/products/ProductsGrid";
 import prisma from "@Lib/prisma";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import { withSessionSsr } from "@Lib/withSession";
+import Head from "next/head";
 
 const WishlistPage: NextPage<WishlistPageProps> = ({ wishlistItems }) => {
   const { removeFromWishlist } = useAuthState();
@@ -17,7 +18,9 @@ const WishlistPage: NextPage<WishlistPageProps> = ({ wishlistItems }) => {
   return (
     <div className="page">
       <div className="page__container">
-        <SEO title="Wishlist" />
+        <Head>
+          <title>Wishlist</title>
+        </Head>
         <h1 className="main-heading">Wishlist</h1>
         {products.length ? (
           <ProductsGrid
@@ -28,7 +31,7 @@ const WishlistPage: NextPage<WishlistPageProps> = ({ wishlistItems }) => {
             products={products}
           />
         ) : (
-          <h2 className="heading">Empty</h2>
+          <h2 className="wishlist__empty">Empty</h2>
         )}
       </div>
     </div>
