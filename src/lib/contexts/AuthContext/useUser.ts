@@ -264,7 +264,7 @@ export default function useUser(currentUser: UserType) {
     emptyUserCart();
     updateUser({
       type: UserActions.EMPTY_CART,
-      payload: { cart: [], cartTotal: 0 },
+      payload: { cart: initUser.cart },
     });
   };
 
