@@ -7,8 +7,8 @@ export default function FeaturesSection() {
   return (
     <section className="features">
       <div className="features__container">
-        {featureBlocks.map(({ Icon, title, text }) => (
-          <div key={title} className="features__col">
+        {featureBlocks.map(({ key, Icon, title, text }) => (
+          <div key={key} className="features__col">
             <div className="features__icon">
               <Icon className="features__icon-element" />
             </div>
@@ -23,8 +23,9 @@ export default function FeaturesSection() {
 
 const featureBlocks = [
   {
+    key: "money-back",
     Icon: AiOutlineTags,
-    title: "100% money-back guarantee",
+    title: <>100% money-back <wbr />guarantee</>,
     text: (
       <>
         We offer a <strong>100% money-back guarantee</strong> for any returns in
@@ -33,6 +34,7 @@ const featureBlocks = [
     ),
   },
   {
+    key: "secure-payment",
     Icon: RiSecurePaymentLine,
     title: "secure payment",
     text: (
@@ -42,6 +44,7 @@ const featureBlocks = [
     ),
   },
   {
+    key: "support",
     Icon: MdSupportAgent,
     title: "online support",
     text: (
@@ -51,6 +54,7 @@ const featureBlocks = [
     ),
   },
   {
+    key: "fast",
     Icon: TbTruckDelivery,
     title: "fast shipping",
     text: (

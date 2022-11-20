@@ -5,7 +5,7 @@ import Cart from "../Cart";
 import Footer from "../Footer";
 import HeroBanner from "../HeroBanner";
 import { ScrollUpButton } from "../ScrollUpButton";
-import FeaturesSection from "../home/FeaturesSection";
+import FeaturesSection from "../FeaturesSection";
 
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 
