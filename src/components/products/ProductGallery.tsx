@@ -59,8 +59,8 @@ export default function ProductGallery({
                   }}
                   priority
                   src={url}
-                  width={dimensions[i].width}
-                  height={dimensions[i].height}
+                  width={dimensions[i]?.width ?? 0}
+                  height={dimensions[i]?.height ?? 0}
                   alt=""
                 />
               ))}

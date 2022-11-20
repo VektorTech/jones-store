@@ -61,7 +61,7 @@ export default function Product({
                 <Image
                   key={url}
                   src={url}
-                  blurDataURL={blurDataUrl ?? DummyPlaceholder}
+                  blurDataURL={blurDataUrl || DummyPlaceholder}
                   placeholder="blur"
                   objectFit="contain"
                   layout="fill"

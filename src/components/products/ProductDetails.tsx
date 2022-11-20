@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { useState, Suspense, CSSProperties } from "react";
-import { Product } from "@prisma/client";
 import { BarLoader } from "react-spinners";
+import { ProductComponentType } from "src/types/shared";
 
 export default function ProductDetails({ product }: PropTypes) {
   const [tabName, setTabName] = useState<
@@ -79,5 +79,5 @@ const cssOverride: CSSProperties = {
 };
 
 interface PropTypes {
-  product: Product;
+  product: ProductComponentType;
 }

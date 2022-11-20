@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Product, PaymentType } from "@prisma/client";
+import { PaymentType } from "@prisma/client";
 
 import SizeOptions from "@Components/common/SizeOptions";
 import Button from "@Components/common/formControls/Button";
@@ -7,8 +7,13 @@ import NumberInput from "@Components/common/formControls/NumberInput";
 
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import { listToEnum } from "@Lib/utils";
+import { ProductComponentType } from "src/types/shared";
 
-export default function ProductCartForm({ product }: { product: Product }) {
+export default function ProductCartForm({
+  product,
+}: {
+  product: ProductComponentType;
+}) {
   const [checkedSize, setCheckedSize] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
 
@@ -65,7 +70,11 @@ export default function ProductCartForm({ product }: { product: Product }) {
   );
 }
 
-const buyNowHandler = (product: Product, quantity: number, size: string) => {
+const buyNowHandler = (
+  product: ProductComponentType,
+  quantity: number,
+  size: string
+) => {
   fetch("/api/checkout", {
     method: "POST",
     headers: {
