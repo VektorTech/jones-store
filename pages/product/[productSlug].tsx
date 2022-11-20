@@ -15,12 +15,6 @@ import { NextPage } from "next";
 import { getProductRatings } from "@Lib/helpers";
 import RatingStars from "@Components/common/RatingStars";
 
-const currencyFormatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  currencyDisplay: "code",
-});
-
 const ProductPage: NextPage<ProductPageType> = ({
   product,
   relatedProducts,
@@ -119,7 +113,7 @@ export const getStaticPaths = async function () {
 
   return {
     paths: products.map(({ title, sku }) => ({
-      params: { productId: getPathString(title + " " + sku) },
+      params: { productSlug: getPathString(title + " " + sku) },
     })),
     fallback: false,
   };
@@ -128,10 +122,10 @@ export const getStaticPaths = async function () {
 export const getStaticProps = async function ({
   params,
 }: {
-  params: { productId: string };
+  params: { productSlug: string };
 }) {
-  const sku = params.productId
-    .substring(params.productId.length - 10)
+  const sku = params.productSlug
+    .substring(params.productSlug.length - 10)
     .replace("-", " ");
 
   const product = await prisma.product.findFirst({
@@ -145,7 +139,6 @@ export const getStaticProps = async function ({
           id: { not: product?.id },
           gender: product?.gender,
           type: product?.type
-          // color: product?.color,
         },
         take: 4,
       })
