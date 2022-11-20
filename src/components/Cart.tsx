@@ -23,7 +23,7 @@ export default function Cart() {
           <button onClick={() => emptyCart()} className="cart__clear">
             {"(Clear Cart)"}
           </button>
-          <button onClick={() => setDialog(null)} className="cart__close">
+          <button aria-label="close cart" onClick={() => setDialog(null)} className="cart__close">
             <BsXLg className="sidebar__close-icon" />
           </button>
         </div>

@@ -33,6 +33,7 @@ export default function ProductsSection({
         </div>
         <div className="products-section__scroll">
           <button
+            aria-label="previous product"
             className="products-section__scroll-button"
             onClick={() =>
               listRef.current?.scrollBy({
@@ -44,6 +45,7 @@ export default function ProductsSection({
             <BsFillArrowLeftCircleFill />
           </button>
           <button
+            aria-label="next product"
             className="products-section__scroll-button"
             onClick={() =>
               listRef.current?.scrollBy({

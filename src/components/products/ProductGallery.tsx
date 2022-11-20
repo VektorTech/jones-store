@@ -67,6 +67,7 @@ export default function ProductGallery({
             </Carousel>
           </div>
           <button
+            aria-label="add to wishlist"
             onClick={() =>
               isOnWishlist
                 ? removeFromWishlist(productId)

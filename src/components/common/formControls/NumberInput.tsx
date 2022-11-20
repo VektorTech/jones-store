@@ -25,6 +25,7 @@ export default forwardRef<HTMLDivElement, PropTypes>(function NumberInput(
         className="number-input__button"
         onClick={() => setValue(Math.max(_value - 1, min))}
         type="button"
+        aria-label="reduce by one"
       >
         {" - "}
       </button>
@@ -39,6 +40,7 @@ export default forwardRef<HTMLDivElement, PropTypes>(function NumberInput(
         className="number-input__button"
         onClick={() => setValue(Math.min(_value + 1, max))}
         type="button"
+        aria-label="increase by one"
       >
         {" + "}
       </button>

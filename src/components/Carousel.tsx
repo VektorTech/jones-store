@@ -114,6 +114,7 @@ export default function Carousel({ children, aIndex, onUpdate }: PropTypes) {
         className="carousel__controls"
       >
         <button
+          aria-label="previous image"
           onClick={(e) => {
             e.stopPropagation();
             if (!transitioning.current) {
@@ -127,6 +128,7 @@ export default function Carousel({ children, aIndex, onUpdate }: PropTypes) {
           <BsArrowLeft />
         </button>
         <button
+          aria-label="next image"
           onClick={(e) => {
             e.stopPropagation();
             if (!transitioning.current) {

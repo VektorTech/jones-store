@@ -27,7 +27,7 @@ export function ScrollUpButton() {
       ref={buttonRef}
       className="scroll-up"
     >
-      <div className="scroll-up__container">
+      <span className="scroll-up__container">
         <Image
           layout="responsive"
           className="scroll-up__image scroll-up__image--flipped"
@@ -37,8 +37,8 @@ export function ScrollUpButton() {
           height={559}
           src={ShoePrint}
         />
-      </div>
-      <div className="scroll-up__container">
+      </span>
+      <span className="scroll-up__container">
         <Image
           layout="responsive"
           className="scroll-up__image"
@@ -48,7 +48,7 @@ export function ScrollUpButton() {
           height={559}
           src={ShoePrint}
         />
-      </div>
+      </span>
     </button>
   );
 }

@@ -77,6 +77,7 @@ export default function Product({
               <div className="product__actions">
                 <button
                   tabIndex={-1}
+                  aria-label="add to wishlist"
                   onClick={(e) => {
                     e.preventDefault();
                     handleWishlistAction();

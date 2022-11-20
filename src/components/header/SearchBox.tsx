@@ -60,7 +60,7 @@ export default function SearchBoxContainer() {
 
   return (
     <div className={"search" + (active ? " search--active" : "")}>
-      <button className="search__close" onClick={() => setDialog(null)}>
+      <button aria-label="close search"  className="search__close" onClick={() => setDialog(null)}>
         <VscChromeClose className="search__close-icon" />
       </button>
       <div className="search__container">

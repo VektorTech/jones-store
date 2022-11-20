@@ -64,6 +64,7 @@ export default function HeaderSection() {
         <div className="header__container">
           <div className="header__menu-button">
             <button
+              aria-label="menu"
               className="header__menu-toggle"
               onClick={() => setDialog(DialogType.SIDEBAR_DIALOG)}
             >
@@ -170,6 +171,7 @@ export default function HeaderSection() {
                     onPointerLeave={(e) => setHoveredElement("")}
                     className="header__button-link"
                     id="header-account-btn"
+                    aria-label="user profile"
                   >
                     <BsPerson />
                     <ToolTip
@@ -226,6 +228,7 @@ export default function HeaderSection() {
               </li>
               <li className="header__button header__button-cart">
                 <button
+                  aria-label="cart"
                   onClick={() => setDialog(DialogType.CART)}
                   onPointerEnter={(e) => setHoveredElement("header-cart-btn")}
                   onPointerLeave={(e) => setHoveredElement("")}

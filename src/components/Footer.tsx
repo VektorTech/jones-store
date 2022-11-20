@@ -151,7 +151,7 @@ export default function Footer() {
                 >
                   YOUR EMAIL
                 </label>
-                <button className="input__submit" type="submit">
+                <button aria-label="add email to newsletter" className="input__submit" type="submit">
                   <FaPaperPlane className="input__submit-icon" />
                 </button>
               </div>

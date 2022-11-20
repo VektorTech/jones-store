@@ -42,7 +42,7 @@ export default function Sidebar() {
       className={`sidebar${sidebarVisible ? " sidebar--active" : ""}`}
       onClick={() => setDialog(null)}
     >
-      <button className="sidebar__close">
+      <button aria-label="close sidebar" className="sidebar__close">
         <BsXLg className="sidebar__close-icon" />
       </button>
       <nav
@@ -142,7 +142,7 @@ export default function Sidebar() {
                     }}
                     action="/api/auth/signout"
                   >
-                    <button className="sidebar__link-btn" type="submit">
+                    <button aria-label="logout" className="sidebar__link-btn" type="submit">
                       <FiLogOut />
                       Logout
                     </button>
@@ -168,6 +168,7 @@ export default function Sidebar() {
               </li>
               <li className="sidebar__icon-links-item">
                 <button
+                  aria-label="cart"
                   onClick={() => setDialog(DialogType.CART)}
                   className="sidebar__anchor"
                 >

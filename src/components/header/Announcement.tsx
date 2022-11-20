@@ -92,7 +92,7 @@ export default function Announcement() {
           <ClipLoader className="announcement__loader" />
         )}
 
-        <button onClick={handleClose} className="announcement__close">
+        <button aria-label="close announcement banner" onClick={handleClose} className="announcement__close">
           <BsXLg className="announcement__close-icon" />
         </button>
 
