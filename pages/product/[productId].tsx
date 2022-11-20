@@ -142,7 +142,8 @@ export const getStaticProps = async function ({
         where: {
           id: { not: product?.id },
           gender: product?.gender,
-          color: product?.color,
+          type: product?.type
+          // color: product?.color,
         },
         take: 5,
       })
