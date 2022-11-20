@@ -120,6 +120,7 @@ export default function HeroBanner() {
                           width={data.imageSrc.width}
                           height={data.imageSrc.height}
                           src={data.imageSrc}
+                          priority
                           alt=""
                         />
                       </div>
