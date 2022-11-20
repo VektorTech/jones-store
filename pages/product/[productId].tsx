@@ -13,6 +13,7 @@ import prisma from "@Lib/prisma";
 import { getPathString } from "@Lib/utils";
 import { NextPage } from "next";
 import { getProductRatings } from "@Lib/helpers";
+import RatingStars from "@Components/common/RatingStars";
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -36,6 +37,7 @@ const ProductPage: NextPage<ProductPageType> = ({
     color,
     salesCount,
     stockQty,
+    ratings,
   } = product;
 
   const cartPrice = (price - discount) * 1;
@@ -57,13 +59,14 @@ const ProductPage: NextPage<ProductPageType> = ({
         <div className="product-view__cart">
           <h1 className="product-view__name">{title}</h1>
           <p className="product-view__gender">{gender}</p>
+          <RatingStars count={ratings} />
 
           <div className="product-view__details">
             <p className="product-view__details-info">
-              SKU: {sku.toUpperCase()}
+              <strong>SKU:</strong> {sku.toUpperCase()}
             </p>
-            <p className="product-view__details-info">Release Year: {year}</p>
-            <p className="product-view__details-info">Colorway: {color}</p>
+            <p className="product-view__details-info"><strong>Release Year:</strong> {year}</p>
+            <p className="product-view__details-info"><strong>Colorway:</strong> {color}</p>
           </div>
 
           <p className="product-view__price">
@@ -147,9 +150,10 @@ export const getStaticProps = async function ({
   let imageDimensions: { width: number; height: number }[] = [];
 
   if (product) {
-    imageDimensions = await Promise.all(
-      product.mediaURLs.map(async (url) => await probe(url))
-    ).catch(console.log) ?? [];
+    imageDimensions =
+      (await Promise.all(
+        product.mediaURLs.map(async (url) => await probe(url))
+      ).catch(console.log)) ?? [];
     productFinal = {
       ...product,
       dateAdded: product.dateAdded.toJSON(),
