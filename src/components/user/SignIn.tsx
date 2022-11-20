@@ -10,6 +10,7 @@ import Button from "@Components/common/formControls/Button";
 import { userLoginSchema } from "@Lib/validations";
 import { validateInput, validateInputs } from "@Lib/helpers";
 import { useAuthState } from "@Lib/contexts/AuthContext";
+import { toast } from "react-toastify";
 
 const defaultUserCred = {
   user: "devnuggetsbusinesss@gmail.com",
@@ -20,7 +21,6 @@ const validateFormField = validateInput(userLoginSchema);
 
 export default function SignIn() {
   const [formErrors, setFormErrors] = useState<formParams>({});
-  const { setAuthUser } = useAuthState();
 
   return (
     <>
@@ -41,8 +41,11 @@ export default function SignIn() {
           }
         }}
         afterSubmit={(res) => {
-          setAuthUser(res.data as UserTypeNormalized);
-          Router.push(location.origin);
+          if (res.success) {
+            location.href = location.origin;
+          } else {
+            toast("Something Went Wrong", { type: "error" })
+          }
         }}
       >
         <TextField

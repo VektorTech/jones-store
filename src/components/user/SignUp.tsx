@@ -11,12 +11,12 @@ import Form from "@Components/common/Form";
 import { userSchema } from "@Lib/validations";
 import { validateInput, validateInputs } from "@Lib/helpers";
 import { useAuthState } from "@Lib/contexts/AuthContext";
+import { toast } from "react-toastify";
 
 const validateFormField = validateInput(userSchema);
 
 export default function SignUp() {
   const [formErrors, setFormErrors] = useState<formParams>({});
-  const { setAuthUser } = useAuthState();
   const generatedName = useRef(generateUsername());
 
   return (
@@ -38,8 +38,11 @@ export default function SignUp() {
           }
         }}
         afterSubmit={(res) => {
-          setAuthUser(res.data as UserTypeNormalized);
-          Router.push(location.origin);
+          if (res.success) {
+            location.href = location.origin;
+          } else {
+            toast("Something Went Wrong", { type: "error" });
+          }
         }}
       >
         <TextField
