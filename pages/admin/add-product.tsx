@@ -9,14 +9,15 @@ import Button from "@Components/common/formControls/Button";
 import Dropdown from "@Components/common/formControls/Dropdown";
 
 import SizeOptions from "@Components/common/SizeOptions";
+import { toast } from "react-toastify";
 
 const CategoriesData = require("@Lib/CategoriesData.json");
 const Categories = listToEnum(CategoriesData?.colorways ?? []);
 
 export default function AddProduct() {
   const handleSubmit: beforeSubmitType = async (params, formElement) => {
-    const { files } = formElement.getElementById(
-      "product-images"
+    const { files } = formElement.querySelector(
+      "#product-images"
     ) as HTMLInputElement;
 
     if (files) {
@@ -30,7 +31,18 @@ export default function AddProduct() {
   return (
     <div className="admin__section">
       <h2>Add Product</h2>
-      <Form beforeSubmit={handleSubmit} method="POST" action="/api/products">
+      <Form
+        beforeSubmit={handleSubmit}
+        afterSubmit={(res) => {
+          if (res.success) {
+            toast("Successfully Added Product To Database", {
+              type: "success",
+            });
+          }
+        }}
+        method="POST"
+        action="/api/products"
+      >
         <TextField name="title" label="Title" />
         <TextField name="id" label="ID" />
         <div className="admin__section-field">
@@ -44,6 +56,7 @@ export default function AddProduct() {
           pattern="[0-9]*"
           min={1985}
           max={new Date().getFullYear()}
+          defaultValue={new Date().getFullYear()}
           name="year"
           type="number"
           inputMode="numeric"
@@ -58,12 +71,6 @@ export default function AddProduct() {
         <AutoComplete name="color" label="Main Colorway" options={Categories} />
         <Button className="admin__section-button" type="submit">
           Add To Inventory
-        </Button>
-        <Button
-          className="admin__section-button admin__section-reset"
-          type="reset"
-        >
-          Reset Form
         </Button>
       </Form>
       <br />
