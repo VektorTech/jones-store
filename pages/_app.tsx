@@ -1,5 +1,6 @@
 import "@Sass/main.scss";
 import "nprogress/nprogress.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import type { IncomingMessage } from "http";
 import type { UserType } from "src/types/shared";
@@ -11,6 +12,7 @@ import Head from "next/head";
 import { NextResponse } from "next/server";
 import NProgress from "nprogress";
 import { getIronSession } from "iron-session";
+import { ToastContainer } from "react-toastify";
 
 import Layout from "@Components/layouts/Layout";
 import SEO from "@Components/common/SEO";
@@ -63,9 +65,12 @@ function MyApp({
   }
 
   return (
-    <UIProvider announcementHidden={cookies?.announcementState == "closed"}>
-      <AuthProvider currentUser={user}>{FinalRenderComponent}</AuthProvider>
-    </UIProvider>
+    <>
+      <UIProvider announcementHidden={cookies?.announcementState == "closed"}>
+        <AuthProvider currentUser={user}>{FinalRenderComponent}</AuthProvider>
+      </UIProvider>
+      <ToastContainer position="bottom-right" hideProgressBar />
+    </>
   );
 }
 

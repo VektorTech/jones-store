@@ -8,6 +8,7 @@ import NumberInput from "@Components/common/formControls/NumberInput";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import { listToEnum } from "@Lib/utils";
 import { ProductComponentType } from "src/types/shared";
+import { toast } from "react-toastify";
 
 export default function ProductCartForm({
   product,
@@ -44,6 +45,7 @@ export default function ProductCartForm({
           if (quantity && size) {
             addToCart(id, quantity, Number(checkedSize));
           } else {
+            toast("Please select size.", { type: "warning" });
           }
         }}
         className="product-cart-form__submit"
@@ -61,6 +63,7 @@ export default function ProductCartForm({
           if (quantity && checkedSize) {
             buyNowHandler(product, quantity, checkedSize);
           } else {
+            toast("Please select size.", { type: "warning" });
           }
         }}
       >
