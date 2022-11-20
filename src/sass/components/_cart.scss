@@ -99,6 +99,7 @@
     column-gap: 0.5rem;
     font-size: $text-sm;
     font-weight: 400;
+    transform: translateX(50%);
     grid-template-rows: repeat(6, 1fr);
     grid-template-columns: repeat(12, 1fr);
     grid-template-areas:
