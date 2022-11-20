@@ -134,6 +134,26 @@
     @include respond-to("medium") {
       column-gap: 2rem;
     }
+
+    #{$self}--active & {
+      @include inline-animation(0.6s) {
+        0% {
+          transform: translateX(50%);
+        }
+        60% {
+          transform: translateX(-10%);
+        }
+        100% {
+          transform: translateX(0%);
+        }
+      }
+
+      @for $i from 1 through 10 {
+        &:nth-child(#{$i}) {
+          animation-delay: 0.1s * ($i - 1);
+        }
+      }
+    }
   }
 
   &__product-image {
