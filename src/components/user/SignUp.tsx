@@ -46,6 +46,7 @@ export default function SignUp() {
           error={formErrors["username"]}
           name="username"
           label="User"
+          placeholder="eg., john_brown"
           required
           onBlur={(e) => {
             setFormErrors({
@@ -60,6 +61,7 @@ export default function SignUp() {
           name="email"
           label="Email"
           type="email"
+          placeholder="example@domain.com"
           required
           onBlur={(e) =>
             setFormErrors({
@@ -73,6 +75,8 @@ export default function SignUp() {
           name="password"
           type="password"
           label="Password"
+          placeholder="At least 7 characters"
+          minLength={7}
           required
           onBlur={(e) =>
             setFormErrors({

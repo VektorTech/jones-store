@@ -50,6 +50,7 @@ export default function SignIn() {
           defaultValue={defaultUserCred.user}
           name="email"
           label="Email or User"
+          placeholder="eg., example@domain.com or john_brown"
           required
           onBlur={(e) =>
             setFormErrors({
@@ -64,6 +65,8 @@ export default function SignIn() {
           name="password"
           type="password"
           label="Password"
+          placeholder="At least 7 characters"
+          minLength={7}
           required
           onBlur={(e) =>
             setFormErrors({

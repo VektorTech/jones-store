@@ -35,7 +35,7 @@
   &__control {
     @extend %text-input-field;
 
-    &:focus:invalid {
+    &:not(:focus):not(:placeholder-shown):invalid {
       background-color: #ffebeb;
     }
 
