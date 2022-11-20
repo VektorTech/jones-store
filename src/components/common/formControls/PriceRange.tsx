@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, forwardRef } from "react";
+import { useState, useRef, useEffect, forwardRef, useCallback } from "react";
 
 const HIGHEST_PRICE = 1000;
 
@@ -18,7 +18,7 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
   const calculatePercentage = (num: number) =>
     (num / (controlRef.current?.offsetWidth || 1)) * 100;
 
-  const updateControlUI = (min: number, max: number) => {
+  const updateControlUI = useCallback((min: number, max: number) => {
     const minHandle = minHandleRef.current;
     const maxHandle = maxHandleRef.current;
     const rangeTrack = rangeRef.current;
@@ -48,19 +48,19 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
     rangeTrack.style.left = calculatePercentage(minHandle.offsetLeft) + "%";
     rangeTrack.style.width =
       calculatePercentage(maxHandle.offsetLeft - minHandle.offsetLeft) + "%";
-  };
+  }, []);
 
   useEffect(() => {
-    if (activeHandle == "") {
-      onUpdate?.(Math.round(minValue), Math.round(maxValue));
+    if (activeHandle == "" && onUpdate) {
+      onUpdate(Math.round(minValue), Math.round(maxValue));
     }
-  }, [activeHandle, minValue, maxValue]);
+  }, [activeHandle, minValue, maxValue, onUpdate]);
 
   useEffect(() => {
     setMinValue(minPrice);
     setMaxValue(maxPrice);
     updateControlUI(minPrice, maxPrice);
-  }, [maxPrice, minPrice]);
+  }, [maxPrice, minPrice, updateControlUI]);
 
   useEffect(() => {
     const minHandle = minHandleRef.current;
@@ -156,7 +156,7 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
       document.removeEventListener("touchmove", mouseMoveHandler);
       resizeObserver.disconnect();
     };
-  }, [activeHandle]);
+  }, [activeHandle, maxValue, minValue, updateControlUI]);
 
   return (
     <div ref={ref} className="price-range">
