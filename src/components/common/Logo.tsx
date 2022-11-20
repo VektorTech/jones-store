@@ -7,7 +7,12 @@ export default function Logo() {
   return (
     <Link href="/">
       <a className="logo">
-        <FutureImage width={80} height={46} alt="" src={logoImg} />
+        <FutureImage
+          width={logoImg.width * 0.105}
+          height={logoImg.height * 0.09}
+          alt=""
+          src={logoImg}
+        />
         <span className="logo__subtext">Jordan Ones</span>
       </a>
     </Link>

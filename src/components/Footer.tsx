@@ -11,6 +11,8 @@ import Logo from "./common/Logo";
 
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 
+import paymentImage from "@Images/payment.png";
+
 export default function Footer() {
   const { currentDialog, setDialog } = useDialog();
   const visible = currentDialog == DialogType.MODAL_LANG_CURRENCY;
@@ -164,10 +166,10 @@ export default function Footer() {
             <hr className="footer__hr" />
             <div className="footer__payments">
               <NextImage
-                src="/assets/images/payment.png"
+                src={paymentImage}
                 alt=""
-                width={362}
-                height={30}
+                width={paymentImage.width}
+                height={paymentImage.height}
               />
             </div>
           </div>

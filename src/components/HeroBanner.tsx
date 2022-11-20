@@ -117,8 +117,8 @@ export default function HeroBanner() {
                       >
                         <Image
                           layout="responsive"
-                          width={220}
-                          height={144}
+                          width={data.imageSrc.width}
+                          height={data.imageSrc.height}
                           src={data.imageSrc}
                           alt=""
                         />
