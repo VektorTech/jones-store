@@ -131,12 +131,15 @@ export const normalizeUserProductItems = (
 };
 
 export const getProductRatings = async (productId: string) => {
-  const aggAvg = await prisma.review.aggregate({
-    where: { productId },
-    _avg: { rating: true },
-  });
+  if (typeof window == "undefined") {
+    const aggAvg = await prisma.review.aggregate({
+      where: { productId },
+      _avg: { rating: true },
+    });
 
-  return (await aggAvg._avg.rating) ?? 0;
+    return (await aggAvg._avg.rating) ?? 0;
+  }
+  return 0;
 };
 
 export const getBase64UrlCloudinary = async (imageId: string) => {
