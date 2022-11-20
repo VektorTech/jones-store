@@ -145,6 +145,12 @@
     background-color: mix(v.$c-background-black, #fff, 85%);
   }
 
+  &:disabled,
+  &[disabled] {
+    background-color: mix(v.$c-background-black, #fff, 85%);
+    cursor: not-allowed;
+  }
+
   &--lg {
     padding: 1rem 2.2rem;
   }
