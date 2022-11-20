@@ -153,20 +153,20 @@ const slidesData = [
     type: "heirloom",
     title: "retro high og",
     imageSrc: BannerImage1,
-    url: "/category/men/retro-high-og",
+    url: "/category/men",
   },
   {
     secondary: { highlighted: "elevated", text: "new build" },
     type: "SIGNAL BLUE",
     title: "air - mid se",
     imageSrc: BannerImage3,
-    url: "/category/men/retro-high-og",
+    url: "/product/air-jordan-1-mid-se-signal-blue-dd6834-402",
   },
   {
     secondary: { highlighted: "authentic", text: "1980s detailing" },
     type: "pollen",
     title: "retro high og",
     imageSrc: BannerImage2,
-    url: "/category/men/retro-high-og",
+    url: "/product/air-jordan-1-high-retro-og-pollen-555088701",
   },
 ];
