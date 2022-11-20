@@ -58,7 +58,7 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
           })
         ).map(async (product) => ({
           ...product,
-          ratings: await getProductRatings(product.id),
+          ratings: await getProductRatings(prisma, product.id),
         }))
       ),
       bestSellers = await Promise.all(
@@ -70,7 +70,7 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
           })
         ).map(async (product) => ({
           ...product,
-          ratings: await getProductRatings(product.id),
+          ratings: await getProductRatings(prisma, product.id),
         }))
       );
 

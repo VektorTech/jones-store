@@ -48,7 +48,7 @@ export const getServerSideProps = withSessionSsr(async function ({
     ).map(async (product) => ({
       ...product,
       dateAdded: product.dateAdded.toJSON(),
-      ratings: await getProductRatings(product.id),
+      ratings: await getProductRatings(prisma, product.id),
     }))
   );
 

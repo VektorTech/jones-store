@@ -156,7 +156,7 @@ export const getServerSideProps = withSessionSsr(async function ({ params }) {
     ).map(async (product) => ({
       ...product,
       dateAdded: product.dateAdded.toJSON(),
-      ratings: await getProductRatings(product.id),
+      ratings: await getProductRatings(prisma, product.id),
     }))
   );
   const productImagePlaceholders: Record<string, string> = {};

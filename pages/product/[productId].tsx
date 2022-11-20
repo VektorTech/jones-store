@@ -46,6 +46,8 @@ const ProductPage: NextPage<ProductPageType> = ({
     ? `${Math.floor((discount / price) * 100)}% off`
     : "";
 
+  if (!product) { return <div></div>; }
+
   return (
     <>
       <SEO title={product.title} />
@@ -70,7 +72,7 @@ const ProductPage: NextPage<ProductPageType> = ({
               <strong>Release Year:</strong> {year}
             </p>
             <p className="product-view__details-info">
-              <strong>Upper:</strong> {type.toLocaleLowerCase()}  Cut
+              <strong>Upper:</strong> {type.toLocaleLowerCase()} Cut
             </p>
             <p className="product-view__details-info">
               <strong>Colorway:</strong> {color}
@@ -149,7 +151,7 @@ export const getStaticProps = async function ({
       })
     ).map(async (product) => ({
       ...product,
-      ratings: await getProductRatings(product.id),
+      ratings: await getProductRatings(prisma, product.id),
       dateAdded: product.dateAdded.toJSON(),
     }))
   );
@@ -166,7 +168,7 @@ export const getStaticProps = async function ({
     productFinal = {
       ...product,
       dateAdded: product.dateAdded.toJSON(),
-      ratings: await getProductRatings(product.id),
+      ratings: await getProductRatings(prisma, product.id),
     };
   }
 

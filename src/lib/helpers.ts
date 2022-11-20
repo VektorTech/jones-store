@@ -2,9 +2,8 @@ import { ObjectSchema, ValidationError } from "yup";
 
 import type { CartType, UserProducts, WishlistType } from "src/types/shared";
 
-import prisma from "@Lib/prisma";
-
 import { CLOUDINARY_CLOUD_NAME } from "./config";
+import { PrismaClient } from "@prisma/client";
 
 export function validateInputs(
   input: any,
@@ -130,9 +129,9 @@ export const normalizeUserProductItems = (
   );
 };
 
-export const getProductRatings = async (productId: string) => {
+export const getProductRatings = async (client: PrismaClient, productId: string) => {
   if (typeof window == "undefined") {
-    const aggAvg = await prisma.review.aggregate({
+    const aggAvg = await client.review.aggregate({
       where: { productId },
       _avg: { rating: true },
     });
