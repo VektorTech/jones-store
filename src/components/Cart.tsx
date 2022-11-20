@@ -31,6 +31,7 @@ export default function Cart() {
           <ul className="cart__list">
             {user.cart.productIds.sort().map((id, index) => (
               <CartProductItem
+                index={index}
                 removeAction={() => removeFromCart(id)}
                 updateAction={(quantity: number) =>
                   addToCart(id, quantity, user.cart.items[id].size)

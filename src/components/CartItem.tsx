@@ -5,10 +5,12 @@ import NumberInput from "./common/formControls/NumberInput";
 import Button from "./common/formControls/Button";
 
 import { currencyFormatter } from "@Lib/intl";
+import React from "react";
 
 export default function CartProductItem({
   product,
   cartItem,
+  index,
   removeAction,
   updateAction,
 }: PropTypes) {
@@ -16,7 +18,10 @@ export default function CartProductItem({
     return null;
   }
   return (
-    <li className="cart__product">
+    <li
+      className="cart__product"
+      style={{ "--index": index } as React.CSSProperties}
+    >
       <Image
         className="cart__product-image"
         objectFit="contain"
@@ -55,6 +60,7 @@ export default function CartProductItem({
 interface PropTypes {
   product: Product;
   cartItem: CartItem;
+  index: number;
   removeAction: () => void;
   updateAction: (quantity: number) => void;
 }

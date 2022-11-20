@@ -148,11 +148,7 @@
         }
       }
 
-      @for $i from 1 through 10 {
-        &:nth-child(#{$i}) {
-          animation-delay: 0.1s * ($i - 1);
-        }
-      }
+      animation-delay: calc(var(--index) * 0.1s);
     }
   }
 
