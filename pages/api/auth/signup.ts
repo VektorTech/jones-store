@@ -86,6 +86,8 @@ async function signupRoute(
     });
 
   res.status(201).json({
+    success: true,
+    error: false,
     message: `Successfully Created User Account, ${username}`,
     data: {
       id: user.id,

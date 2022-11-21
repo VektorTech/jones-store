@@ -89,6 +89,7 @@ const signinRoute = async (
 
     return res.json({
       success: true,
+      error: false,
       message: `${user.username}, Sign In Successful`,
       data: {
         id: user.id,
