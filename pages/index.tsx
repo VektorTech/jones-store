@@ -58,7 +58,12 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
           })
         ).map(async (product) => ({
           ...product,
-          ratings: await getProductRatings(prisma, product.id),
+          ratings: await prisma.review
+            .aggregate({
+              where: { productId: product.id },
+              _avg: { rating: true },
+            })
+            .then((result) => result._avg.rating ?? 0),
         }))
       ),
       bestSellers = await Promise.all(
@@ -70,7 +75,12 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
           })
         ).map(async (product) => ({
           ...product,
-          ratings: await getProductRatings(prisma, product.id),
+          ratings: await prisma.review
+            .aggregate({
+              where: { productId: product.id },
+              _avg: { rating: true },
+            })
+            .then((result) => result._avg.rating ?? 0),
         }))
       );
 
