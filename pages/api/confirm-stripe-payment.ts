@@ -69,7 +69,9 @@ async function ConfirmPayment(
           where: { orderId: Number(orderId) },
         });
 
-        orderLineItems.forEach(async (item) => {
+        console.log(orderLineItems, cart);
+
+        for await (const item of orderLineItems) {
           await prisma.product.update({
             where: { id: item.productId },
             data: {
@@ -82,7 +84,7 @@ async function ConfirmPayment(
               cartId_productId: { cartId: cart.id, productId: item.productId },
             },
           });
-        });
+        }
 
         return res.json({ success: true, message: "Success" });
       }
