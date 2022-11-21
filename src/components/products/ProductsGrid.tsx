@@ -12,7 +12,10 @@ export default function ProductsGrid({ products, actions = {} }: PropTypes) {
       {products.map((product) => (
         <MotionElement key={product.id}>
           <div>
-            <Product {...product} blurDataUrl={productImagePlaceholders[product.id]} />
+            <Product
+              {...product}
+              blurDataUrl={productImagePlaceholders[product.id]}
+            />
 
             {Object.keys(actions).map((action) => (
               <button

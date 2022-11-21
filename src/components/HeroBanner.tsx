@@ -61,7 +61,7 @@ export default function HeroBanner() {
             <div className="banner__indicators">
               {range(0, slidesData.length - 1).map((_, i) => (
                 <button
-                  aria-label={"slide " + (i+1)}
+                  aria-label={"slide " + (i + 1)}
                   key={"indicator" + i}
                   onClick={() => setActiveView(i)}
                   className={

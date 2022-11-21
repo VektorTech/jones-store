@@ -42,13 +42,11 @@ async function postProductRoute(
 
   await prisma.product.create({ data });
 
-  res
-    .status(201)
-    .json({
-      success: true,
-      error: false,
-      message: `Successfully Added ${data.title}`,
-    });
+  res.status(201).json({
+    success: true,
+    error: false,
+    message: `Successfully Added ${data.title}`,
+  });
 }
 
 export default RouteHandler()

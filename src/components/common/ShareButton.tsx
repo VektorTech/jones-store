@@ -97,5 +97,5 @@ interface PropTypes {
 }
 
 const cssOverride: CSSProperties = {
-  marginRight: "1rem"
+  marginRight: "1rem",
 };

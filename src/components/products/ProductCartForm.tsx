@@ -68,7 +68,8 @@ export default function ProductCartForm({
           }
         }}
       >
-        Buy Now &mdash; {currencyFormatter2.format((price - discount) * quantity)}
+        Buy Now &mdash;{" "}
+        {currencyFormatter2.format((price - discount) * quantity)}
       </Button>
     </form>
   );

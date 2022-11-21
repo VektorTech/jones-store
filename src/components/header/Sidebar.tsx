@@ -142,7 +142,11 @@ export default function Sidebar() {
                     }}
                     action="/api/auth/signout"
                   >
-                    <button aria-label="logout" className="sidebar__link-btn" type="submit">
+                    <button
+                      aria-label="logout"
+                      className="sidebar__link-btn"
+                      type="submit"
+                    >
                       <FiLogOut />
                       Logout
                     </button>

@@ -52,10 +52,10 @@ export default function RouteHandler() {
       assertIsHTTPMethod(method);
 
       if (methodActions[method][actionIndex]) {
-        await catchAsyncErrors(
-          methodActions[method][actionIndex]
-        )(request, response, (err: ServerError) =>
-          next(request, response, err, actionIndex + 1)
+        await catchAsyncErrors(methodActions[method][actionIndex])(
+          request,
+          response,
+          (err: ServerError) => next(request, response, err, actionIndex + 1)
         );
       }
     }

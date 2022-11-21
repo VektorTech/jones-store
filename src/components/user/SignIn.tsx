@@ -44,7 +44,7 @@ export default function SignIn() {
           if (res.success) {
             location.href = location.origin;
           } else {
-            toast("Something Went Wrong", { type: "error" })
+            toast("Something Went Wrong", { type: "error" });
           }
         }}
       >

@@ -25,7 +25,12 @@ const featureBlocks = [
   {
     key: "money-back",
     Icon: AiOutlineTags,
-    title: <>100% money-back <wbr />guarantee</>,
+    title: (
+      <>
+        100% money-back <wbr />
+        guarantee
+      </>
+    ),
     text: (
       <>
         We offer a <strong>100% money-back guarantee</strong> for any returns in
