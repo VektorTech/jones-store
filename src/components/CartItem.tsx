@@ -6,6 +6,8 @@ import Button from "./common/formControls/Button";
 
 import { currencyFormatter } from "@Lib/intl";
 import React from "react";
+import Link from "next/link";
+import { getPathString } from "@Lib/utils";
 
 export default function CartProductItem({
   product,
@@ -32,7 +34,11 @@ export default function CartProductItem({
         layout="fixed"
         alt=""
       />
-      <span className="cart__product-title">{product.title}</span>
+      <Link
+        href={`/product/${getPathString(product.title + " " + product.sku)}`}
+      >
+        <a className="cart__product-title">{product.title}</a>
+      </Link>
       <span className="cart__product-gender">{product.gender}</span>
       <span className="cart__product-size">Size: {cartItem.size}</span>
       <span className="cart__product-price">
