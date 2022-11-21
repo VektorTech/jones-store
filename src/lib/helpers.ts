@@ -131,12 +131,12 @@ export const normalizeUserProductItems = (
 
 export const getProductRatings = async (client: PrismaClient, productId: string) => {
   if (typeof window == "undefined") {
-    const aggAvg = await client.review.aggregate({
+    const avgAggregated = await client.review.aggregate({
       where: { productId },
       _avg: { rating: true },
     });
 
-    return (await aggAvg._avg.rating) ?? 0;
+    return avgAggregated._avg.rating ?? 0;
   }
   return 0;
 };
