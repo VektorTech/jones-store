@@ -8,7 +8,7 @@ import ProductsGrid from "@Components/products/ProductsGrid";
 
 import prisma from "@Lib/prisma";
 import { withSessionSsr } from "@Lib/withSession";
-import { getProductRatings } from "@Lib/helpers";
+import { aggregate } from "@Lib/helpers";
 
 const SearchPage: NextPage<SearchPageType> = ({ query, products, count }) => {
   return (
@@ -44,11 +44,12 @@ export const getServerSideProps = withSessionSsr(async function ({
           title: { contains: searchQuery as string, mode: "insensitive" },
         },
         orderBy: { dateAdded: "desc" },
+        include: { review: { select: { rating: true } } },
       })
     ).map(async (product) => ({
       ...product,
       dateAdded: product.dateAdded.toJSON(),
-      ratings: await getProductRatings(prisma, product.id),
+      ratings: aggregate(product.review),
     }))
   );
 

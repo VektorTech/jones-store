@@ -7,9 +7,7 @@ import GenderSection from "@Components/home/GenderSection";
 
 import { withSessionSsr } from "@Lib/withSession";
 import prisma from "@Lib/prisma";
-import { getBase64UrlCloudinary, getProductRatings } from "@Lib/helpers";
-import { Review } from "@prisma/client";
-import review from "./api/products/[productId]/review";
+import { aggregate, getBase64UrlCloudinary } from "@Lib/helpers";
 
 const Home: NextPage<HomePropTypes> = ({
   newArrivals,
@@ -51,16 +49,11 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
 
     const PRODUCTS_COUNT = 5;
 
-    const aggregate = (reviews: Review[]) => {
-      const sum = reviews.reduce((sum, review) => sum + review.rating, 0);
-      return sum / (review.length || 1);
-    };
-
     const newArrivals = await Promise.all(
         (
           await prisma.product.findMany({
             take: PRODUCTS_COUNT,
-            select: { ...productColumns, review: true },
+            select: { ...productColumns, review: { select: { rating: true } } },
             orderBy: { dateAdded: "desc" },
           })
         ).map(async (product) => ({
@@ -72,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
         (
           await prisma.product.findMany({
             take: PRODUCTS_COUNT,
-            select: { ...productColumns, review: true },
+            select: { ...productColumns, review: { select: { rating: true } } },
             orderBy: { salesCount: "desc" },
           })
         ).map(async (product) => ({

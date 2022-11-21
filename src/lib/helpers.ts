@@ -1,5 +1,4 @@
 import type { CartType, UserProducts, WishlistType } from "src/types/shared";
-import type { PrismaClient } from "@prisma/client";
 
 import { ObjectSchema, ValidationError } from "yup";
 
@@ -129,16 +128,9 @@ export const normalizeUserProductItems = (
   );
 };
 
-export const getProductRatings = async (client: PrismaClient, productId: string) => {
-  if (typeof window == "undefined") {
-    const avgAggregated = await client.review.aggregate({
-      where: { productId },
-      _avg: { rating: true },
-    });
-
-    return avgAggregated._avg.rating ?? 0;
-  }
-  return 0;
+export const aggregate = (reviews: { rating: number }[]) => {
+  const sum = reviews.reduce((sum, review) => sum + review.rating, 0);
+  return sum / (reviews.length || 1);
 };
 
 export const getBase64UrlCloudinary = async (imageId: string) => {

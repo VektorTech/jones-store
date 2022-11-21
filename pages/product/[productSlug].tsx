@@ -11,9 +11,9 @@ import ProductDetails from "@Components/products/ProductDetails";
 
 import prisma from "@Lib/prisma";
 import { NextPage } from "next";
-import { getProductRatings } from "@Lib/helpers";
 import RatingStars from "@Components/common/RatingStars";
 import { currencyFormatter } from "@Lib/intl";
+import { aggregate } from "@Lib/helpers";
 
 const ProductPage: NextPage<ProductPageType> = ({
   product,
@@ -119,6 +119,7 @@ export const getServerSideProps = async function ({
 
   const product = await prisma.product.findFirst({
     where: { sku: { equals: sku, mode: "insensitive" } },
+    include: { review: { select: { rating: true } } },
   });
 
   if (product) {
@@ -130,7 +131,7 @@ export const getServerSideProps = async function ({
     const productFinal = {
       ...product,
       dateAdded: product.dateAdded.toJSON(),
-      ratings: await getProductRatings(prisma, product.id),
+      ratings: aggregate(product.review),
     };
 
     const relatedProducts = await Promise.all(
@@ -141,11 +142,12 @@ export const getServerSideProps = async function ({
             gender: product.gender,
             type: product.type,
           },
+          include: { review: { select: { rating: true } } },
           take: 4,
         })
       ).map(async (product) => ({
         ...product,
-        ratings: await getProductRatings(prisma, product.id),
+        ratings: aggregate(product.review),
         dateAdded: product.dateAdded.toJSON(),
       }))
     );
