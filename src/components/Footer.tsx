@@ -12,6 +12,8 @@ import Logo from "./common/Logo";
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 
 import paymentImage from "@Images/payment.png";
+import Form from "./common/Form";
+import { toast } from "react-toastify";
 
 export default function Footer() {
   const { currentDialog, setDialog } = useDialog();
@@ -111,7 +113,14 @@ export default function Footer() {
             </li>
             <li className="footer__link">
               <Link href="/">
-                <a>View Cart</a>
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setDialog(DialogType.CART);
+                  }}
+                >
+                  View Cart
+                </a>
               </Link>
             </li>
             <li className="footer__link">
@@ -133,7 +142,15 @@ export default function Footer() {
               Sign up to our newsletter and we&apos;ll keep you up-to-date with
               the latest arrivals and special offers.
             </p>
-            <form action="/api/newsletter">
+            <Form
+              afterSubmit={() => {
+                toast(
+                  "Thank you for joining our newsletter to receive special offers.",
+                  { type: "success" }
+                );
+              }}
+              action="/api/newsletter"
+            >
               <div className="newsletter__input input input--red input--bottom">
                 <input
                   id="newsletter_input"
@@ -166,7 +183,7 @@ export default function Footer() {
                   <a>Privacy Policy</a>
                 </Link>
               </p>
-            </form>
+            </Form>
             <hr className="footer__hr" />
             <div className="footer__payments">
               <NextImage
