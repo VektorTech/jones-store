@@ -53,7 +53,7 @@ export default function Reviews({ productId }: PropTypes) {
                 method="POST"
                 action={`/api/products/${productId}/review`}
                 afterSubmit={(data) => {
-                  console.log(data, status);
+                  location.reload();
                 }}
               >
                 <RatingStars interactive />

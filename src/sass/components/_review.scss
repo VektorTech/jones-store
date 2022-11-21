@@ -1,6 +1,8 @@
 @use "../abstracts" as *;
 
 .review {
+  margin-bottom: 2rem;
+
   &__container {
     width: 100%;
     display: flex;
