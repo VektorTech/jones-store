@@ -114,30 +114,32 @@ async function PostCheckoutRoute(
 
     if (provider == PaymentType.STRIPE) {
       const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] =
-        cartItems.map(({ quantity, size }, index) => {
-          prisma.orderLine.create({
-            data: {
-              quantity: quantity,
-              total: quantity * (products[index]?.price ?? 0),
-              orderId: order.id,
-              productId: products[index]?.id ?? "",
-              size: Number(size),
-            },
-          });
-
-          return {
-            price_data: {
-              currency: payment.currency,
-              product_data: {
-                name: products[index]?.title ?? "",
-                description: products[index]?.details ?? "",
-                images: products[index]?.mediaURLs,
+        await Promise.all(
+          cartItems.map(async ({ quantity, size }, index) => {
+            await prisma.orderLine.create({
+              data: {
+                quantity: quantity,
+                total: quantity * (products[index]?.price ?? 0),
+                orderId: order.id,
+                productId: products[index]?.id ?? "",
+                size: Number(size),
               },
-              unit_amount: total * 100,
-            },
-            quantity: quantity,
-          };
-        });
+            });
+
+            return {
+              price_data: {
+                currency: payment.currency,
+                product_data: {
+                  name: products[index]?.title ?? "",
+                  description: products[index]?.details ?? "",
+                  images: products[index]?.mediaURLs,
+                },
+                unit_amount: total * 100,
+              },
+              quantity: quantity,
+            };
+          })
+        );
 
       const session = await stripe.checkout.sessions.create({
         line_items,

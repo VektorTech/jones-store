@@ -69,8 +69,6 @@ async function ConfirmPayment(
           where: { orderId: Number(orderId) },
         });
 
-        console.log(orderLineItems, cart);
-
         for await (const item of orderLineItems) {
           await prisma.product.update({
             where: { id: item.productId },
