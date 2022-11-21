@@ -8,6 +8,8 @@ import GenderSection from "@Components/home/GenderSection";
 import { withSessionSsr } from "@Lib/withSession";
 import prisma from "@Lib/prisma";
 import { getBase64UrlCloudinary, getProductRatings } from "@Lib/helpers";
+import { Review } from "@prisma/client";
+import review from "./api/products/[productId]/review";
 
 const Home: NextPage<HomePropTypes> = ({
   newArrivals,
@@ -49,38 +51,33 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
 
     const PRODUCTS_COUNT = 5;
 
+    const aggregate = (reviews: Review[]) => {
+      const sum = reviews.reduce((sum, review) => sum + review.rating, 0);
+      return sum / (review.length || 1);
+    };
+
     const newArrivals = await Promise.all(
         (
           await prisma.product.findMany({
             take: PRODUCTS_COUNT,
-            select: productColumns,
+            select: { ...productColumns, review: true },
             orderBy: { dateAdded: "desc" },
           })
         ).map(async (product) => ({
           ...product,
-          ratings: await prisma.review
-            .aggregate({
-              where: { productId: product.id },
-              _avg: { rating: true },
-            })
-            .then((result) => result._avg.rating ?? 0),
+          ratings: aggregate(product.review),
         }))
       ),
       bestSellers = await Promise.all(
         (
           await prisma.product.findMany({
             take: PRODUCTS_COUNT,
-            select: productColumns,
+            select: { ...productColumns, review: true },
             orderBy: { salesCount: "desc" },
           })
         ).map(async (product) => ({
           ...product,
-          ratings: await prisma.review
-            .aggregate({
-              where: { productId: product.id },
-              _avg: { rating: true },
-            })
-            .then((result) => result._avg.rating ?? 0),
+          ratings: aggregate(product.review),
         }))
       );
 
