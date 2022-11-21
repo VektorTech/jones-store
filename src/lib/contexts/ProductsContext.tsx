@@ -186,11 +186,12 @@ function ProductsProvider(
   };
 
   const clearFilters = () => {
-    const { gender } = filterState.current;
-    filterState.current = { ..._filterState, gender };
+    const { gender, page } = filterState.current;
+    filterState.current = { ..._filterState, gender, page };
     setProductListing(products.filter(getGenderPredicate(gender)));
+    const pageId = gender.toLowerCase() || page;
 
-    Router.replace(`/category/${gender.toLowerCase() || "new"}`, undefined, {
+    Router.replace(`/category/${pageId}`, undefined, {
       scroll: false,
       shallow: true,
     });

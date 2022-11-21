@@ -1,7 +1,7 @@
 import type { ProductComponentType } from "src/types/shared";
 
 import { useEffect, useState, useRef } from "react";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import { Gender } from "@prisma/client";
 
 import FilterAccordion from "@Components/products/filter/FilterAccordion";
@@ -29,8 +29,13 @@ function CategoryPage({ categoryId }: { categoryId: string }) {
   const { currentDialog } = useDialog();
 
   useEffect(() => {
-    if (innerWidth <= 992)
-      document.body.style.overflow = filterActive ? "hidden" : "auto";
+    const toggleScroll = () => {
+      if (innerWidth <= 992)
+        document.body.style.overflow = filterActive ? "hidden" : "auto";
+    };
+    toggleScroll();
+    Router.events.on("routeChangeComplete", toggleScroll);
+    return () => Router.events.off("routeChangeComplete", toggleScroll);
   }, [filterActive, currentDialog]);
 
   useEffect(() => {
@@ -113,7 +118,6 @@ export default function CategoryPageWithContext({
         queryAsFilter[param] = value;
       }
     });
-
     return queryAsFilter;
   };
 
