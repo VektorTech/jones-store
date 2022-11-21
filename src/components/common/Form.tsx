@@ -77,7 +77,7 @@ export default function Form({
       });
 
       const response = await fetch(
-        action + (method == "GET" ? searchParams : ""),
+        action + (method == "GET" ? `?${searchParams.toString()}` : ""),
         {
           method: method,
           headers: {
