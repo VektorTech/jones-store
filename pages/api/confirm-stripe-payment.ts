@@ -66,7 +66,7 @@ async function ConfirmPayment(
         }
 
         const orderLineItems = await prisma.orderLine.findMany({
-          where: { orderId },
+          where: { orderId: Number(orderId) },
         });
 
         orderLineItems.forEach((item) => {
@@ -83,13 +83,15 @@ async function ConfirmPayment(
             },
           });
         });
+
+        return res.json({ success: true, message: "Success" });
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
+      return res.status(500).json({ success: false, message: "Error" });
     }
   }
 
-  res.json({ success: true, message: "Success" });
 }
 
 export default RouteHandler().post(ConfirmPayment);
