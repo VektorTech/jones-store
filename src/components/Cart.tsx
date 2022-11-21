@@ -7,6 +7,7 @@ import CartProductItem from "./CartItem";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import { currencyFormatter } from "@Lib/intl";
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
+import { toast } from "react-toastify";
 
 export default function Cart() {
   const { user, addToCart, removeFromCart, emptyCart } = useAuthState();
@@ -91,5 +92,5 @@ function stripeCheckout() {
     .then(({ data }) => {
       location.href = data;
     })
-    .catch((err) => console.error(err.error));
+    .catch((err) => toast("Please sign in before checkout", { type: "error" }));
 }

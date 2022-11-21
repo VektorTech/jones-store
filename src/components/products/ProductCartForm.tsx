@@ -106,5 +106,5 @@ const buyNowHandler = (
     .then(({ data }) => {
       location.href = data;
     })
-    .catch((err) => console.error(err.error));
+    .catch((err) => toast("Please sign in before checkout", { type: "error" }));
 };
