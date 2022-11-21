@@ -37,14 +37,6 @@ function CategoryPage({ categoryId }: { categoryId: string }) {
     if (innerWidth > 992) setFilterActive(true);
   }, []);
 
-  useEffect(() => {
-    const hideFilter = () => {
-      if (innerWidth <= 992) setFilterActive(false);
-    };
-    addEventListener("resize", hideFilter);
-    return () => removeEventListener("resize", hideFilter);
-  }, []);
-
   return (
     <>
       <SEO title={categoryId.toUpperCase()} />

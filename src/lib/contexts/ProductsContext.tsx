@@ -190,7 +190,7 @@ function ProductsProvider(
     filterState.current = { ..._filterState, gender };
     setProductListing(products.filter(getGenderPredicate(gender)));
 
-    Router.replace(`/category/${gender.toLowerCase()}`, undefined, {
+    Router.replace(`/category/${gender.toLowerCase() || "new"}`, undefined, {
       scroll: false,
       shallow: true,
     });
