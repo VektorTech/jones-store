@@ -50,7 +50,8 @@
     color: $c-text-gray;
     transition: color 0.3s $timing-func-ui;
 
-    &:hover {
+    &:hover,
+    &:focus-visible {
       color: $c-text-black;
     }
   }

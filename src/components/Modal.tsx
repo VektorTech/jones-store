@@ -18,7 +18,17 @@ export default function Modal({
 
   useEffect(() => {
     setIsMountedClient(true);
-  }, []);
+
+    const modal = modalRef.current;
+
+    if (!modal) return;
+
+    const closeOnEscape = ({ key }: KeyboardEvent) => {
+      if (key == "Escape" && onClose) onClose();
+    };
+    modal.addEventListener("keydown", closeOnEscape);
+    return () => modal.removeEventListener("keydown", closeOnEscape);
+  }, [onClose]);
 
   const ModalBody = visible ? (
     <div className="modal">
