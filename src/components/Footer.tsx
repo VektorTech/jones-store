@@ -210,7 +210,8 @@ export default function Footer() {
           </div>
           <div className="gutter__copy">
             <small>
-              &copy; {new Date().getFullYear()} <abbr title="Jordan Ones">Jones</abbr> LLC. All Rights Reserved
+              &copy; {new Date().getFullYear()}{" "}
+              <abbr title="Jordan Ones">Jones</abbr> LLC. All Rights Reserved
             </small>
           </div>
           <div className="gutter__lang-currency language-currency">

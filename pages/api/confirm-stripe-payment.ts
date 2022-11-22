@@ -91,7 +91,6 @@ async function ConfirmPayment(
       return res.status(500).json({ success: false, message: "Error" });
     }
   }
-
 }
 
 export default RouteHandler().post(ConfirmPayment);

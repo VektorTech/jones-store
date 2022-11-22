@@ -19,7 +19,7 @@ const ProductPage: NextPage<ProductPageType> = ({
   product,
   relatedProducts,
   imageDimensions,
-  blurDataUrls
+  blurDataUrls,
 }) => {
   const {
     id,
@@ -166,7 +166,7 @@ export const getServerSideProps = async function ({
         product: productFinal,
         relatedProducts,
         imageDimensions,
-        blurDataUrls
+        blurDataUrls,
       },
     };
   }
