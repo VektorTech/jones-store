@@ -27,7 +27,7 @@ const featureBlocks = [
     Icon: AiOutlineTags,
     title: (
       <>
-        100% money-back <wbr />
+        100% money-back <br />
         guarantee
       </>
     ),
