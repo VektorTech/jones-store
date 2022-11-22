@@ -45,4 +45,14 @@
       }
     }
   }
+
+  &__expanded {
+    max-height: 80vh;
+    overflow-y: scroll;
+
+    > * {
+      width: 100%;
+      margin: 0;
+    }
+  }
 }

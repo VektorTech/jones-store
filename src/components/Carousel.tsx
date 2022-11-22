@@ -104,7 +104,7 @@ export default function Carousel({ children, aIndex, onUpdate }: PropTypes) {
         </div>
       </div>
       <Modal size="lg" onClose={() => setDialog(null)} visible={activeModal}>
-        <div>{updatedChildren?.[slideNumber]}</div>
+        <div className="carousel__expanded">{updatedChildren?.[slideNumber]}</div>
       </Modal>
       <div
         onClick={() => setDialog(DialogType.MODAL_PRODUCT_VIEW)}
