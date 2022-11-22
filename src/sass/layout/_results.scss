@@ -3,11 +3,12 @@
 .results {
   display: flex;
   position: relative;
-  padding-bottom: 5rem;
 
   &__container {
     width: 100%;
     margin-left: auto;
+    background: #fff;
+    padding-top: 3rem;
 
     @include respond-to("large") {
       &--filter {
