@@ -296,6 +296,7 @@
         color: #000;
       }
 
+      &:focus-visible::before,
       &:hover::before {
         transform: scaleX(1);
         transform-origin: left;
