@@ -39,7 +39,8 @@
     background-color: $c-control-black;
     border-radius: 50%;
     left: 0;
-    top: -0.3rem;
+    top: 0;
+    vertical-align: top;
     cursor: grab;
     transition: transform 0.2s;
 
