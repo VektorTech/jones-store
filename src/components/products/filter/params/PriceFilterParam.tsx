@@ -15,8 +15,8 @@ export default function PriceFilterParam() {
     <FilterHeaderParam type="Filter By Price">
       <PriceRange
         onUpdate={updateHandler}
-        minPrice={Math.floor(filterState.price[0])}
-        maxPrice={Math.floor(filterState.price[1])}
+        minPrice={Math.round(filterState.price[0])}
+        maxPrice={Math.round(filterState.price[1])}
       />
     </FilterHeaderParam>
   );
