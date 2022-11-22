@@ -12,6 +12,7 @@ export const allowedTags = Object.freeze([
   "q",
   "strike",
   "small",
+  "br"
 ]);
 export const RESULTS_PER_PAGE = 20;
 export const HIGHEST_PRICE = 1000;
