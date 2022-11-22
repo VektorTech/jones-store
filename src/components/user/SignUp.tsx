@@ -1,5 +1,3 @@
-import type { UserTypeNormalized } from "src/types/shared";
-
 import { useState, useRef } from "react";
 import { generateUsername } from "friendly-username-generator";
 
@@ -9,7 +7,6 @@ import Form from "@Components/common/Form";
 
 import { userSchema } from "@Lib/validations";
 import { validateInput, validateInputs } from "@Lib/helpers";
-import { useAuthState } from "@Lib/contexts/AuthContext";
 import { toast } from "react-toastify";
 
 const validateFormField = validateInput(userSchema);
@@ -40,7 +37,9 @@ export default function SignUp() {
           if (res.success) {
             location.href = location.origin;
           } else {
-            toast("Something Went Wrong", { type: "error" });
+            if ("message" in res) {
+              toast(res.message, { type: "error" });
+            } else toast("Something Went Wrong", { type: "error" });
           }
         }}
       >

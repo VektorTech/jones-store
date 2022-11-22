@@ -1,7 +1,4 @@
-import type { UserTypeNormalized } from "src/types/shared";
-
 import { useState } from "react";
-import Router from "next/router";
 
 import Form from "@Components/common/Form";
 import TextField from "@Components/formControls/TextField";
@@ -9,7 +6,6 @@ import Button from "@Components/formControls/Button";
 
 import { userLoginSchema } from "@Lib/validations";
 import { validateInput, validateInputs } from "@Lib/helpers";
-import { useAuthState } from "@Lib/contexts/AuthContext";
 import { toast } from "react-toastify";
 
 const defaultUserCred = {
@@ -44,7 +40,9 @@ export default function SignIn() {
           if (res.success) {
             location.href = location.origin;
           } else {
-            toast("Something Went Wrong", { type: "error" });
+            if ("message" in res) {
+              toast(res.message, { type: "error" });
+            } else toast("Something Went Wrong", { type: "error" });
           }
         }}
       >
