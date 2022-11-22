@@ -23,15 +23,16 @@
 
   &__col {
     margin: 2.2rem 0;
-    flex: 0 1 1;
+    flex: 0 1 100%;
+    overflow: unset;
 
     @include respond-to("small") {
-      width: calc(50% - 1rem);
+      flex-basis: calc(50% - 1rem);
     }
 
     @include respond-to("medium") {
       margin: 0;
-      width: calc(25% - 1rem);
+      flex-basis: calc(25% - 1rem);
     }
   }
 
