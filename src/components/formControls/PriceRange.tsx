@@ -142,17 +142,21 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
 
     if (activeHandle) {
       document.addEventListener("pointerup", mouseUpHandler);
+      document.addEventListener("pointercancel", mouseUpHandler);
       document.addEventListener("pointermove", mouseMoveHandler);
 
       document.addEventListener("touchend", mouseUpHandler);
+      document.addEventListener("touchcancel", mouseUpHandler);
       document.addEventListener("touchmove", mouseMoveHandler);
     }
 
     return () => {
       document.removeEventListener("pointerup", mouseUpHandler);
+      document.removeEventListener("pointercancel", mouseUpHandler);
       document.removeEventListener("pointermove", mouseMoveHandler);
 
       document.removeEventListener("touchend", mouseUpHandler);
+      document.removeEventListener("touchcancel", mouseUpHandler);
       document.removeEventListener("touchmove", mouseMoveHandler);
       resizeObserver.disconnect();
     };
