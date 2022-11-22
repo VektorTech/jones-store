@@ -156,7 +156,7 @@
     right: 0;
     margin-top: -3rem;
     white-space: nowrap;
-    transition: transform 0.6s ease-out, opacity 1s;
+    transition: transform 0.6s cubic-bezier(0.55, 1, 0.62, 1.09), opacity 1s;
     opacity: 0;
 
     #{$self}__content--active & {
@@ -194,7 +194,7 @@
     margin: 0 auto;
     margin-top: 20vh;
     width: calc(8rem + 12vh + 15vw);
-    transition: transform 0.6s ease-out, opacity 1s;
+    transition: transform 0.6s cubic-bezier(0.55, 1, 0.62, 1.09), opacity 1s;
     opacity: 0;
 
     #{$self}__content--active & {

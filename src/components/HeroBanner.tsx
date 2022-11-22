@@ -99,7 +99,7 @@ export default function HeroBanner() {
                           {data.secondary.text}
                         </p>
                         <h2
-                          style={{ transform: `translateX(${-x * 0.3}px)` }}
+                          style={{ transform: `translateX(${-x * 0.2}px)` }}
                           className="banner__title-type"
                         >
                           {data.type}
@@ -110,8 +110,8 @@ export default function HeroBanner() {
                       </div>
                       <div
                         style={{
-                          transform: `translate(${-x * 1.2}px, ${
-                            -y * 0.6 + scrollTop * 0.1
+                          transform: `translate(${-x * 0.8}px, ${
+                            -y * 0.4 + scrollTop * 0.1
                           }px)`,
                         }}
                         className="banner__image"
