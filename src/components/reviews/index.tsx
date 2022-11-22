@@ -29,7 +29,7 @@ export default function Reviews({ productId }: PropTypes) {
         return Promise.reject(respJson);
       })
       .then((res) => setReviews(res.data ?? []))
-      .catch();
+      .catch(console.log);
 
     return controller.abort.bind(controller);
   }, [productId]);
