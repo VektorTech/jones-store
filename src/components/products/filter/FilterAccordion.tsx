@@ -1,6 +1,6 @@
 import { IoIosArrowBack } from "react-icons/io";
 
-import Button from "@Components/common/formControls/Button";
+import Button from "@Components/formControls/Button";
 import GenderParam from "./params/GenderParam";
 import MainColorParam from "./params/MainColorParam";
 import SizesParam from "./params/SizesParam";

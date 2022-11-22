@@ -1,7 +1,7 @@
 import { BsXLg } from "react-icons/bs";
 import { PaymentType } from "@prisma/client";
 
-import Button from "./common/formControls/Button";
+import Button from "./formControls/Button";
 import CartProductItem from "./CartItem";
 
 import { useAuthState } from "@Lib/contexts/AuthContext";

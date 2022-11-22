@@ -5,7 +5,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { FaPaperPlane } from "react-icons/fa";
 
 import SocialIcons from "./common/SocialButtons";
-import Dropdown from "./common/formControls/Dropdown";
+import Dropdown from "./formControls/Dropdown";
 import Modal from "./Modal";
 import Logo from "./common/Logo";
 

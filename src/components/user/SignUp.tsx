@@ -2,10 +2,9 @@ import type { UserTypeNormalized } from "src/types/shared";
 
 import { useState, useRef } from "react";
 import { generateUsername } from "friendly-username-generator";
-import Router from "next/router";
 
-import TextField from "@Components/common/formControls/TextField";
-import Button from "@Components/common/formControls/Button";
+import TextField from "@Components/formControls/TextField";
+import Button from "@Components/formControls/Button";
 import Form from "@Components/common/Form";
 
 import { userSchema } from "@Lib/validations";

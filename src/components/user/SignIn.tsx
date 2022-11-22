@@ -4,8 +4,8 @@ import { useState } from "react";
 import Router from "next/router";
 
 import Form from "@Components/common/Form";
-import TextField from "@Components/common/formControls/TextField";
-import Button from "@Components/common/formControls/Button";
+import TextField from "@Components/formControls/TextField";
+import Button from "@Components/formControls/Button";
 
 import { userLoginSchema } from "@Lib/validations";
 import { validateInput, validateInputs } from "@Lib/helpers";

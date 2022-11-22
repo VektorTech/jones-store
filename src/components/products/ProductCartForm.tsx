@@ -2,8 +2,8 @@ import { useState, useRef } from "react";
 import { PaymentType } from "@prisma/client";
 
 import SizeOptions from "@Components/common/SizeOptions";
-import Button from "@Components/common/formControls/Button";
-import NumberInput from "@Components/common/formControls/NumberInput";
+import Button from "@Components/formControls/Button";
+import NumberInput from "@Components/formControls/NumberInput";
 
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import { listToEnum } from "@Lib/utils";

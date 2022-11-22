@@ -1,4 +1,4 @@
-import PriceRange from "@Components/common/formControls/PriceRange";
+import PriceRange from "@Components/formControls/PriceRange";
 import FilterHeaderParam from "../FilterHeaderParam";
 
 import { useProductsState } from "@Lib/contexts/ProductsContext";

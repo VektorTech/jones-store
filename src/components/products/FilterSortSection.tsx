@@ -1,7 +1,7 @@
 import { BsSliders } from "react-icons/bs";
 
-import Button from "@Components/common/formControls/Button";
-import Dropdown from "@Components/common/formControls/Dropdown";
+import Button from "@Components/formControls/Button";
+import Dropdown from "@Components/formControls/Dropdown";
 
 import { useProductsState } from "@Lib/contexts/ProductsContext";
 

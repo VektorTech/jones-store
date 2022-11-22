@@ -1,4 +1,4 @@
-import RadioList from "@Components/common/formControls/RadioList";
+import RadioList from "@Components/formControls/RadioList";
 import FilterHeaderParam from "../FilterHeaderParam";
 
 import { useProductsState } from "@Lib/contexts/ProductsContext";

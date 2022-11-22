@@ -3,10 +3,10 @@ import { Gender, Category } from "@prisma/client";
 import { cloudinaryUpload, listToEnum } from "@Lib/utils";
 
 import Form, { beforeSubmitType } from "@Components/common/Form";
-import TextField from "@Components/common/formControls/TextField";
-import AutoComplete from "@Components/common/formControls/AutoComplete";
-import Button from "@Components/common/formControls/Button";
-import Dropdown from "@Components/common/formControls/Dropdown";
+import TextField from "@Components/formControls/TextField";
+import AutoComplete from "@Components/formControls/AutoComplete";
+import Button from "@Components/formControls/Button";
+import Dropdown from "@Components/formControls/Dropdown";
 
 import SizeOptions from "@Components/common/SizeOptions";
 import { toast } from "react-toastify";

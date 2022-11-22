@@ -173,7 +173,7 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
       <input
         type="hidden"
         name="price"
-        defaultValue={`${minValue}-${maxValue}`}
+        defaultValue={`${Math.round(minValue)}-${Math.round(maxValue)}`}
         key={`${minValue}-${maxValue}`}
       />
       <div ref={controlRef} className="price-range__control">

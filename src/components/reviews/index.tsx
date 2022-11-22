@@ -2,8 +2,8 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { User, Review as ReviewType } from "@prisma/client";
 
-import Button from "../common/formControls/Button";
-import TextField from "../common/formControls/TextField";
+import Button from "../formControls/Button";
+import TextField from "../formControls/TextField";
 import Form from "../common/Form";
 import RatingStars from "../common/RatingStars";
 import Modal from "../Modal";

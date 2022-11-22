@@ -2,8 +2,8 @@ import { ChangeEvent, useState } from "react";
 import Image from "next/image";
 import { User } from "@prisma/client";
 
-import TextField from "@Components/common/formControls/TextField";
-import Button from "@Components/common/formControls/Button";
+import TextField from "@Components/formControls/TextField";
+import Button from "@Components/formControls/Button";
 import Form from "@Components/common/Form";
 
 import { withSessionSsr } from "@Lib/withSession";

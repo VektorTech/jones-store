@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { CartItem, Product } from "@prisma/client";
 
-import NumberInput from "./common/formControls/NumberInput";
-import Button from "./common/formControls/Button";
+import NumberInput from "./formControls/NumberInput";
+import Button from "./formControls/Button";
 
 import { currencyFormatter } from "@Lib/intl";
 import React from "react";
