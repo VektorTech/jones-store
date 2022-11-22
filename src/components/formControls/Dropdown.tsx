@@ -52,7 +52,7 @@ export default forwardRef<
     if (_value != value) {
       setValue?.(_value?.toString() ?? "");
     }
-  }, [_value, value]);
+  }, [_value]);
 
   useEffect(() => {
     onOptionSelect?.(value);
