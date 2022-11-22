@@ -49,6 +49,9 @@ export function cloudinaryUpload(files: FileList): CloudinaryBatchResultType {
   return Promise.all(results) as CloudinaryBatchResultType;
 }
 
+export const compareObjects = (obj1: object, obj2: object) =>
+  Object.is(JSON.stringify(obj1), JSON.stringify(obj2));
+
 export const getPathString = (url: string) =>
   url
     .toLowerCase()

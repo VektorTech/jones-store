@@ -12,6 +12,7 @@ import {
 } from "react";
 
 import { HIGHEST_PRICE } from "@Lib/constants";
+import { compareObjects } from "@Lib/utils";
 import Router from "next/router";
 
 export interface filterStateType {
@@ -232,13 +233,14 @@ function ProductsProvider(
 
   useImperativeHandle(ref, () => ({
     updateFilterState: (preFilter: Partial<filterStateType>) => {
-      filterState.current = {
-        ..._filterState,
-        ...preFilter,
-      };
-      sortByRef.current = filterState.current.sort ?? "";
-      setProductListing(getFilteredListings());
-      if (sortByRef.current) sortListings(sortByRef.current);
+      const filterStateUpdated = { ..._filterState, ...preFilter };
+
+      if (!compareObjects(filterState.current, filterStateUpdated)) {
+        filterState.current = filterStateUpdated;
+        setProductListing(getFilteredListings());
+        sortByRef.current = filterState.current.sort ?? "";
+        if (sortByRef.current) sortListings(sortByRef.current);
+      }
     },
   }));
 
