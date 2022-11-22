@@ -10,7 +10,7 @@ export default function CollectionSection() {
     <section className="collections">
       <div className="collections__container">
         <div className="collections__grid">
-          <div className="collections__block collections__block--text">
+          <article className="collections__block collections__block--text">
             <h2 className="collections__heading">
               check out our winter collections
             </h2>
@@ -23,7 +23,7 @@ export default function CollectionSection() {
               to your winter lineup, check and see which ones can complete your
               wardrobe this season.
             </p>
-          </div>
+          </article>
           {collectionImages.map(({ href, imageSrc, title }) => (
             <div key={title} className="collections__block">
               <Link href={href}>

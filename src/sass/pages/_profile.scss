@@ -8,8 +8,14 @@
   }
 
   &__heading {
-    margin-top: 3rem;
+    margin-bottom: 1.5rem;
     font-size: $text-lg;
+    display: block;
+    font-weight: 600;
+  }
+
+  &__fieldset {
+    margin-top: 3rem;
   }
 
   &__name-input,

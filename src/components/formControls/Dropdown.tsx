@@ -52,18 +52,19 @@ export default forwardRef<
     if (_value != value) {
       setValue?.(_value?.toString() ?? "");
     }
-  }, [_value]);
+  }, [_value, value]);
 
   useEffect(() => {
     onOptionSelect?.(value);
   }, [value]);
 
-  const handleKeyUp: KeyboardEventHandler<HTMLDivElement> = (e) => {
+  const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (e) => {
     if (isSelectKey(e) && e.target == DropdownRef.current) {
       e.preventDefault();
       setCollapsed(!collapsed);
     } else if (e.key == "Escape") {
       setCollapsed(true);
+      e.stopPropagation();
     }
   };
 
@@ -89,7 +90,7 @@ export default forwardRef<
       tabIndex={0}
       onClick={handleClick}
       ref={DropdownRef}
-      onKeyDown={handleKeyUp}
+      onKeyDownCapture={handleKeyDown}
       onBlur={handleBlur}
       className={"dropdown" + (className ? ` ${className}` : "")}
     >

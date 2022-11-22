@@ -35,41 +35,50 @@ const ProfilePage: NextPage<ProfilePageType> = ({ user }) => {
       </div>
 
       <Form action={`/api/auth/edit/${user.id}`} method="POST">
-        <h2 className="profile__heading">User Info</h2>
-        <TextField label="Username" value={user.username} name="username" />
-        <TextField label="Email" value={user.email} name="email" type="email" />
-        <TextField
-          className="profile__name-input"
-          label="First Name"
-          value={user.firstName ?? ""}
-          name="firstName"
-        />
-        <TextField
-          className="profile__name-input"
-          label="Last Name"
-          value={user.lastName ?? ""}
-          name="lastName"
-        />
-        <TextField
-          label="Phone"
-          value={user.phoneNumber ?? ""}
-          name="phoneNumber"
-        />
-        <TextField label="Password" name="password" type="password" />
-        <Button type="submit">Save</Button>
+        <fieldset className="profile__fieldset">
+          <legend className="profile__heading">User Info</legend>
+          <TextField label="Username" value={user.username} name="username" />
+          <TextField
+            label="Email"
+            value={user.email}
+            name="email"
+            type="email"
+          />
+          <TextField
+            className="profile__name-input"
+            label="First Name"
+            value={user.firstName ?? ""}
+            name="firstName"
+          />
+          <TextField
+            className="profile__name-input"
+            label="Last Name"
+            value={user.lastName ?? ""}
+            name="lastName"
+          />
+          <TextField
+            label="Phone"
+            value={user.phoneNumber ?? ""}
+            name="phoneNumber"
+          />
+          <TextField label="Password" name="password" type="password" />
+          <Button type="submit">Save</Button>
+        </fieldset>
       </Form>
 
       <br />
 
       <Form action="" method="POST">
-        <h2 className="profile__heading">Address</h2>
-        <TextField label="Address Line 1" />
-        <TextField label="Address Line 2" />
-        <TextField className="profile__address-input" label="Unit #" />
-        <TextField className="profile__address-input" label="City" />
-        <TextField className="profile__address-input" label="Region" />
-        <TextField className="profile__address-input" label="Postal Code" />
-        <TextField label="Country" />
+        <fieldset className="profile__fieldset">
+          <legend className="profile__heading">Address</legend>
+          <TextField label="Address Line 1" />
+          <TextField label="Address Line 2" />
+          <TextField className="profile__address-input" label="Unit #" />
+          <TextField className="profile__address-input" label="City" />
+          <TextField className="profile__address-input" label="Region" />
+          <TextField className="profile__address-input" label="Postal Code" />
+          <TextField label="Country" />
+        </fieldset>
       </Form>
     </div>
   );

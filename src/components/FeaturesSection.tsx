@@ -8,13 +8,13 @@ export default function FeaturesSection() {
     <section className="features">
       <div className="features__container">
         {featureBlocks.map(({ key, Icon, title, text }) => (
-          <div key={key} className="features__col">
+          <article key={key} className="features__col">
             <div className="features__icon">
               <Icon className="features__icon-element" />
             </div>
             <h3 className="features__title">{title}</h3>
             <p className="features__text">{text}</p>
-          </div>
+          </article>
         ))}
       </div>
     </section>

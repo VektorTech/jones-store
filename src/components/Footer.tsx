@@ -22,7 +22,7 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer__container">
-        <div className="footer__col">
+        <address className="footer__col">
           <div className="footer__logo">
             <Logo />
           </div>
@@ -67,7 +67,7 @@ export default function Footer() {
           <div className="footer__social-buttons">
             <SocialIcons size="md" />
           </div>
-        </div>
+        </address>
         <div className="footer__col">
           <h3 className="footer__heading">about</h3>
           <ul>
@@ -210,7 +210,7 @@ export default function Footer() {
           </div>
           <div className="gutter__copy">
             <small>
-              &copy; {new Date().getFullYear()} Jones LLC. All Rights Reserved
+              &copy; {new Date().getFullYear()} <abbr title="Jordan Ones">Jones</abbr> LLC. All Rights Reserved
             </small>
           </div>
           <div className="gutter__lang-currency language-currency">
