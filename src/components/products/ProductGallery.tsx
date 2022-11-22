@@ -10,6 +10,7 @@ export default function ProductGallery({
   productId,
   images,
   dimensions,
+  blurDataUrls,
 }: PropTypes) {
   const [activeImage, setActiveImage] = useState(0);
   const { addToWishlist, removeFromWishlist, user } = useAuthState();
@@ -33,6 +34,8 @@ export default function ProductGallery({
                     src={url}
                     width={80}
                     height={60}
+                    placeholder="blur"
+                    blurDataURL={blurDataUrls[url]}
                     layout="responsive"
                     alt=""
                   />
@@ -59,6 +62,8 @@ export default function ProductGallery({
                   }}
                   priority
                   src={url}
+                  placeholder="blur"
+                  blurDataURL={blurDataUrls[url]}
                   width={dimensions[i]?.width ?? 0}
                   height={dimensions[i]?.height ?? 0}
                   alt=""
@@ -87,4 +92,5 @@ interface PropTypes {
   productId: string;
   images: string[];
   dimensions: { width: number; height: number }[];
+  blurDataUrls: Record<string, string>;
 }

@@ -13,12 +13,13 @@ import prisma from "@Lib/prisma";
 import { NextPage } from "next";
 import RatingStars from "@Components/common/RatingStars";
 import { currencyFormatter } from "@Lib/intl";
-import { aggregate } from "@Lib/helpers";
+import { aggregate, getBase64UrlCloudinary } from "@Lib/helpers";
 
 const ProductPage: NextPage<ProductPageType> = ({
   product,
   relatedProducts,
   imageDimensions,
+  blurDataUrls
 }) => {
   const {
     id,
@@ -53,6 +54,7 @@ const ProductPage: NextPage<ProductPageType> = ({
           productId={id}
           images={product.mediaURLs}
           dimensions={imageDimensions}
+          blurDataUrls={blurDataUrls}
         />
 
         <div className="product-view__cart">
@@ -152,11 +154,19 @@ export const getServerSideProps = async function ({
       }))
     );
 
+    const blurDataUrls: Record<string, string> = {};
+    for (const imageLink of product.mediaURLs) {
+      const imageId = imageLink.match(/upload\/(.+)/)?.[1] ?? "";
+
+      blurDataUrls[imageLink] = await getBase64UrlCloudinary(imageId);
+    }
+
     return {
       props: {
         product: productFinal,
         relatedProducts,
         imageDimensions,
+        blurDataUrls
       },
     };
   }
@@ -172,4 +182,5 @@ interface ProductPageType {
   product: ProductComponentType;
   relatedProducts: ProductComponentType[];
   imageDimensions: { width: number; height: number }[];
+  blurDataUrls: Record<string, string>;
 }
