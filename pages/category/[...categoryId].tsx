@@ -122,11 +122,7 @@ export default function CategoryPageWithContext({
   };
 
   useEffect(() => {
-    const routeChangeHandler = () => {
-      if (ref.current) ref.current.updateFilterState?.(getQueryAsFilter());
-    };
-    router.events.on("routeChangeComplete", routeChangeHandler);
-    return () => router.events.off("routeChangeComplete", routeChangeHandler);
+    ref.current?.updateFilterState?.(getQueryAsFilter());
   });
 
   return (
