@@ -84,12 +84,12 @@
     font-style: italic;
     font-weight: 400;
 
-    transition: transform 1s;
+    transition: opacity 1s;
     transform-origin: bottom;
-    transform: scaleY(0);
+    opacity: 0;
 
     #{$self}__content--active & {
-      transform: scaleY(1);
+      opacity: 1;
     }
 
     & span {
