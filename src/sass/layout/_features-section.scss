@@ -2,7 +2,7 @@
 
 .features {
   width: 100%;
-  background-color: #fff;
+  background-color: #4a4a4a;
   font-weight: 400;
 
   &__container {
@@ -12,8 +12,10 @@
     flex-wrap: wrap;
     flex-direction: column;
     align-content: center;
+    text-align: center;
 
     @include respond-to("small") {
+      text-align: left;
       flex-direction: row;
       gap: 1rem;
     }
@@ -21,15 +23,15 @@
 
   &__col {
     margin: 2.2rem 0;
-    flex: 1;
+    flex: 0 1 1;
 
     @include respond-to("small") {
-      flex-basis: calc(50% - 1rem);
+      width: calc(50% - 1rem);
     }
 
     @include respond-to("medium") {
       margin: 0;
-      flex-basis: calc(25% - 1rem);
+      width: calc(25% - 1rem);
     }
   }
 
@@ -47,7 +49,7 @@
       border-radius: 50%;
       padding: 1.3rem;
       margin-bottom: 2rem;
-      background-color: mix($c-red, #fff, 10%);
+      background-color: #393334;
     }
   }
 
@@ -56,11 +58,12 @@
     text-transform: uppercase;
     font-size: $text-lg;
     font-style: italic;
+    color: #fff;
     @extend %truncate;
   }
 
   &__text {
     font-size: $text-md;
-    color: $c-text-dark;
+    color: #ccc;
   }
 }
