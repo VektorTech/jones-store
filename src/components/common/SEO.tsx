@@ -4,7 +4,7 @@ import { DOMAIN_NAME } from "@Lib/config";
 
 export default function SEO({
   title = "Shop Jordan Ones",
-  description = "",
+  description = "Jones. The world's premier Jordan Ones marketplace.",
   canonical = DOMAIN_NAME ?? "http://localhost:3000",
   name = "Jones",
   ogType = "website",
