@@ -12,6 +12,13 @@ export default function Constraints({
   const router = useRouter();
   const { search, q } = router.query;
   const { filterState, clearFilters } = useProductsState();
+  const { color, size, height, year } = filterState;
+  const clearAllVisible = !!(
+    color.length +
+    size.length +
+    height.length +
+    year.length
+  );
 
   return (
     <div className="constraints">
@@ -35,19 +42,21 @@ export default function Constraints({
         )}
         {!isSearch ? (
           <div className="constraints__filters">
-            <ConstraintButtons paramName="color" items={filterState.color} />
-            <ConstraintButtons paramName="size" items={filterState.size} />
-            <ConstraintButtons paramName="height" items={filterState.height} />
-            <ConstraintButtons paramName="year" items={filterState.year} />
+            <ConstraintButtons paramName="color" items={color} />
+            <ConstraintButtons paramName="size" items={size} />
+            <ConstraintButtons paramName="height" items={height} />
+            <ConstraintButtons paramName="year" items={year} />
           </div>
         ) : null}
 
-        <button
-          onClick={clearFilters}
-          className="constraints__filter constraints__filter--clear"
-        >
-          clear all
-        </button>
+        {clearAllVisible ? (
+          <button
+            onClick={clearFilters}
+            className="constraints__filter constraints__filter--clear"
+          >
+            clear all
+          </button>
+        ) : null}
       </div>
     </div>
   );
