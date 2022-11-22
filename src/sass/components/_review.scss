@@ -15,6 +15,7 @@
     height: 5rem;
     position: relative;
     margin-right: 1.5rem;
+    flex-shrink: 0;
   }
 
   &__body {
@@ -50,5 +51,7 @@
 
   &__comment {
     padding-top: 2rem;
+    word-wrap: break-word;
+    word-break: break-all;
   }
 }
