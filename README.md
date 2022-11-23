@@ -48,7 +48,7 @@ This is a responsive mobile-first website featuring real-time product filters, a
 
 - I created a product context that manages all products on the client for the products page because I wanted more control over how products were sorted and filtered and to reduce querying the database each time the page refreshes upon selecting a different criterion.
 
-- On the product page, I used `next/dynamic` to lazy-load tab panels until the user selects their corresponding tab. This approach was particularly useful for suspending the loading of the size chart and all product reviews until the user demands it.
+- On the product page, I used `next/dynamic` to lazy-load tab panels until the user selects a tab panel's corresponding tab. This approach was particularly useful for suspending the loading of the size chart and all product reviews until the user demands them.
 
 ## Issues Encountered
 
@@ -66,7 +66,7 @@ This is a responsive mobile-first website featuring real-time product filters, a
 
 - After a series of bugs, I eventually realized that I needed to `await` all Prisma DB queries for them to execute successfully.
 
-- The price range component came with more challenges than I would have anticipated. I realized that the `.getBoundingClientRect` method gives details about an element's rendering dimensions that may not be congruent with its layout dimensions in the case where CSS transformations are applied, which caused a few visual bugs on the range's progress bar. Making the price range a controlled component was remarkably difficult as I ran into an issue where, in some instances, the change handler and the internal `setState` were updating state back and forth, especially on mobile, so I had to rethink my approach.
+- The price range component came with more challenges than I would have anticipated. I realized that the `.getBoundingClientRect` method gives details about an element's rendering dimensions that may not be congruent with its layout dimensions in the case where CSS transformations are applied, which caused a few visual bugs on the range's progress bar. Making the price range a controlled component was remarkably difficult as I ran into an issue where, in some instances, the change handler and the component's `setState()` were updating state back and forth, especially on mobile, so I had to rethink my approach.
 
 ## What I've Learned
 
@@ -88,7 +88,7 @@ This is a responsive mobile-first website featuring real-time product filters, a
 
 - For future projects, prefer a test-driven approach - Write tests to specify the purpose of each module before coding. This way, I can check to ensure that adding new code doesn't trigger hidden side effects or break prior features before shipping to production.
 
-- Using a `ResizeObserver` is great for checking if an element layout changes.
+- Use `ResizeObserver` to check if an element layout dimensions changes.
 
 ## Setup
 
