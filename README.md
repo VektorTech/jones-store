@@ -64,9 +64,9 @@ This is a responsive mobile-first website featuring real-time product filters, a
 
 - Made some changes to UI in areas that were not accounted for during design, for layout and stylistic improvements.
 
-- Realized that I needed to `await` all Prisma DB queries for them to execute successfully.
+- After a series of bugs, I eventually realized that I needed to `await` all Prisma DB queries for them to execute successfully.
 
-- The price range component came with more challenges than I would have anticipated. I realized that the `.getBoundingClientRect` method gives details about an elements rendering dimensions that may not be congruent with its layout dimensions in the case where transformations are applied to the element, which caused a few visual bugs inside the range progress.
+- The price range component came with more challenges than I would have anticipated. I realized that the `.getBoundingClientRect` method gives details about an element's rendering dimensions that may not be congruent with its layout dimensions in the case where CSS transformations are applied, which caused a few visual bugs on the range's progress bar. Making the price range a controlled component was remarkably difficult as I ran into an issue where, in some instances, the change handler and the internal `setState` were updating state back and forth, especially on mobile, so I had to rethink my approach.
 
 ## What I've Learned
 
