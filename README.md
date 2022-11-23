@@ -166,6 +166,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] Images Drag n Drop feature for `/api/add-products` when adding product images.
 - [ ] Use SMTP to email users after sign-up and product purchases.
 - [ ] Show products count per filter item constraint on the products page.
+- [ ] Show only available colours in filter.
 - [ ] Integrate Paypal as a second payment gateway.
 - [ ] Add a captcha to the signup and login forms.
 - [ ] Web scraper for product Info.
@@ -179,7 +180,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 - Website design Inspired By [8theme XStore](https://xstore.8theme.com/elementor/demos/sneakers/).
 
-- [Pexels](https://www.pexels.com/)
+- [Pexels](https://www.pexels.com/) for Stock images
 
 - Nike.com for ["Jumpman" Logo](https://www.nike.com/jordan)
 ---
