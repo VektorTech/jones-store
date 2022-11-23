@@ -50,7 +50,7 @@ export default function MotionElement({
         `scale(${scaleFactorX}, ${scaleFactorY})`;
 
       requestAnimationFrame(() => {
-        child.style.transition = `transform 0.35s cubic-bezier(0.47, 0.71, 0.28, 1.25)`;
+        child.style.transition = `transform 0.35s ease-out`;
         child.style.transform = `translate3d(0px, 0px, 0px) scale(1, 1)`;
       });
     }
