@@ -25,6 +25,11 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
   }, [activeHandle, minValue, maxValue, onUpdate]);
 
   useEffect(() => {
+    setMinValue(minPrice);
+    setMaxValue(maxPrice);
+  }, [minPrice, maxPrice]);
+
+  useEffect(() => {
     const minHandle = minHandleRef.current;
     const maxHandle = maxHandleRef.current;
     const rangeTrack = rangeRef.current;
