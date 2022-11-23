@@ -79,7 +79,6 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
     let newMaxValue = 0;
 
     const moveHandler = (event: TouchEvent | PointerEvent) => {
-      event.preventDefault();
       let clientX = 0;
       if (event instanceof PointerEvent) {
         clientX = event.clientX;
