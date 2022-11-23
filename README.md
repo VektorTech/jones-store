@@ -168,9 +168,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] Show products count per filter item constraint on the products page.
 - [ ] Integrate Paypal as a second payment gateway.
 - [ ] Add a captcha to the signup and login forms.
-- [ ] Scrape Products to DB.
-- [ ] Create a size chart table.
+- [ ] Web scraper for product Info.
+- [ ] Create a size chart UI.
 - [ ] Cache BlurData urls.
+- [ ] Improve Accessibility.
 
 ## Credits & Attributions
 
