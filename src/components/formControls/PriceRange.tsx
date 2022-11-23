@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, forwardRef } from "react";
 const HIGHEST_PRICE = 1000;
 
 export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
-  { minPrice = 0, maxPrice = HIGHEST_PRICE, onUpdate },
+  { minPrice = 0, maxPrice = HIGHEST_PRICE, onMinUpdate, onMaxUpdate },
   ref
 ) {
   const [minValue, setMinValue] = useState<number>(minPrice);
@@ -19,15 +19,49 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
     (num / (controlRef.current?.offsetWidth || 1)) * 100;
 
   useEffect(() => {
-    if (activeHandle == "" && onUpdate) {
-      onUpdate(Math.round(minValue), Math.round(maxValue));
-    }
-  }, [activeHandle, minValue, maxValue, onUpdate]);
-
-  useEffect(() => {
+    const control = controlRef.current;
     setMinValue(minPrice);
     setMaxValue(maxPrice);
-  }, [minPrice, maxPrice]);
+
+    const updateControlUI = () => {
+      const minHandle = minHandleRef.current;
+      const maxHandle = maxHandleRef.current;
+      const rangeTrack = rangeRef.current;
+
+      if (!(minHandle && maxHandle && control && rangeTrack)) {
+        return;
+      }
+
+      const limit = control.offsetWidth - maxHandle.offsetWidth * 2;
+      const minHandleLeft =
+        (Number(minPrice) / HIGHEST_PRICE) *
+        calculatePercentage(limit + minHandle.offsetWidth);
+      const maxHandleLeft =
+        (Number(maxPrice) / HIGHEST_PRICE) *
+          calculatePercentage(limit + minHandle.offsetWidth) -
+        calculatePercentage(minHandle.offsetWidth);
+
+      minHandle.style.left = minHandleLeft + "%";
+      maxHandle.style.left = maxHandleLeft + "%";
+
+      minHandle.classList.toggle(
+        "price-range__thumb--above",
+        minHandleLeft >= calculatePercentage(limit)
+      );
+
+      rangeTrack.style.left = calculatePercentage(minHandle.offsetLeft) + "%";
+      rangeTrack.style.width =
+        calculatePercentage(maxHandle.offsetLeft - minHandle.offsetLeft) + "%";
+    };
+
+    if (control) {
+      const resizeObserver = new ResizeObserver(() => {
+        updateControlUI();
+      });
+      resizeObserver.observe(control);
+      return () => resizeObserver.disconnect();
+    }
+  }, [maxPrice, minPrice]);
 
   useEffect(() => {
     const minHandle = minHandleRef.current;
@@ -39,14 +73,13 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
       return;
     }
 
-    const mouseUpHandler = (e: PointerEvent | TouchEvent) => {
-      setActiveHandle("");
-      document.body.classList.remove("grabbing");
-    };
-
     const limit = control.offsetWidth - maxHandle.offsetWidth * 2;
     const controlBounds = control.getBoundingClientRect();
-    const mouseMoveHandler = (event: TouchEvent | PointerEvent) => {
+    let newMinValue = 0;
+    let newMaxValue = 0;
+
+    const moveHandler = (event: TouchEvent | PointerEvent) => {
+      event.preventDefault();
       let clientX = 0;
       if (event instanceof PointerEvent) {
         clientX = event.clientX;
@@ -72,7 +105,7 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
         const pricePercentage =
           thumbLeft / calculatePercentage(limit + maxHandle.offsetWidth);
 
-        const newMinValue = pricePercentage * HIGHEST_PRICE;
+        newMinValue = Math.round(pricePercentage * HIGHEST_PRICE);
         setMinValue(newMinValue);
       } else if (activeHandle == "MAX") {
         const thumbLeft = calculatePercentage(
@@ -90,7 +123,7 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
           (thumbLeft + calculatePercentage(minHandle.offsetWidth)) /
           calculatePercentage(limit + minHandle.offsetWidth);
 
-        const newMaxValue = Number(pricePercentage * HIGHEST_PRICE);
+        newMaxValue = Math.round(Number(pricePercentage * HIGHEST_PRICE));
         setMaxValue(newMaxValue);
       }
 
@@ -99,73 +132,38 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
         calculatePercentage(maxHandle.offsetLeft - minHandle.offsetLeft) + "%";
     };
 
-    if (activeHandle) {
-      document.addEventListener("pointerup", mouseUpHandler);
-      document.addEventListener("pointermove", mouseMoveHandler);
+    const upHandler = (e: PointerEvent | TouchEvent) => {
+      if (activeHandle == "MIN") {
+        onMinUpdate?.(newMinValue);
+      } else if (activeHandle == "MAX") {
+        onMaxUpdate?.(newMaxValue);
+      }
+      setActiveHandle("");
+      document.body.classList.remove("grabbing");
+    };
 
-      document.addEventListener("touchend", mouseUpHandler);
-      document.addEventListener("touchmove", mouseMoveHandler);
+    if (activeHandle) {
+      document.addEventListener("pointerup", upHandler);
+      document.addEventListener("pointermove", moveHandler);
+
+      document.addEventListener("touchend", upHandler);
+      document.addEventListener("touchmove", moveHandler);
     }
 
     return () => {
-      document.removeEventListener("pointerup", mouseUpHandler);
-      document.removeEventListener("pointermove", mouseMoveHandler);
+      document.removeEventListener("pointerup", upHandler);
+      document.removeEventListener("pointermove", moveHandler);
 
-      document.removeEventListener("touchend", mouseUpHandler);
-      document.removeEventListener("touchmove", mouseMoveHandler);
+      document.removeEventListener("touchend", upHandler);
+      document.removeEventListener("touchmove", moveHandler);
     };
-  }, [activeHandle]);
-
-  useEffect(() => {
-    const control = controlRef.current;
-
-    const updateControlUI = () => {
-      const minHandle = minHandleRef.current;
-      const maxHandle = maxHandleRef.current;
-      const rangeTrack = rangeRef.current;
-
-      if (!(minHandle && maxHandle && control && rangeTrack)) {
-        return;
-      }
-
-      const limit = control.offsetWidth - maxHandle.offsetWidth * 2;
-      const minHandleLeft =
-        (Number(minValue) / HIGHEST_PRICE) *
-        calculatePercentage(limit + minHandle.offsetWidth);
-      const maxHandleLeft =
-        (Number(maxValue) / HIGHEST_PRICE) *
-          calculatePercentage(limit + minHandle.offsetWidth) -
-        calculatePercentage(minHandle.offsetWidth);
-
-      minHandle.style.left = minHandleLeft + "%";
-      maxHandle.style.left = maxHandleLeft + "%";
-
-      minHandle.classList.toggle(
-        "price-range__thumb--above",
-        minHandleLeft >= calculatePercentage(limit)
-      );
-
-      rangeTrack.style.left = calculatePercentage(minHandle.offsetLeft) + "%";
-      rangeTrack.style.width =
-        calculatePercentage(maxHandle.offsetLeft - minHandle.offsetLeft) + "%";
-    };
-
-    if (control) {
-      const resizeObserver = new ResizeObserver(() => {
-        updateControlUI();
-      });
-      resizeObserver.observe(control);
-      return () => resizeObserver.disconnect();
-    }
-  }, [maxValue, minValue]);
+  }, [activeHandle, onMaxUpdate, onMinUpdate]);
 
   return (
     <div ref={ref} className="price-range">
       <input
-        defaultValue={`Price: $${Math.round(minValue)} — ${
-          maxValue == HIGHEST_PRICE
-            ? "Over $" + Math.round(maxValue)
-            : "$" + Math.round(maxValue)
+        defaultValue={`Price: $${minValue} — ${
+          maxValue == HIGHEST_PRICE ? "Over $" + maxValue : "$" + maxValue
         }`}
         key={`Price: $${minValue} — $${maxValue}`}
         readOnly
@@ -174,7 +172,7 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
       <input
         type="hidden"
         name="price"
-        defaultValue={`${Math.round(minValue)}-${Math.round(maxValue)}`}
+        defaultValue={`${minValue}-${maxValue}`}
         key={`${minValue}-${maxValue}`}
       />
       <div ref={controlRef} className="price-range__control">
@@ -212,5 +210,6 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
 interface PropTypes {
   minPrice?: number;
   maxPrice?: number;
-  onUpdate?: (minPrice: number, maxPrice: number) => void;
+  onMinUpdate?: (minPrice: number) => void;
+  onMaxUpdate?: (maxPrice: number) => void;
 }
