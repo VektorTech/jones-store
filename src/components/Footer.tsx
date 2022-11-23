@@ -22,52 +22,54 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer__container">
-        <address className="footer__col">
+        <div className="footer__col">
           <div className="footer__logo">
             <Logo />
           </div>
-          <h3 className="footer__sub-heading">Contact</h3>
-          <p className="footer__contact">
-            <BiMap className="footer__contact-icon" />
-            <span className="footer__contact-info">
-              46 Lakeshore St. Knoxville,
-              <br />
-              TN 37918
-            </span>
-          </p>
-          <p className="footer__contact">
-            <BiPhone className="footer__contact-icon" />
-            <span className="footer__contact-info">
-              <a className="footer__contact-link" href="tel:13124786691">
-                +1 (312) 478 6691
-              </a>
-            </span>
-          </p>
-          <p className="footer__contact">
-            <HiOutlineMail className="footer__contact-icon" />
-            <span className="footer__contact-info">
-              <a
-                className="footer__contact-link"
-                href="mailto:support@jones.com?subject=I%20Need%20Support"
-              >
-                support@
-                <wbr />
-                jones.com
-              </a>
-            </span>
-          </p>
-          <p className="footer__contact">
-            <BiTime className="footer__contact-icon" />
-            <span className="footer__contact-info">
-              10:00 &mdash; 18:00, Mon &mdash; Sat
-            </span>
-          </p>
-          <hr className="footer__hr" />
-          <h3 className="footer__sub-heading">Connect With Us</h3>
-          <div className="footer__social-buttons">
-            <SocialIcons size="md" />
-          </div>
-        </address>
+          <address>
+            <h3 className="footer__sub-heading">Contact</h3>
+            <p className="footer__contact">
+              <BiMap className="footer__contact-icon" />
+              <span className="footer__contact-info">
+                46 Lakeshore St. Knoxville,
+                <br />
+                TN 37918
+              </span>
+            </p>
+            <p className="footer__contact">
+              <BiPhone className="footer__contact-icon" />
+              <span className="footer__contact-info">
+                <a className="footer__contact-link" href="tel:13124786691">
+                  +1 (312) 478 6691
+                </a>
+              </span>
+            </p>
+            <p className="footer__contact">
+              <HiOutlineMail className="footer__contact-icon" />
+              <span className="footer__contact-info">
+                <a
+                  className="footer__contact-link"
+                  href="mailto:support@jones.com?subject=I%20Need%20Support"
+                >
+                  support@
+                  <wbr />
+                  jones.com
+                </a>
+              </span>
+            </p>
+            <p className="footer__contact">
+              <BiTime className="footer__contact-icon" />
+              <span className="footer__contact-info">
+                10:00 &mdash; 18:00, Mon &mdash; Sat
+              </span>
+            </p>
+            <hr className="footer__hr" />
+            <h3 className="footer__sub-heading">Connect With Us</h3>
+            <div className="footer__social-buttons">
+              <SocialIcons size="md" />
+            </div>
+          </address>
+        </div>
         <div className="footer__col">
           <h3 className="footer__heading">about</h3>
           <ul>
