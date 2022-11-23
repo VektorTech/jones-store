@@ -19,7 +19,7 @@ const VIEWS_COUNT = 3;
 const INTERVAL = 6000;
 
 export default function HeroBanner() {
-  const [activeView, setActiveView] = useState(0);
+  const [activeView, setActiveView] = useState(VIEWS_COUNT - 1);
   const bannerRef = useRef<HTMLDivElement>(null);
   const rAFRef = useRef(0);
   const router = useRouter();
@@ -31,7 +31,7 @@ export default function HeroBanner() {
   const short = router.pathname != "/";
 
   useEffect(() => {
-    if (bannerRef.current) {
+    if (!!bannerRef.current) {
       let currentTime = performance.now();
 
       rAFRef.current = requestAnimationFrame(function changeSlide(tick) {
