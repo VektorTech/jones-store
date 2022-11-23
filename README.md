@@ -1,58 +1,58 @@
 # Jones (Jordan Ones) Shoe Store
 
-Jones is an online store for purchasing Nike Jordan Ones &mdash; a seamless e-commerce marketplace.
+Jones, a seamless e-commerce marketplace, is an SEO friendly online store for purchasing Nike Jordan Ones.
 
-This is a responsive, mobile-first website featuring real-time product filters, a pop-up search option (AJAX live search), AJAX add to cart and add to wishlist options, a newsletter form, an announcement banner for live updates, customer reviews functionality, a product slideshow on hover and SEO friendly markup.
+This is a responsive mobile-first website featuring real-time product filters, a pop-up search option (AJAX live search), AJAX add to cart and wishlist options, a newsletter form, an announcement banner for live updates, a customer review functionality and a slideshows on product hover.
 
 ## Tech Used
 
-- **Next.JS** &mdash; React Framework - SSR, SSG & REST API
-- **Typescript** &mdash; Static Typing, Type Inference & Type Guarding
-- **Iron Session** &mdash; Session Management
-- **BCrypt** &mdash; Password Hashing & Comparison
-- **Yup** &mdash; Schema & Form Validation
-- **PostgreSQL** &mdash; Relational Database Management System
+- **Next.JS** &mdash; React Framework - Used for server-side rendering and RESTful APIs
+- **Typescript** &mdash; Static typing, type Inference, narrowing & type guarding
+- **Iron Session** &mdash; Session management and data store
+- **BCrypt** &mdash; Password hashing & comparison
+- **Yup** &mdash; Schema validation & form validation
+- **PostgreSQL** &mdash; A Relational Database Management System
 - **Prisma** &mdash; ORM for accessing PostgreSQL
-- **Stripe** &mdash; Payment Gateway & Library for accessing the Stripe API
-- **Micro** &mdash; Parsing Incoming Request Body
-- **Sass** &mdash; Custom Styling
-- **React Icons** &mdash; SVG Icon Library
-- **Next Share** &mdash; Share buttons for social media
-- **React Toastify** &mdash; Toast Popup Library
+- **Stripe** &mdash; Used Stripe as primary payment gateway & npm library for accessing the Stripe API
+- **Micro** &mdash; Used for parsing raw incoming request body
+- **Sass** &mdash; Preprocessor used for custom styling
+- **React Icons** &mdash; SVG icon library
+- **Next Share** &mdash; Button icons for sharing to social media
+- **React Toastify** &mdash; Toast popup library used for notifications
 - **Probe Image Size** &mdash; Gets dimension of remote images
-- **React Spinners** &mdash; Loading Animation Components
-- **nProgress** &mdash; Progress Bar For Navigation Indication
-- **Moment** &mdash; Formatting Dates
+- **React Spinners** &mdash; Loading animation components
+- **nProgress** &mdash; Progressbar for navigation indication
+- **Moment** &mdash; Format dates
 - **Friendly Username Generator** &mdash; Generates random usernames for new users
-- **ESLint** &mdash; Code Linting
-- **Prettier** &mdash; Enforce Consistent Code Format
-- **Figma** &mdash; Page Designs
-- **Adobe Photoshop** &mdash; Design & Image Editing
-- **TinyPng** &mdash; Image Optimization
-- **Postman** &mdash; Testing API routes (Auth, Products)
+- **ESLint** &mdash; Code linter
+- **Prettier** &mdash; Enforces a consistent code format
+- **Figma** &mdash; UI design application
+- **Adobe Photoshop** &mdash; For design & image editing
+- **TinyPng** &mdash; Image optimization
+- **Postman** &mdash; Testing API routes (on Auth and Product routes)
 - **Chrome & Firefox Dev Tools**
 
 ## Design Decisions
 
-- Because this is an e-commerce website, SEO plays a significant factor in its success, but the standard client-side rendered React would seriously hinder search engines from properly crawling each page. So I chose Next.JS for this project as it provides a quick and simple way for writing performant, server-side rendered react applications without much overhead.
+- Because this is an e-commerce website, SEO plays a significant factor in its success, but standard client-side rendered React would seriously hinder search engines from properly crawling each page. So I chose Next.JS for this project as it provides a quick and simple way for writing performant, server-side rendered react applications without much overhead.
 
-- React's `useState` & `useReducer` hooks coupled with the Context API provided a sufficient means for managing and centralizing state in this application as there wasn't much information that needed to be kept in memory on the client that would demand a complex library like Redux. Pages are frequently refreshed, and data is already being rendered onto pages from the server(`getServerSideProps`), which further reduced the need for alternate state management strategies. User preferences are persisted through cookies to allow for pre-rendering on the server.
+- React's `useState` & `useReducer` hooks coupled with the Context API provided a sufficient means for managing and centralizing state in this application as there wasn't much information that needed to be kept in memory on the client that would demand a complex library like Redux. Pages are frequently refreshed, and data is already being rendered onto pages from the server(using `getServerSideProps`), which further reduced the need for alternate state management strategies. Additionally, user preferences are persisted through cookies where they can be pre-rendered on the server.
 
-- For managing the user state, I switched from using multiple `useState` to a single `useReducer` as it's a more convenient option for working with state objects with multiple sub-values, like the wishlist and cart field on the user object.
+- For managing the user state, I switched from using multiple `useState` hooks to a single `useReducer` as it's a more convenient option for working with state objects holding multiple sub-values, like the wishlist and cart fields on the user object.
 
 - Used Postgres trigger functions for updating cart total whenever a cart item gets added or removed.
 
-- After recognizing a repeating pattern in how API routes were being written and wanting to improve the process, I decided to build a method routing function, `RouteHandler`, that arranges request handlers in a similar fashion to `express` routers. It allows all handlers to be composed with a custom error catcher and session middleware and enables authentication and role-based access control. This abstraction reduced boilerplate code inside API routes and made writing async code much cleaner.
+- After recognizing a repeating pattern in how API routes were being written and wanting to improve the process, I decided to build a method routing function, `RouteHandler`, that arranges request handlers in a similar fashion to `express` routers. It allows all handlers to be composed with a custom error catcher and session middleware for authentication and role-based access control. This abstraction reduced boilerplate code inside API routes and made writing async code much simpler.
 
-- The website UI diverted from the original Figma design in a few areas.
+- The website UI diverted from the original Figma design in several areas.
 
-- I created a product context to manage the product data on the client for products page, because I wanted more control over filtering and saw the need to reduce querying the database each time the user selects a different criterion.
+- I created a product context that manages all products on the client for the products page because I wanted more control over how products were sorted and filtered and to reduce querying the database each time the page refreshes upon selecting a different criterion.
 
-- Lazy load tab panels until the user selects their corresponding tab on the product page.
+- On the product page, I used `next/dynamic` to lazy-load tab panels until the user selects their corresponding tab. This approach was particularly useful for suspending the loading of the size chart and all product reviews until the user demands it.
 
 ## Issues Encountered
 
-- Programmatically setting a focusable element to the active element inside the document was not working. I had to wrap the code in a `setTimeout`, for some reason, which I still don't quite understand.
+- Programmatically setting a focusable element as the active element inside the document was not working. I had to wrap the code in a `setTimeout` for some reason, which I still don't quite understand.
 
 - No way to add custom constraints onto table columns inside Prisma, so I had to resort to handwritten SQL Commands.
 
@@ -60,11 +60,13 @@ This is a responsive, mobile-first website featuring real-time product filters, 
 
 - Learning to work with `next/image` was a bit difficult, especially when trying to resize images.
 
-- While implementing the slideshow feature of the product component, I ran into a problem where the state wasn't updating as intended. After some point, I realized that the callback being passed to `setInterval` was using an outdated value of state held inside its closure &mdash; the value assigned during the first render. I later discovered a different way of updating the state by passing a callback to `setState` instead of a value. The callback accepts the current value of the state to calculate and return a new state. [Further details by Dan Abramov...](https://overreacted.io/making-setinterval-declarative-with-react-hooks/)
+- While implementing the slideshow feature of the product component, I ran into a problem where the state wasn't updating as intended. After some point, I realized that the callback being passed to `setInterval` was using an outdated value of state held inside its closure &mdash; the value assigned during the first render. I later discovered a different way of updating the state by passing a callback to `setState` instead of a value. The callback accepts the current value of the state to calculate and return a new state. [Further details by Dan Abramov...](https://overreacted.io/making-setinterval-declarative-with-react-hooks/#second-attempt)
 
-- Made some changes to UI in areas that were not accounted for during design, also for layout and stylistic improvements.
+- Made some changes to UI in areas that were not accounted for during design, for layout and stylistic improvements.
 
-- Realized that I needed to `await` all Prisma DB queries for them to run successfully.
+- Realized that I needed to `await` all Prisma DB queries for them to execute successfully.
+
+- The price range component came with more challenges than I would have anticipated. I realized that the `.getBoundingClientRect` method gives details about an elements rendering dimensions that may not be congruent with its layout dimensions in the case where transformations are applied to the element, which caused a few visual bugs inside the range progress.
 
 ## What I've Learned
 
@@ -78,15 +80,15 @@ This is a responsive, mobile-first website featuring real-time product filters, 
 
 - Canonical tag to signal the main version of (near) duplicate pages to search engines.
 
-- Native internationalization(`Intl`) class that has a method for formatting currency.
+- Native internationalization(`Intl`) class - API that provides many tools for internationalization purposes has a method for formatting currency.
 
 - It's probably best not to program the database using triggers or procedures because they tend to become invisible (may forget or not be aware of them during development), it's probably best to perform calculations on the server instead.
 
 - Alternative way to update state `setState(state => ...)`
 
-- Intl Object - API that provides many tools for internationalization purposes.
-
 - For future projects, prefer a test-driven approach - Write tests to specify the purpose of each module before coding. This way, I can check to ensure that adding new code doesn't trigger hidden side effects or break prior features before shipping to production.
+
+- Using a `ResizeObserver` is great for checking if an element layout changes.
 
 ## Setup
 
@@ -168,6 +170,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] Add a captcha to the signup and login forms.
 - [ ] Scrape Products to DB.
 - [ ] Create a size chart table.
+- [ ] Cache BlurData urls.
 
 ## Credits & Attributions
 
