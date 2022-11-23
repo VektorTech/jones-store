@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, forwardRef, useCallback } from "react";
+import { useState, useRef, useEffect, forwardRef } from "react";
 
 const HIGHEST_PRICE = 1000;
 
@@ -18,49 +18,11 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
   const calculatePercentage = (num: number) =>
     (num / (controlRef.current?.offsetWidth || 1)) * 100;
 
-  const updateControlUI = useCallback((min: number, max: number) => {
-    const minHandle = minHandleRef.current;
-    const maxHandle = maxHandleRef.current;
-    const rangeTrack = rangeRef.current;
-    const control = controlRef.current;
-
-    if (!(minHandle && maxHandle && control && rangeTrack)) {
-      return;
-    }
-
-    const limit = control.offsetWidth - maxHandle.offsetWidth * 2;
-    const minHandleLeft =
-      (Number(min) / HIGHEST_PRICE) *
-      calculatePercentage(limit + minHandle.offsetWidth);
-    const maxHandleLeft =
-      (Number(max) / HIGHEST_PRICE) *
-        calculatePercentage(limit + minHandle.offsetWidth) -
-      calculatePercentage(minHandle.offsetWidth);
-
-    minHandle.style.left = minHandleLeft + "%";
-    maxHandle.style.left = maxHandleLeft + "%";
-
-    minHandle.classList.toggle(
-      "price-range__thumb--above",
-      minHandleLeft >= calculatePercentage(limit)
-    );
-
-    rangeTrack.style.left = calculatePercentage(minHandle.offsetLeft) + "%";
-    rangeTrack.style.width =
-      calculatePercentage(maxHandle.offsetLeft - minHandle.offsetLeft) + "%";
-  }, []);
-
   useEffect(() => {
     if (activeHandle == "" && onUpdate) {
       onUpdate(Math.round(minValue), Math.round(maxValue));
     }
   }, [activeHandle, minValue, maxValue, onUpdate]);
-
-  useEffect(() => {
-    setMinValue(minPrice);
-    setMaxValue(maxPrice);
-    updateControlUI(minPrice, maxPrice);
-  }, [maxPrice, minPrice, updateControlUI]);
 
   useEffect(() => {
     const minHandle = minHandleRef.current;
@@ -132,35 +94,65 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
         calculatePercentage(maxHandle.offsetLeft - minHandle.offsetLeft) + "%";
     };
 
-    const resizeObserver = new ResizeObserver((entries) => {
-      updateControlUI(Number(minValue), Number(maxValue));
-    });
-
-    if (control) {
-      resizeObserver.observe(control);
-    }
-
     if (activeHandle) {
       document.addEventListener("pointerup", mouseUpHandler);
-      document.addEventListener("pointercancel", mouseUpHandler);
       document.addEventListener("pointermove", mouseMoveHandler);
 
       document.addEventListener("touchend", mouseUpHandler);
-      document.addEventListener("touchcancel", mouseUpHandler);
       document.addEventListener("touchmove", mouseMoveHandler);
     }
 
     return () => {
       document.removeEventListener("pointerup", mouseUpHandler);
-      document.removeEventListener("pointercancel", mouseUpHandler);
       document.removeEventListener("pointermove", mouseMoveHandler);
 
       document.removeEventListener("touchend", mouseUpHandler);
-      document.removeEventListener("touchcancel", mouseUpHandler);
       document.removeEventListener("touchmove", mouseMoveHandler);
-      resizeObserver.disconnect();
     };
-  }, [activeHandle, maxValue, minValue, updateControlUI]);
+  }, [activeHandle]);
+
+  useEffect(() => {
+    const control = controlRef.current;
+
+    const updateControlUI = () => {
+      const minHandle = minHandleRef.current;
+      const maxHandle = maxHandleRef.current;
+      const rangeTrack = rangeRef.current;
+
+      if (!(minHandle && maxHandle && control && rangeTrack)) {
+        return;
+      }
+
+      const limit = control.offsetWidth - maxHandle.offsetWidth * 2;
+      const minHandleLeft =
+        (Number(minValue) / HIGHEST_PRICE) *
+        calculatePercentage(limit + minHandle.offsetWidth);
+      const maxHandleLeft =
+        (Number(maxValue) / HIGHEST_PRICE) *
+          calculatePercentage(limit + minHandle.offsetWidth) -
+        calculatePercentage(minHandle.offsetWidth);
+
+      minHandle.style.left = minHandleLeft + "%";
+      maxHandle.style.left = maxHandleLeft + "%";
+
+      minHandle.classList.toggle(
+        "price-range__thumb--above",
+        minHandleLeft >= calculatePercentage(limit)
+      );
+
+      rangeTrack.style.left = calculatePercentage(minHandle.offsetLeft) + "%";
+      rangeTrack.style.width =
+        calculatePercentage(maxHandle.offsetLeft - minHandle.offsetLeft) + "%";
+    };
+
+    if (control) {
+      const resizeObserver = new ResizeObserver(() => {
+        updateControlUI();
+      });
+      resizeObserver.observe(control);
+      return () => resizeObserver.disconnect();
+    }
+  }, [maxValue, minValue]);
 
   return (
     <div ref={ref} className="price-range">
