@@ -1,6 +1,8 @@
 # Jones (Jordan Ones) Shoe Store
 
-Jones, a seamless e-commerce marketplace, is an SEO-friendly online store for purchasing Nike Jordan Ones.
+## Seamless E-Commerce Marketplace
+
+Jones is an SEO-friendly online store for purchasing Nike Jordan Ones.
 
 This is a responsive mobile-first website featuring real-time product filters, a pop-up search option (AJAX live search), AJAX add to cart and wishlist options, a newsletter form, an announcement banner for live updates, a customer review functionality and a slideshows on product hover.
 
@@ -95,47 +97,49 @@ This is a responsive mobile-first website featuring real-time product filters, a
 ## Setup
 
 1. Create a `touch .env` file in the root directory and set the following keys:
-    ```python
-    # Database string for PostgreSQL
-    DATABASE_URL="postgres://{user}:{password}@{hostname}:{port}/{database_name}"
 
-    # 32+ character long string for session cookie encryption [https://1password.com/password-generator/]
-    SECRET_COOKIE_PASSWORD="complex_password_at_least_32_characters_long"
+   ```python
+   # Database string for PostgreSQL
+   DATABASE_URL="postgres://{user}:{password}@{hostname}:{port}/{database_name}"
 
-    # DOMAIN ADDRESS
-    DOMAIN="http(s)://example.org"
+   # 32+ character long string for session cookie encryption [https://1password.com/password-generator/]
+   SECRET_COOKIE_PASSWORD="complex_password_at_least_32_characters_long"
 
-    # STRIPE INFO
-    STRIPE_PUBLISHABLE_KEY="pk_..."
-    STRIPE_SECRET_KEY="sk_..."
-    STRIPE_ENDPOINT_SECRET="whsec_..."
-    ```
+   # DOMAIN ADDRESS
+   DOMAIN="http(s)://example.org"
+
+   # STRIPE INFO
+   STRIPE_PUBLISHABLE_KEY="pk_..."
+   STRIPE_SECRET_KEY="sk_..."
+   STRIPE_ENDPOINT_SECRET="whsec_..."
+   ```
 
 2. You may edit the following variables inside the `./src/lib/config.ts` file:
-    ```js
-    // name for session cookie
-    export const sessionOptions: IronSessionOptions = {
-        cookieName: "<site_name>/user",
-        // ...
-    }
 
-    // name of domain
-    export const DOMAIN_NAME = "";
+   ```js
+   // name for session cookie
+   export const sessionOptions: IronSessionOptions = {
+     cookieName: "<site_name>/user",
+     // ...
+   };
 
-    // https://cloudinary.com upload preset & cloud name
-    export const CLOUDINARY_UPLOAD_PRESET = "";
-    export const CLOUDINARY_CLOUD_NAME = "";
+   // name of domain
+   export const DOMAIN_NAME = "";
 
-    // handles for social media pages
-    export const SocialHandles = {
-        facebook: "",
-        instagram: "",
-        youtube: "",
-        twitter: "",
-        pinterest: "",
-        tiktok: ""
-    };
-    ```
+   // https://cloudinary.com upload preset & cloud name
+   export const CLOUDINARY_UPLOAD_PRESET = "";
+   export const CLOUDINARY_CLOUD_NAME = "";
+
+   // handles for social media pages
+   export const SocialHandles = {
+     facebook: "",
+     instagram: "",
+     youtube: "",
+     twitter: "",
+     pinterest: "",
+     tiktok: "",
+   };
+   ```
 
 3. Run `npm install` to install all dependencies for the project.
 
@@ -146,6 +150,7 @@ This is a responsive mobile-first website featuring real-time product filters, a
 ## Getting Started
 
 Run the development server:
+
 ```bash
 npm run dev
 # or
@@ -185,6 +190,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [Pexels](https://www.pexels.com/) for Stock images
 
 - Nike.com for ["Jumpman" Logo](https://www.nike.com/jordan)
+
 ---
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`npx create-next-app@latest . --ts`](https://github.com/vercel/next.js/blob/canary/docs/basic-features/typescript.md).
