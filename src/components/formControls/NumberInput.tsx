@@ -2,7 +2,7 @@ import { useEffect, useState, forwardRef } from "react";
 
 export default forwardRef<HTMLDivElement, PropTypes>(function NumberInput(
   { value = 0, min = 0, max = Infinity, className = "", name, onChange },
-  ref
+  forwardRef
 ) {
   const [_value, setValue] = useState(Math.min(Math.max(value, min), max));
 
@@ -18,7 +18,7 @@ export default forwardRef<HTMLDivElement, PropTypes>(function NumberInput(
 
   return (
     <div
-      ref={ref}
+      ref={forwardRef}
       className={"number-input" + (className ? ` ${className}` : "")}
     >
       <button

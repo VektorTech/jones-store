@@ -26,19 +26,22 @@ export default forwardRef<
     onOptionSelect,
     ...inputProps
   },
-  ref
+  forwardRef
 ) {
   const [value, setValue] = useState(_value?.toString() ?? "");
   const [collapsed, setCollapsed] = useState(true);
   const MenuListRef = useRef<HTMLUListElement>(null);
   const DropdownRef = useRef<HTMLDivElement>(null);
 
-  useImperativeHandle<HTMLDivElement | null, HTMLDivElement | null>(ref, () => {
-    if (DropdownRef.current) {
-      return DropdownRef.current;
+  useImperativeHandle<HTMLDivElement | null, HTMLDivElement | null>(
+    forwardRef,
+    () => {
+      if (DropdownRef.current) {
+        return DropdownRef.current;
+      }
+      return null;
     }
-    return null;
-  });
+  );
 
   useArrowKeyTrap(MenuListRef.current, !collapsed, true);
 

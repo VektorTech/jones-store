@@ -4,7 +4,7 @@ const HIGHEST_PRICE = 1000;
 
 export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
   { minPrice = 0, maxPrice = HIGHEST_PRICE, onMinUpdate, onMaxUpdate },
-  ref
+  forwardRef
 ) {
   const [minValue, setMinValue] = useState<number>(minPrice);
   const [maxValue, setMaxValue] = useState<number>(maxPrice);
@@ -159,7 +159,7 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
   }, [activeHandle, onMaxUpdate, onMinUpdate]);
 
   return (
-    <div ref={ref} className="price-range">
+    <div ref={forwardRef} className="price-range">
       <input
         defaultValue={`Price: $${minValue} — ${
           maxValue == HIGHEST_PRICE ? "Over $" + maxValue : "$" + maxValue

@@ -5,11 +5,11 @@ export default forwardRef<
   PropTypes & JSX.IntrinsicElements["button"]
 >(function Button(
   { children, className = "", large, invert, ...buttonProps },
-  ref
+  forwardRef
 ) {
   return (
     <button
-      ref={ref}
+      ref={forwardRef}
       {...buttonProps}
       className={
         "button" +

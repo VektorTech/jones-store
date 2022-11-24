@@ -18,7 +18,7 @@ export default forwardRef<
     onChange,
     ...inputProps
   },
-  ref
+  forwardRef
 ) {
   const [_type, setType] = useState(type);
   const [_value, setValue] = useState<string | number | readonly string[]>(
@@ -59,7 +59,7 @@ export default forwardRef<
 
   return (
     <div
-      ref={ref}
+      ref={forwardRef}
       className={"text-field" + (className ? ` ${className}` : "")}
     >
       <label className="text-field__label">

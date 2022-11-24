@@ -18,7 +18,7 @@ export default forwardRef<
     className = "",
     ...inputProps
   },
-  ref
+  forwardRef
 ) {
   const initState = useMemo<{ [value: string]: boolean }>(
     () =>
@@ -63,7 +63,7 @@ export default forwardRef<
 
   return (
     <div
-      ref={ref}
+      ref={forwardRef}
       className={"radio-list" + (className ? ` ${className}` : "")}
     >
       <fieldset>

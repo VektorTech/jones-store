@@ -6,7 +6,7 @@ export default forwardRef<
   PropTypes & JSX.IntrinsicElements["input"]
 >(function AutoComplete(
   { label, className, options, name, ...inputProps },
-  ref
+  forwardRef
 ) {
   const [collapsed, setCollapsed] = useState(true);
   const [value, setValue] = useState("");
@@ -22,7 +22,7 @@ export default forwardRef<
 
   return (
     <div
-      ref={ref}
+      ref={forwardRef}
       className={"autocomplete" + (className ? ` ${className}` : "")}
     >
       <label className="autocomplete__label">
