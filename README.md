@@ -1,6 +1,6 @@
 # Jones (Jordan Ones) Shoe Store
 
-Jones, a seamless e-commerce marketplace, is an SEO friendly online store for purchasing Nike Jordan Ones.
+Jones, a seamless e-commerce marketplace, is an SEO-friendly online store for purchasing Nike Jordan Ones.
 
 This is a responsive mobile-first website featuring real-time product filters, a pop-up search option (AJAX live search), AJAX add to cart and wishlist options, a newsletter form, an announcement banner for live updates, a customer review functionality and a slideshows on product hover.
 
@@ -67,6 +67,8 @@ This is a responsive mobile-first website featuring real-time product filters, a
 - After a series of bugs, I eventually realized that I needed to `await` all Prisma DB queries for them to execute successfully.
 
 - The price range component came with more challenges than I would have anticipated. I realized that the `.getBoundingClientRect` method gives details about an element's rendering dimensions that may not be congruent with its layout dimensions in the case where CSS transformations are applied, which caused a few visual bugs on the range's progress bar. Making the price range a controlled component was remarkably difficult as I ran into an issue where, in some instances, the change handler and the component's `setState()` were updating state back and forth, especially on mobile, so I had to rethink my approach.
+
+- Trying to aggregate the average ratings for each product resulted in multiple Prisma clients being instantiated at once, which caused errors on Vercel. To resolve this, I included all the related reviews in the `.find` method and then used that to map through and programmatically calculate the average ratings of each product.
 
 ## What I've Learned
 
