@@ -37,6 +37,7 @@ export default function ProductCartForm({
         value={quantity}
         min={1}
         max={stockQty}
+        name="qty"
       />
       <input type="hidden" name="productId" defaultValue={id} />
       <Button

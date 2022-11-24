@@ -1,7 +1,7 @@
 import { useEffect, useState, forwardRef } from "react";
 
 export default forwardRef<HTMLDivElement, PropTypes>(function NumberInput(
-  { value = 0, min = 0, max = Infinity, className = "", onChange },
+  { value = 0, min = 0, max = Infinity, className = "", name, onChange },
   ref
 ) {
   const [_value, setValue] = useState(Math.min(Math.max(value, min), max));
@@ -32,7 +32,7 @@ export default forwardRef<HTMLDivElement, PropTypes>(function NumberInput(
       <input
         className="number-input__control"
         readOnly
-        name="qty"
+        name={name}
         key={_value}
         defaultValue={_value}
       />

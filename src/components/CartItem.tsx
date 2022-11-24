@@ -54,6 +54,7 @@ export default function CartProductItem({
         value={cartItem.quantity}
         min={1}
         max={product.stockQty}
+        name="qty"
         onChange={(value) => updateAction(value)}
       />
       <Button onClick={removeAction} className="cart__product-remove">
