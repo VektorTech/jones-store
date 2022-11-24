@@ -53,7 +53,7 @@ export default forwardRef<
           collapsed ? " autocomplete__menu--collapsed" : ""
         }`}
       >
-        <ul className="autocomplete__list">
+        <ul role="listbox" className="autocomplete__list">
           {filtered.map((option) => (
             <li
               role="option"

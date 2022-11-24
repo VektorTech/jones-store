@@ -19,7 +19,7 @@ export default function SocialButtons({ vertical, size = "sm" }: PropTypes) {
     >
       {SocialHandles.facebook ? (
         <Link href={`https://www.facebook.com/${SocialHandles.facebook}/`}>
-          <a className="social-links__link">
+          <a aria-label="Follow us on Facebook" className="social-links__link">
             <RiFacebookBoxFill />
           </a>
         </Link>
@@ -27,7 +27,7 @@ export default function SocialButtons({ vertical, size = "sm" }: PropTypes) {
 
       {SocialHandles.instagram ? (
         <Link href={`https://www.instagram.com/${SocialHandles.instagram}/`}>
-          <a className="social-links__link">
+          <a aria-label="Follow us on Instagram" className="social-links__link">
             <RiInstagramFill />
           </a>
         </Link>
@@ -35,7 +35,10 @@ export default function SocialButtons({ vertical, size = "sm" }: PropTypes) {
 
       {SocialHandles.tiktok ? (
         <Link href={`https://www.tiktok.com/@${SocialHandles.tiktok}`}>
-          <a className="social-links__link social-links__link--tiktok">
+          <a
+            aria-label="Follow us on TikTok"
+            className="social-links__link social-links__link--tiktok"
+          >
             <SiTiktok />
           </a>
         </Link>
@@ -43,7 +46,7 @@ export default function SocialButtons({ vertical, size = "sm" }: PropTypes) {
 
       {SocialHandles.youtube ? (
         <Link href={`https://www.youtube.com/c/${SocialHandles.youtube}`}>
-          <a className="social-links__link">
+          <a aria-label="Follow us on YouTube" className="social-links__link">
             <RiYoutubeFill />
           </a>
         </Link>
@@ -51,7 +54,7 @@ export default function SocialButtons({ vertical, size = "sm" }: PropTypes) {
 
       {SocialHandles.twitter ? (
         <Link href={`https://twitter.com/${SocialHandles.twitter}`}>
-          <a className="social-links__link">
+          <a aria-label="Follow us on Twitter" className="social-links__link">
             <RiTwitterFill />
           </a>
         </Link>
@@ -59,7 +62,7 @@ export default function SocialButtons({ vertical, size = "sm" }: PropTypes) {
 
       {SocialHandles.pinterest ? (
         <Link href={`https://www.pinterest.com/${SocialHandles.pinterest}/`}>
-          <a className="social-links__link">
+          <a aria-label="Follow us on Pinterest" className="social-links__link">
             <RiPinterestFill />
           </a>
         </Link>

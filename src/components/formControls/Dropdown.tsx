@@ -115,7 +115,7 @@ export default forwardRef<
           collapsed ? " dropdown__menu--collapsed" : ""
         }`}
       >
-        <ul ref={MenuListRef} className="dropdown__list">
+        <ul role="listbox" ref={MenuListRef} className="dropdown__list">
           {Object.keys(options).map((option) => (
             <li
               tabIndex={-1}

@@ -17,7 +17,11 @@ export default function FilterAccordion({ active, setState }: PropTypes) {
     <div className={"filter" + (active ? " filter--active" : "")}>
       <div className="filter__head">
         <span>Filter</span>
-        <button onClick={() => setState(false)} className="filter__hide">
+        <button
+          aria-label="hide filter"
+          onClick={() => setState(false)}
+          className="filter__hide"
+        >
           <IoIosArrowBack />
         </button>
       </div>

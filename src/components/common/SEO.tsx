@@ -1,6 +1,7 @@
 import Head from "next/head";
 
 import { DOMAIN_NAME } from "@Lib/config";
+import { useRouter } from "next/router";
 
 export default function SEO({
   title = "Shop Jordan Ones",
@@ -11,6 +12,8 @@ export default function SEO({
   ogImage = "/assets/images/banner-bg-eindhoven.jpg",
   twitterHandle = "@creator",
 }) {
+  const router = useRouter();
+
   return (
     <Head>
       <title>{`${title} | ${name}`}</title>
@@ -51,7 +54,7 @@ export default function SEO({
 
       <meta name="robots" content="index,follow" />
 
-      <link rel="canonical" href={canonical} />
+      <link rel="canonical" href={canonical + router.asPath} />
     </Head>
   );
 }

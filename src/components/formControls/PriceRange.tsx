@@ -165,6 +165,7 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
           maxValue == HIGHEST_PRICE ? "Over $" + maxValue : "$" + maxValue
         }`}
         key={`Price: $${minValue} — $${maxValue}`}
+        aria-label="price range"
         readOnly
         className="price-range__input"
       />

@@ -10,7 +10,7 @@ import RatingStars from "./RatingStars";
 import { getPathString } from "@Lib/utils";
 import { useAuthState } from "@Lib/contexts/AuthContext";
 import { currencyFormatter } from "@Lib/intl";
-import { DummyPlaceholder } from "@Lib/constants";
+import { DefaultPlaceholder } from "@Lib/constants";
 
 const MAX_IMAGE_SLIDES = 3;
 
@@ -55,13 +55,13 @@ export default function Product({
     >
       <Link href={`/product/${getPathString(title + " " + sku)}`}>
         <a>
-          <div className="product__wrapper">
+          <article className="product__wrapper">
             <div className="product__image">
               {mediaURLs.slice(0, MAX_IMAGE_SLIDES).map((url, i) => (
                 <Image
                   key={url}
                   src={url}
-                  blurDataURL={blurDataUrl || DummyPlaceholder}
+                  blurDataURL={blurDataUrl || DefaultPlaceholder}
                   placeholder="blur"
                   objectFit="contain"
                   layout="fill"
@@ -77,7 +77,7 @@ export default function Product({
               <div className="product__actions">
                 <button
                   tabIndex={-1}
-                  aria-label="add to wishlist"
+                  aria-label="Add to wishlist"
                   onClick={(e) => {
                     e.preventDefault();
                     handleWishlistAction();
@@ -94,9 +94,9 @@ export default function Product({
             </div>
             <div className="product__info">
               <p className="product__type">{gender}</p>
-              <h3 title={title} className="product__title">
+              <p title={title} className="product__title">
                 {title}
-              </h3>
+              </p>
               <div className="product__rating">
                 <RatingStars count={ratings} />
               </div>
@@ -119,7 +119,7 @@ export default function Product({
                 ) : null}
               </p>
             </div>
-          </div>
+          </article>
         </a>
       </Link>
     </div>
