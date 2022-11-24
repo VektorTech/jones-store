@@ -88,7 +88,7 @@ export default forwardRef<
                   type={checkbox ? "checkbox" : "radio"}
                   name={name}
                   required={required}
-                  checked={!!groupState[value]}
+                  checked={groupState[value]}
                   value={value}
                   style={{ display: RenderComponent ? "none" : "inline-block" }}
                   onChange={(e) =>
@@ -100,7 +100,7 @@ export default forwardRef<
                 {RenderComponent ? (
                   <>
                     <RenderComponent
-                      checked={!!groupState[value]}
+                      checked={groupState[value]}
                       label={values[value]}
                       value={value}
                     />
@@ -113,7 +113,7 @@ export default forwardRef<
                         (checkbox ? "checkbox" : "radio")
                       }
                     ></span>
-                    <span className="radio-list__text">{value}</span>
+                    <span className="radio-list__text">{values[value]}</span>
                   </>
                 )}
               </label>

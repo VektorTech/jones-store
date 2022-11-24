@@ -12,22 +12,13 @@ export default forwardRef<
     className = "",
     type = "text",
     multiline = false,
-    defaultValue,
     error,
-    value = "",
-    onChange,
+    onChange = () => null,
     ...inputProps
   },
   forwardRef
 ) {
   const [_type, setType] = useState(type);
-  const [_value, setValue] = useState<string | number | readonly string[]>(
-    value
-  );
-
-  useEffect(() => {
-    setValue(defaultValue ?? value);
-  }, [value, defaultValue]);
 
   let Icon;
 
@@ -78,11 +69,7 @@ export default forwardRef<
               {...inputProps}
               rows={5}
               required={required}
-              value={_value}
-              onChange={(e) => {
-                onChange?.(e);
-                setValue(e.currentTarget.value);
-              }}
+              onChange={onChange}
               className={
                 "text-field__control text-field__control--multiline" +
                 (error ? " text-field__control--error" : "")
@@ -94,11 +81,7 @@ export default forwardRef<
                 {...inputProps}
                 type={_type}
                 required={required}
-                value={_value}
-                onChange={(e) => {
-                  onChange?.(e);
-                  setValue(e.currentTarget.value);
-                }}
+                onChange={onChange}
                 className={
                   "text-field__control" +
                   (error ? " text-field__control--error" : "")

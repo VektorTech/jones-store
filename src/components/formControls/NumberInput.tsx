@@ -1,20 +1,17 @@
-import { useEffect, useState, forwardRef } from "react";
+import { useRef, forwardRef } from "react";
 
 export default forwardRef<HTMLDivElement, PropTypes>(function NumberInput(
   { value = 0, min = 0, max = Infinity, className = "", name, onChange },
   forwardRef
 ) {
-  const [_value, setValue] = useState(Math.min(Math.max(value, min), max));
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    setValue(value);
-  }, [value]);
-
-  useEffect(() => {
-    if (value != _value) {
-      onChange?.(_value);
+  const changeHandler = (num: number) => {
+    if (inputRef.current) {
+      inputRef.current.value = num.toString();
     }
-  }, [_value]);
+    onChange?.(num);
+  };
 
   return (
     <div
@@ -23,7 +20,7 @@ export default forwardRef<HTMLDivElement, PropTypes>(function NumberInput(
     >
       <button
         className="number-input__button"
-        onClick={() => setValue(Math.max(_value - 1, min))}
+        onClick={() => changeHandler(Math.max(value - 1, min))}
         type="button"
         aria-label="reduce by one"
       >
@@ -33,12 +30,12 @@ export default forwardRef<HTMLDivElement, PropTypes>(function NumberInput(
         className="number-input__control"
         readOnly
         name={name}
-        key={_value}
-        defaultValue={_value}
+        ref={inputRef}
+        value={Math.min(Math.max(value, min), max)}
       />
       <button
         className="number-input__button"
-        onClick={() => setValue(Math.min(_value + 1, max))}
+        onClick={() => changeHandler(Math.min(value + 1, max))}
         type="button"
         aria-label="increase by one"
       >
@@ -53,5 +50,6 @@ interface PropTypes {
   min: number;
   max: number;
   className?: string;
+  name?: string;
   onChange?: (value: number) => void;
 }

@@ -52,22 +52,15 @@ export default forwardRef<
   }, [collapsed]);
 
   useEffect(() => {
-    if (_value != value) {
-      setValue?.(_value?.toString() ?? "");
-    }
+    setValue?.(_value?.toString() ?? "");
   }, [_value]);
 
-  useEffect(() => {
-    onOptionSelect?.(value);
-  }, [value]);
-
   const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (e) => {
+    e.preventDefault();
     if (isSelectKey(e) && e.target == DropdownRef.current) {
-      e.preventDefault();
       setCollapsed(!collapsed);
     } else if (e.key == "Escape") {
       setCollapsed(true);
-      e.stopPropagation();
     }
   };
 
@@ -125,7 +118,10 @@ export default forwardRef<
               key={option}
               role="option"
               aria-selected={value == option}
-              onClick={(e) => setValue(option)}
+              onClick={(e) => {
+                setValue(option);
+                onOptionSelect?.(option);
+              }}
               data-value={option}
               className="dropdown__option"
             >
