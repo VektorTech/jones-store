@@ -36,6 +36,7 @@ export default function ShareButton({
       </button>
       <Modal
         title="Share"
+        size="sm"
         visible={shareModalOpen}
         onClose={() => setDialog(null)}
       >
