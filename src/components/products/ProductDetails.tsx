@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { useState, Suspense, CSSProperties } from "react";
-import { BarLoader } from "react-spinners";
+import { MoonLoader } from "react-spinners";
 import { ProductComponentType } from "src/types/shared";
 
 export default function ProductDetails({ product }: PropTypes) {
@@ -20,14 +20,14 @@ export default function ProductDetails({ product }: PropTypes) {
     ),
     size_guide: (
       <Suspense
-        fallback={<BarLoader speedMultiplier={2} cssOverride={cssOverride} />}
+        fallback={<MoonLoader size={30} cssOverride={cssOverride} />}
       >
         <SizeGuide />
       </Suspense>
     ),
     reviews: (
       <Suspense
-        fallback={<BarLoader speedMultiplier={2} cssOverride={cssOverride} />}
+        fallback={<MoonLoader size={30} cssOverride={cssOverride} />}
       >
         <Reviews productId={product.id} />
       </Suspense>
