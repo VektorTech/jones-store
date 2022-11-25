@@ -79,12 +79,9 @@
   }
 
   &__loader {
-    position: relative;
     margin: auto;
     top: 0.5rem;
     border-color: $c-background-dark $c-background-dark transparent;
-    width: 2.5rem !important;
-    height: 2.5rem !important;
     display: block !important;
   }
 

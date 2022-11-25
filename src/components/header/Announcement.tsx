@@ -3,7 +3,7 @@ import type { Announcement as AnnouncementType } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { BsXLg } from "react-icons/bs";
 import { FiHelpCircle } from "react-icons/fi";
-import { ClipLoader } from "react-spinners";
+import { MoonLoader } from "react-spinners";
 import sanitizeHtml from "sanitize-html";
 
 import Modal from "@Components/Modal";
@@ -89,7 +89,7 @@ export default function Announcement() {
             ))}
           </div>
         ) : (
-          <ClipLoader className="announcement__loader" />
+          <MoonLoader size={20} className="announcement__loader" />
         )}
 
         <button
