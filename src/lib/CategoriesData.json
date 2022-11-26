@@ -13,6 +13,19 @@
     "ULTRA"
   ],
 
+  "men_2": [
+    "POLLEN",
+    "BRED",
+    "DARK",
+    "BLACK",
+    "OG",
+    "DENIM",
+    "RETRO OG",
+    "MOCHA",
+    "UNC",
+    "MID"
+  ],
+
   "women": [
     "OG LOW",
     "LOW SLIP",
@@ -22,6 +35,15 @@
     "OG HIGH",
     "ZOOM COMFORT",
     "WILD"
+  ],
+
+  "women_2": [
+    "MULTI",
+    "DENIM",
+    "HOMAGE",
+    "RETRO HIGH",
+    "MID SE",
+    "OG HIGH"
   ],
 
   "colorways": [

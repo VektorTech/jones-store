@@ -18,7 +18,7 @@ export const MenCategoriesList = [
     </Link>
   </li>,
 ].concat(
-  CategoriesData.men.map((name: string) => (
+  CategoriesData.men_2.map((name: string) => (
     <li key={name} className="sidebar__links-item">
       <Link href={"/category/men/" + getPathString(name)}>
         <a className="sidebar__anchor">{name}</a>
@@ -34,7 +34,7 @@ export const WomenCategoriesList = [
     </Link>
   </li>,
 ].concat(
-  CategoriesData.women.map((name: string) => (
+  CategoriesData.women_2.map((name: string) => (
     <li key={name} className="sidebar__links-item">
       <Link href={"/category/women/" + getPathString(name)}>
         <a className="sidebar__anchor">{name}</a>
