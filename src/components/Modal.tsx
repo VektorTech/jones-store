@@ -26,8 +26,9 @@ export default function Modal({
     const closeOnEscape = ({ key }: KeyboardEvent) => {
       if (key == "Escape" && onClose) onClose();
     };
-    modal.addEventListener("keydown", closeOnEscape);
-    return () => modal.removeEventListener("keydown", closeOnEscape);
+    document.addEventListener("keydown", closeOnEscape);
+    return () =>
+      document.removeEventListener("keydown", closeOnEscape);
   }, [onClose]);
 
   const ModalBody = visible ? (
