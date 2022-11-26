@@ -137,7 +137,7 @@ export default function HeroBanner() {
                 </>
               ) : (
                 <div className="banner__loader">
-                  <MoonLoader className="banner__loader-spinner" />
+                  <MoonLoader color="#fff" className="banner__loader-spinner" />
                 </div>
               )}
             </div>
