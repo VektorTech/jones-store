@@ -51,6 +51,7 @@ const ProductPage: NextPage<ProductPageType> = ({
 
       <div className="product-view">
         <ProductGallery
+          key={`gallery-${id}`}
           productId={id}
           images={product.mediaURLs}
           dimensions={imageDimensions}
