@@ -85,7 +85,7 @@ const ProductPage: NextPage<ProductPageType> = ({
             {salesCount ?? 0} Sold &mdash; {stockQty} available in stock
           </p>
 
-          <ProductCartForm product={product} />
+          <ProductCartForm key={product.id} product={product} />
 
           <ShareButton
             title={product.title}
