@@ -10,18 +10,18 @@ This is a responsive mobile-first website featuring real-time product filters, a
 
 - **Next.JS** &mdash; React Framework - Used for server-side rendering and RESTful APIs
 - **Typescript** &mdash; Static typing, type Inference, narrowing & type guarding
-- **Iron Session** &mdash; Session management and data store
+- **Iron Session** &mdash; Session utility using cookies to store data.
 - **BCrypt** &mdash; Password hashing & comparison
 - **Yup** &mdash; Schema validation & form validation
 - **PostgreSQL** &mdash; A Relational Database Management System
-- **Prisma** &mdash; ORM for accessing PostgreSQL
-- **Stripe** &mdash; Used Stripe as primary payment gateway & npm library for accessing the Stripe API
+- **Prisma** &mdash; ORM for PostgreSQL (Data modeling, query Building, migration system & GUI to access database)
+- **Stripe** &mdash; Used Stripe as primary payment gateway & npm library for accessing their API
 - **Micro** &mdash; Used for parsing raw incoming request body
-- **Sass** &mdash; Preprocessor used for custom styling
+- **Sass** &mdash; Preprocessor used for styling
 - **React Icons** &mdash; SVG icon library
 - **Next Share** &mdash; Button icons for sharing to social media
 - **React Toastify** &mdash; Toast popup library used for notifications
-- **Probe Image Size** &mdash; Gets dimension of remote images
+- **Probe Image Size** &mdash; Gets width & height of remote images
 - **React Spinners** &mdash; Loading animation components
 - **nProgress** &mdash; Progressbar for navigation indication
 - **Moment** &mdash; Format dates
