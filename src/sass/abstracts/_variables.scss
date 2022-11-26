@@ -18,9 +18,9 @@ $c-control-black: #333;
 $text-xs: 1.24rem;
 $text-sm: 1.36rem;
 $text-md: 1.52rem;
-$text-lg: 1.92rem;
-$text-xl: 2.87rem;
-$text-xxl: 3.65rem;
+$text-lg: clamp(1.87rem, 0.5rem + 1.4vw, 1.98rem); // 1.92rem
+$text-xl: clamp(2.65rem, 0.8rem + 1.8vw, 3.2rem); // 2.87rem
+$text-xxl: clamp(3.25rem, 1.2rem + 2vw, 3.8rem); // 3.65rem
 
 $announcement-height: 3.5rem;
 $header-height: 6.5rem;
