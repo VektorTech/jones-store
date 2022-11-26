@@ -96,6 +96,7 @@
 
   &__content {
     padding: 2rem 1.5rem;
+    flex-grow: 1;
 
     @include respond-to("medium") {
       padding: 2rem 3.5rem;
@@ -192,7 +193,8 @@
   &__product-cost {
     grid-area: c;
     text-align: right;
-    font-size: $text-md;
+    font-size: $text-sm;
+    color: $c-text-gray;
     font-weight: 300;
   }
   &__product-quantity {
