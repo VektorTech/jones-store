@@ -52,7 +52,7 @@ This is a responsive mobile-first website featuring real-time product filters, a
 
 - On the product page, I used `next/dynamic` to lazy-load tab panels until the user selects a tab panel's corresponding tab. This approach was particularly useful for suspending the loading of the size chart and all product reviews until the user demands them.
 
-- There were a number of changes made to the database throughout the course of this project. The details can be seen in the `prisma/migrations` folder.
+- There were a number of changes made to the database throughout the course of this project. The details can be seen in the `prisma/migrations` folder where changes to the schemas are tracked.
 
 ## Issues Encountered
 
@@ -72,7 +72,7 @@ This is a responsive mobile-first website featuring real-time product filters, a
 
 - The price range component came with more challenges than I would have anticipated:
 I found out that the `.getBoundingClientRect` method gives details about an element's rendering dimensions that may not be congruent with its layout dimensions in the case where CSS transformations are applied, which caused a few visual bugs on the range's progress bar. So I had to update my calculations.
-Because I took a naive approach to my attempt to make the price range a controlled component, the code grew increasingly complicated and hard to manage. While trying to trigger state updates in response to changing props, I ran into a condition where, in some cases, the change handlers and the component's `useEffect()` were continuously updating the state. They triggered updates one after the other due to stale values, noticeably on mobile, so I had to rethink my approach. The solution was simple, set a key on the component that uses all the props necessary for causing a reset.
+Because I took a naive approach to my initial attempt to make the price range a controlled component, the code grew increasingly complicated and harder to manage. The main issue stemmed from trying to trigger state updates in response to changing props. I ran into a condition where, in some cases, the change handlers and the component's `useEffect()` were continuously updating the state. They triggered state updates one after the other due to stale values, noticeably on mobile, so I had to rethink my approach. The solution was simple, set a key on the component that uses all the props necessary for causing a reset.
 
 - Trying to aggregate the average ratings for each product resulted in multiple Prisma clients being instantiated at once, which caused errors in Vercel. To resolve this, I included all reviews related to the products in their `.find` method and then used that to map through and programmatically calculate the average ratings of each product.
 
