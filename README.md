@@ -48,9 +48,11 @@ This is a responsive mobile-first website featuring real-time product filters, a
 
 - The website UI diverted from the original Figma design in several areas.
 
-- I created a product context that manages all products on the client for the products page because I wanted more control over how products were sorted and filtered and to reduce querying the database each time the page refreshes upon selecting a different criterion.
+- I created a product context that manages all products on the client for the products page since I wanted more control over how products were sorted and filtered and to reduce querying the database each time the page refreshes upon selecting a different criterion.
 
 - On the product page, I used `next/dynamic` to lazy-load tab panels until the user selects a tab panel's corresponding tab. This approach was particularly useful for suspending the loading of the size chart and all product reviews until the user demands them.
+
+- There were a number of changes made to the database throughout the course of this project. The details can be seen in the `prisma/migrations` folder.
 
 ## Issues Encountered
 
@@ -68,9 +70,11 @@ This is a responsive mobile-first website featuring real-time product filters, a
 
 - After a series of bugs, I eventually realized that I needed to `await` all Prisma DB queries for them to execute successfully.
 
-- The price range component came with more challenges than I would have anticipated. I realized that the `.getBoundingClientRect` method gives details about an element's rendering dimensions that may not be congruent with its layout dimensions in the case where CSS transformations are applied, which caused a few visual bugs on the range's progress bar. Making the price range a controlled component was remarkably difficult as I ran into an issue where, in some instances, the change handler and the component's `setState()` were updating state back and forth, especially on mobile, so I had to rethink my approach.
+- The price range component came with more challenges than I would have anticipated:
+I found out that the `.getBoundingClientRect` method gives details about an element's rendering dimensions that may not be congruent with its layout dimensions in the case where CSS transformations are applied, which caused a few visual bugs on the range's progress bar. So I had to update my calculations.
+Because I took a naive approach to my attempt to make the price range a controlled component, the code grew increasingly complicated and hard to manage. While trying to trigger state updates in response to changing props, I ran into a condition where, in some cases, the change handlers and the component's `useEffect()` were continuously updating the state. They triggered updates one after the other due to stale values, noticeably on mobile, so I had to rethink my approach. The solution was simple, set a key on the component that uses all the props necessary for causing a reset.
 
-- Trying to aggregate the average ratings for each product resulted in multiple Prisma clients being instantiated at once, which caused errors on Vercel. To resolve this, I included all the related reviews in the `.find` method and then used that to map through and programmatically calculate the average ratings of each product.
+- Trying to aggregate the average ratings for each product resulted in multiple Prisma clients being instantiated at once, which caused errors in Vercel. To resolve this, I included all reviews related to the products in their `.find` method and then used that to map through and programmatically calculate the average ratings of each product.
 
 ## What I've Learned
 
@@ -86,7 +90,7 @@ This is a responsive mobile-first website featuring real-time product filters, a
 
 - Native internationalization(`Intl`) class - API that provides many tools for internationalization purposes has a method for formatting currency.
 
-- It's probably best not to program the database using triggers or procedures because they tend to become invisible (may forget or not be aware of them during development), it's probably best to perform calculations on the server instead.
+- It's probably best not to program the database using triggers or procedures since they tend to become invisible (may forget or not be aware of them during development), it's probably best to perform calculations on the server instead.
 
 - Alternative way to update state `setState(state => ...)`
 
@@ -161,25 +165,27 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Todo
 
-- [ ] Find a way to elegantly hide the pinned header when the user scrolls back up.
-- [ ] Build Admin Dashboard
-- [ ] Add Google Auth
 - [ ] Internationalize - Allow multiple currencies and languages
+- [ ] Build Admin Dashboard
+- [ ] Improve Accessibility.
 - [ ] Password Recovery Feature
 - [ ] Order Tracking Feature
+- [ ] Web scraper for product Info.
+- [ ] Use SMTP to email users after sign-up and product purchases.
+- [ ] Add Google Auth
 - [ ] Add Structured Data to Product Pages Using [JSON-LD](https://nextjs.org/learn/seo/rendering-and-ranking/metadata)
 - [ ] Add An [XML Sitemap](https://nextjs.org/learn/seo/crawling-and-indexing/xml-sitemaps)
+- [ ] Cache BlurData urls.
+- [ ] Show only available colours in filter.
+- [ ] Find a way to elegantly hide the pinned header when the user scrolls back up.
 - [ ] Image Drag n Drop feature when uploading profile avatar
 - [ ] Images Drag n Drop feature for `/api/add-products` when adding product images.
-- [ ] Use SMTP to email users after sign-up and product purchases.
 - [ ] Show products count per filter item constraint on the products page.
-- [ ] Show only available colours in filter.
 - [ ] Integrate Paypal as a second payment gateway.
 - [ ] Add a captcha to the signup and login forms.
-- [ ] Web scraper for product Info.
 - [ ] Create a size chart UI.
-- [ ] Cache BlurData urls.
-- [ ] Improve Accessibility.
+- [ ] Animate Menu Button.
+- [ ] Add navigation animation to product when clicked, so the product's image transitions to gallery.
 
 ## Credits & Attributions
 
