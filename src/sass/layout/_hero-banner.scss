@@ -313,10 +313,8 @@
 
       > span {
         @extend %full-size;
+        @extend %center-content;
         position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         font-size: $text-md;
 
         @include respond-to("xx-large") {

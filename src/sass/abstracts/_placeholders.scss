@@ -129,12 +129,10 @@
 
 %form-button {
   @extend %truncate;
+  @extend %center-content;
   background-color: v.$c-background-black;
   color: #fff;
   text-transform: uppercase;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 0.7rem 2rem;
   font-weight: 400;
   font-size: v.$text-sm;
@@ -235,4 +233,10 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+}
+
+%center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

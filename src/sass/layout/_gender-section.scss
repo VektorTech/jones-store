@@ -36,15 +36,13 @@
 
   &__text-overlay {
     @extend %full-size;
+    @extend %center-content;
     font-family: "Shrikhand", sans-serif;
     color: #fff;
     text-align: center;
     margin: 0;
     font-size: 12vw;
     user-select: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     opacity: 0.8;
     letter-spacing: 0.3rem;
 

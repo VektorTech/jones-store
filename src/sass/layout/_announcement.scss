@@ -94,14 +94,12 @@
   }
 
   &__close {
+    @extend %center-content;
     position: absolute;
     width: $announcement-height;
     height: $announcement-height;
     right: 0;
     top: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     color: $c-gray;
     background-color: #fff;
     z-index: 2;

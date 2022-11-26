@@ -56,21 +56,18 @@
     }
 
     &-close {
+      @extend %center-content;
       position: absolute;
       border-radius: 50%;
       border: 0.1rem solid;
       border-color: inherit;
       color: inherit;
       font-size: $text-xs;
-      display: inline-block;
       width: 2rem;
       height: 2rem;
       right: -0.8rem;
       top: -0.8rem;
       background-color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
   }
 }
