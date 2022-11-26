@@ -1,3 +1,5 @@
+import { useRef } from "react";
+
 import Link from "next/link";
 import Image from "next/image";
 
@@ -7,10 +9,17 @@ import womanImage from "@Images/woman.jpg";
 import kidImage from "@Images/kid.webp";
 import babyImage from "@Images/baby.jpeg";
 import unisexImage from "@Images/unisex.jpg";
+import useIntersectionObserver from "@Lib/hooks/useIntersectionObserver";
 
 export default function GenderSection() {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useIntersectionObserver(ref, true);
+
   return (
-    <section className="gender">
+    <section
+      ref={ref}
+      className={`gender${inView ? " gender--intersected" : ""}`}
+    >
       <div className="gender__container">
         <div className="gender__tall-img">
           <Image
