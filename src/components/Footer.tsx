@@ -211,10 +211,8 @@ export default function Footer() {
             </Link>
           </div>
           <div className="gutter__copy">
-            <small>
-              &copy; {new Date().getFullYear()}{" "}
-              <abbr title="Jordan Ones">Jones</abbr> LLC. All Rights Reserved
-            </small>
+            &copy;&nbsp;{new Date().getFullYear()}&nbsp;
+            <abbr title="Jordan Ones">Jones</abbr>&nbsp;LLC. All Rights Reserved
           </div>
           <div className="gutter__lang-currency language-currency">
             <button

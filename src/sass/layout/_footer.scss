@@ -180,12 +180,9 @@
     }
 
     &__copy {
+      @extend %center-content;
+      font-size: $text-xs;
       order: -1;
-
-      > small {
-        position: relative;
-        top: 25%;
-      }
 
       @include respond-to("small") {
         order: 0;
