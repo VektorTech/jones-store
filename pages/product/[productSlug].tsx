@@ -101,7 +101,7 @@ const ProductPage: NextPage<ProductPageType> = ({
       <div className="related-products">
         {relatedProducts.length ? (
           <>
-            <h2 className="related-products__heading">Related Products</h2>
+            <h2 className="related-products__heading">Related <wbr/>Products</h2>
             <ProductsGrid products={relatedProducts} />
           </>
         ) : null}

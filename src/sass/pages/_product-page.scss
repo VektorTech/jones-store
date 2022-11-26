@@ -98,5 +98,6 @@
   &__heading {
     @extend %section-heading;
     color: $c-text-black;
+    margin-bottom: 3rem;
   }
 }
