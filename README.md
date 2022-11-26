@@ -36,29 +36,29 @@ This is a responsive mobile-first website featuring real-time product filters, a
 
 ## Design Decisions
 
-- Because this is an e-commerce website, SEO plays a significant factor in its success, but standard client-side rendered React would seriously hinder search engines from properly crawling each page. So I chose Next.JS for this project as it provides a quick and simple way for writing performant, server-side rendered react applications without much overhead.
+- Considering that this is an e-commerce website, SEO plays a significant factor in its success, but standard client-side rendered React would seriously hinder search engines from properly crawling each page. So I chose Next.JS for this project as it provides a quick and simple way for writing performant, server-side rendered react applications without much overhead.
 
 - React's `useState` & `useReducer` hooks coupled with the Context API provided a sufficient means for managing and centralizing state in this application as there wasn't much information that needed to be kept in memory on the client that would demand a complex library like Redux. Pages are frequently refreshed, and data is already being rendered onto pages from the server(using `getServerSideProps`), which further reduced the need for alternate state management strategies. Additionally, user preferences are persisted through cookies where they can be pre-rendered on the server.
 
-- For managing the user state, I switched from using multiple `useState` hooks to a single `useReducer` as it's a more convenient option for working with state objects holding multiple sub-values, like the wishlist and cart fields on the user object.
+- For managing the user state, I switched from using multiple `useState` hooks to a single `useReducer` as it's a more convenient option for working with state objects holding multiple sub-values(like the wishlist and cart fields on the user object.)
 
 - Used Postgres trigger functions for updating cart total whenever a cart item gets added or removed.
 
-- After recognizing a repeating pattern in how API routes were being written and wanting to improve the process, I decided to build a method routing function, `RouteHandler`, that arranges request handlers in a similar fashion to `express` routers. It allows all handlers to be composed with a custom error catcher and session middleware for authentication and role-based access control. This abstraction reduced boilerplate code inside API routes and made writing async code much simpler.
+- After recognizing a repeating pattern in how API routes were being written and wanting to improve the process, I decided to build a method routing function, `RouteHandler`, that arranges request handlers in a similar fashion to `express` routers. It allows all handlers to be composed with a custom error catcher and allowed me to use session middleware for authentication and role-based access control. This abstraction reduced boilerplate code inside API routes and made writing async code much simpler.
 
 - The website UI diverted from the original Figma design in several areas.
 
-- I created a product context that manages all products on the client for the products page since I wanted more control over how products were sorted and filtered and to reduce querying the database each time the page refreshes upon selecting a different criterion.
+- I created a product context that manages all products on the client for the products page since I wanted more control over how products are sorted and filtered and to reduce querying the database each time the page refreshes upon selecting a different criterion.
 
 - On the product page, I used `next/dynamic` to lazy-load tab panels until the user selects a tab panel's corresponding tab. This approach was particularly useful for suspending the loading of the size chart and all product reviews until the user demands them.
 
-- There were a number of changes made to the database throughout the course of this project. The details can be seen in the `prisma/migrations` folder where changes to the schemas are tracked.
+- There were a number of changes made to the database throughout the course of this project. The details can be seen in the `prisma/migrations` folder where schema migrations are tracked.
 
 ## Issues Encountered
 
-- Programmatically setting a focusable element as the active element inside the document was not working. I had to wrap the code in a `setTimeout` for some reason, which I still don't quite understand.
+- Programmatically setting a focusable element as the active element inside the document is a bit buggy for some reason.
 
-- No way to add custom constraints onto table columns inside Prisma, so I had to resort to handwritten SQL Commands.
+- No way to add custom constraints onto table columns inside Prisma, so I had to resort to handwritten SQL commands.
 
 - The Sass team is deprecating the `@import` statement in favour of `@use`, which forced me to import (with `@use()`) all variables, functions, placeholders and mixins into all sass files that depends on them.
 
@@ -71,10 +71,10 @@ This is a responsive mobile-first website featuring real-time product filters, a
 - After a series of bugs, I eventually realized that I needed to `await` all Prisma DB queries for them to execute successfully.
 
 - The price range component came with more challenges than I would have anticipated:
-I found out that the `.getBoundingClientRect` method gives details about an element's rendering dimensions that may not be congruent with its layout dimensions in the case where CSS transformations are applied, which caused a few visual bugs on the range's progress bar. So I had to update my calculations.
-Because I took a naive approach to my initial attempt to make the price range a controlled component, the code grew increasingly complicated and harder to manage. The main issue stemmed from trying to trigger state updates in response to changing props. I ran into a condition where, in some cases, the change handlers and the component's `useEffect()` were continuously updating the state. They triggered state updates one after the other due to stale values, noticeably on mobile, so I had to rethink my approach. The solution was simple, set a key on the component that uses all the props necessary for causing a reset.
+  - I found out that the `.getBoundingClientRect` method gives details about an element's rendering dimensions that may not be congruent with its layout dimensions in the case where CSS transformations are applied, which caused a few visual bugs on the range's progress bar. So I had to update my calculations.
+  - Because I took a naive approach to my initial attempt to make the price range a controlled component, the code grew increasingly complicated and harder to manage. The main issue stemmed from trying to trigger state updates in response to changing props. I ran into a condition where, in some cases, the change handlers and the component's `useEffect()` were continuously updating the state. They triggered state updates one after the other due to stale values, noticeably on mobile, so I had to rethink my approach. The solution was simple, set a key on the component that uses all the props required for triggering a reset.
 
-- Trying to aggregate the average ratings for each product resulted in multiple Prisma clients being instantiated at once, which caused errors in Vercel. To resolve this, I included all reviews related to the products in their `.find` method and then used that to map through and programmatically calculate the average ratings of each product.
+- Trying to aggregate the average ratings for each product resulted in multiple Prisma clients being instantiated at once, which caused errors in Vercel. So to resolve this, in the database query, I included all reviews related to the products and then used that to map through and programmatically calculate the average ratings of each product.
 
 ## What I've Learned
 
