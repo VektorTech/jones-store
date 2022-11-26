@@ -4,7 +4,7 @@
 
 Jones is an SEO-friendly online store for purchasing Nike Jordan Ones.
 
-This is a responsive mobile-first website featuring real-time product filters, a pop-up search option (AJAX live search), AJAX add to cart and wishlist options, a newsletter form, an announcement banner for live updates, a product review section and slideshows on product hover.
+This is a responsive mobile-first website featuring real-time product filters, a pop-up search option (AJAX live search), AJAX add to cart and wishlist options, a newsletter form, an announcement banner for live updates, a product review section and a slideshow on product hover.
 
 ## Tech Used
 
