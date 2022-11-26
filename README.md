@@ -14,7 +14,7 @@ This is a responsive mobile-first website featuring real-time product filters, a
 - **BCrypt** &mdash; Password hashing & comparison
 - **Yup** &mdash; Schema validation & form validation
 - **PostgreSQL** &mdash; A Relational Database Management System
-- **Prisma** &mdash; ORM for PostgreSQL (Data modeling, query Building, migration system & GUI to access database)
+- **Prisma** &mdash; ORM for PostgreSQL (Data Modeling, Query Building, Migration System & GUI to Access Database)
 - **Stripe** &mdash; Used Stripe as primary payment gateway & npm library for accessing their API
 - **Micro** &mdash; Used for parsing raw incoming request body
 - **Sass** &mdash; Preprocessor used for styling
