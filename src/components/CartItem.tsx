@@ -52,6 +52,7 @@ export default function CartProductItem({
       <NumberInput
         className="cart__product-quantity"
         value={cartItem.quantity}
+        key={`cart-${cartItem.quantity}`}
         min={1}
         max={product.stockQty}
         name="qty"

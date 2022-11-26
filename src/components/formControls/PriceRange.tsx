@@ -20,8 +20,6 @@ export default forwardRef<HTMLDivElement, PropTypes>(function PriceRange(
 
   useEffect(() => {
     const control = controlRef.current;
-    setMinValue(minPrice);
-    setMaxValue(maxPrice);
 
     const updateControlUI = () => {
       const minHandle = minHandleRef.current;

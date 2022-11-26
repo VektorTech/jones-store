@@ -51,10 +51,6 @@ export default forwardRef<
     }
   }, [collapsed]);
 
-  useEffect(() => {
-    setValue?.(_value?.toString() ?? "");
-  }, [_value]);
-
   const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();
     if (isSelectKey(e) && e.target == DropdownRef.current) {

@@ -18,6 +18,7 @@ export default function FilterSortSection({ toggleFilter }: PropTypes) {
 
         <div className="filter-sort__sort-by">
           <Dropdown
+            key={sortBy}
             label="Sort By"
             className="filter-sort__sort-select"
             value={sortBy}

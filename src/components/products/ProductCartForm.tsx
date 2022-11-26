@@ -35,6 +35,7 @@ export default function ProductCartForm({
       <NumberInput
         onChange={(value) => setQuantity(value)}
         value={quantity}
+        key={`cart-form-${quantity}`}
         min={1}
         max={stockQty}
         name="qty"

@@ -13,6 +13,7 @@ export default function MainColorParam() {
         checkbox
         values={colorsHex}
         checkedItems={filterState.color}
+        key={`color-param-${filterState.color.length}`}
         onChecked={(items) => filterListings({ color: items })}
         render={({ label, checked, value }) => (
           <span

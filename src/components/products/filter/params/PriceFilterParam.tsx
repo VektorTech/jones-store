@@ -18,6 +18,7 @@ export default function PriceFilterParam() {
         onMaxUpdate={(max) => updateHandler(filterState.price[0], max)}
         minPrice={Math.round(filterState.price[0])}
         maxPrice={Math.round(filterState.price[1])}
+        key={`price-param-${filterState.price[0]}-${filterState.price[1]}`}
       />
     </FilterHeaderParam>
   );

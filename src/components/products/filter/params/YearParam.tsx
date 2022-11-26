@@ -18,6 +18,7 @@ export default function YearParam() {
         checkbox
         reverse
         checkedItems={filterState.year.map((y) => y.toString())}
+        key={`year-param-${filterState.year.length}`}
         onChecked={(items) =>
           filterListings({ year: (items as string[]).map((y) => +y) })
         }

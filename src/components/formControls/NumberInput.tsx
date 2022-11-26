@@ -1,15 +1,13 @@
-import { useRef, forwardRef } from "react";
+import { useState, forwardRef } from "react";
 
 export default forwardRef<HTMLDivElement, PropTypes>(function NumberInput(
   { value = 0, min = 0, max = Infinity, className = "", name, onChange },
   forwardRef
 ) {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [_value, setValue] = useState(Math.min(Math.max(value, min), max));
 
   const changeHandler = (num: number) => {
-    if (inputRef.current) {
-      inputRef.current.value = num.toString();
-    }
+    setValue(num);
     onChange?.(num);
   };
 
@@ -30,8 +28,7 @@ export default forwardRef<HTMLDivElement, PropTypes>(function NumberInput(
         className="number-input__control"
         readOnly
         name={name}
-        ref={inputRef}
-        value={Math.min(Math.max(value, min), max)}
+        value={_value}
       />
       <button
         className="number-input__button"

@@ -1,4 +1,4 @@
-import { useEffect, useState, forwardRef } from "react";
+import { useState, forwardRef } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export default forwardRef<

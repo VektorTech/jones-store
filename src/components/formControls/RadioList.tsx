@@ -1,4 +1,4 @@
-import { ReactElement, useState, useEffect, useMemo, forwardRef } from "react";
+import { ReactElement, useState, useMemo, forwardRef } from "react";
 
 export default forwardRef<
   HTMLDivElement,
@@ -37,10 +37,6 @@ export default forwardRef<
 
   const [groupState, setGroupState] = useState(initState);
   const [all, setAll] = useState(valuesArr.length < 10);
-
-  useEffect(() => {
-    setGroupState(initState);
-  }, [checkedItems, initState]);
 
   const radioHandler = (value: string) => {
     const cloned = Object.assign({}, groupState);

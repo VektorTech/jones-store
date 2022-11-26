@@ -13,6 +13,7 @@ export default function SizeOptions({
 }: PropTypes) {
   return (
     <RadioList
+      key={`size-options-${checkedItems?.length || 0}`}
       name="sizes"
       checkbox={checkbox}
       label={label}

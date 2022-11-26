@@ -15,6 +15,7 @@ export default function HeightParam() {
         values={Category}
         checkbox
         checkedItems={filterState.height}
+        key={`height-param-${filterState.height.length}`}
         onChecked={(items) => filterListings({ height: items })}
         render={({ label, checked }) => (
           <span
