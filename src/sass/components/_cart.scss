@@ -105,21 +105,22 @@
 
   &__product {
     display: grid;
-    margin-bottom: 3rem;
-    height: 13rem;
+    margin-bottom: 1rem;
+    height: 11rem;
     column-gap: 0.5rem;
+    row-gap: 0.5rem;
     font-size: $text-sm;
     font-weight: 400;
     transform: translateX(50%);
-    grid-template-rows: repeat(6, 1fr);
+    grid-template-rows: repeat(5, 1fr);
     grid-template-columns: repeat(12, 1fr);
     grid-template-areas:
-      "t t t t t t t t t r r r"
-      "t t t t t t t t t r r r"
-      "g g g g g g g g g q q q"
-      "s s s s s s s s s q q q"
-      "c c c c c c c c c c c c"
-      "p p p p p p p p p p p p";
+    "t t t t t t t t t p p p"
+    "g g g g g g g g g c c c"
+    "s s s s s s s s s c c c"
+    "q q q q q q q q q q r r"
+    "q q q q q q q q q q r r"
+    "q q q q q q q q q q r r";
 
     & > span:first-child {
       grid-area: i;
@@ -134,13 +135,14 @@
     }
 
     @include respond-to("small") {
+      row-gap: 0rem;
       grid-template-areas:
-        "i i i t t t t t t p p p"
         "i i i t t t t t t p p p"
         "i i i g g g g g g c c c"
         "i i i s s s s s s c c c"
-        "i i i q q q q q q r r r"
-        "i i i q q q q q q r r r";
+        "i i i q q q q q q q r r"
+        "i i i q q q q q q q r r"
+        "i i i q q q q q q q r r";
     }
 
     @include respond-to("medium") {
@@ -170,46 +172,51 @@
 
   &__product-title {
     grid-area: t;
-    align-self: end;
     font-weight: 600;
     font-size: $text-md;
     @extend %truncate;
   }
+
   &__product-gender {
     grid-area: g;
     color: $c-text-dark;
   }
+
   &__product-size {
     grid-area: s;
     font-weight: 300;
     padding-top: 0.5rem;
   }
+
   &__product-price {
     grid-area: p;
     align-self: end;
-    text-align: right;
     font-size: $text-md;
+    text-align: right;
   }
+
   &__product-cost {
     grid-area: c;
-    text-align: right;
     font-size: $text-sm;
     color: $c-text-gray;
     font-weight: 300;
+    text-align: right;
   }
+
   &__product-quantity {
     grid-area: q;
     justify-self: right;
+    align-self: end;
   }
+
   &__product-remove {
     grid-area: r;
     font-size: $text-xs;
     padding: 0;
-    margin-bottom: 0.6rem;
-
-    @include respond-to("small") {
-      margin: 0 0rem 1.2rem 0.5rem;
-    }
+    height: 3rem;
+    width: 9rem;
+    align-self: end;
+    justify-self: right;
   }
 
   &__details {
