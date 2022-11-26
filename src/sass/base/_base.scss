@@ -7,9 +7,8 @@ html {
 
 body {
   background-color: $c-background-color;
-}
+  color: $c-text-black;
 
-body {
   &.grabbing #grab-cover {
     cursor: grabbing;
     @extend %full-size;
