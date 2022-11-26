@@ -23,6 +23,7 @@ export default function Document() {
         <NextScript />
         <div id="modal-root"></div>
         <div id="popup-root"></div>
+        <div id="grab-cover"></div>
       </body>
     </Html>
   );

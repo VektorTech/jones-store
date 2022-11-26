@@ -9,8 +9,13 @@ body {
   background-color: $c-background-color;
 }
 
-body.grabbing {
-  cursor: grabbing;
+body {
+  &.grabbing #grab-cover {
+    cursor: grabbing;
+    @extend %full-size;
+    z-index: 1000;
+    position: fixed;
+  }
 }
 
 article {
