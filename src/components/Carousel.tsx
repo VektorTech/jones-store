@@ -36,16 +36,8 @@ export default function Carousel({ children, aIndex, onUpdate }: PropTypes) {
   const len = React.Children.count(updatedChildren);
 
   useEffect(() => {
-    setSlideNumber(0);
-  }, [children]);
-
-  useEffect(() => {
     setSlideNumber(aIndex);
   }, [aIndex]);
-
-  useEffect(() => {
-    onUpdate?.(slideNumber);
-  }, [slideNumber]);
 
   useEffect(() => {
     if (carousel.current) {
@@ -121,7 +113,9 @@ export default function Carousel({ children, aIndex, onUpdate }: PropTypes) {
             e.stopPropagation();
             if (!transitioning.current) {
               transitioning.current = true;
-              setSlideNumber((slideNumber - 1 + len) % len);
+              const newSlideNumber = (slideNumber - 1 + len) % len;
+              setSlideNumber(newSlideNumber);
+              onUpdate?.(newSlideNumber);
             }
           }}
           onPointerMove={(e) => e.stopPropagation()}
@@ -135,7 +129,9 @@ export default function Carousel({ children, aIndex, onUpdate }: PropTypes) {
             e.stopPropagation();
             if (!transitioning.current) {
               transitioning.current = true;
-              setSlideNumber((slideNumber + 1) % len);
+              const newSlideNumber = (slideNumber + 1) % len;
+              setSlideNumber(newSlideNumber);
+              onUpdate?.(newSlideNumber);
             }
           }}
           onPointerMove={(e) => e.stopPropagation()}
