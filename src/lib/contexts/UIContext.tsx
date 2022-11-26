@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useRouter } from "next/router";
+import { Router } from "next/router";
 
 export enum DialogType {
   SIDEBAR_DIALOG,
@@ -69,13 +69,12 @@ export const UIProvider = ({
   const [announcementVisible, setAnnouncementVisible] = useState(
     !announcementHidden
   );
-  const router = useRouter();
 
   useEffect(() => {
     const clearDialogState = () => setDialog(null);
-    router.events.on("routeChangeStart", clearDialogState);
-    return () => router.events.off("routeChangeStart", clearDialogState);
-  }, [router, currentDialog]);
+    Router.events.on("routeChangeStart", clearDialogState);
+    return () => Router.events.off("routeChangeStart", clearDialogState);
+  }, [currentDialog]);
 
   return (
     <UIContext.Provider

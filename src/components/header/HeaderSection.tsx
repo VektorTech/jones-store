@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/router";
+import { Router } from "next/router";
 
 import Link from "next/link";
 import { AiOutlineHeart } from "react-icons/ai";
@@ -45,13 +45,11 @@ export default function HeaderSection() {
     }
   }, [scrollTop]);
 
-  const router = useRouter();
-
   useEffect(() => {
     const hideDropdown = () => setDropdownNav(null);
-    router.events.on("routeChangeStart", hideDropdown);
-    return () => router.events.off("routeChangeStart", hideDropdown);
-  }, [router]);
+    Router.events.on("routeChangeStart", hideDropdown);
+    return () => Router.events.off("routeChangeStart", hideDropdown);
+  }, []);
 
   const [hoveredElement, setHoveredElement] = useState<string>("");
 
