@@ -8,12 +8,20 @@ import { useAuthState } from "@Lib/contexts/AuthContext";
 import { currencyFormatter } from "@Lib/intl";
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import { MoonLoader } from "react-spinners";
 
 export default function Cart() {
   const { user, addToCart, removeFromCart, emptyCart } = useAuthState();
-  const shippingTotalCost = user.cart.shippingTotal;
+  const [loading, setLoading] = useState(false);
   const { currentDialog, setDialog } = useDialog();
+
   const active = currentDialog == DialogType.CART;
+  const shippingTotalCost = user.cart.shippingTotal;
+
+  useEffect(() => {
+    setLoading(false);
+  }, [user]);
 
   return (
     <div className={"cart" + (active ? " cart--active" : "")}>
@@ -37,10 +45,14 @@ export default function Cart() {
             {user.cart.productIds.sort().map((id, index) => (
               <CartProductItem
                 index={index}
-                removeAction={() => removeFromCart(id)}
-                updateAction={(quantity: number) =>
-                  addToCart(id, quantity, user.cart.items[id].size)
-                }
+                removeAction={() => {
+                  removeFromCart(id);
+                  setLoading(true);
+                }}
+                updateAction={(quantity: number) => {
+                  addToCart(id, quantity, user.cart.items[id].size);
+                  setLoading(true);
+                }}
                 key={`cart-${id}`}
                 product={user.cart.items[id].product}
                 cartItem={user.cart.items[id]}
@@ -63,16 +75,24 @@ export default function Cart() {
               {currencyFormatter.format(user.cart.total + shippingTotalCost)}
             </p>
           </div>
-          <Button onClick={stripeCheckout} className="cart__checkout-button">
+          <Button
+            onClick={() => stripeCheckout(() => setLoading(false))}
+            className="cart__checkout-button"
+          >
             Checkout
           </Button>
         </div>
+        {loading && (
+          <div className="cart__loader">
+            <MoonLoader size={30} />
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
-function stripeCheckout() {
+function stripeCheckout(callback: () => void) {
   fetch("/api/cart-checkout", {
     method: "POST",
     headers: {
@@ -92,5 +112,6 @@ function stripeCheckout() {
     .then(({ data }) => {
       location.href = data;
     })
-    .catch((err) => toast("Please sign in before checkout", { type: "error" }));
+    .catch((err) => toast("Please sign in before checkout", { type: "error" }))
+    .finally(callback);
 }

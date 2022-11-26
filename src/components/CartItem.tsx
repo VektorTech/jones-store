@@ -42,12 +42,12 @@ export default function CartProductItem({
       <span className="cart__product-gender">{product.gender}</span>
       <span className="cart__product-size">Size: {cartItem.size}</span>
       <span className="cart__product-price">
-        {currencyFormatter.format(product.price - product.discount)}
-      </span>
-      <span className="cart__product-cost">
         {currencyFormatter.format(
           (product.price - product.discount) * cartItem.quantity
         )}
+      </span>
+      <span className="cart__product-cost">
+        {currencyFormatter.format(product.price - product.discount)}
       </span>
       <NumberInput
         className="cart__product-quantity"
