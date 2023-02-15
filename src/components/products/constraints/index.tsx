@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 import ConstraintButtons from "./ConstraintButtons";
 
-import { useProductsState } from "@Lib/contexts/ProductsContext";
+import { useProductsState } from "@Contexts/ProductsContext";
 
 export default function Constraints({
   allProductsCount,

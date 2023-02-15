@@ -3,7 +3,7 @@ import { Category } from "@prisma/client";
 import RadioList from "@Components/formControls/RadioList";
 import FilterHeaderParam from "../FilterHeaderParam";
 
-import { useProductsState } from "@Lib/contexts/ProductsContext";
+import { useProductsState } from "@Contexts/ProductsContext";
 
 export default function HeightParam() {
   const { filterListings, filterState } = useProductsState();

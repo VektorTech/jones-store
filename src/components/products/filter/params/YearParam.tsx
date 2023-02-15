@@ -3,7 +3,7 @@ import { useRef } from "react";
 import RadioList from "@Components/formControls/RadioList";
 import FilterHeaderParam from "../FilterHeaderParam";
 
-import { useProductsState } from "@Lib/contexts/ProductsContext";
+import { useProductsState } from "@Contexts/ProductsContext";
 import { listToEnum, range } from "src/utils";
 
 export default function YearParam() {

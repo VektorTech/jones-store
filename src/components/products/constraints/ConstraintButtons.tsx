@@ -3,7 +3,7 @@ import { VscChromeClose } from "react-icons/vsc";
 import {
   filterStateType,
   useProductsState,
-} from "@Lib/contexts/ProductsContext";
+} from "@Contexts/ProductsContext";
 
 export default function ConstraintButtons({ paramName, items }: PropTypes) {
   const { filterState, filterListings } = useProductsState();

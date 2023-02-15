@@ -21,8 +21,8 @@ import ErrorBoundary from "@Components/ErrorBoundary";
 
 import prisma from "@Lib/prisma";
 import { sessionOptions } from "@Lib/config";
-import { AuthProvider } from "@Lib/contexts/AuthContext";
-import { UIProvider } from "@Lib/contexts/UIContext";
+import { AuthProvider } from "@Contexts/AuthContext";
+import { UIProvider } from "@Contexts/UIContext";
 
 NProgress.configure({ showSpinner: false });
 Router.events.on("routeChangeStart", () => NProgress.start());

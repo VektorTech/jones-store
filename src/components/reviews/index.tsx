@@ -9,7 +9,7 @@ import RatingStars from "../common/RatingStars";
 import Modal from "../Modal";
 import Review from "./Review";
 
-import { useAuthState } from "@Lib/contexts/AuthContext";
+import { useAuthState } from "@Contexts/AuthContext";
 
 export default function Reviews({ productId }: PropTypes) {
   const [reviewModal, setReviewModal] = useState(false);

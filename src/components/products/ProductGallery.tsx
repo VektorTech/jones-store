@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 import Carousel from "@Components/Carousel";
-import { useAuthState } from "@Lib/contexts/AuthContext";
+import { useAuthState } from "@Contexts/AuthContext";
 
 export default function ProductGallery({
   productId,

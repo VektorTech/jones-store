@@ -5,7 +5,7 @@ import SizeOptions from "@Components/common/SizeOptions";
 import Button from "@Components/formControls/Button";
 import NumberInput from "@Components/formControls/NumberInput";
 
-import { useAuthState } from "@Lib/contexts/AuthContext";
+import { useAuthState } from "@Contexts/AuthContext";
 import { listToEnum } from "src/utils";
 import { ProductComponentType } from "src/types/shared";
 import { toast } from "react-toastify";

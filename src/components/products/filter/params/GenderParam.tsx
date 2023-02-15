@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import FilterHeaderParam from "../FilterHeaderParam";
 
-import { useProductsState } from "@Lib/contexts/ProductsContext";
+import { useProductsState } from "@Contexts/ProductsContext";
 
 export default function GenderParam() {
   const { filterListings, filterState } = useProductsState();

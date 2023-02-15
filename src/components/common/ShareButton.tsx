@@ -15,7 +15,7 @@ import { HiOutlineShare } from "react-icons/hi";
 
 import Modal from "@Components/Modal";
 
-import { DialogType, useDialog } from "@Lib/contexts/UIContext";
+import { DialogType, useDialog } from "@Contexts/UIContext";
 
 export default function ShareButton({
   title,

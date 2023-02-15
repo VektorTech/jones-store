@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { RiRadioButtonLine, RiCheckboxBlankCircleFill } from "react-icons/ri";
 
-import { useAnnouncementState } from "@Lib/contexts/UIContext";
+import { useAnnouncementState } from "@Contexts/UIContext";
 import useMouseCoords from "@Hooks/useMouseCoords";
 import useScrollTop from "@Hooks/useScrollTop";
 import { range } from "src/utils";

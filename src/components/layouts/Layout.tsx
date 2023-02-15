@@ -7,7 +7,7 @@ import HeroBanner from "../HeroBanner";
 import { ScrollUpButton } from "../ScrollUpButton";
 import FeaturesSection from "../FeaturesSection";
 
-import { DialogType, useDialog } from "@Lib/contexts/UIContext";
+import { DialogType, useDialog } from "@Contexts/UIContext";
 
 export default function Layout({ children }: { children: ReactNode }) {
   useDialog(

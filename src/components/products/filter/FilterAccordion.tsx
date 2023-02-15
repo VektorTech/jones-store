@@ -8,7 +8,7 @@ import HeightParam from "./params/HeightParam";
 import PriceFilterParam from "./params/PriceFilterParam";
 import YearParam from "./params/YearParam";
 
-import { useProductsState } from "@Lib/contexts/ProductsContext";
+import { useProductsState } from "@Contexts/ProductsContext";
 
 export default function FilterAccordion({ active, setState }: PropTypes) {
   const { clearFilters } = useProductsState();

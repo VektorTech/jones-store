@@ -7,7 +7,7 @@ import SEO from "@Components/common/SEO";
 import ProductsGrid from "@Components/products/ProductsGrid";
 
 import prisma from "@Lib/prisma";
-import { useAuthState } from "@Lib/contexts/AuthContext";
+import { useAuthState } from "@Contexts/AuthContext";
 import { withSessionSsr } from "@Lib/withSession";
 import Head from "next/head";
 

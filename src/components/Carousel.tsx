@@ -3,7 +3,7 @@ import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
 
 import Modal from "./Modal";
 
-import { DialogType, useDialog } from "@Lib/contexts/UIContext";
+import { DialogType, useDialog } from "@Contexts/UIContext";
 import useMouseCoords from "@Hooks/useMouseCoords";
 
 export default function Carousel({ children, aIndex, onUpdate }: PropTypes) {

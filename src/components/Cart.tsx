@@ -4,9 +4,9 @@ import { PaymentType } from "@prisma/client";
 import Button from "./formControls/Button";
 import CartProductItem from "./CartItem";
 
-import { useAuthState } from "@Lib/contexts/AuthContext";
+import { useAuthState } from "@Contexts/AuthContext";
 import { currencyFormatter } from "src/intl";
-import { DialogType, useDialog } from "@Lib/contexts/UIContext";
+import { DialogType, useDialog } from "@Contexts/UIContext";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { MoonLoader } from "react-spinners";

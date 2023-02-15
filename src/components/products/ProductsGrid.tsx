@@ -3,7 +3,7 @@ import type { ProductComponentType } from "src/types/shared";
 import Product from "@Components/common/Product";
 import MotionElement from "@Components/common/MotionElement";
 
-import { useProductsState } from "@Lib/contexts/ProductsContext";
+import { useProductsState } from "@Contexts/ProductsContext";
 
 export default function ProductsGrid({ products, actions = {} }: PropTypes) {
   const { productImagePlaceholders } = useProductsState();

@@ -1,7 +1,7 @@
 import SizeOptions from "@Components/common/SizeOptions";
 import FilterHeaderParam from "../FilterHeaderParam";
 
-import { useProductsState } from "@Lib/contexts/ProductsContext";
+import { useProductsState } from "@Contexts/ProductsContext";
 
 export default function SizesParam() {
   const { filterListings, filterState } = useProductsState();

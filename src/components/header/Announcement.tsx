@@ -12,7 +12,7 @@ import {
   DialogType,
   useAnnouncementState,
   useDialog,
-} from "@Lib/contexts/UIContext";
+} from "@Contexts/UIContext";
 import { setCookie } from "src/utils";
 import { allowedTags } from "src/constants";
 

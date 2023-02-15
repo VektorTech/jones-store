@@ -3,7 +3,7 @@ import { BsSliders } from "react-icons/bs";
 import Button from "@Components/formControls/Button";
 import Dropdown from "@Components/formControls/Dropdown";
 
-import { useProductsState } from "@Lib/contexts/ProductsContext";
+import { useProductsState } from "@Contexts/ProductsContext";
 
 export default function FilterSortSection({ toggleFilter }: PropTypes) {
   const { sortListings, sortBy } = useProductsState();

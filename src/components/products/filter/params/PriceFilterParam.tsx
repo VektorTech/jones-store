@@ -1,7 +1,7 @@
 import PriceRange from "@Components/formControls/PriceRange";
 import FilterHeaderParam from "../FilterHeaderParam";
 
-import { useProductsState } from "@Lib/contexts/ProductsContext";
+import { useProductsState } from "@Contexts/ProductsContext";
 import { useCallback } from "react";
 
 export default function PriceFilterParam() {

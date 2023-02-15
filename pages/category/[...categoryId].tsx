@@ -14,11 +14,11 @@ import prisma from "@Lib/prisma";
 import { withSessionSsr } from "@Lib/withSession";
 import { HIGHEST_PRICE } from "src/constants";
 
-import { useDialog } from "@Lib/contexts/UIContext";
+import { useDialog } from "@Contexts/UIContext";
 import ProductsProvider, {
   filterStateType,
   useProductsState,
-} from "@Lib/contexts/ProductsContext";
+} from "@Contexts/ProductsContext";
 import { aggregate, getBase64UrlCloudinary } from "src/helpers";
 
 function CategoryPage({ categoryId }: { categoryId: string }) {

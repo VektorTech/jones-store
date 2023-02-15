@@ -8,7 +8,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import RatingStars from "./RatingStars";
 
 import { getPathString } from "src/utils";
-import { useAuthState } from "@Lib/contexts/AuthContext";
+import { useAuthState } from "@Contexts/AuthContext";
 import { currencyFormatter } from "src/intl";
 import { DefaultPlaceholder } from "src/constants";
 

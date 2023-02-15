@@ -9,7 +9,7 @@ import Dropdown from "./formControls/Dropdown";
 import Modal from "./Modal";
 import Logo from "./common/Logo";
 
-import { DialogType, useDialog } from "@Lib/contexts/UIContext";
+import { DialogType, useDialog } from "@Contexts/UIContext";
 
 import paymentImage from "@Images/payment.png";
 import Form from "./common/Form";

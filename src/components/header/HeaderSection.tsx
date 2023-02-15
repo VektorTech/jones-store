@@ -17,8 +17,8 @@ import {
 } from "./MenuLists";
 
 import useScrollTop from "@Hooks/useScrollTop";
-import { DialogType, useDialog } from "@Lib/contexts/UIContext";
-import { useAuthState } from "@Lib/contexts/AuthContext";
+import { DialogType, useDialog } from "@Contexts/UIContext";
+import { useAuthState } from "@Contexts/AuthContext";
 import { currencyFormatter2 } from "src/intl";
 
 export default function HeaderSection() {

@@ -12,8 +12,8 @@ import {
   WomenCategoriesList,
 } from "./MenuLists";
 
-import { useDialog, DialogType } from "@Lib/contexts/UIContext";
-import { useAuthState } from "@Lib/contexts/AuthContext";
+import { useDialog, DialogType } from "@Contexts/UIContext";
+import { useAuthState } from "@Contexts/AuthContext";
 import useTabTrapIn from "@Hooks/useKeyTrap";
 import { currencyFormatter2 } from "src/intl";
 
