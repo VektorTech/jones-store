@@ -185,6 +185,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] Add a captcha to the signup and login forms.
 - [ ] Create a size chart UI.
 - [ ] Animate Menu Button.
+- [ ] Skeleton Loading Animation.
 - [ ] Add navigation animation to product when clicked, so the product's image transitions to gallery.
 
 ## Credits & Attributions
