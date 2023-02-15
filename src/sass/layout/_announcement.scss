@@ -79,10 +79,14 @@
   }
 
   &__loader {
-    margin: auto;
-    top: 0.5rem;
-    border-color: $c-background-dark $c-background-dark transparent;
-    display: block !important;
+    height: 100%;
+    display: flex;
+
+    &-spinner {
+      margin: auto;
+      border-color: $c-background-dark $c-background-dark transparent;
+      display: block !important;
+    }
   }
 
   &__info-icon {

@@ -29,6 +29,7 @@
 
   &__link {
     margin-right: 1rem;
+    color: white;
 
     > svg {
       transition: transform 0.3s $timing-func-ui, color 0.3s $timing-func-ui;

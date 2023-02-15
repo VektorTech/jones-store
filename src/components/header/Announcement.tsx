@@ -89,7 +89,9 @@ export default function Announcement() {
             ))}
           </div>
         ) : (
-          <MoonLoader size={20} className="announcement__loader" />
+          <div className="announcement__loader">
+            <MoonLoader size={22} className="announcement__loader-spinner" />
+          </div>
         )}
 
         <button
