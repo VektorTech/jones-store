@@ -14,7 +14,7 @@ import {
   deleteCartItem,
   emptyUserCart,
   normalizeUserProductItems,
-} from "@Lib/helpers";
+} from "src/helpers";
 
 export const initUser: UserTypeNormalized = {
   id: "",

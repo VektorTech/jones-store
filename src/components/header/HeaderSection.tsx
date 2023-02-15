@@ -16,10 +16,10 @@ import {
   WomenCategoriesList,
 } from "./MenuLists";
 
-import useScrollTop from "@Lib/hooks/useScrollTop";
+import useScrollTop from "@Hooks/useScrollTop";
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 import { useAuthState } from "@Lib/contexts/AuthContext";
-import { currencyFormatter2 } from "@Lib/intl";
+import { currencyFormatter2 } from "src/intl";
 
 export default function HeaderSection() {
   const { setDialog } = useDialog();

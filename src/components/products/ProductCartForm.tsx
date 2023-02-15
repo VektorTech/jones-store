@@ -6,10 +6,10 @@ import Button from "@Components/formControls/Button";
 import NumberInput from "@Components/formControls/NumberInput";
 
 import { useAuthState } from "@Lib/contexts/AuthContext";
-import { listToEnum } from "@Lib/utils";
+import { listToEnum } from "src/utils";
 import { ProductComponentType } from "src/types/shared";
 import { toast } from "react-toastify";
-import { currencyFormatter2 } from "@Lib/intl";
+import { currencyFormatter2 } from "src/intl";
 
 export default function ProductCartForm({
   product,

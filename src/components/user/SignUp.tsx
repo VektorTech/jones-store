@@ -6,7 +6,7 @@ import Button from "@Components/formControls/Button";
 import Form from "@Components/common/Form";
 
 import { userSchema } from "@Lib/validations";
-import { validateInput, validateInputs } from "@Lib/helpers";
+import { validateInput, validateInputs } from "src/helpers";
 import { toast } from "react-toastify";
 
 const validateFormField = validateInput(userSchema);

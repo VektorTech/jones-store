@@ -4,7 +4,7 @@ import type { DefaultResponse } from "src/types/shared";
 import RouteHandler from "@Lib/RouteHandler";
 import prisma from "@Lib/prisma";
 import { isAuthenticated } from "@Lib/apiMiddleware";
-import { ServerError } from "@Lib/utils";
+import { ServerError } from "src/utils";
 
 async function postReviewRoute(
   req: NextApiRequest,

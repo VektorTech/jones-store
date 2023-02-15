@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useRef } from "react";
 
-import useScrollTop from "@Lib/hooks/useScrollTop";
+import useScrollTop from "@Hooks/useScrollTop";
 
 import ShoePrint from "@Images/jordan-shoe-print.png";
 

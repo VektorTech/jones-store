@@ -7,7 +7,7 @@ import { OrderStatus, PaymentType } from "@prisma/client";
 import RouteHandler from "@Lib/RouteHandler";
 import prisma from "@Lib/prisma";
 import { isAuthenticated } from "@Lib/apiMiddleware";
-import { ServerError } from "@Lib/utils";
+import { ServerError } from "src/utils";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2022-08-01",

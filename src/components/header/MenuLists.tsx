@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { getPathString } from "@Lib/utils";
+import { getPathString } from "src/utils";
 
-const CategoriesData = require("@Lib/CategoriesData.json");
+const CategoriesData = require("@Data/CategoriesData.json");
 
 export const ColorwaysList = CategoriesData.colorways.map((name: string) => (
   <li key={name} className="sidebar__links-item">

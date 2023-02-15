@@ -2,7 +2,7 @@ import type { AsyncAPIHandler, HTTPMethods } from "src/types/shared";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { withSessionRoute } from "./withSession";
-import { catchAsyncErrors, ServerError } from "./utils";
+import { catchAsyncErrors, ServerError } from "../utils";
 
 interface RouteHandlerReturnType {
   (req: NextApiRequest, res: NextApiResponse): void;

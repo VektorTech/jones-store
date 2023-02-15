@@ -13,8 +13,8 @@ import {
   useAnnouncementState,
   useDialog,
 } from "@Lib/contexts/UIContext";
-import { setCookie } from "@Lib/utils";
-import { allowedTags } from "@Lib/constants";
+import { setCookie } from "src/utils";
+import { allowedTags } from "src/constants";
 
 export default function Announcement() {
   const [announcementVisible, setAnnouncementVisible] = useAnnouncementState();

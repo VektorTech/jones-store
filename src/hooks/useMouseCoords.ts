@@ -1,4 +1,4 @@
-import { map, throttle } from "@Lib/utils";
+import { map, throttle } from "src/utils";
 import { useState, useEffect } from "react";
 
 export default function useMouseCoords<T extends HTMLElement>(

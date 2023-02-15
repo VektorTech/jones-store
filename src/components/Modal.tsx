@@ -2,7 +2,7 @@ import React, { ReactElement, useRef, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { VscChromeClose } from "react-icons/vsc";
 
-import useTabTrapIn from "@Lib/hooks/useKeyTrap";
+import useTabTrapIn from "@Hooks/useKeyTrap";
 
 export default function Modal({
   children,

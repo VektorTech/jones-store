@@ -4,8 +4,8 @@ import type { DefaultResponse } from "src/types/shared";
 import RouteHandler from "@Lib/RouteHandler";
 import prisma from "@Lib/prisma";
 import { newsletterRecipientSchema } from "@Lib/validations";
-import { validateInputs } from "@Lib/helpers";
-import { ServerError } from "@Lib/utils";
+import { validateInputs } from "src/helpers";
+import { ServerError } from "src/utils";
 
 async function NewsletterRoute(
   req: NextApiRequest,

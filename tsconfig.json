@@ -19,6 +19,9 @@
     "paths": {
       "@Components/*": ["src/components/*"],
       "@Lib/*": ["src/lib/*"],
+      "@Data/*": ["src/data/*"],
+      "@Hooks/*": ["src/hooks/*"],
+      "@Contexts/*": ["src/contexts/*"],
       "@Sass/*": ["src/sass/*"],
       "@Images/*": ["public/assets/images/*"],
     }

@@ -8,7 +8,7 @@ import ProductsGrid from "@Components/products/ProductsGrid";
 
 import prisma from "@Lib/prisma";
 import { withSessionSsr } from "@Lib/withSession";
-import { aggregate } from "@Lib/helpers";
+import { aggregate } from "src/helpers";
 
 const SearchPage: NextPage<SearchPageType> = ({ query, products, count }) => {
   return (

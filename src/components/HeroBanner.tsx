@@ -5,9 +5,9 @@ import { useRouter } from "next/router";
 import { RiRadioButtonLine, RiCheckboxBlankCircleFill } from "react-icons/ri";
 
 import { useAnnouncementState } from "@Lib/contexts/UIContext";
-import useMouseCoords from "@Lib/hooks/useMouseCoords";
-import useScrollTop from "@Lib/hooks/useScrollTop";
-import { range } from "@Lib/utils";
+import useMouseCoords from "@Hooks/useMouseCoords";
+import useScrollTop from "@Hooks/useScrollTop";
+import { range } from "src/utils";
 import SocialIcons from "./common/SocialButtons";
 
 import BannerImage1 from "@Images/jordan-1-banner.png";

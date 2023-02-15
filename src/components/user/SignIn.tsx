@@ -5,7 +5,7 @@ import TextField from "@Components/formControls/TextField";
 import Button from "@Components/formControls/Button";
 
 import { userLoginSchema } from "@Lib/validations";
-import { validateInput, validateInputs } from "@Lib/helpers";
+import { validateInput, validateInputs } from "src/helpers";
 import { toast } from "react-toastify";
 
 const defaultUserCred = {

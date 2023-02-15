@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { isSelectKey } from "@Lib/utils";
+import { isSelectKey } from "src/utils";
 
 let focusIndex = 0;
 

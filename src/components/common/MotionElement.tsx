@@ -1,6 +1,6 @@
 import { ReactElement, cloneElement, useRef } from "react";
 
-import useIsomorphicLayoutEffect from "@Lib/hooks/useIsomorphicLayoutEffect";
+import useIsomorphicLayoutEffect from "@Hooks/useIsomorphicLayoutEffect";
 
 export default function MotionElement({
   children,

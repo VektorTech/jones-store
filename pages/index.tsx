@@ -7,7 +7,7 @@ import GenderSection from "@Components/home/GenderSection";
 
 import { withSessionSsr } from "@Lib/withSession";
 import prisma from "@Lib/prisma";
-import { aggregate, getBase64UrlCloudinary } from "@Lib/helpers";
+import { aggregate, getBase64UrlCloudinary } from "src/helpers";
 
 const Home: NextPage<HomePropTypes> = ({
   newArrivals,

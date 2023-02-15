@@ -4,10 +4,10 @@ import { CartItem, Product } from "@prisma/client";
 import NumberInput from "./formControls/NumberInput";
 import Button from "./formControls/Button";
 
-import { currencyFormatter } from "@Lib/intl";
+import { currencyFormatter } from "src/intl";
 import React from "react";
 import Link from "next/link";
-import { getPathString } from "@Lib/utils";
+import { getPathString } from "src/utils";
 
 export default function CartProductItem({
   product,

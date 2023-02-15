@@ -11,8 +11,8 @@ import {
   ForwardedRef,
 } from "react";
 
-import { HIGHEST_PRICE } from "@Lib/constants";
-import { compareObjects } from "@Lib/utils";
+import { HIGHEST_PRICE } from "src/constants";
+import { compareObjects } from "src/utils";
 import Router from "next/router";
 
 export interface filterStateType {
@@ -118,7 +118,7 @@ const actions: { [type: string]: Function } = {
   year: getYearPredicate,
 };
 
-const ProductsContext = createContext(ProductsState);
+const ProductsContext = createContext<ProductStateType>(ProductsState);
 
 export const useProductsState = () => useContext(ProductsContext);
 

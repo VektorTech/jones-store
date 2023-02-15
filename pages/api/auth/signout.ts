@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { DefaultResponse } from "src/types/shared";
 import RouteHandler from "@Lib/RouteHandler";
 import { isAuthenticated } from "@Lib/apiMiddleware";
-import { ServerError } from "@Lib/utils";
+import { ServerError } from "src/utils";
 
 async function signoutRoute(
   req: NextApiRequest,

@@ -7,8 +7,8 @@ import bcrypt from "bcryptjs";
 import RouteHandler from "@Lib/RouteHandler";
 import prisma from "@Lib/prisma";
 import { userLoginSchema } from "@Lib/validations";
-import { normalizeUserProductItems, validateInputs } from "@Lib/helpers";
-import { ServerError } from "@Lib/utils";
+import { normalizeUserProductItems, validateInputs } from "src/helpers";
+import { ServerError } from "src/utils";
 
 const signinRoute = async (
   req: NextApiRequest,

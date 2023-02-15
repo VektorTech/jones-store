@@ -1,6 +1,6 @@
 import { Gender, Category } from "@prisma/client";
 
-import { cloudinaryUpload, listToEnum } from "@Lib/utils";
+import { cloudinaryUpload, listToEnum } from "src/utils";
 
 import Form, { beforeSubmitType } from "@Components/common/Form";
 import TextField from "@Components/formControls/TextField";

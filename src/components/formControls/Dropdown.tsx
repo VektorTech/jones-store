@@ -10,8 +10,8 @@ import {
 } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
-import useArrowKeyTrap from "@Lib/hooks/useKeyTrap";
-import { isSelectKey } from "@Lib/utils";
+import useArrowKeyTrap from "@Hooks/useKeyTrap";
+import { isSelectKey } from "src/utils";
 
 export default forwardRef<
   HTMLDivElement | null,

@@ -1,6 +1,6 @@
 import RadioList from "../formControls/RadioList";
 
-import { listToEnum } from "@Lib/utils";
+import { listToEnum } from "src/utils";
 
 const sizeListObj = listToEnum([...Array(37)].map((_, i) => String(2 + i / 2)));
 

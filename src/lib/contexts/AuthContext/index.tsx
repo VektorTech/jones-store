@@ -2,9 +2,9 @@ import type { UserTypeNormalized, UserType } from "src/types/shared";
 
 import { createContext, ReactElement, useContext } from "react";
 
-import useUser, { initUser } from "./useUser";
+import useUser, { initUser } from "./authState";
 
-const authState: {
+interface AuthStateType {
   user: UserTypeNormalized;
   addToWishlist: (id: string) => Promise<void>;
   removeFromWishlist: (id: string) => Promise<void>;
@@ -13,7 +13,9 @@ const authState: {
   removeFromCart: (id: string) => Promise<void>;
   useSelector: (callback: (user: UserTypeNormalized) => void) => void;
   setAuthUser: (user: UserTypeNormalized) => void;
-} = {
+}
+
+const authState: AuthStateType = {
   user: initUser,
   addToWishlist: (id) => Promise.resolve(),
   removeFromWishlist: (id) => Promise.resolve(),
@@ -24,7 +26,7 @@ const authState: {
   setAuthUser: () => null,
 };
 
-const AuthContext = createContext(authState);
+const AuthContext = createContext<AuthStateType>(authState);
 
 export const useAuthState = () => useContext(AuthContext);
 

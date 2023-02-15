@@ -2,7 +2,7 @@ import type { CartType, UserProducts, WishlistType } from "src/types/shared";
 
 import { ObjectSchema, ValidationError } from "yup";
 
-import { CLOUDINARY_CLOUD_NAME } from "./config";
+import { CLOUDINARY_CLOUD_NAME } from "./lib/config";
 
 export function validateInputs(
   input: any,

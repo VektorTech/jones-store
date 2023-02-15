@@ -7,10 +7,10 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 import RatingStars from "./RatingStars";
 
-import { getPathString } from "@Lib/utils";
+import { getPathString } from "src/utils";
 import { useAuthState } from "@Lib/contexts/AuthContext";
-import { currencyFormatter } from "@Lib/intl";
-import { DefaultPlaceholder } from "@Lib/constants";
+import { currencyFormatter } from "src/intl";
+import { DefaultPlaceholder } from "src/constants";
 
 const MAX_IMAGE_SLIDES = 3;
 

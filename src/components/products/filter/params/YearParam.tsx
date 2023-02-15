@@ -4,7 +4,7 @@ import RadioList from "@Components/formControls/RadioList";
 import FilterHeaderParam from "../FilterHeaderParam";
 
 import { useProductsState } from "@Lib/contexts/ProductsContext";
-import { listToEnum, range } from "@Lib/utils";
+import { listToEnum, range } from "src/utils";
 
 export default function YearParam() {
   const values = useRef(listToEnum(range(1985, new Date().getFullYear())));

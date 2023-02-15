@@ -14,8 +14,8 @@ import {
 
 import { useDialog, DialogType } from "@Lib/contexts/UIContext";
 import { useAuthState } from "@Lib/contexts/AuthContext";
-import useTabTrapIn from "@Lib/hooks/useKeyTrap";
-import { currencyFormatter2 } from "@Lib/intl";
+import useTabTrapIn from "@Hooks/useKeyTrap";
+import { currencyFormatter2 } from "src/intl";
 
 export default function Sidebar() {
   const [submenu, setSubmenu] = useState<Array<any> | null>(null);

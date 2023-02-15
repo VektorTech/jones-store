@@ -7,7 +7,7 @@ import { VscChromeClose } from "react-icons/vsc";
 import Product from "@Components/common/Product";
 
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
-import { useDebounce } from "@Lib/hooks/useDebounce";
+import { useDebounce } from "@Hooks/useDebounce";
 
 export default function SearchBoxContainer() {
   const { currentDialog, setDialog } = useDialog();

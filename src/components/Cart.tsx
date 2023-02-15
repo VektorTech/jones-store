@@ -5,7 +5,7 @@ import Button from "./formControls/Button";
 import CartProductItem from "./CartItem";
 
 import { useAuthState } from "@Lib/contexts/AuthContext";
-import { currencyFormatter } from "@Lib/intl";
+import { currencyFormatter } from "src/intl";
 import { DialogType, useDialog } from "@Lib/contexts/UIContext";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";

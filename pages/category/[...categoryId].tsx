@@ -12,14 +12,14 @@ import ProductsGrid from "@Components/products/ProductsGrid";
 
 import prisma from "@Lib/prisma";
 import { withSessionSsr } from "@Lib/withSession";
-import { HIGHEST_PRICE } from "@Lib/constants";
+import { HIGHEST_PRICE } from "src/constants";
 
 import { useDialog } from "@Lib/contexts/UIContext";
 import ProductsProvider, {
   filterStateType,
   useProductsState,
 } from "@Lib/contexts/ProductsContext";
-import { aggregate, getBase64UrlCloudinary } from "@Lib/helpers";
+import { aggregate, getBase64UrlCloudinary } from "src/helpers";
 
 function CategoryPage({ categoryId }: { categoryId: string }) {
   const { products } = useProductsState();

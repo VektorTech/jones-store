@@ -12,8 +12,8 @@ import ProductDetails from "@Components/products/ProductDetails";
 import prisma from "@Lib/prisma";
 import { NextPage } from "next";
 import RatingStars from "@Components/common/RatingStars";
-import { currencyFormatter } from "@Lib/intl";
-import { aggregate, getBase64UrlCloudinary } from "@Lib/helpers";
+import { currencyFormatter } from "src/intl";
+import { aggregate, getBase64UrlCloudinary } from "src/helpers";
 
 const ProductPage: NextPage<ProductPageType> = ({
   product,

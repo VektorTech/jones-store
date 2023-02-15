@@ -5,9 +5,9 @@ import type { User } from "@prisma/client";
 import RouteHandler from "@Lib/RouteHandler";
 import prisma from "@Lib/prisma";
 import { userSchema } from "@Lib/validations";
-import { validateInputs } from "@Lib/helpers";
+import { validateInputs } from "src/helpers";
 import { isAuthorizedUser } from "@Lib/apiMiddleware";
-import { ServerError } from "@Lib/utils";
+import { ServerError } from "src/utils";
 
 async function editUserRoute(
   req: NextApiRequest,

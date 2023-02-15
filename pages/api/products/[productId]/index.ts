@@ -3,7 +3,7 @@ import type { DefaultResponse } from "src/types/shared";
 
 import RouteHandler from "@Lib/RouteHandler";
 import prisma from "@Lib/prisma";
-import { ServerError } from "@Lib/utils";
+import { ServerError } from "src/utils";
 
 async function productRoute(
   req: NextApiRequest,

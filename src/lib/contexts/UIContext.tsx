@@ -19,19 +19,21 @@ export enum DialogType {
   MODAL_SHARE,
 }
 
-const uiState: {
+interface UIStateType {
   announcementVisible?: boolean;
   currentDialog?: DialogType | null;
   setDialog: Dispatch<SetStateAction<DialogType | null>>;
   setAnnouncementVisible: Dispatch<SetStateAction<boolean>>;
-} = {
+}
+
+const uiState = {
   announcementVisible: true,
   currentDialog: undefined,
   setDialog: () => {},
   setAnnouncementVisible: () => {},
 };
 
-const UIContext = createContext(uiState);
+const UIContext = createContext<UIStateType>(uiState);
 
 export function useDialog(
   observer?: (isVisible: boolean, currentState?: DialogType | null) => void,

@@ -7,7 +7,7 @@ import RouteHandler from "@Lib/RouteHandler";
 import prisma from "@Lib/prisma";
 import { authorizeRole, isAuthenticated } from "@Lib/apiMiddleware";
 import { Role } from "@prisma/client";
-import { allowedTags } from "@Lib/constants";
+import { allowedTags } from "src/constants";
 
 export default RouteHandler()
   .post(
