@@ -10,6 +10,7 @@ import {
 import { Router } from "next/router";
 import { CurrencyRate } from "@prisma/client";
 import { formatCurrency } from "src/intl";
+import useLocalStorage from "@Hooks/useLocalStorage";
 
 export enum DialogType {
   SIDEBAR_DIALOG,
@@ -37,7 +38,7 @@ interface UIStateType {
   currency: CurrencyType;
   setDialog: Dispatch<SetStateAction<DialogType | null>>;
   setAnnouncementVisible: Dispatch<SetStateAction<boolean>>;
-  setCurrency: Dispatch<SetStateAction<CurrencyType>>;
+  setCurrency: (value: CurrencyType) => void;
 }
 
 const uiState = {
@@ -69,7 +70,7 @@ export function useDialog(
 
 export function useCurrencyState(): {
   currency: CurrencyType;
-  setCurrency: Dispatch<SetStateAction<CurrencyType>>;
+  setCurrency: (value: CurrencyType) => void;
   currencyRates: UIStateType["currencyRates"];
 } {
   const { currency, setCurrency, currencyRates } = useContext(UIContext);
@@ -105,7 +106,10 @@ export const UIProvider = ({
   const [announcementVisible, setAnnouncementVisible] = useState(
     !announcementHidden
   );
-  const [currency, setCurrency] = useState<CurrencyType>(CurrencyType.USD);
+  const [currency, setCurrency] = useLocalStorage<CurrencyType>(
+    "currency",
+    CurrencyType.USD
+  );
   useEffect(() => {
     const clearDialogState = () => setDialog(null);
     Router.events.on("routeChangeStart", clearDialogState);
