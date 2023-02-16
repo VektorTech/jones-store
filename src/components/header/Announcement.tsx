@@ -2,7 +2,6 @@ import type { Announcement as AnnouncementType } from "@prisma/client";
 
 import { useEffect, useState } from "react";
 import { BsXLg } from "react-icons/bs";
-import { FiHelpCircle } from "react-icons/fi";
 import { MoonLoader } from "react-spinners";
 import sanitizeHtml from "sanitize-html";
 
@@ -44,7 +43,6 @@ export default function Announcement() {
           __html: sanitizeHtml(headline, { allowedTags: [...allowedTags] }),
         }}
       ></span>
-      <FiHelpCircle className="announcement__info-icon" />
     </div>
   ));
 
