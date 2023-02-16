@@ -23,13 +23,13 @@
   @include respond-to("medium") {
     flex-basis: calc(25% - 1.5rem);
 
-    &__actions button {
+    &__actions [role="button"] {
       opacity: 0;
       visibility: hidden;
       transform: translateX(50%);
     }
 
-    &:hover &__actions button {
+    &:hover &__actions [role="button"] {
       transform: translateY(0);
       opacity: 1;
       visibility: visible;
@@ -125,7 +125,7 @@
     text-align: right;
     color: $c-text-dark;
 
-    > button {
+    > [role="button"] {
       transition: background-color 0.3s, transform 0.3s, visibility 0.3s,
         opacity 0.3s;
 
@@ -136,6 +136,7 @@
   }
 
   &__add-wishlist {
+    display: inline-block;
     padding: 0.5rem;
     height: 3.5rem;
     border-radius: 50%;
@@ -156,6 +157,7 @@
     font-weight: 700;
     text-transform: uppercase;
     font-size: $text-xs;
+    margin-bottom: 0.6rem;
   }
 
   &__title {

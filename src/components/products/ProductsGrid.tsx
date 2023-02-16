@@ -8,27 +8,28 @@ import { useProductsState } from "@Contexts/ProductsContext";
 export default function ProductsGrid({ products, actions = {} }: PropTypes) {
   const { productImagePlaceholders } = useProductsState();
   return (
-    <div className="products-grid">
+    <ul className="products-grid">
       {products.map((product) => (
         <MotionElement key={product.id}>
-          <div>
-            <Product
-              {...product}
-              blurDataUrl={productImagePlaceholders[product.id]}
-            />
+          <li>
+            <ul>
+              <Product
+                {...product}
+                blurDataUrl={productImagePlaceholders[product.id]}
+              />
 
-            {Object.keys(actions).map((action) => (
-              <button
-                key={action + product.id}
-                onClick={() => actions[action](product.id)}
-              >
-                {action}
-              </button>
-            ))}
-          </div>
+              {Object.keys(actions).map((action) => (
+                <li key={action + product.id}>
+                  <button onClick={() => actions[action](product.id)}>
+                    {action}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </li>
         </MotionElement>
       ))}
-    </div>
+    </ul>
   );
 }
 

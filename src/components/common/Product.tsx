@@ -39,7 +39,7 @@ export default function Product({
   const timer = useRef<NodeJS.Timer>();
 
   return (
-    <div
+    <li
       className={`product${small ? " product--small" : ""}`}
       onPointerEnter={() => {
         clearInterval(timer.current);
@@ -55,7 +55,7 @@ export default function Product({
     >
       <Link href={`/product/${getPathString(title + " " + sku)}`}>
         <a>
-          <article className="product__wrapper">
+          <div className="product__wrapper">
             <div className="product__image">
               {mediaURLs.slice(0, MAX_IMAGE_SLIDES).map((url, i) => (
                 <Image
@@ -75,7 +75,8 @@ export default function Product({
               ))}
               {discount ? <span className="product__tag">sale</span> : null}
               <div className="product__actions">
-                <button
+                <span
+                  role="button"
                   tabIndex={-1}
                   aria-label="Add to wishlist"
                   onClick={(e) => {
@@ -89,14 +90,16 @@ export default function Product({
                   ) : (
                     <AiOutlineHeart className="product__add-wishlist-icon" />
                   )}
-                </button>
+                </span>
               </div>
             </div>
-            <div className="product__info">
-              <p className="product__type">{gender}</p>
-              <p title={title} className="product__title">
-                {title}
-              </p>
+            <article className="product__info">
+              <header>
+                <p className="product__type">{gender}</p>
+                <h3 title={title} className="product__title">
+                  {title}
+                </h3>
+              </header>
               <div className="product__rating">
                 <RatingStars count={ratings} />
               </div>
@@ -118,10 +121,10 @@ export default function Product({
                   </>
                 ) : null}
               </p>
-            </div>
-          </article>
+            </article>
+          </div>
         </a>
       </Link>
-    </div>
+    </li>
   );
 }

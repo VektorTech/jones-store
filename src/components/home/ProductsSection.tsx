@@ -22,15 +22,15 @@ export default function ProductsSection({
       blurDataUrl={productImageDataUrls[product.id]}
     />
   ));
-  const listRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
 
   return (
     <section className="products-section">
       <div className="products-section__container">
         <h2 className="products-section__heading">#shop {title}</h2>
-        <div ref={listRef} className="products-section__products">
+        <ul ref={listRef} className="products-section__products">
           {productsComponent}
-        </div>
+        </ul>
         <div className="products-section__scroll">
           <button
             aria-label="previous product"

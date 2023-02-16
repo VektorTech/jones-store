@@ -113,11 +113,11 @@ export default function SearchBoxContainer() {
         <h3 className="search__results-info">
           {products.length} Jordans Found
         </h3>
-        <div className="search__results">
+        <ul className="search__results">
           {products.map((product) => (
             <Product key={product.id} small {...product} />
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   );
