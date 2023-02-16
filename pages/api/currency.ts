@@ -9,6 +9,15 @@ async function PostCurrencyRoute(
   res: NextApiResponse<DefaultResponse>,
   next: Function
 ) {
+  const { CRON_ACTION_KEY } = process.env;
+  const authToken = req.headers.authorization?.split(" ")[1];
+
+  if (CRON_ACTION_KEY != authToken) {
+    return res
+      .status(401)
+      .json({ error: true, message: "Unauthorized Request" });
+  }
+
   const rates: Record<string, number> = await fetch(
     "https://open.er-api.com/v6/latest/USD"
   )

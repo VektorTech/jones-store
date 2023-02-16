@@ -1,0 +1,13 @@
+name: update-currency-rates
+on:
+  schedule:
+    - cron: "0 1 * * *"
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call the currency api to update conversion rates in the database
+        run: |
+          curl --request POST \
+          --url 'https://jones-store.vercel.app/api/currency' \
+          --header 'Authorization: Bearer ${{ secrets.CRON_ACTION_KEY }}'

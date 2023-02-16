@@ -116,6 +116,9 @@ This is a responsive mobile-first website featuring real-time product filters, a
    STRIPE_PUBLISHABLE_KEY="pk_..."
    STRIPE_SECRET_KEY="sk_..."
    STRIPE_ENDPOINT_SECRET="whsec_..."
+
+   # authorization key for github action
+   CRON_ACTION_KEY="random_string"
    ```
 
 2. You may edit the following variables inside the `./src/lib/config.ts` file:
@@ -165,7 +168,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Todo
 
-- [ ] Internationalize - Allow multiple currencies and languages
+- [ ] Internationalize - Allow multiple ~~currencies~~ and languages
 - [ ] Build Admin Dashboard
 - [ ] Improve Accessibility.
 - [ ] Password Recovery Feature
