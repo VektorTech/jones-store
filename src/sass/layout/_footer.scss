@@ -113,6 +113,10 @@
 
   &__payments {
     text-align: center;
+
+    &-image {
+      -webkit-user-drag: none;
+    }
   }
 
   & .newsletter {

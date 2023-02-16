@@ -191,6 +191,7 @@ export default function Footer() {
               <NextImage
                 src={paymentImage}
                 alt=""
+                className="footer__payments-image"
                 width={paymentImage.width}
                 height={paymentImage.height}
               />
