@@ -10,7 +10,7 @@ import RatingStars from "./RatingStars";
 import { getPathString } from "src/utils";
 import { useAuthState } from "@Contexts/AuthContext";
 import { currencyFormatter } from "src/intl";
-import { DefaultPlaceholder } from "src/constants";
+import { ProductPlaceholderImg } from "src/constants";
 
 const MAX_IMAGE_SLIDES = 3;
 
@@ -61,7 +61,7 @@ export default function Product({
                 <Image
                   key={url}
                   src={url}
-                  blurDataURL={blurDataUrl || DefaultPlaceholder}
+                  blurDataURL={blurDataUrl || ProductPlaceholderImg}
                   placeholder="blur"
                   objectFit="contain"
                   layout="fill"

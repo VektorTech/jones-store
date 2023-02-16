@@ -5,6 +5,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 import Carousel from "@Components/Carousel";
 import { useAuthState } from "@Contexts/AuthContext";
+import { ProductPlaceholderImg } from "src/constants";
 
 export default function ProductGallery({
   productId,
@@ -35,7 +36,7 @@ export default function ProductGallery({
                     width={80}
                     height={60}
                     placeholder="blur"
-                    blurDataURL={blurDataUrls[url]}
+                    blurDataURL={blurDataUrls[url] || ProductPlaceholderImg}
                     layout="responsive"
                     alt=""
                   />
@@ -64,7 +65,7 @@ export default function ProductGallery({
                   priority
                   src={url}
                   placeholder="blur"
-                  blurDataURL={blurDataUrls[url]}
+                  blurDataURL={blurDataUrls[url] || ProductPlaceholderImg}
                   width={dimensions[i]?.width ?? 0}
                   height={dimensions[i]?.height ?? 0}
                   alt=""
