@@ -23,6 +23,8 @@ import prisma from "@Lib/prisma";
 import { sessionOptions } from "@Lib/config";
 import { AuthProvider } from "@Contexts/AuthContext";
 import { UIProvider } from "@Contexts/UIContext";
+import { CurrencyRate } from "@prisma/client";
+import Script from "next/script";
 
 NProgress.configure({ showSpinner: false });
 Router.events.on("routeChangeStart", () => NProgress.start());
@@ -35,6 +37,7 @@ function MyApp({
   cookies,
   isAdmin,
   user,
+  rates,
 }: AppPropsWithCookies) {
   let FinalRenderComponent: ReactElement | null = null;
 
@@ -66,7 +69,7 @@ function MyApp({
 
   return (
     <>
-      <UIProvider announcementHidden={cookies?.announcementState == "closed"}>
+      <UIProvider currencyRates={rates} announcementHidden={cookies?.announcementState == "closed"}>
         <AuthProvider currentUser={user}>{FinalRenderComponent}</AuthProvider>
       </UIProvider>
       <ToastContainer position="bottom-right" hideProgressBar />
@@ -137,6 +140,8 @@ MyApp.getInitialProps = async (context: AppContext) => {
     }
   }
 
+  const rates = await prisma.currencyRate.findMany();
+
   const cookies = req?.headers.cookie?.split("; ").reduce((batch, cookie) => {
     const [key, value] = cookie.split("=");
     return { ...batch, [key]: value };
@@ -147,6 +152,7 @@ MyApp.getInitialProps = async (context: AppContext) => {
     cookies,
     isAdmin: req?.url?.startsWith("/admin"),
     user,
+    rates,
   };
 };
 
@@ -154,6 +160,7 @@ interface AppPropsWithCookies extends AppProps {
   cookies: { announcementState: string };
   isAdmin: boolean;
   user: UserType;
+  rates: CurrencyRate[];
 }
 
 export default MyApp;

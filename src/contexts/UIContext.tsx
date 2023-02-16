@@ -8,6 +8,7 @@ import {
   useState,
 } from "react";
 import { Router } from "next/router";
+import { CurrencyRate } from "@prisma/client";
 
 export enum DialogType {
   SIDEBAR_DIALOG,
@@ -19,18 +20,32 @@ export enum DialogType {
   MODAL_SHARE,
 }
 
+export enum CurrencyType {
+  USD = "USD",
+  CAD = "CAD",
+  GBP = "GBP",
+  EUR = "EUR",
+  JMD = "JMD",
+}
+type CurrencyTypes = keyof typeof CurrencyType;
+
 interface UIStateType {
   announcementVisible?: boolean;
   currentDialog?: DialogType | null;
+  currencyRates?: Record<CurrencyTypes, number>;
+  currency: CurrencyType;
   setDialog: Dispatch<SetStateAction<DialogType | null>>;
   setAnnouncementVisible: Dispatch<SetStateAction<boolean>>;
+  setCurrency: Dispatch<SetStateAction<CurrencyType>>;
 }
 
 const uiState = {
   announcementVisible: true,
   currentDialog: undefined,
+  currency: CurrencyType.USD,
   setDialog: () => {},
   setAnnouncementVisible: () => {},
+  setCurrency: () => {},
 };
 
 const UIContext = createContext<UIStateType>(uiState);
@@ -51,6 +66,15 @@ export function useDialog(
   return _uiState;
 }
 
+export function useCurrencyState(): {
+  currency: CurrencyType;
+  setCurrency: Dispatch<SetStateAction<CurrencyType>>;
+  currencyRates: UIStateType["currencyRates"];
+} {
+  const { currency, setCurrency, currencyRates } = useContext(UIContext);
+  return { currency, setCurrency, currencyRates };
+}
+
 export function useAnnouncementState(): [
   announcementVisible: boolean,
   setAnnouncementVisible: Dispatch<SetStateAction<boolean>>
@@ -63,28 +87,41 @@ export function useAnnouncementState(): [
 export const UIProvider = ({
   children,
   announcementHidden = true,
+  currencyRates,
 }: {
   children: ReactElement;
   announcementHidden: boolean;
+  currencyRates: CurrencyRate[];
 }) => {
   const [currentDialog, setDialog] = useState<DialogType | null>(null);
   const [announcementVisible, setAnnouncementVisible] = useState(
     !announcementHidden
   );
-
+  const [currency, setCurrency] = useState<CurrencyType>(CurrencyType.USD);
   useEffect(() => {
     const clearDialogState = () => setDialog(null);
     Router.events.on("routeChangeStart", clearDialogState);
     return () => Router.events.off("routeChangeStart", clearDialogState);
   }, [currentDialog]);
 
+  const currencyRatesObj = currencyRates.reduce<UIStateType["currencyRates"]>(
+    (obj, current) => {
+      if (obj) obj[current.symbol as CurrencyTypes] = current.rate;
+      return obj;
+    },
+    Object.create({})
+  );
+
   return (
     <UIContext.Provider
       value={{
         announcementVisible,
         currentDialog,
+        currency,
+        currencyRates: currencyRatesObj,
         setDialog,
         setAnnouncementVisible,
+        setCurrency,
       }}
     >
       {children}

@@ -9,13 +9,19 @@ import Dropdown from "./formControls/Dropdown";
 import Modal from "./Modal";
 import Logo from "./common/Logo";
 
-import { DialogType, useDialog } from "@Contexts/UIContext";
+import {
+  CurrencyType,
+  DialogType,
+  useCurrencyState,
+  useDialog,
+} from "@Contexts/UIContext";
 
 import paymentImage from "@Images/payment.png";
 import Form from "./common/Form";
 import { toast } from "react-toastify";
 
 export default function Footer() {
+  const { currency, setCurrency } = useCurrencyState();
   const { currentDialog, setDialog } = useDialog();
   const visible = currentDialog == DialogType.MODAL_LANG_CURRENCY;
 
@@ -221,7 +227,7 @@ export default function Footer() {
               className="language-currency__btn"
             >
               {"English"} <span className="language-currency__sep">|</span>{" "}
-              {"$ USD"}
+              {`$ ${currency}`}
             </button>
           </div>
         </div>
@@ -234,20 +240,58 @@ export default function Footer() {
         visible={visible}
       >
         <Dropdown
-          label="Select Currency"
+          onOptionSelect={(value) =>
+            setCurrency(value.toUpperCase() as CurrencyType)
+          }
+          label={`Select Currency (${currency.toUpperCase()})`}
           options={{
-            usd: "USD",
-            cad: "CAD",
-            gbp: "GBP £",
-            eur: "EUR €",
-            jmd: "JMD",
+            usd: CurrencyType.USD,
+            cad: CurrencyType.CAD,
+            gbp: CurrencyType.GBP,
+            eur: CurrencyType.EUR,
+            jmd: CurrencyType.JMD,
           }}
           icons={{
-            usd: <NextImage src="https://flagcdn.com/24x18/us.png" width="24" height="18" alt="" />,
-            cad: <NextImage src="https://flagcdn.com/24x18/ca.png" width="24" height="18" alt="" />,
-            gbp: <NextImage src="https://flagcdn.com/24x18/gb.png" width="24" height="18" alt="" />,
-            eur: <NextImage src="https://flagcdn.com/24x18/eu.png" width="24" height="18" alt="" />,
-            jmd: <NextImage src="https://flagcdn.com/24x18/jm.png" width="24" height="18" alt="" />
+            usd: (
+              <NextImage
+                src="https://flagcdn.com/24x18/us.png"
+                width="24"
+                height="18"
+                alt=""
+              />
+            ),
+            cad: (
+              <NextImage
+                src="https://flagcdn.com/24x18/ca.png"
+                width="24"
+                height="18"
+                alt=""
+              />
+            ),
+            gbp: (
+              <NextImage
+                src="https://flagcdn.com/24x18/gb.png"
+                width="24"
+                height="18"
+                alt=""
+              />
+            ),
+            eur: (
+              <NextImage
+                src="https://flagcdn.com/24x18/eu.png"
+                width="24"
+                height="18"
+                alt=""
+              />
+            ),
+            jmd: (
+              <NextImage
+                src="https://flagcdn.com/24x18/jm.png"
+                width="24"
+                height="18"
+                alt=""
+              />
+            ),
           }}
         />
       </Modal>
