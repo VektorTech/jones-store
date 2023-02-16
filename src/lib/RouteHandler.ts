@@ -19,6 +19,7 @@ function assertIsHTTPMethod(str?: string): asserts str is HTTPMethods {
 }
 
 export default function RouteHandler() {
+  const registeredMethods: HTTPMethods[] = [];
   const methodActions: Record<HTTPMethods, AsyncAPIHandler[]> = {
     GET: [],
     POST: [],
@@ -62,14 +63,16 @@ export default function RouteHandler() {
   };
 
   const setHandlers = (handlers: AsyncAPIHandler[], method: HTTPMethods) => {
+    registeredMethods.push(method);
     methodActions[method] = handlers;
   };
 
   const createRouter: RouteHandlerReturnType = (req, res) => {
     if (!methodActions[req.method as HTTPMethods]?.length) {
       return res
-        .status(404)
-        .json({ success: false, message: "Route Not Found" });
+        .status(405)
+        .setHeader("Allow", registeredMethods.join(", "))
+        .json({ success: false, message: "Method Not Allowed" });
     } else {
       return withSessionRoute(next)(req, res);
     }
