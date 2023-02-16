@@ -1,6 +1,26 @@
 {
   "name": "jones-store",
   "version": "0.1.0",
+  "author": {
+    "name": "Kenny Sutherland",
+    "email": "kennymax18@gmail.com"
+  },
+  "description": "Jones - An online store for purchasing Nike Jordan Ones.",
+  "keywords": [
+    "jordan ones",
+    "nike",
+    "e-commerce",
+    "shoe",
+    "store",
+    "typescript",
+    "react",
+    "next js",
+    "sql",
+    "prisma",
+    "postgresql",
+    "stripe",
+    "sass"
+  ],
   "private": true,
   "scripts": {
     "dev": "next dev",
