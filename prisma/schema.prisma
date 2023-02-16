@@ -196,6 +196,13 @@ model NewsletterRecipient {
   @@map(name: "newsletter_recipients")
 }
 
+model CurrencyRate {
+  symbol String @id @db.Char(3) @default("USD")
+  rate Float @default(1)
+
+  @@map(name: "currency-rates")
+}
+
 enum Role {
   USER
   ADMIN

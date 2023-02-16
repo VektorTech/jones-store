@@ -28,7 +28,7 @@
     "start": "next start",
     "lint": "next lint",
     "pretty-up": "prettier --config .prettierrc {{src,pages}/**/*.{ts,tsx},middleware.ts} --write",
-    "db:migrate": "npx prisma migrate dev"
+    "db:migrate": "npx prisma migrate dev --name"
   },
   "dependencies": {
     "@prisma/client": "^4.3.1",

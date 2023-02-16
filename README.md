@@ -149,7 +149,7 @@ This is a responsive mobile-first website featuring real-time product filters, a
 
 4. Then run `npx prisma db push`. This will use the schema (from `./prisma/schema.prisma`) to add the relevant tables to your `jonesdb` database.
 
-5. If you make any changes to `schema.prisma`, run `npm run db:migrate --name <name_of_migration>` to further maintain a history of each update to the database. You may also run `npx prisma generate` to manually sync `@prisma/client` with the database after updating the table schemas. Use `npx prisma studio` to launch the prisma client to observe and manipulate the database.
+5. If you make any changes to `schema.prisma`, run `npm run db:migrate -- <name_of_migration>` to further maintain a history of each update to the database. You may also run `npx prisma generate` to manually sync `@prisma/client` with the database after updating the table schemas. Use `npx prisma studio` to launch the prisma client to observe and manipulate the database.
 
 ## Getting Started
 
