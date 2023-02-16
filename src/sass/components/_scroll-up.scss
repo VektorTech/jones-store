@@ -44,7 +44,7 @@
   }
 
   &__image {
-    transform: rotate(5deg);
+    display: block;
     @include inline-animation(
       0.6s,
       infinite,
@@ -56,16 +56,15 @@
     ) {
       from {
         opacity: 0.2;
-        transform: rotate(5deg) translateY(1rem);
+        transform: translateY(1rem);
       }
       to {
         opacity: 1;
-        transform: rotate(5deg) translateY(-1rem);
+        transform: translateY(-1rem);
       }
     }
 
     &--flipped {
-      transform: scale(-1, 1) rotate(5deg);
       @include inline-animation(
         0.6s,
         infinite,
@@ -77,14 +76,13 @@
       ) {
         from {
           opacity: 0.2;
-          transform: scale(-1, 1) rotate(5deg) translateY(1rem);
+          transform: translateY(1rem);
         }
         to {
           opacity: 1;
-          transform: scale(-1, 1) rotate(5deg) translateY(-1rem);
+          transform: translateY(-1rem);
         }
       }
-      position: absolute;
     }
   }
 }
