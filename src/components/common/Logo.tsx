@@ -8,8 +8,8 @@ export default function Logo() {
     <Link href="/">
       <a className="logo">
         <FutureImage
-          width={logoImg.width * 0.105}
-          height={logoImg.height * 0.09}
+          width={Math.round(logoImg.width * 0.105)}
+          height={Math.round(logoImg.height * 0.09)}
           alt=""
           src={logoImg}
         />

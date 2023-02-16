@@ -26,8 +26,8 @@ export default function Footer() {
           <div className="footer__logo">
             <Logo />
           </div>
+          <h3 className="footer__sub-heading">Contact</h3>
           <address>
-            <h3 className="footer__sub-heading">Contact</h3>
             <p className="footer__contact">
               <BiMap className="footer__contact-icon" />
               <span className="footer__contact-info">
@@ -64,7 +64,7 @@ export default function Footer() {
               </span>
             </p>
             <hr className="footer__hr" />
-            <h3 className="footer__sub-heading">Connect With Us</h3>
+            <p className="footer__sub-heading">Connect With Us</p>
             <div className="footer__social-buttons">
               <SocialIcons size="md" />
             </div>
