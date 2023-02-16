@@ -11,10 +11,10 @@ export const currencyFormatter2 = new Intl.NumberFormat("en-US", {
   currency: "USD",
 });
 
-export const formatCurrency = (currency: CurrencyType, price: number) => {
+export const formatCurrency = (currency: CurrencyType, amount: number) => {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: currency.toUpperCase(),
     currencyDisplay: "code",
-  }).format(price);
+  }).format(amount);
 };

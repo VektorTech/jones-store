@@ -5,13 +5,17 @@ import Button from "./formControls/Button";
 import CartProductItem from "./CartItem";
 
 import { useAuthState } from "@Contexts/AuthContext";
-import { currencyFormatter } from "src/intl";
-import { DialogType, useDialog } from "@Contexts/UIContext";
+import {
+  DialogType,
+  useCurrencyFormatter,
+  useDialog,
+} from "@Contexts/UIContext";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { MoonLoader } from "react-spinners";
 
 export default function Cart() {
+  const format = useCurrencyFormatter();
   const { user, addToCart, removeFromCart, emptyCart } = useAuthState();
   const [loading, setLoading] = useState(false);
   const { currentDialog, setDialog } = useDialog();
@@ -63,16 +67,12 @@ export default function Cart() {
         <div className="cart__checkout">
           <div className="cart__details">
             <p className="cart__sub-total">Sub-total:</p>
-            <p className="cart__sub-total-value">
-              {currencyFormatter.format(user.cart.total)}
-            </p>
+            <p className="cart__sub-total-value">{format(user.cart.total)}</p>
             <p className="cart__shipping">Shipping:</p>
-            <p className="cart__shipping-value">
-              {currencyFormatter.format(shippingTotalCost)}
-            </p>
+            <p className="cart__shipping-value">{format(shippingTotalCost)}</p>
             <p className="cart__total">Total:</p>
             <p className="cart__total-value">
-              {currencyFormatter.format(user.cart.total + shippingTotalCost)}
+              {format(user.cart.total + shippingTotalCost)}
             </p>
           </div>
           <Button

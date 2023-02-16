@@ -11,7 +11,7 @@ import { getPathString } from "src/utils";
 import { useAuthState } from "@Contexts/AuthContext";
 import { formatCurrency } from "src/intl";
 import { ProductPlaceholderImg } from "src/constants";
-import { useCurrencyState } from "@Contexts/UIContext";
+import { useCurrencyFormatter } from "@Contexts/UIContext";
 
 const MAX_IMAGE_SLIDES = 3;
 
@@ -27,7 +27,7 @@ export default function Product({
   id,
   blurDataUrl,
 }: ProductComponentType) {
-  const { currency, currencyRates } = useCurrencyState();
+  const format = useCurrencyFormatter();
   const { addToWishlist, removeFromWishlist, user } = useAuthState();
   const isOnWishlist = !!user.wishlist.items[id];
   const handleWishlistAction = () => {
@@ -107,10 +107,7 @@ export default function Product({
               </div>
               <p className="product__price">
                 <span className="product__amount">
-                  {formatCurrency(
-                    currency,
-                    (currencyRates?.[currency] || 1) * (price - discount)
-                  )}
+                  {format(price - discount)}
                 </span>
 
                 {discount ? (
@@ -120,10 +117,7 @@ export default function Product({
                     </span>
                     <span className="product__old-price">
                       <span className="product__old-amount">
-                        {formatCurrency(
-                          currency,
-                          (currencyRates?.[currency] || 1) * price
-                        )}
+                        {format(price)}
                       </span>
                     </span>
                   </>

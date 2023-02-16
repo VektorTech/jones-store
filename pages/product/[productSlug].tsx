@@ -12,8 +12,8 @@ import ProductDetails from "@Components/products/ProductDetails";
 import prisma from "@Lib/prisma";
 import { NextPage } from "next";
 import RatingStars from "@Components/common/RatingStars";
-import { currencyFormatter } from "src/intl";
 import { aggregate, getBase64UrlCloudinary } from "src/helpers";
+import { useCurrencyFormatter } from "@Contexts/UIContext";
 
 const ProductPage: NextPage<ProductPageType> = ({
   product,
@@ -21,6 +21,7 @@ const ProductPage: NextPage<ProductPageType> = ({
   imageDimensions,
   blurDataUrls,
 }) => {
+  const format = useCurrencyFormatter();
   const {
     id,
     title,
@@ -79,7 +80,7 @@ const ProductPage: NextPage<ProductPageType> = ({
           </div>
 
           <p className="product-view__price">
-            {currencyFormatter.format(cartPrice)} <span>{percentageOff}</span>
+            {format(cartPrice)} <span>{percentageOff}</span>
           </p>
 
           <p className="product-view__sold">

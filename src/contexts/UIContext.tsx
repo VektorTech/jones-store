@@ -9,6 +9,7 @@ import {
 } from "react";
 import { Router } from "next/router";
 import { CurrencyRate } from "@prisma/client";
+import { formatCurrency } from "src/intl";
 
 export enum DialogType {
   SIDEBAR_DIALOG,
@@ -74,6 +75,13 @@ export function useCurrencyState(): {
   const { currency, setCurrency, currencyRates } = useContext(UIContext);
   return { currency, setCurrency, currencyRates };
 }
+
+export const useCurrencyFormatter = () => {
+  const { currency, currencyRates } = useContext(UIContext);
+  return function format(amount: number) {
+    return formatCurrency(currency, (currencyRates?.[currency] || 1) * amount);
+  };
+};
 
 export function useAnnouncementState(): [
   announcementVisible: boolean,

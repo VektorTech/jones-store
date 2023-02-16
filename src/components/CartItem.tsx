@@ -4,10 +4,10 @@ import { CartItem, Product } from "@prisma/client";
 import NumberInput from "./formControls/NumberInput";
 import Button from "./formControls/Button";
 
-import { currencyFormatter } from "src/intl";
 import React from "react";
 import Link from "next/link";
 import { getPathString } from "src/utils";
+import { useCurrencyFormatter } from "@Contexts/UIContext";
 
 export default function CartProductItem({
   product,
@@ -16,6 +16,8 @@ export default function CartProductItem({
   removeAction,
   updateAction,
 }: PropTypes) {
+  const format = useCurrencyFormatter();
+
   if (!cartItem || !product) {
     return null;
   }
@@ -42,12 +44,10 @@ export default function CartProductItem({
       <span className="cart__product-gender">{product.gender}</span>
       <span className="cart__product-size">Size: {cartItem.size}</span>
       <span className="cart__product-price">
-        {currencyFormatter.format(
-          (product.price - product.discount) * cartItem.quantity
-        )}
+        {format((product.price - product.discount) * cartItem.quantity)}
       </span>
       <span className="cart__product-cost">
-        {currencyFormatter.format(product.price - product.discount)}
+        {format(product.price - product.discount)}
       </span>
       <NumberInput
         className="cart__product-quantity"
