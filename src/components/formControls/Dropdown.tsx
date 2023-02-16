@@ -7,6 +7,7 @@ import {
   FocusEventHandler,
   forwardRef,
   useImperativeHandle,
+  ReactElement,
 } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
@@ -20,6 +21,7 @@ export default forwardRef<
   {
     label = "Select Option",
     options,
+    icons,
     value: _value,
     className,
     name = "",
@@ -121,7 +123,7 @@ export default forwardRef<
               data-value={option}
               className="dropdown__option"
             >
-              {options[option]}
+              <>{icons?.[option]} {options[option]}</>
             </li>
           ))}
         </ul>
@@ -133,5 +135,6 @@ export default forwardRef<
 interface PropTypes {
   onOptionSelect?: (value: string) => void;
   options: { [value: string]: string };
+  icons?: { [value: string]: ReactElement };
   label?: string;
 }

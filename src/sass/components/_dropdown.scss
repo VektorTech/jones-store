@@ -44,5 +44,8 @@
     text-overflow: ellipsis;
     overflow: hidden;
     cursor: pointer;
+    column-gap: 1rem;
+    display: flex;
+    align-items: center;
   }
 }

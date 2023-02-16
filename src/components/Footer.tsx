@@ -236,11 +236,18 @@ export default function Footer() {
         <Dropdown
           label="Select Currency"
           options={{
-            usd: "🇺🇸 USD",
-            cad: "🇨🇦 CAD",
-            gbp: "🇬🇧 GBP £",
-            eur: "🇪🇺 EUR €",
-            jmd: "🇯🇲 JMD",
+            usd: "USD",
+            cad: "CAD",
+            gbp: "GBP £",
+            eur: "EUR €",
+            jmd: "JMD",
+          }}
+          icons={{
+            usd: <NextImage src="https://flagcdn.com/24x18/us.png" width="24" height="18" alt="" />,
+            cad: <NextImage src="https://flagcdn.com/24x18/ca.png" width="24" height="18" alt="" />,
+            gbp: <NextImage src="https://flagcdn.com/24x18/gb.png" width="24" height="18" alt="" />,
+            eur: <NextImage src="https://flagcdn.com/24x18/eu.png" width="24" height="18" alt="" />,
+            jmd: <NextImage src="https://flagcdn.com/24x18/jm.png" width="24" height="18" alt="" />
           }}
         />
       </Modal>
