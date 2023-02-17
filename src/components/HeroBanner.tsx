@@ -125,15 +125,15 @@ export default function HeroBanner() {
                           alt=""
                         />
                       </div>
-                      <div className="banner__action-button">
-                        <Link href={data.url}>
-                          <a className="banner__action-button-link">
-                            <span>buy yours</span>
-                          </a>
-                        </Link>
-                      </div>
                     </div>
                   ))}
+                  <div className="banner__action-button">
+                    <Link href={slidesData[activeView].url}>
+                      <a className="banner__action-button-link">
+                        <span>buy yours</span>
+                      </a>
+                    </Link>
+                  </div>
                 </>
               ) : (
                 <div className="banner__loader">

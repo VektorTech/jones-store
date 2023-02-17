@@ -2,6 +2,7 @@
 
 .banner {
   $self: &;
+  $banner-timing-func: cubic-bezier(1, 0.11, 0.97, 0.61);
 
   width: 100%;
   height: calc(100vh - 3rem);
@@ -28,7 +29,7 @@
       size: cover;
       repeat: no-repeat;
       position: top right;
-    };
+    }
   }
 
   &__main {
@@ -83,13 +84,14 @@
     font-size: $text-xs;
     font-style: italic;
     font-weight: 400;
-
-    transition: opacity 1s;
-    transform-origin: bottom;
-    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.7s $banner-timing-func;
 
     #{$self}__content--active & {
-      opacity: 1;
+      transition-delay: 0.3s;
+      transform-origin: bottom;
+      transform: scaleY(1);
     }
 
     & span {
@@ -114,7 +116,8 @@
       display: inline-block;
       transform: translateY(100%);
       opacity: 0;
-      transition: transform 1s, opacity 0.5s;
+      transition: transform 0.7s 0.3s $banner-timing-func,
+        opacity 0.3s $banner-timing-func;
     }
 
     #{$self}__content--active & {
@@ -148,7 +151,7 @@
       size: 16vw;
       weight: 900;
       style: italic;
-    };
+    }
     color: #ffffff16;
     height: auto;
     max-width: 90rem;
@@ -156,10 +159,12 @@
     right: 0;
     margin-top: -3rem;
     white-space: nowrap;
-    transition: transform 0.6s cubic-bezier(0.55, 1, 0.62, 1.09), opacity 1s;
+    transition: transform 0.6s cubic-bezier(0.55, 1, 0.62, 1.09),
+      opacity 0.4s $banner-timing-func;
     opacity: 0;
 
     #{$self}__content--active & {
+      transition-delay: 0.35s;
       opacity: 1;
     }
 
@@ -194,10 +199,12 @@
     margin: 0 auto;
     margin-top: 20vh;
     width: calc(8rem + 12vh + 15vw);
-    transition: transform 0.6s cubic-bezier(0.55, 1, 0.62, 1.09), opacity 1s;
+    transition: transform 0.6s cubic-bezier(0.55, 1, 0.62, 1.09),
+      opacity 0.4s $banner-timing-func;
     opacity: 0;
 
     #{$self}__content--active & {
+      transition-delay: 0.35s;
       opacity: 1;
     }
 
@@ -249,51 +256,41 @@
 
   &__action-button {
     position: absolute;
-    bottom: 2.5rem;
-    left: 0rem;
-    right: 0rem;
+    bottom: 5%;
+    left: 0;
+    right: 0;
 
     @include respond-to("x-small") {
-      top: 40%;
-      bottom: unset;
-      text-align: left;
+      bottom: 15%;
       left: 10rem;
-      right: 10rem;
+      right: auto;
     }
 
     @include respond-to("medium") {
-      position: relative;
-      top: 12rem;
       left: 15%;
-      right: 15%;
-    }
-
-    @include respond-to("large") {
-      top: calc(14rem + 4vw);
     }
 
     @include respond-to("x-large") {
       left: 20%;
-      right: 20%;
-    }
-
-    @include respond-to("xx-small-h") {
-      top: 8rem;
+      bottom: 25%;
     }
 
     &-link {
-      display: inline-block;
+      display: block;
       border: 0.1rem solid #fff;
       width: min(22rem, max(12%, 15rem));
       height: 4rem;
       position: relative;
+      margin: auto;
       font-weight: 400;
       transition: color 0.3s $timing-func-ui,
         background-color 0.3s $timing-func-ui;
 
       &:focus-visible,
       &:hover {
-        color: #000;
+        > span {
+          color: #000;
+        }
       }
 
       &:focus-visible::before,
@@ -316,10 +313,8 @@
         @extend %center-content;
         position: absolute;
         font-size: $text-md;
-
-        @include respond-to("xx-large") {
-          font-size: $text-lg;
-        }
+        color: #fff;
+        text-transform: uppercase;
       }
     }
   }
