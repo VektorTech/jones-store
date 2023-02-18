@@ -38,7 +38,8 @@ This is a responsive mobile-first website featuring real-time product filters, a
 
 - Considering that this is an e-commerce website, SEO plays a significant factor in its success, but standard client-side rendered React would seriously hinder search engines from properly crawling each page. So I chose Next.JS for this project as it provides a quick and simple way for writing performant, server-side rendered react applications without much overhead.
 
-- React's `useState` & `useReducer` hooks coupled with the Context API provided a sufficient means for managing and centralizing state in this application as there wasn't much information that needed to be kept in memory on the client that would demand a complex library like Redux. Pages are frequently refreshed, and data is already being rendered onto pages from the server(using `getServerSideProps`), which further reduced the need for alternate state management strategies. Additionally, user preferences are persisted through cookies where they can be pre-rendered on the server.
+- ~~React's `useState` & `useReducer` hooks coupled with the Context API provided a sufficient means for managing and centralizing state in this application as there wasn't much information that needed to be kept in memory on the client that would demand a complex library like Redux. Pages are frequently refreshed, and data is already being rendered onto pages from the server(using `getServerSideProps`), which further reduced the need for alternate state management strategies. Additionally, user preferences are persisted through cookies where they can be pre-rendered on the server.~~
+  - **Important Note** &mdash; In hindsight, it would have been better to have used a purpose-built state management library like redux, as I didn't anticipate how complex the state would have grown. I also learned that Context forces a re-render of all the components subscribed to it irrespective of whether their part of the state has updated, which can hinder performance. Though, there are some ways to circumvent this issue. The Context is better suited for storing static values that infrequently update (like UI themes or locale preferences) or local state instead of the type of data required by the client in this application.
 
 - For managing the user state, I switched from using multiple `useState` hooks to a single `useReducer` as it's a more convenient option for working with state objects holding multiple sub-values(like the wishlist and cart fields on the user object.)
 
@@ -71,6 +72,7 @@ This is a responsive mobile-first website featuring real-time product filters, a
 - After a series of bugs, I eventually realized that I needed to `await` all Prisma DB queries for them to execute successfully.
 
 - The price range component came with more challenges than I would have anticipated:
+
   - I found out that the `.getBoundingClientRect` method gives details about an element's rendering dimensions that may not be congruent with its layout dimensions in the case where CSS transformations are applied, which caused a few visual bugs on the range's progress bar. So I had to update my calculations.
   - Because I took a naive approach to my initial attempt to make the price range a controlled component, the code grew increasingly complicated and harder to manage. The main issue stemmed from trying to trigger state updates in response to changing props. I ran into a condition where, in some cases, the change handlers and the component's `useEffect()` were continuously updating the state. They triggered state updates one after the other due to stale values, noticeably on mobile, so I had to rethink my approach. The solution was simple, set a key on the component that uses all the props required for triggering a reset.
 
@@ -117,7 +119,7 @@ This is a responsive mobile-first website featuring real-time product filters, a
    STRIPE_SECRET_KEY="sk_..."
    STRIPE_ENDPOINT_SECRET="whsec_..."
 
-   # authorization key for github action
+   # authorization key for cron task
    CRON_ACTION_KEY="random_string"
    ```
 
