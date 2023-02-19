@@ -9,7 +9,6 @@ import RatingStars from "./RatingStars";
 
 import { getPathString } from "src/utils";
 import { useAuthState } from "@Contexts/AuthContext";
-import { formatCurrency } from "src/intl";
 import { ProductPlaceholderImg } from "src/constants";
 import { useCurrencyFormatter } from "@Contexts/UIContext";
 

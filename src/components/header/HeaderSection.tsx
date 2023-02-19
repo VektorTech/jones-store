@@ -19,7 +19,7 @@ import {
 import useScrollTop from "@Hooks/useScrollTop";
 import { DialogType, useDialog } from "@Contexts/UIContext";
 import { useAuthState } from "@Contexts/AuthContext";
-import { currencyFormatter2 } from "src/intl";
+import { currencyFormatter2 } from "src/i18n";
 
 export default function HeaderSection() {
   const { setDialog } = useDialog();

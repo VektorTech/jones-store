@@ -9,7 +9,7 @@ import {
 } from "react";
 import { Router } from "next/router";
 import { CurrencyRate } from "@prisma/client";
-import { formatCurrency } from "src/intl";
+import { formatCurrency } from "src/i18n";
 import useLocalStorage from "@Hooks/useLocalStorage";
 
 export enum DialogType {
