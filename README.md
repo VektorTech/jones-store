@@ -1,10 +1,8 @@
 # Jones (Jordan Ones) Shoe Store
 
-## Seamless E-Commerce Marketplace
+## A Seamless E-Commerce Marketplace
 
-Jones is an SEO-friendly online store for purchasing Nike Jordan Ones.
-
-This is a responsive mobile-first website featuring real-time product filters, a pop-up search option (AJAX live search), AJAX add to cart and wishlist options, a newsletter form, an announcement banner for live updates, a product review section and a slideshow on product hover.
+Jones is an SEO-friendly, responsive mobile-first online store for purchasing Nike Jordan Ones. The website features real-time product filters, a pop-up search option (AJAX live search), AJAX add-to-cart and wishlist options, a guest shopping cart, a newsletter form, an announcement banner for live updates, a product review section and a slideshow on product hover.
 
 ## Tech Used
 
@@ -16,7 +14,7 @@ This is a responsive mobile-first website featuring real-time product filters, a
 - **PostgreSQL** &mdash; A Relational Database Management System
 - **Prisma** &mdash; ORM for PostgreSQL (Data Modeling, Query Building, Migration System & GUI to Access Database)
 - **Stripe** &mdash; Used Stripe as primary payment gateway & npm library for accessing their API
-- **Micro** &mdash; Used for parsing raw incoming request body
+- **Micro** &mdash; Used for parsing raw incoming requests body
 - **Sass** &mdash; Preprocessor used for styling
 - **React Icons** &mdash; SVG icon library
 - **Next Share** &mdash; Button icons for sharing to social media
@@ -36,24 +34,24 @@ This is a responsive mobile-first website featuring real-time product filters, a
 
 ## Design Decisions
 
-- Considering that this is an e-commerce website, SEO plays a significant factor in its success, but standard client-side rendered React would seriously hinder search engines from properly crawling each page. So I chose Next.JS for this project as it provides a quick and simple way for writing performant, server-side rendered react applications without much overhead.
+- Considering that this is an e-commerce website, SEO plays a significant factor in its success, but using standard client-side rendered React would seriously hinder search engines from properly crawling each page. So I chose Next.JS for this project as it provides a quick and simple way for writing performant, server-side rendered react applications without much overhead.
 
-- ~~React's `useState` & `useReducer` hooks coupled with the Context API provided a sufficient means for managing and centralizing state in this application as there wasn't much information that needed to be kept in memory on the client that would demand a complex library like Redux. Pages are frequently refreshed, and data is already being rendered onto pages from the server(using `getServerSideProps`), which further reduced the need for alternate state management strategies. Additionally, user preferences are persisted through cookies where they can be pre-rendered on the server.~~
+- ~~React's `useState` & `useReducer` hooks coupled with the Context API provided a sufficient means for managing and centralizing state in this application as there wasn't much information that needed to be kept in memory on the client that would demand a complex library like Redux. The pages are frequently refreshed, and the data is already being rendered onto the pages from the server(using `getServerSideProps`), which further reduces the need for alternate state management strategies. Additionally, user preferences are being persisted through cookies for server-side rendering.~~
   - **Important Note** &mdash; In hindsight, it would have been better to have used a purpose-built state management library like redux, as I didn't anticipate how complex the state would have grown. I also learned that Context forces a re-render of all the components subscribed to it irrespective of whether their part of the state has updated, which can hinder performance. Though, there are some ways to circumvent this issue. The Context API is better suited for storing static values that infrequently update (like UI themes or locale preferences) or local state instead of the type of data required by the client in this application.
 
 - For managing the user state, I switched from using multiple `useState` hooks to a single `useReducer` as it's a more convenient option for working with state objects holding multiple sub-values(like the wishlist and cart fields on the user object.)
 
 - Used Postgres trigger functions for updating cart total whenever a cart item gets added or removed.
 
-- After recognizing a repeating pattern in how API routes were being written and wanting to improve the process, I decided to build a method routing function, `RouteHandler`, that arranges request handlers in a similar fashion to Express.js routers. It allows all handlers to be composed with a custom error catcher and allowed me to use session middleware for authentication and role-based access control (through protected routes). This abstraction reduced boilerplate code inside the API routes and made writing async code much simpler.
+- After recognizing a repeating pattern in how API routes were being written and wanting to improve the process, I decided to build a method routing function, `RouteHandler`, that similarly arranges request handlers like Express.js routers. It allows all handlers to be composed within a custom error catcher and me to use session middlewares for authentication and role-based access control (via protected routes). This abstraction reduced boilerplate code inside the API routes and made writing async code much cleaner.
 
 - The website UI diverted from the original Figma design in several areas.
 
 - I created a product context for managing state on the products page to gain more control over how products are sorted and filtered and to reduce querying the database each time the page refreshes upon selecting a different criterion.
 
-- On the product page, I used `next/dynamic` to lazy-load tab panels until the user selects a tab panel's corresponding tab. This approach was particularly useful for suspending the loading of the size chart and all product reviews until the user demands them.
+- On the product page, I used `next/dynamic` to lazy-load tab panels until the user selects a tab panel's corresponding tab. This approach was particularly useful for suspending the loading of the size chart and product reviews component until requested by the user.
 
-- There were a number of changes made to the database throughout the course of this project. The details can be seen in the `prisma/migrations` folder where schema migrations are tracked.
+- There were several changes made to the database throughout this project. The details can be observed in the `prisma/migrations` folder where schema migrations are tracked.
 
 ## Issues Encountered
 
@@ -61,21 +59,21 @@ This is a responsive mobile-first website featuring real-time product filters, a
 
 - No way to add custom constraints onto table columns inside Prisma, so I had to resort to handwritten SQL commands.
 
-- The Sass team is deprecating the `@import` statement in favour of `@use`, which forced me to import (with `@use()`) all variables, functions, placeholders and mixins into all sass files that depends on them.
+- The Sass team is deprecating the `@import` statement in favour of `@use`, which forced me to import (with `@use()`) all variables, functions, placeholders and mixins into all sass files that depend on them.
 
 - Learning to work with `next/image` was a bit difficult, especially when trying to resize images.
 
-- While implementing the slideshow feature of the product component, I ran into a problem where the state wasn't updating as intended. After some point, I realized that the callback being passed to `setInterval` was using an outdated value of state held inside its closure &mdash; the value assigned during the first render. I later discovered a different way of updating the state by passing a callback to `setState` instead of a value. The callback accepts the current value of the state to calculate and return a new state. [Further details by Dan Abramov...](https://overreacted.io/making-setinterval-declarative-with-react-hooks/#second-attempt)
+- While implementing the slideshow feature of the product component, I encountered a problem where the state wasn't updating as intended. After some point, I realized that the callback being passed to `setInterval` was using an outdated value of state held inside its closure &mdash; the value assigned during the first render. I later discovered a different way of updating the state by passing a callback to `setState` instead of a value. The callback accepts the current value of the state to calculate and return a new state. [Further details by Dan Abramov...](https://overreacted.io/making-setinterval-declarative-with-react-hooks/#second-attempt)
 
-- Made some changes to UI in areas that were not accounted for during design, for layout and stylistic improvements.
+- I made some changes to UI in sections that were not accounted for during the design phase for layout and stylistic improvements.
 
 - After a series of bugs, I eventually realized that I needed to `await` all Prisma DB queries for them to execute successfully.
 
 - The price range component came with more challenges than I would have anticipated:
 
-- I found out that the `.getBoundingClientRect` method gives details about an element's rendering dimensions that may not be congruent with its layout dimensions in the case where CSS transformations are applied, which caused a few visual bugs on the range's progress bar. So I had to update my calculations.
+- I found out that the `.getBoundingClientRect` method gives details about an element's rendering dimensions that may be incongruent with its layout dimensions in the case where CSS transformations are applied, which caused a few visual bugs on the range's progress bar. So I had to update my calculations.
 
-- My naive attempt at making the price range a controlled component made the code grew increasingly complicated and harder to manage. The main issue stemmed from trying to trigger state updates in response to changing props. I ran into a condition where, in some cases, the change handlers and the component's `useEffect()` were continuously updating the state. They triggered state updates one after the other due to stale values being passed, so I had to rethink my approach. The solution was simple, set a key on the component that uses all the props required for triggering a reset.
+- My naive attempt at making the price range a controlled component made the code increasingly complicated and harder to manage. The main issue stemmed from trying to trigger state updates in response to changing props. I ran into a condition where, in some cases, the change handlers and the component's `useEffect()` would cause the state to be perpetually updated. One update after the other due to stale values, so I had to rethink my approach. The solution was simple, set a key on the component that uses all the props required for triggering a reset.
 
 - Trying to aggregate the average ratings for each product resulted in multiple Prisma clients being instantiated at once, which caused errors in Vercel. So to resolve this, in the database query, I included all reviews related to the products and then used that to map through and programmatically calculate the average ratings of each product.
 
@@ -93,7 +91,7 @@ This is a responsive mobile-first website featuring real-time product filters, a
 
 - Native internationalization(`Intl`) class - API that provides many tools for internationalization purposes has a method for formatting currency.
 
-- It's probably best not to program the database using triggers or procedures since they tend to become invisible (may forget or not be aware of them during development), it's probably best to perform calculations on the server instead.
+- It's probably best not to program the database using triggers or procedures since they tend to become invisible (may forget or not be aware of them during development), so it's probably best to perform calculations on the server instead.
 
 - Alternative way to update state `setState(state => ...)`
 
@@ -127,13 +125,13 @@ This is a responsive mobile-first website featuring real-time product filters, a
 2. You may edit the following variables inside the `./src/lib/config.ts` file:
 
    ```js
-   // name for session cookie
+   // name for the session cookie
    export const sessionOptions: IronSessionOptions = {
      cookieName: "<site_name>/user",
      // ...
    };
 
-   // name of domain
+   // name of the domain
    export const DOMAIN_NAME = "";
 
    // https://cloudinary.com upload preset & cloud name
@@ -153,7 +151,7 @@ This is a responsive mobile-first website featuring real-time product filters, a
 
 3. Run `npm install` to install all dependencies for the project.
 
-4. Then run `npx prisma db push`. This will use the schema (from `./prisma/schema.prisma`) to add the relevant tables to your `jonesdb` database.
+4. Then run `npx prisma db push`. It will use the schema (from `./prisma/schema.prisma`) to add the relevant tables to your `jonesdb` database.
 
 5. If you make any changes to `schema.prisma`, run `npm run db:migrate -- <name_of_migration>` to further maintain a history of each update to the database. You may also run `npx prisma generate` to manually sync `@prisma/client` with the database after updating the table schemas. Use `npx prisma studio` to launch the prisma client to observe and manipulate the database.
 
@@ -176,23 +174,23 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] Improve Accessibility.
 - [ ] Password Recovery Feature
 - [ ] Order Tracking Feature
-- [ ] Web scraper for product Info.
+- [ ] Web scraper for products Info.
 - [ ] Use SMTP to email users after sign-up and product purchases.
 - [ ] Add Google Auth
 - [ ] Add Structured Data to Product Pages Using [JSON-LD](https://nextjs.org/learn/seo/rendering-and-ranking/metadata)
 - [ ] Add An [XML Sitemap](https://nextjs.org/learn/seo/crawling-and-indexing/xml-sitemaps)
 - [ ] Cache BlurData urls.
-- [ ] Show only available colours in filter.
+- [ ] Show only available colours inside the filter options.
 - [ ] Find a way to elegantly hide the pinned header when the user scrolls back up.
 - [ ] Image Drag n Drop feature when uploading profile avatar
 - [ ] Images Drag n Drop feature for `/api/add-products` when adding product images.
 - [ ] Show products count per filter item constraint on the products page.
 - [ ] Integrate Paypal as a second payment gateway.
-- [ ] Add a captcha to the signup and login forms.
+- [ ] Add a captcha to the sign-up and login forms.
 - [ ] Create a size chart UI.
 - [ ] Animate Menu Button.
 - [ ] Skeleton Loading Animation.
-- [ ] Add navigation animation to product when clicked, so the product's image transitions to gallery.
+- [ ] Add transition animation to the product component when navigating to the product page, so the product's image transitions to the gallery.
 
 ## Credits & Attributions
 
