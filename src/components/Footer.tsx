@@ -240,9 +240,10 @@ export default function Footer() {
         visible={visible}
       >
         <Dropdown
-          onOptionSelect={(value) =>
-            setCurrency(value.toUpperCase() as CurrencyType)
-          }
+          onOptionSelect={(value) => {
+            setCurrency(value.toUpperCase() as CurrencyType);
+            setDialog(null);
+          }}
           label={`Select Currency (${currency.toUpperCase()})`}
           options={{
             usd: CurrencyType.USD,
