@@ -184,6 +184,7 @@
     align-self: end;
     font-size: $text-md;
     text-align: right;
+    font-variant-numeric: tabular-nums;
   }
 
   &__product-cost {
@@ -192,6 +193,7 @@
     color: $c-text-gray;
     font-weight: 300;
     text-align: right;
+    font-variant-numeric: tabular-nums;
   }
 
   &__product-quantity {
@@ -229,6 +231,7 @@
     color: $c-text-dark;
 
     &-value {
+      font-variant-numeric: tabular-nums;
       text-align: right;
       font-weight: 400;
       font-size: $text-md;

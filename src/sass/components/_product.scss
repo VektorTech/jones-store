@@ -169,6 +169,7 @@
 
   &__price {
     color: $c-text-red;
+    font-variant-numeric: tabular-nums;
 
     & #{$self}__amount {
       font-weight: 600;

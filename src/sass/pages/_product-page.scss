@@ -60,6 +60,7 @@
   &__price {
     font-size: $text-lg;
     font-weight: 600;
+    font-variant-numeric: tabular-nums;
 
     > span {
       font-weight: 400;
@@ -83,6 +84,7 @@
 
   &__sold {
     margin: 1rem 0;
+    font-variant-numeric: tabular-nums;
   }
 
   &__buy {
