@@ -86,10 +86,10 @@
     font-weight: 400;
     transform: scaleY(0);
     transform-origin: top;
-    transition: transform 0.7s $banner-timing-func;
+    transition: transform 0.4s $banner-timing-func;
 
     #{$self}__content--active & {
-      transition-delay: 0.3s;
+      transition-delay: 0.35s;
       transform-origin: bottom;
       transform: scaleY(1);
     }
@@ -116,7 +116,7 @@
       display: inline-block;
       transform: translateY(100%);
       opacity: 0;
-      transition: transform 0.7s 0.3s $banner-timing-func,
+      transition: transform 0.5s 0.3s $banner-timing-func,
         opacity 0.3s $banner-timing-func;
     }
 
@@ -159,10 +159,10 @@
     right: 0;
     margin-top: -3rem;
     white-space: nowrap;
-    transition: transform 0.5s cubic-bezier(0.55, 1, 0.62, 1.09);
+    transition: transform 0.4s cubic-bezier(0.55, 1, 0.62, 1.09);
 
     & span {
-      transition: opacity 0.4s $banner-timing-func;
+      transition: opacity 0.35s $banner-timing-func;
       opacity: 0;
     }
 
