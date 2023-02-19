@@ -2,7 +2,7 @@
 
 .banner {
   $self: &;
-  $banner-timing-func: cubic-bezier(1, 0.11, 0.97, 0.61);
+  $banner-timing-func: cubic-bezier(0.63, 0.33, 0.45, 0.45);
 
   width: 100%;
   height: calc(100vh - 3rem);
@@ -159,11 +159,14 @@
     right: 0;
     margin-top: -3rem;
     white-space: nowrap;
-    transition: transform 0.6s cubic-bezier(0.55, 1, 0.62, 1.09),
-      opacity 0.4s $banner-timing-func;
-    opacity: 0;
+    transition: transform 0.5s cubic-bezier(0.55, 1, 0.62, 1.09);
 
-    #{$self}__content--active & {
+    & span {
+      transition: opacity 0.4s $banner-timing-func;
+      opacity: 0;
+    }
+
+    #{$self}__content--active & span {
       transition-delay: 0.35s;
       opacity: 1;
     }
@@ -199,11 +202,14 @@
     margin: 0 auto;
     margin-top: 20vh;
     width: calc(8rem + 12vh + 15vw);
-    transition: transform 0.6s cubic-bezier(0.55, 1, 0.62, 1.09),
-      opacity 0.4s $banner-timing-func;
-    opacity: 0;
+    transition: transform 0.5s cubic-bezier(0.55, 1, 0.62, 1.09);
 
-    #{$self}__content--active & {
+    &-element {
+      opacity: 0;
+      transition: opacity 0.4s $banner-timing-func;
+    }
+
+    #{$self}__content--active &-element {
       transition-delay: 0.35s;
       opacity: 1;
     }
