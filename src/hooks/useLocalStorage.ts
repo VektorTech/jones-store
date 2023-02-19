@@ -8,7 +8,7 @@ export default function useLocalStorage<T>(
 
   useEffect(() => {
     const value = localStorage[key];
-    setItemValue(value);
+    if (value) setItemValue(value);
   }, [key]);
 
   const setItem = (value: T) => {
