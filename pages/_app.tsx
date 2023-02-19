@@ -24,7 +24,6 @@ import { sessionOptions } from "@Lib/config";
 import { AuthProvider } from "@Contexts/AuthContext";
 import { UIProvider } from "@Contexts/UIContext";
 import { CurrencyRate } from "@prisma/client";
-import Script from "next/script";
 
 NProgress.configure({ showSpinner: false });
 Router.events.on("routeChangeStart", () => NProgress.start());
@@ -85,6 +84,7 @@ MyApp.getInitialProps = async (context: AppContext) => {
   let session = null;
   let user = null;
   let cart = null;
+  let rates: CurrencyRate[] = [];
 
   if (req) {
     session = await getIronSession(req, res, sessionOptions).catch();
@@ -138,9 +138,9 @@ MyApp.getInitialProps = async (context: AppContext) => {
       };
       user = session.guest;
     }
+    rates = await prisma.currencyRate.findMany();
   }
 
-  const rates = await prisma.currencyRate.findMany();
 
   const cookies = req?.headers.cookie?.split("; ").reduce((batch, cookie) => {
     const [key, value] = cookie.split("=");
