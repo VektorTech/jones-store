@@ -13,6 +13,7 @@ import {
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { MoonLoader } from "react-spinners";
+import Animate from "./common/Animate";
 
 export default function Cart() {
   const format = useCurrencyFormatter();
@@ -28,67 +29,71 @@ export default function Cart() {
   }, [user]);
 
   return (
-    <div className={"cart" + (active ? " cart--active" : "")}>
-      <div onClick={() => setDialog(null)} className="cart__backdrop"></div>
-      <div className="cart__container">
-        <div className="cart__top">
-          <h3 className="cart__heading">Cart {`(${user.cart.count})`}</h3>
-          <button onClick={() => emptyCart()} className="cart__clear">
-            {"(Clear Cart)"}
-          </button>
-          <button
-            aria-label="close cart"
-            onClick={() => setDialog(null)}
-            className="cart__close"
-          >
-            <BsXLg className="sidebar__close-icon" />
-          </button>
-        </div>
-        <div className="cart__content">
-          <ul className="cart__list">
-            {user.cart.productIds.sort().map((id, index) => (
-              <CartProductItem
-                index={index}
-                removeAction={() => {
-                  removeFromCart(id);
-                  setLoading(true);
-                }}
-                updateAction={(quantity: number) => {
-                  addToCart(id, quantity, user.cart.items[id].size);
-                  setLoading(true);
-                }}
-                key={`cart-${id}`}
-                product={user.cart.items[id].product}
-                cartItem={user.cart.items[id]}
-              />
-            ))}
-          </ul>
-        </div>
-        <div className="cart__checkout">
-          <div className="cart__details">
-            <p className="cart__sub-total">Sub-total:</p>
-            <p className="cart__sub-total-value">{format(user.cart.total)}</p>
-            <p className="cart__shipping">Shipping:</p>
-            <p className="cart__shipping-value">{format(shippingTotalCost)}</p>
-            <p className="cart__total">Total:</p>
-            <p className="cart__total-value">
-              {format(user.cart.total + shippingTotalCost)}
-            </p>
+    <Animate isMounted={active} unmountDelay={300}>
+      <div className="cart">
+        <div onClick={() => setDialog(null)} className="cart__backdrop"></div>
+        <div className="cart__container">
+          <div className="cart__top">
+            <h3 className="cart__heading">Cart {`(${user.cart.count})`}</h3>
+            <button onClick={() => emptyCart()} className="cart__clear">
+              {"(Clear Cart)"}
+            </button>
+            <button
+              aria-label="close cart"
+              onClick={() => setDialog(null)}
+              className="cart__close"
+            >
+              <BsXLg className="sidebar__close-icon" />
+            </button>
           </div>
-          <Button
-            onClick={() => stripeCheckout(() => setLoading(false))}
-            className="cart__checkout-button"
-          >
-            Checkout
-          </Button>
-        </div>
-        {loading && (
-          <div className="cart__loader">
-            <MoonLoader size={30} />
+          <div className="cart__content">
+            <ul className="cart__list">
+              {user.cart.productIds.sort().map((id, index) => (
+                <CartProductItem
+                  index={index}
+                  removeAction={() => {
+                    removeFromCart(id);
+                    setLoading(true);
+                  }}
+                  updateAction={(quantity: number) => {
+                    addToCart(id, quantity, user.cart.items[id].size);
+                    setLoading(true);
+                  }}
+                  key={`cart-${id}`}
+                  product={user.cart.items[id].product}
+                  cartItem={user.cart.items[id]}
+                />
+              ))}
+            </ul>
           </div>
-        )}
+          <div className="cart__checkout">
+            <div className="cart__details">
+              <p className="cart__sub-total">Sub-total:</p>
+              <p className="cart__sub-total-value">{format(user.cart.total)}</p>
+              <p className="cart__shipping">Shipping:</p>
+              <p className="cart__shipping-value">
+                {format(shippingTotalCost)}
+              </p>
+              <p className="cart__total">Total:</p>
+              <p className="cart__total-value">
+                {format(user.cart.total + shippingTotalCost)}
+              </p>
+            </div>
+            <Button
+              onClick={() => stripeCheckout(() => setLoading(false))}
+              className="cart__checkout-button"
+            >
+              Checkout
+            </Button>
+          </div>
+          {loading && (
+            <div className="cart__loader">
+              <MoonLoader size={30} />
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </Animate>
   );
 }
 

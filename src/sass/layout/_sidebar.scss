@@ -11,7 +11,7 @@
   text-transform: uppercase;
   visibility: hidden;
 
-  &--active {
+  &.active {
     pointer-events: unset;
     background-color: $c-backdrop;
     visibility: visible;

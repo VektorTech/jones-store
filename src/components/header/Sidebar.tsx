@@ -15,7 +15,8 @@ import {
 import { useDialog, DialogType } from "@Contexts/UIContext";
 import { useAuthState } from "@Contexts/AuthContext";
 import useTabTrapIn from "@Hooks/useKeyTrap";
-import { currencyFormatter2 } from "src/intl";
+import { currencyFormatter2 } from "src/i18n";
+import Animate from "@Components/common/Animate";
 
 export default function Sidebar() {
   const [submenu, setSubmenu] = useState<Array<any> | null>(null);
@@ -38,179 +39,178 @@ export default function Sidebar() {
   }, [submenuActive]);
 
   return (
-    <div
-      className={`sidebar${sidebarVisible ? " sidebar--active" : ""}`}
-      onClick={() => setDialog(null)}
-    >
-      <button aria-label="close sidebar" className="sidebar__close">
-        <BsXLg className="sidebar__close-icon" />
-      </button>
-      <nav
-        className={`sidebar__nav${
-          submenuActive ? " sidebar__nav--submenu" : ""
-        }`}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div ref={sidebarRef} className="sidebar__container">
-          <button
-            onClick={() => setDialog(DialogType.SEARCH_BOX)}
-            className="sidebar__search-box"
-          >
-            <span className="sidebar__search-box-label">
-              Search Jones Store
-            </span>
-            <span className="sidebar__search-box-icon">
-              <FiSearch />
-            </span>
-          </button>
-          <div className="sidebar__links">
-            <ul>
-              <li className="sidebar__links-item">
-                <Link href="/">
-                  <a className="sidebar__anchor">HOME</a>
-                </Link>
-              </li>
-              <li className="sidebar__links-item sidebar__links-menu">
-                <button
-                  onClick={() => {
-                    setSubmenu(ColorwaysList);
-                    setSubmenuActive(true);
-                  }}
-                >
-                  <span>COLORWAYS</span>
-                  <IoIosArrowForward />
-                </button>
-              </li>
-              <li className="sidebar__links-item sidebar__links-menu">
-                <button
-                  onClick={() => {
-                    setSubmenu(MenCategoriesList);
-                    setSubmenuActive(true);
-                  }}
-                >
-                  <span>MEN</span>
-                  <IoIosArrowForward />
-                </button>
-              </li>
-              <li className="sidebar__links-item sidebar__links-menu">
-                <button
-                  onClick={() => {
-                    setSubmenu(WomenCategoriesList);
-                    setSubmenuActive(true);
-                  }}
-                >
-                  <span>WOMEN</span>
-                  <IoIosArrowForward />
-                </button>
-              </li>
-              <li className="sidebar__links-item">
-                <Link href="/category/kids">
-                  <a className="sidebar__anchor">KIDS</a>
-                </Link>
-              </li>
-              <li className="sidebar__links-item">
-                <Link href="/category/baby">
-                  <a className="sidebar__anchor">BABY</a>
-                </Link>
-              </li>
-              <li className="sidebar__links-item">
-                <Link href="/category/unisex">
-                  <a className="sidebar__anchor">UNISEX</a>
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="sidebar__icon-links">
-            <ul>
-              {isAuth ? (
+    <Animate isMounted={sidebarVisible} unmountDelay={300}>
+      <div className="sidebar" onClick={() => setDialog(null)}>
+        <button aria-label="close sidebar" className="sidebar__close">
+          <BsXLg className="sidebar__close-icon" />
+        </button>
+        <nav
+          className={`sidebar__nav${
+            submenuActive ? " sidebar__nav--submenu" : ""
+          }`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div ref={sidebarRef} className="sidebar__container">
+            <button
+              onClick={() => setDialog(DialogType.SEARCH_BOX)}
+              className="sidebar__search-box"
+            >
+              <span className="sidebar__search-box-label">
+                Search Jones Store
+              </span>
+              <span className="sidebar__search-box-icon">
+                <FiSearch />
+              </span>
+            </button>
+            <div className="sidebar__links">
+              <ul>
+                <li className="sidebar__links-item">
+                  <Link href="/">
+                    <a className="sidebar__anchor">HOME</a>
+                  </Link>
+                </li>
+                <li className="sidebar__links-item sidebar__links-menu">
+                  <button
+                    onClick={() => {
+                      setSubmenu(ColorwaysList);
+                      setSubmenuActive(true);
+                    }}
+                  >
+                    <span>COLORWAYS</span>
+                    <IoIosArrowForward />
+                  </button>
+                </li>
+                <li className="sidebar__links-item sidebar__links-menu">
+                  <button
+                    onClick={() => {
+                      setSubmenu(MenCategoriesList);
+                      setSubmenuActive(true);
+                    }}
+                  >
+                    <span>MEN</span>
+                    <IoIosArrowForward />
+                  </button>
+                </li>
+                <li className="sidebar__links-item sidebar__links-menu">
+                  <button
+                    onClick={() => {
+                      setSubmenu(WomenCategoriesList);
+                      setSubmenuActive(true);
+                    }}
+                  >
+                    <span>WOMEN</span>
+                    <IoIosArrowForward />
+                  </button>
+                </li>
+                <li className="sidebar__links-item">
+                  <Link href="/category/kids">
+                    <a className="sidebar__anchor">KIDS</a>
+                  </Link>
+                </li>
+                <li className="sidebar__links-item">
+                  <Link href="/category/baby">
+                    <a className="sidebar__anchor">BABY</a>
+                  </Link>
+                </li>
+                <li className="sidebar__links-item">
+                  <Link href="/category/unisex">
+                    <a className="sidebar__anchor">UNISEX</a>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className="sidebar__icon-links">
+              <ul>
+                {isAuth ? (
+                  <li className="sidebar__icon-links-item">
+                    <Link href="/profile">
+                      <a className="sidebar__anchor">
+                        <BsPerson />
+                        <span>Profile</span>
+                      </a>
+                    </Link>
+                  </li>
+                ) : null}
                 <li className="sidebar__icon-links-item">
-                  <Link href="/profile">
+                  {isAuth ? (
+                    <Form
+                      afterSubmit={(data) => {
+                        if (data.success) {
+                          location.reload();
+                        }
+                      }}
+                      action="/api/auth/signout"
+                    >
+                      <button
+                        aria-label="logout"
+                        className="sidebar__link-btn"
+                        type="submit"
+                      >
+                        <FiLogOut />
+                        Logout
+                      </button>
+                    </Form>
+                  ) : (
+                    <Link href="/signin">
+                      <a className="sidebar__anchor">
+                        <FiLogIn />
+                        <span>Login / Register</span>
+                      </a>
+                    </Link>
+                  )}
+                </li>
+                <li className="sidebar__icon-links-item">
+                  <Link href="/wishlist">
                     <a className="sidebar__anchor">
-                      <BsPerson />
-                      <span>Profile</span>
+                      <AiOutlineHeart />
+                      <span>
+                        Wishlist{wishlistCount ? ` (${wishlistCount})` : ""}
+                      </span>
                     </a>
                   </Link>
                 </li>
-              ) : null}
-              <li className="sidebar__icon-links-item">
-                {isAuth ? (
-                  <Form
-                    afterSubmit={(data) => {
-                      if (data.success) {
-                        location.reload();
-                      }
-                    }}
-                    action="/api/auth/signout"
+                <li className="sidebar__icon-links-item">
+                  <button
+                    aria-label="cart"
+                    onClick={() => setDialog(DialogType.CART)}
+                    className="sidebar__anchor"
                   >
-                    <button
-                      aria-label="logout"
-                      className="sidebar__link-btn"
-                      type="submit"
-                    >
-                      <FiLogOut />
-                      Logout
-                    </button>
-                  </Form>
-                ) : (
-                  <Link href="/signin">
-                    <a className="sidebar__anchor">
-                      <FiLogIn />
-                      <span>Login / Register</span>
-                    </a>
-                  </Link>
-                )}
-              </li>
-              <li className="sidebar__icon-links-item">
-                <Link href="/wishlist">
-                  <a className="sidebar__anchor">
-                    <AiOutlineHeart />
+                    <BsCart3 />
                     <span>
-                      Wishlist{wishlistCount ? ` (${wishlistCount})` : ""}
+                      Cart
+                      {cartCount
+                        ? ` (${cartCount}) (${currencyFormatter2.format(
+                            cartTotal
+                          )})`
+                        : ""}
                     </span>
-                  </a>
-                </Link>
-              </li>
-              <li className="sidebar__icon-links-item">
-                <button
-                  aria-label="cart"
-                  onClick={() => setDialog(DialogType.CART)}
-                  className="sidebar__anchor"
-                >
-                  <BsCart3 />
-                  <span>
-                    Cart
-                    {cartCount
-                      ? ` (${cartCount}) (${currencyFormatter2.format(
-                          cartTotal
-                        )})`
-                      : ""}
-                  </span>
-                </button>
-              </li>
-            </ul>
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div className="sidebar__lang-currency language-currency">
+              <button className="language-currency__btn">
+                {"English"} <span className="language-currency__sep">|</span>{" "}
+                {"$ USD"}
+              </button>
+            </div>
           </div>
-          <div className="sidebar__lang-currency language-currency">
-            <button className="language-currency__btn">
-              {"English"} <span className="language-currency__sep">|</span>{" "}
-              {"$ USD"}
-            </button>
-          </div>
-        </div>
 
-        <div className="sidebar__container sidebar__submenu-container">
-          <div className="sidebar__links-2">
-            <ul hidden={submenu == null}>
-              <li className="sidebar__links-item sidebar__back-button">
-                <button onClick={() => setSubmenuActive(false)}>
-                  <IoIosArrowBack />
-                  <span>BACK</span>
-                </button>
-              </li>
-              {submenu}
-            </ul>
+          <div className="sidebar__container sidebar__submenu-container">
+            <div className="sidebar__links-2">
+              <ul hidden={submenu == null}>
+                <li className="sidebar__links-item sidebar__back-button">
+                  <button onClick={() => setSubmenuActive(false)}>
+                    <IoIosArrowBack />
+                    <span>BACK</span>
+                  </button>
+                </li>
+                {submenu}
+              </ul>
+            </div>
           </div>
-        </div>
-      </nav>
-    </div>
+        </nav>
+      </div>
+    </Animate>
   );
 }
