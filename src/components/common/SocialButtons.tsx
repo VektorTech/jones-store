@@ -5,6 +5,7 @@ import {
   RiYoutubeFill,
   RiTwitterFill,
   RiPinterestFill,
+  RiGithubFill,
 } from "react-icons/ri";
 import { SiTiktok } from "react-icons/si";
 
@@ -67,6 +68,12 @@ export default function SocialButtons({ vertical, size = "sm" }: PropTypes) {
           </a>
         </Link>
       ) : null}
+
+      <Link href="https://github.com/VektorTech/jones-store">
+        <a aria-label="Follow us on Github" className="social-links__link">
+          <RiGithubFill />
+        </a>
+      </Link>
     </div>
   );
 }
