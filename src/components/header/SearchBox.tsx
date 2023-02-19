@@ -82,6 +82,7 @@ export default function SearchBoxContainer() {
                   type="text"
                   name="search"
                   placeholder="Searching for..."
+                  autoComplete="off"
                   onChange={(e) => searchChangedHandler(e.currentTarget.value)}
                   value={searchTerm}
                 />
