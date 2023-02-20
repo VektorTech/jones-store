@@ -1,0 +1,65 @@
+@use "../abstracts" as *;
+
+.size-guide {
+  max-width: 100%;
+  overflow: auto;
+  border: 0.1rem solid black;
+  border-top: none;
+
+  table {
+    border-top: 0.1rem solid black;
+    border-bottom: 0.1rem solid black;
+    border-collapse: collapse;
+  }
+
+  thead {
+    border-bottom: 0.1rem solid black;
+    font-size: $text-sm;
+  }
+
+  th[scope="row"] {
+    background-color: black;
+    color: white;
+    text-transform: lowercase;
+    font-variant: small-caps;
+  }
+
+  &.sticky th[scope="row"] {
+    position: absolute;
+    left: 0;
+  }
+
+  th,
+  td {
+    width: 9rem;
+    text-align: left;
+    padding: 0.5rem 1rem;
+	white-space: nowrap;
+	min-width: 9rem;
+  }
+
+  th {
+    font-weight: normal;
+  }
+
+  tbody tr td:nth-of-type(2n + 1) {
+    background-color: #f2f2f2;
+  }
+
+  &.sticky {
+    thead th[colspan="2"] {
+      display: none;
+    }
+
+    th[colspan="4"] {
+      width: calc(9rem * 4);
+    }
+
+    thead,
+    tbody {
+      display: block;
+      padding-left: 23rem;
+      width: 100%;
+    }
+  }
+}

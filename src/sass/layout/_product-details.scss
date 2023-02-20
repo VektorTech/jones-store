@@ -44,6 +44,13 @@
     width: 100%;
     padding: 2rem 0;
 
+    h2 {
+      font-size: $text-lg;
+      font-weight: bold;
+      text-align: center;
+      padding: 0.5rem 1rem;
+    }
+
     & .reviews {
       margin-top: 2rem;
 
