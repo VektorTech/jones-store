@@ -2,7 +2,9 @@
 
 ### A Seamless E-Commerce Marketplace
 
-Jones is an SEO-friendly, responsive mobile-first online store for purchasing Nike Jordan Ones. The website features real-time product filters, a pop-up search option (AJAX live search), AJAX add-to-cart and wishlist options, a guest shopping cart, a newsletter form, an announcement banner for live updates, a product review section and a slideshow on product hover.
+Jones is an SEO-friendly, responsive, mobile-first online store for purchasing Nike Jordan Ones.
+
+The website features real-time product filters, a pop-up search option (AJAX live search), AJAX add-to-cart and wishlist options, a guest shopping cart, a newsletter form, an announcement banner for live updates, a product review section and a slideshow on product hover.
 
 ## Table of Content
 
@@ -50,21 +52,21 @@ Jones is an SEO-friendly, responsive mobile-first online store for purchasing Ni
 
 - Considering that this is an e-commerce website, SEO plays a significant factor in its success, but using standard client-side rendered React would seriously hinder search engines from properly crawling each page. So I chose Next.JS for this project as it provides a quick and simple way for writing performant, server-side rendered react applications without much overhead.
 
-- ~~React's `useState` & `useReducer` hooks coupled with the Context API provided a sufficient means for managing and centralizing state in this application as there wasn't much information that needed to be kept in memory on the client that would demand a complex library like Redux. The pages are frequently refreshed, and the data is already being rendered onto the pages from the server(using `getServerSideProps`), which further reduces the need for alternate state management strategies. Additionally, user preferences are being persisted through cookies for server-side rendering.~~
+- ~~React's `useState` & `useReducer` hooks coupled with the Context API provided a sufficient means for managing and centralizing state in this application as there wasn't much information that needed to be kept in memory on the client that would demand a complex library like Redux. The pages are frequently refreshed, and the data is already being rendered onto the pages from the server(using `getServerSideProps`), further reducing the need for alternate state management strategies. Additionally, user preferences are being persisted through cookies for server-side rendering.~~
 
-  - **Important Note** &mdash; In hindsight, it would have been better to have used a purpose-built state management library like redux, as I didn't anticipate how complex the state would have grown in this app. I also learned that the Context API forces a re-render of all the components subscribed to it irrespective of whether their part of the state has updated, which can hinder performance. Though, there are some ways to work around this issue, but the results may not be very ideal compared to what a library like redux has to offer. Furthermore, the Context API is better suited for storing static values that infrequently update (like UI themes or locale preferences) or local state instead of the type of data required by the client in this application.
+  - **Important Note** &mdash; In hindsight, it would have been better to have used a purpose-built state management library like redux, as I didn't anticipate how much the state would have grown in this application. I also learned that an individual Context would force a re-render of all the components subscribed to it irrespective of whether their part of the state has updated, which could hinder performance. There are some ways to circumvent this issue, but the results will not be as ideal as what libraries like redux can offer. Furthermore, the Context API is better suited for storing static values that infrequently update (like UI themes or locale preferences.) Or local state instead of the type of data in this application.
 
 - For managing the user state, I switched from using multiple `useState` hooks to a single `useReducer` as it's a more convenient option for working with state objects holding multiple sub-values(like the wishlist and cart fields on the user object.)
 
 - Used Postgres trigger functions for updating cart total whenever a cart item gets added or removed.
 
-- After recognizing a repeating pattern in how API routes were being written and wanting to improve the process, I decided to build a method routing function, `RouteHandler`, that similarly arranges request handlers like Express.js routers. It allows all handlers to be composed within a custom error catcher and me to use session middlewares for authentication and role-based access control (via protected routes). This abstraction reduced boilerplate code inside the API routes and made writing async code much cleaner.
+- After recognizing a repeating pattern in how API routes were being written and wanting to improve the process, I built a method routing function, `RouteHandler`. It allows for arranging request handlers in a similar fashion to Express.js routers. Now all handlers can be composed within a custom error catcher and have session middlewares for authentication and role-based access control (via protected routes). This abstraction reduced boilerplate code inside the API routes and made writing async code in the handlers much cleaner.
 
-- The website UI diverted from the original Figma design in several areas.
+- The website UI diverted from the original Figma design in several different areas.
 
 - I created a product context for managing state on the products page to gain more control over how products are sorted and filtered and to reduce querying the database each time the page refreshes upon selecting a different criterion.
 
-- On the product page, I used `next/dynamic` to lazy-load tab panels until the user selects a tab panel's corresponding tab. This approach was particularly useful for suspending the loading of the size chart and product reviews component until requested by the user.
+- For the product page, I used `next/dynamic` to lazy-load tab panels until the user selects a tab panel's corresponding tab. This approach was particularly useful for suspending the loading of the size chart and product reviews component until requested by the user.
 
 - There were several changes made to the database throughout this project. The details can be observed in the `prisma/migrations` folder where schema migrations are tracked.
 
@@ -78,7 +80,7 @@ Jones is an SEO-friendly, responsive mobile-first online store for purchasing Ni
 
 - Learning to work with `next/image` was a bit difficult, especially when trying to resize images.
 
-- While implementing the slideshow feature of the product component, I encountered a problem where the state wasn't updating as intended. After some point, I realized that the callback being passed to `setInterval` was using an outdated value of state held inside its closure &mdash; the value assigned during the first render. I later discovered a different way of updating the state by passing a callback to `setState` instead of a value. The callback accepts the current value of the state to calculate and return a new state. [Further details by Dan Abramov...](https://overreacted.io/making-setinterval-declarative-with-react-hooks/#second-attempt)
+- While implementing the slideshow feature on the product component, I encountered a problem where the state wasn't updating as intended. After some point, I realized that the callback being passed to `setInterval` was using an outdated value of state held inside its closure &mdash; the value assigned during the first render. I later discovered a different way of updating state by passing a callback to `setState` instead of some value. The callback accepts the current value of the state to calculate and return a new state. [Further details by Dan Abramov...](https://overreacted.io/making-setinterval-declarative-with-react-hooks/#second-attempt)
 
 - I made some changes to UI in sections that were not accounted for during the design phase for layout and stylistic improvements.
 
@@ -88,9 +90,9 @@ Jones is an SEO-friendly, responsive mobile-first online store for purchasing Ni
 
 - I found out that the `.getBoundingClientRect` method gives details about an element's rendering dimensions that may be incongruent with its layout dimensions in the case where CSS transformations are applied, which caused a few visual bugs on the range's progress bar. So I had to update my calculations.
 
-- My naive attempt at making the price range a controlled component made the code increasingly complicated and harder to manage. The main issue stemmed from trying to trigger state updates in response to changing props. I ran into a condition where, in some cases, the change handlers and the component's `useEffect()` would cause the state to be perpetually updated. One update after the other due to stale values, so I had to rethink my approach. The solution was simple, set a key on the component that uses all the props required for triggering a reset.
+- My naive attempt at making the price range a controlled component made the code increasingly complicated and harder to manage. The main issue stemmed from trying to trigger state updates in response to changing props. I ran into a condition where, in some cases, the change handlers and the component's `useEffect()` would cause the state to be perpetually updated. One update after the other due to stale values, so I had to rethink my approach. The solution was simple, set a key prop on the component that would trigger a reset whenever certain values change.
 
-- Trying to aggregate the average ratings for each product resulted in multiple Prisma clients being instantiated at once, which caused errors in Vercel. So to resolve this, in the database query, I included all reviews related to the products and then used that to map through and programmatically calculate the average ratings of each product.
+- Trying to aggregate the average ratings for each product resulted in multiple Prisma clients being instantiated, which caused errors in Vercel. So to resolve this, in the database query, I included all reviews related to the products and then used that to map through and programmatically calculate the average ratings of each product.
 
 ## What I've Learned
 
@@ -210,6 +212,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] Skeleton Loading Animation.
 - [ ] Add transition animation to the product component when navigating to the product page, so the product's image transitions to the gallery.
 - [ ] Paginate Products List
+- [ ] Make certain UI updates optimistic (like add to cart feature)
 
 ## Credits & Attributions
 
