@@ -117,7 +117,8 @@ $control-size: 1.7rem;
     margin-left: 1rem;
   }
 
-  &__see-all{
+  &__see-all {
+    font-size: $text-sm;
     width: 100%;
     padding-top: 0.5rem;
     text-decoration: underline;
