@@ -1,8 +1,16 @@
 @use "../abstracts" as *;
 
 .product-cart-form {
-	&__submit {
-		width: 100%;
-		margin-top: 2rem;
-	}
+  &__submit {
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  &__size-label,
+  &__quantity {
+    font-size: $text-sm;
+    color: $c-text-dark;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
 }

@@ -60,8 +60,8 @@ const ProductPage: NextPage<ProductPageType> = ({
         />
 
         <div className="product-view__cart">
-          <h1 className="product-view__name">{title}</h1>
           <p className="product-view__gender">{gender}</p>
+          <h1 className="product-view__name">{title}</h1>
           <RatingStars count={ratings} />
 
           <div className="product-view__details">
@@ -84,10 +84,11 @@ const ProductPage: NextPage<ProductPageType> = ({
           </p>
 
           <p className="product-view__sold">
-            {salesCount ?? 0} Sold &mdash; {stockQty} available in stock
+            {salesCount ?? 0} Sold / {stockQty} available in stock
           </p>
 
           <ProductCartForm key={product.id} product={product} />
+          <p className="product-view__shipping-info">Shipping calculated at checkout.</p>
 
           <ShareButton
             title={product.title}

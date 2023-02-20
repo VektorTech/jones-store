@@ -19,31 +19,34 @@
     will-change: transform;
   }
 
-  &__controls {
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  &__button {
     font-size: 2.2rem;
-    @extend %vertical-center;
-    left: 0;
-    right: 0;
-    padding: 0 1rem;
     text-align: center;
     cursor: pointer;
+    height: 4.6rem;
+    width: 4.6rem;
+    display: flex;
+    color: #fff;
+    border-radius: 50%;
+    background-color: #0000003e;
+    position: absolute;
+    @extend %vertical-center;
 
-    &-button {
-      height: 3.6rem;
-      width: 3.5rem;
-      display: flex;
-      color: #eee;
-      border-radius: 0.2rem;
-      background-color: #0000004e;
-
-      & svg {
-        margin: auto;
-      }
+    & svg {
+      margin: auto;
     }
+
+    &[hidden] {
+      visibility: hidden;
+    }
+  }
+
+  &__next {
+    right: 0;
+  }
+
+  &__slide {
+    transition: transform 0.3s cubic-bezier(0.13, 0.72, 0.31, 0.84);
   }
 
   &__expanded {

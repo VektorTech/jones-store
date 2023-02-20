@@ -1,23 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
 
-import Modal from "./Modal";
-
-import { DialogType, useDialog } from "@Contexts/UIContext";
 import useMouseCoords from "@Hooks/useMouseCoords";
 
 export default function Carousel({ children, aIndex, onUpdate }: PropTypes) {
   const carousel = useRef<HTMLDivElement>(null);
   const slidesContainer = useRef<HTMLDivElement>(null);
-  const controls = useRef<HTMLDivElement>(null);
   const transitioning = useRef<boolean>(false);
-  const { currentDialog, setDialog } = useDialog();
-  const activeModal = currentDialog == DialogType.MODAL_PRODUCT_VIEW;
   const [slideNumber, setSlideNumber] = useState(aIndex);
   const [carouselWidth, setCarouselWidth] = useState(
     carousel.current?.clientWidth ?? 0
   );
-  const [x, y] = useMouseCoords(controls.current);
+  const [x, y] = useMouseCoords(carousel.current, 0, 35);
 
   const getChildrenAsSlides = (): Array<React.ReactNode> | undefined => {
     if (Array.isArray(children)) {
@@ -85,62 +79,54 @@ export default function Carousel({ children, aIndex, onUpdate }: PropTypes) {
   };
 
   return (
-    <>
-      <div className="carousel" ref={carousel}>
-        <div
-          ref={slidesContainer}
-          style={{ width: `${carouselWidth * len}px` }}
-          className="carousel__container"
-        >
-          {updatedChildren}
-        </div>
-      </div>
-      <Modal size="lg" onClose={() => setDialog(null)} visible={activeModal}>
-        <div className="carousel__expanded">
-          {updatedChildren?.[slideNumber]}
-        </div>
-      </Modal>
+    <div
+      className="carousel"
+      ref={carousel}
+      onPointerMove={handlePointerOver}
+      onPointerOut={handlePointerLeave}
+    >
       <div
-        onClick={() => setDialog(DialogType.MODAL_PRODUCT_VIEW)}
-        onPointerMove={handlePointerOver}
-        onPointerOut={handlePointerLeave}
-        ref={controls}
-        className="carousel__controls"
+        ref={slidesContainer}
+        style={{ width: `${carouselWidth * len}px` }}
+        className="carousel__container"
       >
-        <button
-          aria-label="previous image"
-          onClick={(e) => {
-            e.stopPropagation();
-            if (!transitioning.current) {
-              transitioning.current = true;
-              const newSlideNumber = (slideNumber - 1 + len) % len;
-              setSlideNumber(newSlideNumber);
-              onUpdate?.(newSlideNumber);
-            }
-          }}
-          onPointerMove={(e) => e.stopPropagation()}
-          className="carousel__controls-button carousel__prev"
-        >
-          <BsArrowLeft />
-        </button>
-        <button
-          aria-label="next image"
-          onClick={(e) => {
-            e.stopPropagation();
-            if (!transitioning.current) {
-              transitioning.current = true;
-              const newSlideNumber = (slideNumber + 1) % len;
-              setSlideNumber(newSlideNumber);
-              onUpdate?.(newSlideNumber);
-            }
-          }}
-          onPointerMove={(e) => e.stopPropagation()}
-          className="carousel__controls-button carousel__next"
-        >
-          <BsArrowRight />
-        </button>
+        {updatedChildren}
       </div>
-    </>
+      <button
+        aria-label="previous image"
+        onClick={(e) => {
+          e.stopPropagation();
+          if (!transitioning.current) {
+            transitioning.current = true;
+            const newSlideNumber = (slideNumber - 1 + len) % len;
+            setSlideNumber(newSlideNumber);
+            onUpdate?.(newSlideNumber);
+          }
+        }}
+        hidden={slideNumber == 0}
+        onPointerMove={(e) => e.stopPropagation()}
+        className="carousel__button carousel__prev"
+      >
+        <BsArrowLeft />
+      </button>
+      <button
+        aria-label="next image"
+        onClick={(e) => {
+          e.stopPropagation();
+          if (!transitioning.current) {
+            transitioning.current = true;
+            const newSlideNumber = (slideNumber + 1) % len;
+            setSlideNumber(newSlideNumber);
+            onUpdate?.(newSlideNumber);
+          }
+        }}
+        hidden={slideNumber == len - 1}
+        onPointerMove={(e) => e.stopPropagation()}
+        className="carousel__button carousel__next"
+      >
+        <BsArrowRight />
+      </button>
+    </div>
   );
 }
 

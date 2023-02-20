@@ -54,16 +54,11 @@ export default function ProductGallery({
             >
               {images.map((url, i) => (
                 <FutureImage
+                  className="product-gallery__image"
                   key={"image:" + url}
-                  style={{
-                    objectPosition: "top",
-                    objectFit: "contain",
-                    maxHeight: "100%",
-                    height: "100%",
-                    position: "static",
-                  }}
                   priority
                   src={url}
+                  onClick={() => window.open(url, "_blank")}
                   placeholder="blur"
                   blurDataURL={blurDataUrls[url] || ProductPlaceholderImg}
                   width={dimensions[i]?.width ?? 0}

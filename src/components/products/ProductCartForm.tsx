@@ -26,18 +26,24 @@ export default function ProductCartForm({
 
   return (
     <form method="POST" action="/api/cart">
-      <p>
+      <label htmlFor="size" className="product-cart-form__size-label">
         <strong>Size:</strong> Please Select
-      </p>
+      </label>
       <SizeOptions
+        id="size"
         values={sizesValuesRef.current}
         onChecked={(items) => setCheckedSize(items as string)}
       />
+
+      <label className="product-cart-form__quantity" htmlFor="quantity">
+        Quantity
+      </label>
       <NumberInput
         onChange={(value) => setQuantity(value)}
         value={quantity}
         key={`cart-form-${quantity}`}
         min={1}
+        id="quantity"
         max={stockQty}
         name="qty"
       />
@@ -71,8 +77,7 @@ export default function ProductCartForm({
           }
         }}
       >
-        Buy Now &mdash;{" "}
-        {format((price - discount) * quantity)}
+        Buy Now &mdash; {format((price - discount) * quantity)}
       </Button>
     </form>
   );

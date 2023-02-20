@@ -7,7 +7,7 @@ import jordanHighImage from "@Images/air-jordan-1-high.webp";
 
 export default function CollectionSection() {
   return (
-    <section className="collections">
+    <div className="collections">
       <div className="collections__container">
         <div className="collections__grid">
           <article className="collections__block collections__block--text">
@@ -46,7 +46,7 @@ export default function CollectionSection() {
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 

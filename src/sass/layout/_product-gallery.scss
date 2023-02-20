@@ -8,6 +8,7 @@
     position: sticky;
     display: flex;
     top: calc(var(--header-height) + 1rem);
+    user-select: none;
   }
 
   @include respond-to("medium") {
@@ -22,6 +23,14 @@
       width: 100%;
       padding: 0.2rem;
     }
+  }
+
+  &__image {
+    object-position: top;
+    object-fit: contain;
+    max-height: 100%;
+    height: 100%;
+    position: static;
   }
 
   &__thumb {
