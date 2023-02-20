@@ -11,7 +11,7 @@ import Dropdown from "@Components/formControls/Dropdown";
 import SizeOptions from "@Components/common/SizeOptions";
 import { toast } from "react-toastify";
 
-const CategoriesData = require("@Lib/CategoriesData.json");
+const CategoriesData = require("@Data/CategoriesData.json");
 const Categories = listToEnum(CategoriesData?.colorways ?? []);
 
 export default function AddProduct() {
