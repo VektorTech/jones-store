@@ -120,6 +120,9 @@ Jones is an SEO-friendly, responsive mobile-first online store for purchasing Ni
 
    # authorization key for cron task
    CRON_ACTION_KEY="random_string"
+
+   # From google analytics
+   NEXT_PUBLIC_GA_MEASUREMENT_ID="G-..."
    ```
 
 2. You may edit the following variables inside the `./src/lib/config.ts` file:
