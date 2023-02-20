@@ -44,7 +44,7 @@ function CategoryPage({ categoryId }: { categoryId: string }) {
 
   return (
     <>
-      <SEO title={categoryId.toUpperCase()} />
+      <SEO title={categoryId} />
       <Constraints allProductsCount={count} currentProductsCount={count} />
       <FilterSortSection toggleFilter={() => setFilterActive(!filterActive)} />
 
