@@ -1,10 +1,23 @@
 # Jones (Jordan Ones) Shoe Store
 
-## A Seamless E-Commerce Marketplace
+### A Seamless E-Commerce Marketplace
 
 Jones is an SEO-friendly, responsive mobile-first online store for purchasing Nike Jordan Ones. The website features real-time product filters, a pop-up search option (AJAX live search), AJAX add-to-cart and wishlist options, a guest shopping cart, a newsletter form, an announcement banner for live updates, a product review section and a slideshow on product hover.
 
-## Tech Used
+## Table of Content
+
+1. [Technologies Used](#technologies-used)
+2. [Design Decisions](#design-decisions)
+3. [Issues Encountered](#issues-encountered)
+4. [What I've Learned](#what-ive-learned)
+5. [Setup Instructions](#setup-instructions)
+6. [Getting Started](#getting-started)
+7. [Todo](#todo)
+8. [Credits & Attributions](#credits--attributions)
+9. [Learn More](#learn-more)
+10. [Deploy on Vercel](#deploy-on-vercel)
+
+## Technologies Used
 
 - **Next.JS** &mdash; React Framework - Used for server-side rendering and RESTful APIs
 - **Typescript** &mdash; Static typing, type Inference, narrowing & type guarding
@@ -13,6 +26,7 @@ Jones is an SEO-friendly, responsive mobile-first online store for purchasing Ni
 - **Yup** &mdash; Schema validation & form validation
 - **PostgreSQL** &mdash; A Relational Database Management System
 - **Prisma** &mdash; ORM for PostgreSQL (Data Modeling, Query Building, Migration System & GUI to Access Database)
+- **Cloudinary** &mdash; Used as cloud image store for product images
 - **Stripe** &mdash; Used Stripe as primary payment gateway & npm library for accessing their API
 - **Micro** &mdash; Used for parsing raw incoming requests body
 - **Sass** &mdash; Preprocessor used for styling
@@ -37,7 +51,8 @@ Jones is an SEO-friendly, responsive mobile-first online store for purchasing Ni
 - Considering that this is an e-commerce website, SEO plays a significant factor in its success, but using standard client-side rendered React would seriously hinder search engines from properly crawling each page. So I chose Next.JS for this project as it provides a quick and simple way for writing performant, server-side rendered react applications without much overhead.
 
 - ~~React's `useState` & `useReducer` hooks coupled with the Context API provided a sufficient means for managing and centralizing state in this application as there wasn't much information that needed to be kept in memory on the client that would demand a complex library like Redux. The pages are frequently refreshed, and the data is already being rendered onto the pages from the server(using `getServerSideProps`), which further reduces the need for alternate state management strategies. Additionally, user preferences are being persisted through cookies for server-side rendering.~~
-  - **Important Note** &mdash; In hindsight, it would have been better to have used a purpose-built state management library like redux, as I didn't anticipate how complex the state would have grown. I also learned that Context forces a re-render of all the components subscribed to it irrespective of whether their part of the state has updated, which can hinder performance. Though, there are some ways to circumvent this issue. The Context API is better suited for storing static values that infrequently update (like UI themes or locale preferences) or local state instead of the type of data required by the client in this application.
+
+  - **Important Note** &mdash; In hindsight, it would have been better to have used a purpose-built state management library like redux, as I didn't anticipate how complex the state would have grown. I also learned that Context forces a re-render of all the components subscribed to it irrespective of whether their part of the state has updated, which can hinder performance. Though, there are some ways to work around this issue, but the results may not be very ideal compared to what a library like redux has to offer. Furthermore, the Context API is better suited for storing static values that infrequently update (like UI themes or locale preferences) or local state instead of the type of data required by the client in this application.
 
 - For managing the user state, I switched from using multiple `useState` hooks to a single `useReducer` as it's a more convenient option for working with state objects holding multiple sub-values(like the wishlist and cart fields on the user object.)
 
@@ -99,7 +114,7 @@ Jones is an SEO-friendly, responsive mobile-first online store for purchasing Ni
 
 - Use `ResizeObserver` to check if an element layout dimensions changes.
 
-## Setup
+## Setup Instructions
 
 1. Create a `touch .env` file in the root directory and set the following keys:
 
@@ -190,10 +205,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] Show products count per filter item constraint on the products page.
 - [ ] Integrate Paypal as a second payment gateway.
 - [ ] Add a captcha to the sign-up and login forms.
-- [ ] Create a size chart UI.
+- [x] Create a size chart UI (almost there.)
 - [ ] Animate Menu Button.
 - [ ] Skeleton Loading Animation.
 - [ ] Add transition animation to the product component when navigating to the product page, so the product's image transitions to the gallery.
+- [ ] Paginate Products List
 
 ## Credits & Attributions
 
