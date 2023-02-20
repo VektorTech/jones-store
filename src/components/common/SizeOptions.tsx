@@ -9,6 +9,7 @@ export default function SizeOptions({
   checkedItems,
   label,
   checkbox = false,
+  id = "",
   onChecked,
 }: PropTypes) {
   return (
@@ -19,6 +20,7 @@ export default function SizeOptions({
       label={label}
       grid
       className="size-options"
+      id={id}
       values={values ?? sizeListObj}
       checkedItems={checkedItems}
       onChecked={onChecked}
@@ -42,6 +44,7 @@ interface PropTypes {
   };
   checkedItems?: string[];
   label?: string;
+  id?: string;
   checkbox?: boolean;
-  onChecked?: (items: string | string[], value?: string | undefined) => void;
+  onChecked?: (items: string | string[], value: string | undefined) => void;
 }

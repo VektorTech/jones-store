@@ -1,7 +1,15 @@
 import { useState, forwardRef } from "react";
 
 export default forwardRef<HTMLDivElement, PropTypes>(function NumberInput(
-  { value = 0, min = 0, max = Infinity, className = "", name, onChange },
+  {
+    value = 0,
+    min = 0,
+    max = Infinity,
+    className = "",
+    id = "",
+    name,
+    onChange,
+  },
   forwardRef
 ) {
   const [_value, setValue] = useState(Math.min(Math.max(value, min), max));
@@ -28,6 +36,7 @@ export default forwardRef<HTMLDivElement, PropTypes>(function NumberInput(
         className="number-input__control"
         readOnly
         name={name}
+        id={id}
         value={_value}
       />
       <button
@@ -49,4 +58,5 @@ interface PropTypes {
   className?: string;
   name?: string;
   onChange?: (value: number) => void;
+  id?: string;
 }
