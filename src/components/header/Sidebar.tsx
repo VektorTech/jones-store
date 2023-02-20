@@ -12,13 +12,13 @@ import {
   WomenCategoriesList,
 } from "./MenuLists";
 
-import { useDialog, DialogType } from "@Contexts/UIContext";
+import { useDialog, DialogType, useCurrencyFormatter } from "@Contexts/UIContext";
 import { useAuthState } from "@Contexts/AuthContext";
 import useTabTrapIn from "@Hooks/useKeyTrap";
-import { currencyFormatter2 } from "src/i18n";
 import Animate from "@Components/common/Animate";
 
 export default function Sidebar() {
+  const format = useCurrencyFormatter();
   const [submenu, setSubmenu] = useState<Array<any> | null>(null);
   const [submenuActive, setSubmenuActive] = useState<boolean>(false);
 
@@ -179,7 +179,7 @@ export default function Sidebar() {
                     <span>
                       Cart
                       {cartCount
-                        ? ` (${cartCount}) (${currencyFormatter2.format(
+                        ? ` (${cartCount}) (${format(
                             cartTotal
                           )})`
                         : ""}
