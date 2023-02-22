@@ -14,6 +14,7 @@ import { useAuthState } from "@Contexts/AuthContext";
 export default function Reviews({ productId }: PropTypes) {
   const [reviewModal, setReviewModal] = useState(false);
   const [reviews, setReviews] = useState<(ReviewType & { user: User })[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const { user } = useAuthState();
 
@@ -29,7 +30,8 @@ export default function Reviews({ productId }: PropTypes) {
         return Promise.reject(respJson);
       })
       .then((res) => setReviews(res.data ?? []))
-      .catch(console.log);
+      .catch(console.log)
+      .finally(() => setLoading(false));
 
     return controller.abort.bind(controller);
   }, [productId]);
@@ -37,6 +39,14 @@ export default function Reviews({ productId }: PropTypes) {
   const averageRatings =
     reviews.reduce((total, { rating }) => total + rating, 0) /
     (reviews.length || 1);
+
+  if (loading) {
+    return (
+      <div className="product-details__panel product-details__reviews-panel">
+        <p className="product-details__prompt">Please wait while loading reviews...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="product-details__panel product-details__reviews-panel">
