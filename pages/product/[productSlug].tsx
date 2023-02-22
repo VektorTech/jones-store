@@ -88,7 +88,7 @@ const ProductPage: NextPage<ProductPageType> = ({
           </p>
 
           <ProductCartForm key={product.id} product={product} />
-          <p className="product-view__shipping-info">Shipping calculated at checkout.</p>
+          <p className="product-view__shipping-info">Shipping is calculated at checkout.</p>
 
           <ShareButton
             title={product.title}
