@@ -1,5 +1,3 @@
-import { useEffect, useRef } from "react";
-
 export default function SizeGuide() {
   return (
     <div className="product-details__panel product-details__size-panel">
@@ -38,25 +36,8 @@ const getNumList2 = (start = 1, len = 43, skip?: number[]) => {
 };
 
 const SizeTable = () => {
-  const guide = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (guide.current) {
-      const guideElement = guide.current;
-      const handler: Parameters<typeof guideElement.addEventListener>[1] = (
-        event
-      ) => {
-        const target = event.target as HTMLDivElement;
-        target.classList.toggle("sticky", target.scrollLeft > 100);
-      };
-      guideElement.addEventListener("scroll", handler);
-
-      return () => guideElement.removeEventListener("scroll", handler);
-    }
-  }, []);
-
   return (
-    <div ref={guide} className="size-guide">
+    <div className="size-guide">
       <table>
         <thead>
           <tr>
@@ -94,7 +75,11 @@ const SizeTable = () => {
           </tr>
           <tr>
             <th scope="row">UK</th>
-            <th scope="row" rowSpan={3}></th>
+            <th
+              scope="row"
+              rowSpan={3}
+              className="hidden-cell"
+            ></th>
             {getNumList(0.5, undefined, [6]).map((num, i) => (
               <td key={"uk:" + num + i}>{num}</td>
             ))}
@@ -120,17 +105,3 @@ const SizeTable = () => {
     </div>
   );
 };
-
-// <tr>
-// <th scope="row">EU</th>
-// {getNumList2(
-//   16,
-//   61,
-//   [
-//     16.5, 18, 19, 20, 20.5, 21.5, 22.5, 23, 24, 24.5, 25.5, 26.5,
-//     29, 30.5, 32.5, 34.5, 37, 39.5, 41.5, 43.5, 46.5,
-//   ]
-// ).map((num, i) => (
-//   <td key={"uk:" + num + i}>{num}</td>
-// ))}
-// </tr>
