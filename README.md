@@ -212,7 +212,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] Skeleton Loading Animation.
 - [ ] Add transition animation to the product component when navigating to the product page, so the product's image transitions to the gallery.
 - [ ] Paginate Products List
-- [ ] Make certain UI updates optimistic (like add to cart feature)
+- [x] Make certain UI updates optimistic (like add to cart feature)
 
 ## Credits & Attributions
 
