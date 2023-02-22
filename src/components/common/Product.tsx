@@ -12,8 +12,6 @@ import { useAuthState } from "@Contexts/AuthContext";
 import { ProductPlaceholderImg } from "src/constants";
 import { useCurrencyFormatter } from "@Contexts/UIContext";
 
-const MAX_IMAGE_SLIDES = 3;
-
 export default function Product(props: ProductComponentType) {
   const {
     small = false,
@@ -37,7 +35,7 @@ export default function Product(props: ProductComponentType) {
     }
     addToWishlist(props);
   };
-
+  const MAX_IMAGE_SLIDES = Math.min(3, mediaURLs.length);
   const [imageIndex, setImageIndex] = useState(0);
   const timer = useRef<NodeJS.Timer>();
 
