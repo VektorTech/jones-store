@@ -21,7 +21,7 @@ export default function ProductCartForm({
   const [quantity, setQuantity] = useState(1);
 
   const { id, stockQty, price, discount } = product;
-  const { addToCart } = useAuthState();
+  const { addToCart, user } = useAuthState();
   const sizesValuesRef = useRef(listToEnum(product.sizes));
 
   return (
@@ -49,11 +49,12 @@ export default function ProductCartForm({
       />
       <input type="hidden" name="productId" defaultValue={id} />
       <Button
+        disabled={user.processing}
         onClick={(e) => {
           e.preventDefault();
           const size = Number(checkedSize);
           if (quantity && size) {
-            addToCart(id, quantity, Number(checkedSize));
+            addToCart(product, quantity, Number(checkedSize));
           } else {
             toast("Please select size.", { type: "warning" });
           }

@@ -7,12 +7,17 @@ import type {
 import { createContext, ReactElement, useContext } from "react";
 
 import useUser, { initUser } from "./authState";
+import { Product } from "@prisma/client";
 
 interface AuthStateType {
   user: UserTypeNormalized;
   addToWishlist: (product: ProductComponentType) => Promise<void>;
   removeFromWishlist: (id: string) => Promise<void>;
-  addToCart: (id: string, quantity: number, size: number) => Promise<void>;
+  addToCart: (
+    product: ProductComponentType | Product,
+    quantity: number,
+    size: number
+  ) => Promise<void>;
   emptyCart: () => void;
   removeFromCart: (id: string) => Promise<void>;
   useSelector: (callback: (user: UserTypeNormalized) => void) => void;

@@ -65,7 +65,9 @@ async function postCartRoute(
         const cartItemData = {
           size: Number(size),
           quantity: Math.min(Number(qty), product.stockQty),
-          total: (product.price - product.discount) * Number(qty),
+          total:
+            (product.price - (product.discount ?? 0)) *
+            Math.min(Number(qty), product.stockQty),
         };
         const item = await prisma.cartItem.upsert({
           create: {

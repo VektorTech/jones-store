@@ -17,6 +17,7 @@ import {
 } from "./api";
 
 import { normalizeUserProductItems } from "src/helpers";
+import { Product } from "@prisma/client";
 
 export const initUser: UserTypeNormalized = {
   id: "",
@@ -51,7 +52,7 @@ enum UserActions {
   REMOVE_WISHLIST_ITEM,
   ADD_CART_ITEM,
   REMOVE_CART_ITEM,
-  EMPTY_CART,
+  RESET_CART,
   START_PROCESSING,
   STOP_PROCESSING,
 }
@@ -186,7 +187,7 @@ const authReducer = (
         },
       };
     }
-    case UserActions.EMPTY_CART:
+    case UserActions.RESET_CART:
       return { ...user, ...action.payload };
     case UserActions.START_PROCESSING:
       return { ...user, processing: true };
@@ -264,12 +265,43 @@ export default function useUser(currentUser: UserType) {
     }
   };
 
-  const addCartItem = async (id: string, quantity: number, size: number) => {
-    const r = await postCartItem(id, quantity, size);
-    if (!r.error) {
+  const addCartItem = async (
+    product: ProductComponentType | Product,
+    quantity: number,
+    size: number
+  ) => {
+    try {
+      updateUser({
+        type: UserActions.START_PROCESSING,
+        payload: null,
+      });
       updateUser({
         type: UserActions.ADD_CART_ITEM,
-        payload: r.data,
+        payload: {
+          product,
+          productId: product.id,
+          size,
+          quantity,
+          total:
+            (product.price - (product.discount ?? 0)) *
+            Math.min(Number(quantity), product.stockQty),
+        },
+      });
+      const res = await postCartItem(product.id, quantity, size);
+      if (res.error) throw new Error(res.message);
+      updateUser({
+        type: UserActions.ADD_CART_ITEM,
+        payload: res.data,
+      });
+    } catch (err) {
+      updateUser({
+        type: UserActions.REMOVE_CART_ITEM,
+        payload: product.id,
+      });
+    } finally {
+      updateUser({
+        type: UserActions.STOP_PROCESSING,
+        payload: null,
       });
     }
   };
@@ -284,12 +316,22 @@ export default function useUser(currentUser: UserType) {
     }
   };
 
-  const emptyCart = () => {
-    emptyUserCart();
-    updateUser({
-      type: UserActions.EMPTY_CART,
-      payload: { cart: initUser.cart },
-    });
+  const emptyCart = async () => {
+    let stateSnapshot: string = "";
+    try {
+      stateSnapshot = JSON.stringify(userState.cart);
+      updateUser({
+        type: UserActions.RESET_CART,
+        payload: { cart: initUser.cart },
+      });
+      const res = await emptyUserCart();
+      if (res.error) throw new Error(res.message);
+    } catch (err) {
+      updateUser({
+        type: UserActions.RESET_CART,
+        payload: { cart: JSON.parse(stateSnapshot) },
+      });
+    }
   };
 
   const useSelector = (callback: (user: UserTypeNormalized) => void) =>

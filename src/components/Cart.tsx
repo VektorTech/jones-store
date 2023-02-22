@@ -52,12 +52,16 @@ export default function Cart() {
                 <CartProductItem
                   index={index}
                   removeAction={() => {
+                    if (user.processing) return;
                     removeFromCart(id);
-                    setLoading(true);
                   }}
                   updateAction={(quantity: number) => {
-                    addToCart(id, quantity, user.cart.items[id].size);
-                    setLoading(true);
+                    if (user.processing) return;
+                    addToCart(
+                      user.cart.items[id].product,
+                      quantity,
+                      user.cart.items[id].size
+                    );
                   }}
                   key={`cart-${id}`}
                   product={user.cart.items[id].product}
