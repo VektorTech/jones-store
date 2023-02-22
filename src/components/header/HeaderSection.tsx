@@ -17,9 +17,8 @@ import {
 } from "./MenuLists";
 
 import useScrollTop from "@Hooks/useScrollTop";
-import { DialogType, useDialog } from "@Contexts/UIContext";
+import { DialogType, useCurrencyFormatter, useDialog } from "@Contexts/UIContext";
 import { useAuthState } from "@Contexts/AuthContext";
-import { currencyFormatter2 } from "src/i18n";
 
 export default function HeaderSection() {
   const { setDialog } = useDialog();
@@ -28,7 +27,7 @@ export default function HeaderSection() {
   const [pinnedState, setPinnedState] = useState(false);
   const scrollTop = useScrollTop();
   const headerRef = useRef<HTMLElement>(null);
-
+  const format = useCurrencyFormatter();
   const { user } = useAuthState();
   const isAuth = user.isAuth;
   const wishlistCount = user.wishlist.count;
@@ -239,8 +238,8 @@ export default function HeaderSection() {
                     hoverElementId="header-cart-btn"
                   >
                     {cartCount ? (
-                      <span style={{ fontWeight: "400" }}>
-                        {currencyFormatter2.format(cartTotal)}
+                      <span style={{ fontWeight: "400", userSelect: "none" }}>
+                        {format(cartTotal)}
                       </span>
                     ) : (
                       "Empty"
