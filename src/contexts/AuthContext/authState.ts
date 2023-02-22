@@ -4,6 +4,7 @@ import type {
   UserTypeNormalized,
   UserType,
   WishlistType,
+  ProductComponentType,
 } from "src/types/shared";
 
 import { useEffect, useReducer } from "react";
@@ -13,8 +14,9 @@ import {
   postCartItem,
   deleteCartItem,
   emptyUserCart,
-  normalizeUserProductItems,
-} from "src/helpers";
+} from "./api";
+
+import { normalizeUserProductItems } from "src/helpers";
 
 export const initUser: UserTypeNormalized = {
   id: "",
@@ -40,6 +42,7 @@ export const initUser: UserTypeNormalized = {
     shippingTotal: 0,
   },
   isAuth: false,
+  processing: false,
 };
 
 enum UserActions {
@@ -49,6 +52,8 @@ enum UserActions {
   ADD_CART_ITEM,
   REMOVE_CART_ITEM,
   EMPTY_CART,
+  START_PROCESSING,
+  STOP_PROCESSING,
 }
 
 const authReducer = (
@@ -183,6 +188,10 @@ const authReducer = (
     }
     case UserActions.EMPTY_CART:
       return { ...user, ...action.payload };
+    case UserActions.START_PROCESSING:
+      return { ...user, processing: true };
+    case UserActions.STOP_PROCESSING:
+      return { ...user, processing: false };
     default:
       return user;
   }
@@ -220,12 +229,27 @@ export default function useUser(currentUser: UserType) {
     }
   }, [currentUser]);
 
-  const addWishlistItem = async (id: string) => {
-    const r = await postWishlistItem(id);
-    if (!r.error) {
+  const addWishlistItem = async (product: ProductComponentType) => {
+    try {
+      updateUser({
+        type: UserActions.START_PROCESSING,
+        payload: null,
+      });
       updateUser({
         type: UserActions.ADD_WISHLIST_ITEM,
-        payload: r.data,
+        payload: { product, productId: product.id, userId: userState.id },
+      });
+      const res = await postWishlistItem(product.id);
+      if (res.error) throw new Error(res.message);
+    } catch (err) {
+      updateUser({
+        type: UserActions.REMOVE_WISHLIST_ITEM,
+        payload: product.id,
+      });
+    } finally {
+      updateUser({
+        type: UserActions.STOP_PROCESSING,
+        payload: null,
       });
     }
   };

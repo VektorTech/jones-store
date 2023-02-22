@@ -3,7 +3,6 @@ import type { ProductComponentType } from "src/types/shared";
 import { NextPage } from "next";
 import { Wishlist } from "@prisma/client";
 
-import SEO from "@Components/common/SEO";
 import ProductsGrid from "@Components/products/ProductsGrid";
 
 import prisma from "@Lib/prisma";

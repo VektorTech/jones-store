@@ -142,6 +142,11 @@
     border-radius: 50%;
     background-color: #fff;
 
+    &:disabled,
+    &[aria-disabled="true"] {
+      opacity: 0.5;
+    }
+
     &-icon {
       vertical-align: baseline;
     }

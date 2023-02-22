@@ -14,18 +14,20 @@ import { useCurrencyFormatter } from "@Contexts/UIContext";
 
 const MAX_IMAGE_SLIDES = 3;
 
-export default function Product({
-  small = false,
-  title,
-  price,
-  discount,
-  mediaURLs,
-  gender,
-  ratings,
-  sku,
-  id,
-  blurDataUrl,
-}: ProductComponentType) {
+export default function Product(props: ProductComponentType) {
+  const {
+    small = false,
+    title,
+    price,
+    discount,
+    mediaURLs,
+    gender,
+    ratings,
+    sku,
+    id,
+    blurDataUrl,
+  } = props;
+
   const format = useCurrencyFormatter();
   const { addToWishlist, removeFromWishlist, user } = useAuthState();
   const isOnWishlist = !!user.wishlist.items[id];
@@ -33,7 +35,7 @@ export default function Product({
     if (isOnWishlist) {
       return removeFromWishlist(id);
     }
-    addToWishlist(id);
+    addToWishlist(props);
   };
 
   const [imageIndex, setImageIndex] = useState(0);
@@ -80,7 +82,9 @@ export default function Product({
                   role="button"
                   tabIndex={-1}
                   aria-label="Add to wishlist"
+                  aria-disabled={user.processing}
                   onClick={(e) => {
+                    if (user.processing) return;
                     e.preventDefault();
                     handleWishlistAction();
                   }}

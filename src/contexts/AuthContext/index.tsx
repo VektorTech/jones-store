@@ -1,4 +1,8 @@
-import type { UserTypeNormalized, UserType } from "src/types/shared";
+import type {
+  UserTypeNormalized,
+  UserType,
+  ProductComponentType,
+} from "src/types/shared";
 
 import { createContext, ReactElement, useContext } from "react";
 
@@ -6,7 +10,7 @@ import useUser, { initUser } from "./authState";
 
 interface AuthStateType {
   user: UserTypeNormalized;
-  addToWishlist: (id: string) => Promise<void>;
+  addToWishlist: (product: ProductComponentType) => Promise<void>;
   removeFromWishlist: (id: string) => Promise<void>;
   addToCart: (id: string, quantity: number, size: number) => Promise<void>;
   emptyCart: () => void;
@@ -17,10 +21,10 @@ interface AuthStateType {
 
 const authState: AuthStateType = {
   user: initUser,
-  addToWishlist: (id) => Promise.resolve(),
-  removeFromWishlist: (id) => Promise.resolve(),
-  addToCart: (id, quantity, size) => Promise.resolve(),
-  removeFromCart: (id) => Promise.resolve(),
+  addToWishlist: () => Promise.resolve(),
+  removeFromWishlist: () => Promise.resolve(),
+  addToCart: () => Promise.resolve(),
+  removeFromCart: () => Promise.resolve(),
   emptyCart: () => null,
   useSelector: () => null,
   setAuthUser: () => null,

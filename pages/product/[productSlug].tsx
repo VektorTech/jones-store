@@ -53,7 +53,7 @@ const ProductPage: NextPage<ProductPageType> = ({
       <div className="product-view">
         <ProductGallery
           key={`gallery-${id}`}
-          productId={id}
+          product={product}
           images={product.mediaURLs}
           dimensions={imageDimensions}
           blurDataUrls={blurDataUrls}

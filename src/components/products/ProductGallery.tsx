@@ -6,16 +6,17 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import Carousel from "@Components/Carousel";
 import { useAuthState } from "@Contexts/AuthContext";
 import { ProductPlaceholderImg } from "src/constants";
+import { ProductComponentType } from "src/types/shared";
 
 export default function ProductGallery({
-  productId,
+  product,
   images,
   dimensions,
   blurDataUrls,
 }: PropTypes) {
   const [activeImage, setActiveImage] = useState(0);
   const { addToWishlist, removeFromWishlist, user } = useAuthState();
-  const isOnWishlist = !!user.wishlist.items[productId];
+  const isOnWishlist = !!user.wishlist.items[product.id];
 
   return (
     <div className="product-gallery">
@@ -50,7 +51,7 @@ export default function ProductGallery({
             <Carousel
               onUpdate={(i: number) => setActiveImage(i)}
               aIndex={activeImage}
-              key={`carousel-${productId}`}
+              key={`carousel-${product.id}`}
             >
               {images.map((url, i) => (
                 <FutureImage
@@ -70,10 +71,11 @@ export default function ProductGallery({
           </div>
           <button
             aria-label="add to wishlist"
+            disabled={user.processing}
             onClick={() =>
               isOnWishlist
-                ? removeFromWishlist(productId)
-                : addToWishlist(productId)
+                ? removeFromWishlist(product.id)
+                : addToWishlist(product)
             }
             className="product-gallery__wish"
           >
@@ -86,7 +88,7 @@ export default function ProductGallery({
 }
 
 interface PropTypes {
-  productId: string;
+  product: ProductComponentType;
   images: string[];
   dimensions: { width: number; height: number }[];
   blurDataUrls: Record<string, string>;

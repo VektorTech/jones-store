@@ -24,6 +24,7 @@ export type UserTypeNormalized = Partial<User> & {
   wishlist: UserProducts<WishlistType>;
   cart: UserProducts<CartType>;
   isAuth: boolean;
+  processing: boolean;
 };
 
 export type UserType = Partial<User> & {
