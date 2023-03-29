@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import clsx from "clsx";
 
 import RatingStars from "./RatingStars";
 
@@ -66,11 +67,11 @@ export default function Product(props: ProductComponentType) {
                   placeholder="blur"
                   objectFit="contain"
                   layout="fill"
-                  className={`product__image-img${
-                    i == imageIndex % MAX_IMAGE_SLIDES
-                      ? " product__image-img--active"
-                      : ""
-                  }`}
+                  className={clsx({
+                    "product__image-img": true,
+                    "product__image-img--active":
+                      i == imageIndex % MAX_IMAGE_SLIDES,
+                  })}
                   alt=""
                 />
               ))}

@@ -1,6 +1,7 @@
 import RadioList from "../formControls/RadioList";
 
 import { listToEnum } from "src/utils";
+import clsx from "clsx";
 
 const sizeListObj = listToEnum([...Array(37)].map((_, i) => String(2 + i / 2)));
 
@@ -26,9 +27,10 @@ export default function SizeOptions({
       onChecked={onChecked}
       render={({ label, checked }) => (
         <span
-          className={
-            "filter-param__box" + (checked ? " filter-param__box--checked" : "")
-          }
+          className={clsx({
+            "filter-param__box": true,
+            "filter-param__box--checked": checked,
+          })}
         >
           {label}
         </span>
