@@ -12,13 +12,13 @@
 
   &__section {
     &--collapsed {
-      & #{$param}-type {
+      & #{$param}__type {
         & svg {
           transform: rotate(-180deg);
         }
       }
 
-      & #{$param}-body {
+      & #{$param}__body {
         height: 0;
         padding: 0;
         transform: scaleY(0);
