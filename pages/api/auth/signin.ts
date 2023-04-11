@@ -42,18 +42,20 @@ const signinRoute = async (
     });
 
     if (req.session.guest) {
-      try {
-        req.session.guest.wishlist.forEach(async (item) => {
+      req.session.guest.wishlist.forEach(async (item) => {
+        try {
           await prisma.wishlist.create({
             data: {
               userId: user?.id as string,
               productId: item.productId as string,
             },
           });
-        });
+        } catch (e) {}
+      });
 
-        if (cart) {
-          req.session.guest.cart.forEach(async (item) => {
+      if (cart) {
+        req.session.guest.cart.forEach(async (item) => {
+          try {
             await prisma.cartItem.create({
               data: {
                 cartId: cart?.id,
@@ -63,11 +65,11 @@ const signinRoute = async (
                 total: Number(item.total),
               },
             });
-          });
-        }
+          } catch (e) {}
+        });
+      }
 
-        req.session.guest = { id: "guest", wishlist: [], cart: [] };
-      } catch (e) {}
+      req.session.guest = { id: "guest", wishlist: [], cart: [] };
     }
 
     req.session.user = {
